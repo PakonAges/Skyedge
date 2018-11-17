@@ -1,0 +1,11 @@
+{
+    "name": "FieldSceneControllerImplementations",
+    "references": [
+        "FieldSceneControllerInterfaces",
+        "FieldGeneratorInterfaces"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
