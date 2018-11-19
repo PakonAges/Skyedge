@@ -1,0 +1,10 @@
+{
+    "name": "FieldGenerator",
+    "references": [
+        "IFieldGenerator"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

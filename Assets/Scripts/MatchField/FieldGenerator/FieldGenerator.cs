@@ -1,13 +1,7 @@
-﻿public class FieldGenerator : IFiledGenerator
+﻿public class FieldGenerator : IFieldGenerator
 {
-    readonly IFieldGenerationRules rules;
 
-    public FieldGenerator(IFieldGenerationRules rules)
-    {
-        this.rules = rules;
-    }
-
-    public IField GenerateField()
+    public IField GenerateField(IFieldGenerationRules rules)
     {
         var NewField = new BasicField(rules.Xsize, rules.Ysize);
 

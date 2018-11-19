@@ -1,7 +1,9 @@
 {
-    "name": "FieldGeneration",
+    "name": "FieldSceneController",
     "references": [
-        "FieldGeneratorInterfaces"
+        "IFieldSceneController",
+        "IFieldGenerator",
+        "IFieldVisualization"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

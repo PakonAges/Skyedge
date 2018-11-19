@@ -6,4 +6,9 @@
     {
         Field = new int[Xsize, Ysize];
     }
+
+    public void Reset()
+    {
+        //Reset Field
+    }
 }

@@ -1,8 +1,7 @@
 {
-    "name": "FieldSceneControllerImplementations",
+    "name": "FieldRulesProvider",
     "references": [
-        "FieldSceneControllerInterfaces",
-        "FieldGeneratorInterfaces"
+        "IFieldGenerator"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
