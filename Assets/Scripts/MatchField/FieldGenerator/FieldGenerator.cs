@@ -1,4 +1,6 @@
-﻿public class FieldGenerator : IFieldGenerator
+﻿using UnityEngine;
+
+public class FieldGenerator : IFieldGenerator
 {
 
     public IField GenerateField(IFieldGenerationRules rules)
@@ -12,6 +14,8 @@
                 NewField.Field[i, j] = i; //hack
             }
         }
+
+        Debug.Log("Field Generated from Field Generator");
 
         return NewField;
     }

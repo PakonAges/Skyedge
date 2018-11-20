@@ -1,4 +1,6 @@
-﻿public class FieldSceneController : IFieldSceneController
+﻿using UnityEngine;
+
+public class FieldSceneController : IFieldSceneController
 {
     private readonly IFieldGenerator _fieldGenerator;
     private readonly IFieldGenerationRulesProvider _fieldGenerationRulesProvider;
@@ -18,11 +20,14 @@
     public void GenerateField()
     {
         Field = _fieldGenerator.GenerateField(_fieldGenerationRulesProvider.ProvideRules());
-        //Visualize
+        Debug.Log("FieldGenerated from Scene Controller");
+
+        _fieldVisualization.ShowField(Field);
     }
 
     public void ResetField()
     {
         Field.Reset();
+        _fieldVisualization.ResetField(Field);
     }
 }

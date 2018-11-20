@@ -1,7 +1,7 @@
 {
     "name": "FieldVisualization",
     "references": [
-        "IFieldVisualization"
+        "IFieldGenerator"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

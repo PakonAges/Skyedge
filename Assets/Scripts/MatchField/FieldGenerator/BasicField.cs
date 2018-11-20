@@ -1,4 +1,6 @@
-﻿public class BasicField : IField
+﻿using UnityEngine;
+
+public class BasicField : IField
 {
     public int[,] Field;
 
@@ -9,6 +11,6 @@
 
     public void Reset()
     {
-        //Reset Field
+        Debug.Log("Field Data Reseted from Field class");
     }
 }
