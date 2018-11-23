@@ -1,5 +1,5 @@
 {
-    "name": "FieldRulesProvider",
+    "name": "NullObjects",
     "references": [
         "IFieldGenerator"
     ],

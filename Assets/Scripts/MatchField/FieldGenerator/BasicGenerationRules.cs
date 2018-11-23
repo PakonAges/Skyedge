@@ -1,41 +1,13 @@
 ﻿public class BasicGenerationRules : IFieldGenerationRules
 {
-    public int Xsize
+    public BasicGenerationRules(int Xsize, int Ysize, int ElementsAmount)
     {
-        get
-        {
-            throw new System.NotImplementedException();
-        }
-
-        set
-        {
-            throw new System.NotImplementedException();
-        }
+        this.Xsize = Xsize;
+        this.Ysize = Ysize;
+        this.NumberOfBasicElements = ElementsAmount;
     }
 
-    public int Ysize
-    {
-        get
-        {
-            throw new System.NotImplementedException();
-        }
-
-        set
-        {
-            throw new System.NotImplementedException();
-        }
-    }
-
-    public int NumberOfBasicElements
-    {
-        get
-        {
-            throw new System.NotImplementedException();
-        }
-
-        set
-        {
-            throw new System.NotImplementedException();
-        }
-    }
+    public int Xsize { get; set; }
+    public int Ysize { get; set; }
+    public int NumberOfBasicElements { get; set; }
 }

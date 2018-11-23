@@ -6,7 +6,7 @@ public class HotKeyInput : MonoBehaviour {
     public KeyCode GenerateField = KeyCode.G;
     public KeyCode ResetField = KeyCode.R;
 
-    private IFieldSceneController _fieldSceneController;
+    public IFieldSceneController _fieldSceneController;
 	
     [Inject]
     public void Construct(IFieldSceneController fieldSceneController)
