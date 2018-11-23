@@ -20,8 +20,6 @@ public class FieldSceneController : IFieldSceneController
     public void GenerateField()
     {
         Field = _fieldGenerator.GenerateField(_fieldGenerationRulesProvider.ProvideRules());
-        Debug.Log("FieldGenerated from Scene Controller");
-
         _fieldVisualization.ShowField(Field);
     }
 

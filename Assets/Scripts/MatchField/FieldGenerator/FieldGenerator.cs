@@ -11,11 +11,13 @@ public class FieldGenerator : IFieldGenerator
         {
             for (int j = 0; j < rules.Xsize; j++)
             {
-                NewField.Field[i, j] = i; //hack
+                var elementIndex = Random.Range(0, rules.NumberOfBasicElements);
+
+                NewField.Field[i, j] = elementIndex;
             }
         }
 
-        Debug.Log("Field Generated from Field Generator");
+        Debug.LogFormat("Field [{0},{1}] with {2} elements Generated in Field Generator",rules.Xsize, rules.Ysize, rules.NumberOfBasicElements);
 
         return NewField;
     }
