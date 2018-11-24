@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-public class FieldSceneController : IFieldSceneController
+/// <summary>
+/// Passing commands to change Global Field State. Doesn't care about implementation details of modules
+/// </summary>
+public class DefaultFieldSceneController : IFieldSceneController
 {
     private readonly IFieldGenerator _fieldGenerator;
     private readonly IFieldGenerationRulesProvider _fieldGenerationRulesProvider;
@@ -8,7 +11,7 @@ public class FieldSceneController : IFieldSceneController
 
     public IField Field;
 
-    public FieldSceneController(IFieldGenerator fieldGenerator,
+    public DefaultFieldSceneController(IFieldGenerator fieldGenerator,
                                 IFieldGenerationRulesProvider fieldGenerationRulesProvider,
                                 IFieldVisualization fieldVisualization)
     {

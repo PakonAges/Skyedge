@@ -6,10 +6,10 @@ public class MatchFieldInstaller : MonoInstaller
     {
         InstallNullObjects();
 
-        Container.Bind<IFieldSceneController>().To<FieldSceneController>().WhenInjectedInto<HotKeyInput>();
+        Container.Bind<IFieldSceneController>().To<DefaultFieldSceneController>().WhenInjectedInto<HotKeyInput>();
         Container.Bind<IFieldGenerator>().To<FieldGenerator>().AsSingle();
         Container.Bind<IFieldGenerationRulesProvider>().To<FieldRulesProvider>().AsSingle();
-        Container.Bind<IFieldVisualization>().To<FieldVisualization>().AsSingle();
+        Container.Bind<IFieldVisualization>().To<DefaultFieldVisualization>().AsSingle();
     }
 
     void InstallNullObjects()

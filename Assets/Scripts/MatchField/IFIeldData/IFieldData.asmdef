@@ -1,8 +1,6 @@
 {
-    "name": "FieldGenerator",
-    "references": [
-        "IFieldGenerator"
-    ],
+    "name": "IFieldData",
+    "references": [],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-public class FieldVisualization : IFieldVisualization
+/// <summary>
+/// Visualizes Field based on it's Data
+/// </summary>
+public class DefaultFieldVisualization : IFieldVisualization
 {
     //Visualization Options. Like take from Scriptable object sprite
     //then Instantiate it properly

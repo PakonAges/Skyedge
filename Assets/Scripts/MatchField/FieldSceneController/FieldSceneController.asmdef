@@ -2,7 +2,7 @@
     "name": "FieldSceneController",
     "references": [
         "IFieldSceneController",
-        "IFieldGenerator"
+        "IFieldGeneration"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

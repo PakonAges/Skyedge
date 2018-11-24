@@ -1,8 +1,6 @@
 {
-    "name": "NullObjects",
-    "references": [
-        "IFieldGeneration"
-    ],
+    "name": "IFieldGeneration",
+    "references": [],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,7 +1,7 @@
 {
-    "name": "NullObjects",
+    "name": "FieldData",
     "references": [
-        "IFieldGeneration"
+        "IFieldData"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
