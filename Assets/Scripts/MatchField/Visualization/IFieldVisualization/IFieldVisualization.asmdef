@@ -1,0 +1,11 @@
+{
+    "name": "IFieldVisualization",
+    "references": [
+        "IFieldGameplayData",
+        "FieldGameplayData"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

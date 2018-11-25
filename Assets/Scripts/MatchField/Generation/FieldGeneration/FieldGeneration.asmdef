@@ -1,0 +1,12 @@
+{
+    "name": "FieldGeneration",
+    "references": [
+        "IFieldGeneration",
+        "FieldGameplayData",
+        "IFieldGameplayData"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

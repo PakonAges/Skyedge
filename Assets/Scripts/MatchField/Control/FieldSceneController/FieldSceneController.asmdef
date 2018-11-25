@@ -1,0 +1,13 @@
+{
+    "name": "FieldSceneController",
+    "references": [
+        "IFieldSceneController",
+        "IFieldGeneration",
+        "IFieldVisualization",
+        "IFieldGameplayData"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

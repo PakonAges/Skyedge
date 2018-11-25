@@ -1,0 +1,10 @@
+{
+    "name": "FieldGameplayData",
+    "references": [
+        "IFieldGameplayData"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
