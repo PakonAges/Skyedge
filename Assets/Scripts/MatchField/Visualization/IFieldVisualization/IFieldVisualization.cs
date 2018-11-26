@@ -1,5 +1,5 @@
 ﻿public interface IFieldVisualization
 {
-    void ShowField(IFieldData fieldData);
-    void ResetField(IFieldData fieldData);
+    void ShowField(FieldData fieldData);
+    void ResetField(FieldData fieldData);
 }

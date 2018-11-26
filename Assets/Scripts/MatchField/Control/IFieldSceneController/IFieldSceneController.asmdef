@@ -1,6 +1,8 @@
 {
     "name": "IFieldSceneController",
-    "references": [],
+    "references": [
+        "DataLayer"
+    ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],

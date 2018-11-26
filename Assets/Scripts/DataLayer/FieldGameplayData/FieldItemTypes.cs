@@ -1,12 +1,9 @@
-﻿public class FieldItemTypes
+﻿public enum FieldItemType
 {
-    public enum FieldItemType
-    {
-        NullItem = 0,
-        Food,
-        Crystal,
-        Gold,
-        Logs,
-        Potion
-    }
+    NullItem = 0,
+    Food,
+    Crystal,
+    Gold,
+    Logs,
+    Potion
 }

@@ -2,9 +2,9 @@
 
 public class BasicField : IField
 {
-    public IFieldData FieldData { get; set; }
-
-    public BasicField (IFieldData fieldData)
+    public FieldData FieldData { get; set; }
+    
+    public BasicField (FieldData fieldData)
     {
         FieldData = fieldData;
     }

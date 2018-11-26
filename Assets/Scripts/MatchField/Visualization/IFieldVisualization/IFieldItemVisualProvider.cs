@@ -2,6 +2,6 @@
 
 public interface IFieldItemVisualProvider
 {
-    Sprite GetItemSprite(FieldItemTypes.FieldItemType fieldItemType);
+    Sprite GetItemSprite(FieldItemType fieldItemType);
 
 }

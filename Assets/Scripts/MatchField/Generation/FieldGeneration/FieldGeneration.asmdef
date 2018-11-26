@@ -2,8 +2,7 @@
     "name": "FieldGeneration",
     "references": [
         "IFieldGeneration",
-        "FieldGameplayData",
-        "IFieldGameplayData"
+        "DataLayer"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

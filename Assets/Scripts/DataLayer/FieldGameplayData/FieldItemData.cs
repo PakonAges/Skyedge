@@ -1,4 +1,4 @@
-﻿public class FieldItemData : IFieldItemData
+﻿public class FieldItemData
 {
-    public FieldItemTypes ItemType { get; set; }
+    public FieldItemType ItemType { get; set; }
 }

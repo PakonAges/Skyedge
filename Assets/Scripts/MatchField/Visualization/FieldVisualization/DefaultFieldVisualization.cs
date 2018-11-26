@@ -18,7 +18,7 @@ public class DefaultFieldVisualization : IFieldVisualization
         _fieldItemSpawner = fieldItemSpawner;
     }
 
-    public void ShowField(IFieldData fieldData)
+    public void ShowField(FieldData fieldData)
     {
         //Use Custom Visualizer to display Field. 
         //This can be a 2D sprite variant
@@ -30,14 +30,15 @@ public class DefaultFieldVisualization : IFieldVisualization
             for (int j = 0; j < fieldData.Xsize; j++)
             {
                 var pos = _itemPositioner.WorldPosition(i, j, fieldData.Xsize, fieldData.Ysize);
-                var img = _fieldItemVisualProvider.GetItemSprite(fieldData.)
+                var img = _fieldItemVisualProvider.GetItemSprite((FieldItemType)fieldData.FieldMatrix[i,j]);
+                _fieldItemSpawner.CreateItem(img, pos);
             }
         }
 
         Debug.Log("Field Visualized from field visualization");
     }
 
-    public void ResetField(IFieldData fieldData)
+    public void ResetField(FieldData fieldData)
     {
         //Way to reset? clear all!
         Debug.Log("Field Resetted from field visualization");

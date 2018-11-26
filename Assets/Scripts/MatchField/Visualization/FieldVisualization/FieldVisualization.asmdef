@@ -2,7 +2,7 @@
     "name": "FieldVisualization",
     "references": [
         "IFieldVisualization",
-        "IFieldGameplayData"
+        "DataLayer"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

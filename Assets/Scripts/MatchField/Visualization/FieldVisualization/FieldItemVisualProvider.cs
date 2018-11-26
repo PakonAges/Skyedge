@@ -6,7 +6,7 @@ public class FieldItemVisualProvider : IFieldItemVisualProvider
 {
     //Collection
 
-    public Sprite GetItemSprite(FieldItemTypes.FieldItemType fieldItemType)
+    public Sprite GetItemSprite(FieldItemType fieldItemType)
     {
         //return from collection by type;
         throw new System.NotImplementedException();

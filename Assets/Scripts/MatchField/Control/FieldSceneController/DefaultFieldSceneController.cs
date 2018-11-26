@@ -6,23 +6,23 @@
 public class DefaultFieldSceneController : IFieldSceneController
 {
     private readonly IFieldGenerator _fieldGenerator;
-    private readonly IFieldGenerationRulesProvider _fieldGenerationRulesProvider;
+    private readonly IFieldDataProvider _fieldDataProvider;
     private readonly IFieldVisualization _fieldVisualization;
 
     public IField Field;
 
     public DefaultFieldSceneController( IFieldGenerator fieldGenerator,
-                                        IFieldGenerationRulesProvider fieldGenerationRulesProvider,
+                                        IFieldDataProvider fieldDataProvider,
                                         IFieldVisualization fieldVisualization)
     {
         _fieldGenerator = fieldGenerator;
-        _fieldGenerationRulesProvider = fieldGenerationRulesProvider;
+        _fieldDataProvider = fieldDataProvider;
         _fieldVisualization = fieldVisualization;
     }
 
     public void GenerateField()
     {
-        Field = _fieldGenerator.GenerateField(_fieldGenerationRulesProvider.ProvideRules());
+        Field = _fieldGenerator.GenerateField(_fieldDataProvider.ProvideData());
         _fieldVisualization.ShowField(Field.FieldData);
     }
 
