@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class FieldItemVisualProvider : IFieldItemVisualProvider
 {
-    //Collection
+    private FieldItemCollection _fieldItemCollection;
+
+    public FieldItemVisualProvider(FieldItemCollection fieldItemCollection)
+    {
+        _fieldItemCollection = fieldItemCollection;
+    }
 
     public Sprite GetItemSprite(FieldItemType fieldItemType)
     {
-        //return from collection by type;
-        throw new System.NotImplementedException();
+        //test
+        return _fieldItemCollection.testImage;
     }
 }

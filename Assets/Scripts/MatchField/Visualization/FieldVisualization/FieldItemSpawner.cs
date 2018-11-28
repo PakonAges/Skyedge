@@ -2,8 +2,11 @@
 
 public class FieldItemSpawner : MonoBehaviour, IFieldItemSpawner
 {
+    public GameObject FieldItemGo;
+
     public void CreateItem(Sprite image, Vector3 position)
     {
-        Instantiate(image, position, Quaternion.identity);
+        var newItem = Instantiate(FieldItemGo, position, Quaternion.identity);
+        newItem.GetComponent<SpriteRenderer>().sprite = image;
     }
 }

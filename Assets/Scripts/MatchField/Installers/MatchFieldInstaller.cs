@@ -5,6 +5,7 @@ using Zenject;
 public class MatchFieldInstaller : MonoInstaller
 {
     public GameObject FieldVisualizatonSetup;
+    public FieldItemCollection ItemCollection;
 
     public override void InstallBindings()
     {
@@ -19,7 +20,8 @@ public class MatchFieldInstaller : MonoInstaller
     {
         Container.Bind<IFieldItemWorldPositionProvider>().To<FieldItemWorldPositionProvider>().WhenInjectedInto<DefaultFieldVisualization>();
         Container.Bind<IFieldItemVisualProvider>().To<FieldItemVisualProvider>().WhenInjectedInto<DefaultFieldVisualization>();
-        Container.Bind<IFieldItemSpawner>().To<FieldItemSpawner>().WhenInjectedInto<DefaultFieldVisualization>();
+        Container.Bind<IFieldItemSpawner>().To<FieldItemSpawner>().FromComponentOn(FieldVisualizatonSetup).WhenInjectedInto<DefaultFieldVisualization>();
+        Container.Bind<FieldItemCollection>().FromInstance(ItemCollection).WhenInjectedInto<FieldItemVisualProvider>();
     }
 
     //void InstallNullObjects()

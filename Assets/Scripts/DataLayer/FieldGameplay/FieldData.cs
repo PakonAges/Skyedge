@@ -8,7 +8,7 @@
     public FieldData(int xSize, int ySize, int NumberOfElements)
     {
         Xsize = xSize;
-        Ysize = Ysize;
+        Ysize = ySize;
         this.NumberOfElements = NumberOfElements;
         FieldMatrix = new int[Xsize, Ysize];
     }
