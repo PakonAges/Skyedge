@@ -5,7 +5,25 @@ using UnityEngine;
 [CreateAssetMenu]
 public class FieldItemCollection : ScriptableObject
 {
-    public Dictionary<FieldItemType,Sprite> ItemsCollection;
+    public List<FieldItemPresentation> ItemCollection;
 
-    public Sprite testImage;
+    public Sprite GetItemImage(FieldItemType Type)
+    {
+        for (int i = 0; i < ItemCollection.Count; i++)
+        {
+            if (ItemCollection[i].Type == Type)
+            {
+                return ItemCollection[i].Image;
+            }
+        }
+
+        return ItemCollection[0].Image;
+    }
+}
+
+[System.Serializable] 
+public struct FieldItemPresentation
+{
+    public FieldItemType Type;
+    public Sprite Image;
 }
