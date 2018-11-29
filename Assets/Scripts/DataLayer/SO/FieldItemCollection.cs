@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Data/Field/Items Collection")]
 public class FieldItemCollection : ScriptableObject
 {
     public List<FieldItemPresentation> ItemCollection;

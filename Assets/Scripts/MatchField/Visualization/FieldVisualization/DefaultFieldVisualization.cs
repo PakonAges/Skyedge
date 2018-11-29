@@ -20,16 +20,13 @@ public class DefaultFieldVisualization : IFieldVisualization
 
     public void ShowField(FieldData fieldData)
     {
-        //Use Custom Visualizer to display Field. 
-        //This can be a 2D sprite variant
-        //This Can be 3D model
-        //Debug mode?
+        float ItemSize = _itemPositioner.CalculateItemSize(fieldData.Xsize, fieldData.Ysize);
 
         for (int i = 0; i < fieldData.Ysize; i++)
         {
             for (int j = 0; j < fieldData.Xsize; j++)
             {
-                var pos = _itemPositioner.WorldPosition(i, j, fieldData.Xsize, fieldData.Ysize);
+                var pos = _itemPositioner.WorldPosition(i, j);
                 var img = _fieldItemVisualProvider.GetItemSprite((FieldItemType)fieldData.FieldMatrix[i,j]);
                 _fieldItemSpawner.CreateItem(img, pos);
             }
