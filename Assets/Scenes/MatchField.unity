@@ -228,6 +228,7 @@ MonoBehaviour:
   ItemCollection: {fileID: 11400000, guid: b057e7260d3c00a40acc6d45702f824f, type: 2}
   VisualizationParameters: {fileID: 11400000, guid: fd520e7e20c3c4b478cf2f2631ca8e9c,
     type: 2}
+  MainCamera: {fileID: 519420031}
 --- !u!114 &1657495045
 MonoBehaviour:
   m_ObjectHideFlags: 0

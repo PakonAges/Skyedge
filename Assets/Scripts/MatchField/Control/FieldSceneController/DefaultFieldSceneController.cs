@@ -22,8 +22,15 @@ public class DefaultFieldSceneController : IFieldSceneController
 
     public void GenerateField()
     {
+        ShowBackGround();
+
         Field = _fieldGenerator.GenerateField(_fieldDataProvider.ProvideData());
         _fieldVisualization.ShowField(Field.FieldData);
+    }
+
+    public void ShowBackGround()
+    {
+        _fieldVisualization.ShowBackGround(_fieldDataProvider.ProvideBGData());
     }
 
     public void ResetField()

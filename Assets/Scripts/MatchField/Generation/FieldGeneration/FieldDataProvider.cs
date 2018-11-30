@@ -1,6 +1,19 @@
-﻿public class FieldDataProvider : IFieldDataProvider
+﻿using UnityEngine;
+
+public class FieldDataProvider : IFieldDataProvider
 {
     FieldData _defaultRules;
+    Sprite _defaultFieldBG;
+
+    public FieldDataProvider (Sprite defaultFieldBg)
+    {
+        _defaultFieldBG = defaultFieldBg;
+    }
+
+    public Sprite ProvideBGData()
+    {
+        return _defaultFieldBG;
+    }
 
     //public FieldDataProvider(FieldData nullRules)
     //{

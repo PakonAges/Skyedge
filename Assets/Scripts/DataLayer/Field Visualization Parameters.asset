@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScreenMargin: 10
   MaxItemSize: 100
+  DefaultFieldBG: {fileID: 21300000, guid: d7ed20e3648ef454e89351ffd0cc497a, type: 3}

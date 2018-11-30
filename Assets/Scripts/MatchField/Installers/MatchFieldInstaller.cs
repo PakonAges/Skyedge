@@ -7,6 +7,7 @@ public class MatchFieldInstaller : MonoInstaller
     public GameObject FieldVisualizatonSetup;
     public FieldItemCollection ItemCollection;
     public FieldVisualizationParameters VisualizationParameters;
+    public Camera MainCamera;
 
     public override void InstallBindings()
     {
@@ -24,6 +25,11 @@ public class MatchFieldInstaller : MonoInstaller
         Container.Bind<IFieldItemSpawner>().To<FieldItemSpawner>().FromComponentOn(FieldVisualizatonSetup).WhenInjectedInto<DefaultFieldVisualization>();
         Container.Bind<FieldItemCollection>().FromInstance(ItemCollection).WhenInjectedInto<FieldItemVisualProvider>();
         Container.Bind<FieldVisualizationParameters>().FromInstance(VisualizationParameters).WhenInjectedInto<FieldItemWorldPositionProvider>();
+
+        //BG spawner
+        Container.Bind<IFieldBGScaleProvider>().To<VerticalFieldBGScaleProvider>().WhenInjectedInto<DefaultFieldVisualization>();
+        Container.Bind<Sprite>().FromInstance(VisualizationParameters.DefaultFieldBG).WhenInjectedInto<FieldDataProvider>();
+        Container.Bind<Camera>().FromInstance(MainCamera);
     }
 
     //void InstallNullObjects()
