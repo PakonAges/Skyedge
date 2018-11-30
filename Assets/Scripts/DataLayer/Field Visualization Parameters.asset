@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb13c046008ccf4ab5acf424b713507, type: 3}
   m_Name: Field Visualization Parameters
   m_EditorClassIdentifier: 
-  ScreenMargin: 10
+  ScreenMargin: 0.1
   MaxItemSize: 100
-  DefaultFieldBG: {fileID: 21300000, guid: d7ed20e3648ef454e89351ffd0cc497a, type: 3}
+  DefaultFieldBG: {fileID: 21300000, guid: e239656ab9106d744a94af4756221ea4, type: 3}

@@ -2,6 +2,6 @@
 
 public interface IFieldItemSpawner
 {
-    void CreateItem(Sprite image, Vector3 position);
+    void CreateItem(Sprite image, Vector3 position, float scale);
 
 }

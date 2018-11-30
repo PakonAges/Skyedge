@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-public interface IFieldItemWorldPositionProvider
+public interface IFieldItemPositionProvider
 {
-    Vector3 WorldPosition(int elementX, int elementY);
-    float CalculateItemSize(int FieldItemsAmountX, int FieldItemsAmountY);
+    Vector3 GetPosition(int elementX, int elementY);
+    float CalculateItemSize(Camera camera, int FieldItemsAmountX, int FieldItemsAmountY);
 }

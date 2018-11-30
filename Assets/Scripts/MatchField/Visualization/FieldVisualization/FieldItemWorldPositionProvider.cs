@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class FieldItemWorldPositionProvider : IFieldItemWorldPositionProvider
+public class FieldItemVerticalScreenPositionProvider : IFieldItemPositionProvider
 {
     public FieldVisualizationParameters VisualParameters { get; private set; }
 
@@ -9,7 +9,7 @@ public class FieldItemWorldPositionProvider : IFieldItemWorldPositionProvider
     public Vector2 SpawningOffset { get; private set; }
     private float itemSize;
 
-    public FieldItemWorldPositionProvider(FieldVisualizationParameters visualizationParameters)
+    public FieldItemVerticalScreenPositionProvider(FieldVisualizationParameters visualizationParameters)
     {
         ScreenSizeX = Screen.width;
         ScreenSizeY = Screen.height;
@@ -17,33 +17,36 @@ public class FieldItemWorldPositionProvider : IFieldItemWorldPositionProvider
         Debug.LogFormat("Screen Size detected: X = {0}, Y = {1}", ScreenSizeX, ScreenSizeY);
     }
 
-    public Vector3 WorldPosition(int elementX, int elementY)
+    public Vector3 GetPosition(int elementX, int elementY)
     {
         var Position = new Vector3
         {
-            x = SpawningOffset.x + elementX * itemSize,
-            y = SpawningOffset.y + elementY * itemSize
+            //x = SpawningOffset.x + elementX * itemSize,
+            x = elementX * itemSize,
+
+            //y = SpawningOffset.y + elementY * itemSize,
+            y = elementY * itemSize,
+            z = 1
         };
 
         return Position;
     }
 
-    //Size in pixels! But What I really need is a screen Size! because... well nah. Max size is not valid for Retina display and so on. My Field should be limited by... percentage?
-    public float CalculateItemSize(int fieldTotalItemsX, int fieldTotalItemsY)
+
+    public float CalculateItemSize(Camera came, int fieldTotalItemsX, int fieldTotalItemsY)
     {
-        float PossibleFieldSizeX = ScreenSizeX - 2 * VisualParameters.ScreenMargin;
-        float PossibleFieldSizeY = ScreenSizeY - 2 * VisualParameters.ScreenMargin;
+        var worldScreenHeight = came.orthographicSize * 2.0;
+        var worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
 
-        float PossibleElementSizeX = PossibleFieldSizeX / fieldTotalItemsX;
-        float PossibleElementSizeY = PossibleFieldSizeY / fieldTotalItemsY;
+        //Calculate Field Bounds. Field always square! even 2x8 or 8x2
+        //Screen is always vertical. At least in this implementation
+        var FieldBound = (float)worldScreenWidth - VisualParameters.ScreenMargin * 2;
 
-        float minPossibleEmenetSize = (PossibleFieldSizeX > PossibleFieldSizeY) ? PossibleFieldSizeY : PossibleFieldSizeX;
-        float Result = (minPossibleEmenetSize > VisualParameters.MaxItemSize) ? VisualParameters.MaxItemSize : minPossibleEmenetSize;
+        //Find element size, based on bounds 
+        itemSize = (fieldTotalItemsX > fieldTotalItemsY) ? (FieldBound / fieldTotalItemsX) : (FieldBound / fieldTotalItemsX);
+        return itemSize;
 
-        SpawningOffset = CalculateOffset(Result, fieldTotalItemsX, fieldTotalItemsY);
-        itemSize = Result;
-
-        return Result;
+        //TODO : check for limits! 
     }
 
     Vector2 CalculateOffset(float itemSize, int fieldTotalItemsX, int fieldTotalItemsY)

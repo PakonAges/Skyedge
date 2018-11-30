@@ -20,11 +20,11 @@ public class MatchFieldInstaller : MonoInstaller
     }
     private void InstallVisualization()
     {
-        Container.Bind<IFieldItemWorldPositionProvider>().To<FieldItemWorldPositionProvider>().WhenInjectedInto<DefaultFieldVisualization>();
+        Container.Bind<IFieldItemPositionProvider>().To<FieldItemVerticalScreenPositionProvider>().WhenInjectedInto<DefaultFieldVisualization>();
         Container.Bind<IFieldItemVisualProvider>().To<FieldItemVisualProvider>().WhenInjectedInto<DefaultFieldVisualization>();
         Container.Bind<IFieldItemSpawner>().To<FieldItemSpawner>().FromComponentOn(FieldVisualizatonSetup).WhenInjectedInto<DefaultFieldVisualization>();
         Container.Bind<FieldItemCollection>().FromInstance(ItemCollection).WhenInjectedInto<FieldItemVisualProvider>();
-        Container.Bind<FieldVisualizationParameters>().FromInstance(VisualizationParameters).WhenInjectedInto<FieldItemWorldPositionProvider>();
+        Container.Bind<FieldVisualizationParameters>().FromInstance(VisualizationParameters).WhenInjectedInto<FieldItemVerticalScreenPositionProvider>();
 
         //BG spawner
         Container.Bind<IFieldBGScaleProvider>().To<VerticalFieldBGScaleProvider>().WhenInjectedInto<DefaultFieldVisualization>();
