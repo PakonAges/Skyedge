@@ -21,11 +21,11 @@ public class FieldItemVerticalScreenPositionProvider : IFieldItemPositionProvide
     {
         var Position = new Vector3
         {
-            //x = SpawningOffset.x + elementX * itemSize,
-            x = elementX * itemSize,
+            x = SpawningOffset.x + elementX * itemSize,
+            //x = elementX * itemSize,
 
-            //y = SpawningOffset.y + elementY * itemSize,
-            y = elementY * itemSize,
+            y = SpawningOffset.y + elementY * itemSize,
+            //y = elementY * itemSize,
             z = 1
         };
 
@@ -44,16 +44,21 @@ public class FieldItemVerticalScreenPositionProvider : IFieldItemPositionProvide
 
         //Find element size, based on bounds 
         itemSize = (fieldTotalItemsX > fieldTotalItemsY) ? (FieldBound / fieldTotalItemsX) : (FieldBound / fieldTotalItemsX);
+
+        //Clalculate offset
+        SpawningOffset = new Vector2(FieldBound * (-0.5f) + itemSize * 0.5f, FieldBound * (-0.5f) + itemSize * 0.5f);
+
         return itemSize;
 
         //TODO : check for limits! 
+        //Offest would be different
     }
 
-    Vector2 CalculateOffset(float itemSize, int fieldTotalItemsX, int fieldTotalItemsY)
-    {
-        Vector2 offset = new Vector2();
-        offset.x = (-0.5f) * itemSize * fieldTotalItemsX;
-        offset.y = (-0.5f) * itemSize * fieldTotalItemsY;
-        return offset;
-    }
+    //Vector2 CalculateOffset(float itemSize, int fieldTotalItemsX, int fieldTotalItemsY)
+    //{
+    //    Vector2 offset = new Vector2();
+    //    offset.x = (-0.5f) * itemSize * fieldTotalItemsX;
+    //    offset.y = (-0.5f) * itemSize * fieldTotalItemsY;
+    //    return offset;
+    //}
 }
