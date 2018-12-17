@@ -5,25 +5,34 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/Field/Items Collection")]
 public class FieldItemCollection : ScriptableObject
 {
-    public List<FieldItemPresentation> ItemCollection;
+    public GameObject EmptyGridCell;
+    public ChipPrefab[] ChipPrefabCollection;
+    public NormalChipVisual[] NormalChipVisual;
 
-    public Sprite GetItemImage(FieldItemType Type)
+    public Sprite GetItemImage(NormalChipType Type)
     {
-        for (int i = 0; i < ItemCollection.Count; i++)
+        for (int i = 0; i < NormalChipVisual.Length; i++)
         {
-            if (ItemCollection[i].Type == Type)
+            if (NormalChipVisual[i].Type == Type)
             {
-                return ItemCollection[i].Image;
+                return NormalChipVisual[i].Image;
             }
         }
 
-        return ItemCollection[0].Image;
+        return NormalChipVisual[0].Image;
     }
 }
 
 [System.Serializable] 
-public struct FieldItemPresentation
+public struct ChipPrefab
 {
-    public FieldItemType Type;
+    public ChipType Type;
+    public GameObject Prefab;
+}
+
+[System.Serializable]
+public struct NormalChipVisual
+{
+    public NormalChipType Type;
     public Sprite Image;
 }

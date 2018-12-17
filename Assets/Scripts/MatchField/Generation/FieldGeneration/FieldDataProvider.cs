@@ -2,7 +2,7 @@
 
 public class FieldDataProvider : IFieldDataProvider
 {
-    FieldData _defaultRules;
+    Field _defaultRules;
     Sprite _defaultFieldBG;
 
     public FieldDataProvider (Sprite defaultFieldBg)
@@ -20,10 +20,10 @@ public class FieldDataProvider : IFieldDataProvider
     //    _defaultRules = nullRules;
     //}
 
-    public FieldData ProvideData()
+    public Field ProvideData()
     {
         //Rules definition logic
-        var Data = new FieldData(8, 8, 5);
+        var Data = new Field(8, 8, 5);
         return Data;
 
         //if (rules != null)

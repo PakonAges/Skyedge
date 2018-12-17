@@ -2,6 +2,6 @@
 
 public interface IFieldDataProvider
 {
-    FieldData ProvideData();
+    Field ProvideData();
     Sprite ProvideBGData();
 }

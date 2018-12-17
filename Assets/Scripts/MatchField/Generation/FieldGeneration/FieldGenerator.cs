@@ -2,7 +2,7 @@
 
 public class FieldGenerator : IFieldGenerator
 {
-    public IField GenerateField(FieldData fieldData)
+    public IField GenerateField(Field fieldData)
     {
         var NewField = new BasicField(fieldData);
 
@@ -12,7 +12,7 @@ public class FieldGenerator : IFieldGenerator
             {
                 var elementIndex = Random.Range(0, fieldData.NumberOfElements);
 
-                fieldData.FieldMatrix[i, j] = elementIndex;
+                fieldData.FieldMatrix[i, j] = new Chip(j,i,(ChipType)elementIndex);
             }
         }
 

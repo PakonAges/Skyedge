@@ -1,5 +1,5 @@
 ﻿public interface IFieldItemTypeProvider
 {
-    FieldItemType GetType(FieldData fieldData, int cellX, int cellY);
+    ChipType GetType(Field fieldData, int cellX, int cellY);
 
 }

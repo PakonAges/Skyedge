@@ -26,7 +26,7 @@ public class DefaultFieldVisualization : IFieldVisualization
         _mainCamera = camera;
     }
 
-    public void ShowField(FieldData fieldData)
+    public void ShowField(Field fieldData)
     {
         float ItemSize = _itemPositioner.CalculateItemSize(_mainCamera, fieldData.Xsize, fieldData.Ysize);
 
@@ -35,7 +35,7 @@ public class DefaultFieldVisualization : IFieldVisualization
             for (int j = 0; j < fieldData.Xsize; j++)
             {
                 var pos = _itemPositioner.GetPosition(i, j);
-                var img = _fieldItemVisualProvider.GetItemSprite((FieldItemType)fieldData.FieldMatrix[i,j]);
+                var img = _fieldItemVisualProvider.GetItemSprite((NormalChipType)fieldData.FieldMatrix[i,j]);
                 _fieldItemSpawner.CreateItem(img, pos, ItemSize);
             }
         }
@@ -43,7 +43,7 @@ public class DefaultFieldVisualization : IFieldVisualization
         Debug.Log("Field Visualized from field visualization");
     }
 
-    public void ResetField(FieldData fieldData)
+    public void ResetField(Field fieldData)
     {
         //Way to reset? clear all!
         Debug.Log("Field Resetted from field visualization");

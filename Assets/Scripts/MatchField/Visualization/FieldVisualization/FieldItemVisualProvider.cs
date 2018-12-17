@@ -11,7 +11,7 @@ public class FieldItemVisualProvider : IFieldItemVisualProvider
         _fieldItemCollection = fieldItemCollection;
     }
 
-    public Sprite GetItemSprite(FieldItemType type)
+    public Sprite GetItemSprite(NormalChipType type)
     {
         return _fieldItemCollection.GetItemImage(type);
     }

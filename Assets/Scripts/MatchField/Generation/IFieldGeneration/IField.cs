@@ -1,5 +1,5 @@
 ﻿public interface IField
 {
-    FieldData FieldData { get; set; }
+    Field FieldData { get; set; }
     void Reset();
 }

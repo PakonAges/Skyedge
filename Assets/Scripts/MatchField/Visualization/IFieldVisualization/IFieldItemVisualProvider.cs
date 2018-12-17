@@ -2,6 +2,6 @@
 
 public interface IFieldItemVisualProvider
 {
-    Sprite GetItemSprite(FieldItemType fieldItemType);
+    Sprite GetItemSprite(NormalChipType fieldItemType);
 
 }

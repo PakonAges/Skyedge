@@ -1,5 +1,5 @@
 ﻿public interface IFieldGenerator {
 
-    IField GenerateField(FieldData fieldData);
+    IField GenerateField(Field fieldData);
 
 }
