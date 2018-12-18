@@ -39,6 +39,8 @@ public class DefaultFieldVisualization : IFieldVisualization
             {
                 var pos = _itemPositioner.GetPosition(x, y);
                 var prefab = _chipPrefabProvider.GetPrefab(fieldData.FieldMatrix[x, y].ChipType);
+                prefab.name = "Chip [" + x + ";" + y + "]";
+                //prefab.transform.parent = _fieldBackGround.transform;
                 _fieldItemSpawner.SpawnChip(prefab, pos, ItemSize);
             }
         }

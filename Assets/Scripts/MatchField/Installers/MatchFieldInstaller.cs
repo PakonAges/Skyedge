@@ -1,15 +1,20 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public class MatchFieldInstaller : MonoInstaller
 {
+    public Camera MainCamera;
+
+    [Header("Visualization refferences")]
     public GameObject FieldVisualizatonSetup;
+    public FieldVisualizationParameters VisualizationParameters;
+
+    [Header("Assets Collection")]
     public ChipTypesCollection ItemCollection;
     public NormalChipCollection NormalChipsCollection;
-    public FieldVisualizationParameters VisualizationParameters;
+
+    [Header("Test Configs")]
     public SOFieldGenerationRules DebugFieldRules;
-    public Camera MainCamera;
 
     public override void InstallBindings()
     {
