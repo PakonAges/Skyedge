@@ -1,41 +1,39 @@
-﻿using UnityEngine;
-
-/// <summary>
+﻿/// <summary>
 /// Passing commands to change Global Field State. Doesn't care about implementation details of modules
 /// </summary>
 public class DefaultFieldSceneController : IFieldSceneController
 {
     private readonly IFieldGenerator _fieldGenerator;
-    private readonly IFieldDataProvider _fieldDataProvider;
     private readonly IFieldVisualization _fieldVisualization;
 
-    public IField Field;
+    private readonly FieldGenerationRules _fieldGenerationRules;
+
+    public Field GameField;
 
     public DefaultFieldSceneController( IFieldGenerator fieldGenerator,
-                                        IFieldDataProvider fieldDataProvider,
+                                        IFieldGenerationRulesProvider fieldDataProvider,
                                         IFieldVisualization fieldVisualization)
     {
         _fieldGenerator = fieldGenerator;
-        _fieldDataProvider = fieldDataProvider;
         _fieldVisualization = fieldVisualization;
+        _fieldGenerationRules = fieldDataProvider.GetGenerationRules();
     }
 
     public void GenerateField()
     {
         ShowBackGround();
-
-        Field = _fieldGenerator.GenerateField(_fieldDataProvider.ProvideData());
-        _fieldVisualization.ShowField(Field.FieldData);
+        GameField = _fieldGenerator.GenerateField(_fieldGenerationRules);
+        _fieldVisualization.ShowField(GameField); // or _fieldGenerationRules?
     }
 
     public void ShowBackGround()
     {
-        _fieldVisualization.ShowBackGround(_fieldDataProvider.ProvideBGData());
+        _fieldVisualization.ShowBackGround(_fieldGenerationRules.BackgroundImage);
     }
 
     public void ResetField()
     {
-        Field.Reset();
-        _fieldVisualization.ResetField(Field.FieldData);
+        //Field.Reset();
+        //_fieldVisualization.ResetField(Field.FieldData);
     }
 }

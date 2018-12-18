@@ -1,13 +1,18 @@
 {
     "name": "FieldSceneController",
     "references": [
+        "DataLayer",
         "IFieldSceneController",
         "IFieldGeneration",
         "IFieldVisualization",
-        "DataLayer"
+        "IFieldGenerationRules"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": false
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
 }

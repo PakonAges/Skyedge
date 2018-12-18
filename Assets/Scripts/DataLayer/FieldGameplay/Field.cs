@@ -1,15 +1,13 @@
 ﻿public class Field
 {
-    public int Xsize { get; private set; }
-    public int Ysize { get; private set; }
-    public int NumberOfElements { get; private set; }
+    public int Xsize { get; }
+    public int Ysize { get; }
     public Chip[,] FieldMatrix;
 
-    public Field(int xSize, int ySize, int NumberOfElements)
+    public Field(int xSize, int ySize)
     {
         Xsize = xSize;
         Ysize = ySize;
-        this.NumberOfElements = NumberOfElements;
         FieldMatrix = new Chip[Xsize, Ysize];
     }
 }

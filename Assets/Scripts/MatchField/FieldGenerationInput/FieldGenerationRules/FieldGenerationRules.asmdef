@@ -1,7 +1,7 @@
 {
-    "name": "FieldGeneration",
+    "name": "FieldGenerationRules",
     "references": [
-        "IFieldGeneration",
+        "IFieldGenerationRules",
         "DataLayer"
     ],
     "optionalUnityReferences": [],

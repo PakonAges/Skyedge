@@ -3,6 +3,6 @@
 public interface IFieldVisualization
 {
     void ShowBackGround(Sprite image);
-    void ShowField(Field fieldData);
-    void ResetField(Field fieldData);
+    void ShowField(Field field);
+    void ResetField(Field field);
 }

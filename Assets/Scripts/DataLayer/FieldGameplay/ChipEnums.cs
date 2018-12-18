@@ -1,13 +1,13 @@
 ﻿public enum ChipType
 {
     NormalChip,
+    EmptyCell,
     Hero,
     Enemy
 }
 
 public enum NormalChipType
 {
-    NullItem = 0,
     Food,
     Crystal,
     Gold,

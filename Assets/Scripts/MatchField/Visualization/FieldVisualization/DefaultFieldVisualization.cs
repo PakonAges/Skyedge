@@ -5,21 +5,24 @@
 /// </summary>
 public class DefaultFieldVisualization : IFieldVisualization
 {
-    readonly IFieldItemPositionProvider _itemPositioner;
-    readonly IFieldItemVisualProvider _fieldItemVisualProvider;
-    readonly IFieldItemSpawner _fieldItemSpawner;
+    readonly IChipPositionProvider _itemPositioner;
+    readonly IChipPrefabProvider _chipPrefabProvider;
+    readonly IChipVisualProvider _fieldItemVisualProvider;
+    readonly IChipSpawner _fieldItemSpawner;
     readonly IFieldBGScaleProvider _fieldBGScaleProvider;
 
     private GameObject _fieldBackGround;
     readonly Camera _mainCamera;
 
-    public DefaultFieldVisualization(   IFieldItemPositionProvider fieldItemWorldPositionProvider,
-                                        IFieldItemVisualProvider fieldItemVisualProvider,
-                                        IFieldItemSpawner fieldItemSpawner,
+    public DefaultFieldVisualization(   IChipPositionProvider fieldItemWorldPositionProvider,
+                                        IChipPrefabProvider chipPrefabProvider,
+                                        IChipVisualProvider fieldItemVisualProvider,
+                                        IChipSpawner fieldItemSpawner,
                                         IFieldBGScaleProvider fieldBGScaleProvider,
                                         Camera camera)
     {
         _itemPositioner = fieldItemWorldPositionProvider;
+        _chipPrefabProvider = chipPrefabProvider;
         _fieldItemVisualProvider = fieldItemVisualProvider;
         _fieldItemSpawner = fieldItemSpawner;
         _fieldBGScaleProvider = fieldBGScaleProvider;
@@ -30,13 +33,13 @@ public class DefaultFieldVisualization : IFieldVisualization
     {
         float ItemSize = _itemPositioner.CalculateItemSize(_mainCamera, fieldData.Xsize, fieldData.Ysize);
 
-        for (int i = 0; i < fieldData.Ysize; i++)
+        for (int x = 0; x < fieldData.Xsize; x++)
         {
-            for (int j = 0; j < fieldData.Xsize; j++)
+            for (int y = 0; y < fieldData.Ysize; y++)
             {
-                var pos = _itemPositioner.GetPosition(i, j);
-                var img = _fieldItemVisualProvider.GetItemSprite((NormalChipType)fieldData.FieldMatrix[i,j]);
-                _fieldItemSpawner.CreateItem(img, pos, ItemSize);
+                var pos = _itemPositioner.GetPosition(x, y);
+                var prefab = _chipPrefabProvider.GetPrefab(fieldData.FieldMatrix[x, y].ChipType);
+                _fieldItemSpawner.SpawnChip(prefab, pos, ItemSize);
             }
         }
 

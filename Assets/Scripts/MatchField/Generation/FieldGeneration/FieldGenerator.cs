@@ -2,21 +2,19 @@
 
 public class FieldGenerator : IFieldGenerator
 {
-    public IField GenerateField(Field fieldData)
+    public Field GenerateField(FieldGenerationRules rules)
     {
-        var NewField = new BasicField(fieldData);
+        var NewField = new Field(rules.Xsize, rules.Ysize);
 
-        for (int i = 0; i < fieldData.Ysize; i++)
+        for (int x = 0; x < rules.Xsize; x++)
         {
-            for (int j = 0; j < fieldData.Xsize; j++)
+            for (int y = 0; y < rules.Ysize; y++)
             {
-                var elementIndex = Random.Range(0, fieldData.NumberOfElements);
-
-                fieldData.FieldMatrix[i, j] = new Chip(j,i,(ChipType)elementIndex);
+                NewField.FieldMatrix[x, y] = new Chip(x, y, rules.ChipTypes[0]); //Chip types apropriate? or  use empty grid?
             }
         }
 
-        Debug.LogFormat("Field [{0},{1}] with {2} elements Generated in Field Generator",fieldData.Xsize, fieldData.Ysize, fieldData.NumberOfElements);
+        //Debug.LogFormat("Field [{0},{1}] with {2} elements Generated in Field Generator", rules.Xsize, rules.Ysize, rules.ChipTypes.Count);
 
         return NewField;
     }

@@ -226,8 +226,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FieldVisualizatonSetup: {fileID: 1670375603}
   ItemCollection: {fileID: 11400000, guid: b057e7260d3c00a40acc6d45702f824f, type: 2}
+  NormalChipsCollection: {fileID: 11400000, guid: 195092ac773e0794589a9f3b5e5dda54,
+    type: 2}
   VisualizationParameters: {fileID: 11400000, guid: fd520e7e20c3c4b478cf2f2631ca8e9c,
     type: 2}
+  DebugFieldRules: {fileID: 11400000, guid: 3b09032836773344f9843e7a4f9265de, type: 2}
   MainCamera: {fileID: 519420031}
 --- !u!114 &1657495045
 MonoBehaviour:
@@ -292,8 +295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 849c0ab53c441c640a4e01d862f61e7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FieldItemGo: {fileID: 1501630801969474, guid: fc8cab4271a048444a3a2bb1f036a324,
-    type: 3}
 --- !u!224 &1670375605
 RectTransform:
   m_ObjectHideFlags: 0
