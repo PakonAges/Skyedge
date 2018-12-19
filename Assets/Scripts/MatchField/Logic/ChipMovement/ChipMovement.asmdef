@@ -1,9 +1,9 @@
 {
-    "name": "FieldVisualization",
+    "name": "ChipMovement",
     "references": [
+        "IChipMovement",
         "IFieldVisualization",
-        "DataLayer",
-        "IChipMovement"
+        "DataLayer"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

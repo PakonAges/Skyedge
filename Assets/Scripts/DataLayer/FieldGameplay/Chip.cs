@@ -1,41 +1,47 @@
-﻿public class Chip
+﻿using UnityEngine;
+
+public class Chip
 {
+    public Transform ChipTransform { get; set; }
+
     private int _x;
     public int X
     {
         get { return _x; }
-        set { if (IsMoveable) { _x = value; } }
+        set { if (_isMoveable) { _x = value; } }
     }
 
     private int _y;
     public int Y
     {
         get { return _y; }
-        set { if (IsMoveable) { _y = value; } }
+        set { if (_isMoveable) { _y = value; } }
     }
 
+    private bool _isMoveable;
     public bool IsMoveable
     {
-        get { return (_movementComponent != null) ? true : false; }
+        //get { return (_movementComponent != null) ? true : false; }
+        set { _isMoveable = value; }
     }
 
     public ChipType ChipType { get; }
-    ChipMovement _movementComponent;
-    NormalChipType _normalChip;
+    //NormalChipType _normalChip;
+
+    //IChipMovement _movementComponent;
 
     //Field refference?
-    //Is it MonoBehaviour?
 
     public Chip(int x, int y, ChipType chiptype)
     {
         X = x;
         Y = y;
         ChipType = chiptype;
-    }
 
-    public void MakeMoveable (ChipMovement moveableChip)
-    {
-        _movementComponent = moveableChip;
+        if (chiptype == ChipType.NormalChip)
+        {
+            //_movementComponent = new ChipMovement(ChipTransform);
+        }
     }
 
     public void Move (int newX, int newY)
@@ -45,6 +51,6 @@
         Y = newY;
 
         //Move on the Display
-        _movementComponent.Move(newX, newY);
+        //_movementComponent.Move(newX, newY);
     }
 }

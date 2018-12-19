@@ -12,6 +12,7 @@ public class DefaultFieldVisualization : IFieldVisualization
     readonly IChipVisualProvider _chipVisualProvider;
     readonly IChipSpawner _chipSpawner;
     readonly IFieldBGScaleProvider _fieldBGScaleProvider;
+    readonly IChipMovement _chipMovement;
     readonly FieldVisualizationParameters _visualizationParameters;
     readonly Camera _mainCamera;
 
@@ -23,6 +24,7 @@ public class DefaultFieldVisualization : IFieldVisualization
                                         IChipVisualProvider fieldItemVisualProvider,
                                         IChipSpawner fieldItemSpawner,
                                         IFieldBGScaleProvider fieldBGScaleProvider,
+                                        IChipMovement chipMovement,
                                         FieldVisualizationParameters fieldVisualizationParameters,
                                         Camera camera)
     {
@@ -32,6 +34,7 @@ public class DefaultFieldVisualization : IFieldVisualization
         _chipVisualProvider = fieldItemVisualProvider;
         _chipSpawner = fieldItemSpawner;
         _fieldBGScaleProvider = fieldBGScaleProvider;
+        _chipMovement = chipMovement;
         _visualizationParameters = fieldVisualizationParameters;
         _mainCamera = camera;
     }
@@ -46,9 +49,11 @@ public class DefaultFieldVisualization : IFieldVisualization
             {
                 var pos = _chipPositioner.GetPosition(x, y);
                 var prefab = _chipPrefabProvider.GetPrefab(fieldData.FieldMatrix[x, y].ChipType);
-                prefab.name = "Chip [" + x + ";" + y + "]";
-                //prefab.transform.parent = _fieldBackGround.transform;
-                _chipSpawner.SpawnChip(prefab, pos, _chipSize);
+                var ChipGO = _chipSpawner.SpawnChip(prefab, Vector3.zero, _chipSize);
+                fieldData.FieldMatrix[x, y].ChipTransform = ChipGO.transform;
+                ChipGO.name = "Chip [" + x + ";" + y + "]";
+
+                _chipMovement.Move(fieldData.FieldMatrix[x, y], pos);
             }
         }
 

@@ -1,9 +1,7 @@
 {
-    "name": "FieldVisualization",
+    "name": "IChipMovement",
     "references": [
-        "IFieldVisualization",
-        "DataLayer",
-        "IChipMovement"
+        "DataLayer"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

@@ -10,7 +10,7 @@ public class FieldGenerator : IFieldGenerator
         {
             for (int y = 0; y < rules.Ysize; y++)
             {
-                NewField.FieldMatrix[x, y] = new Chip(x, y, ChipType.EmptyCell); //Chip types apropriate? or  use empty grid?
+                NewField.FieldMatrix[x, y] = new Chip(x, y, ChipType.NormalChip);
             }
         }
 
