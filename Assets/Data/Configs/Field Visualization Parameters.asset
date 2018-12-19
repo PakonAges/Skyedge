@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb13c046008ccf4ab5acf424b713507, type: 3}
   m_Name: Field Visualization Parameters
   m_EditorClassIdentifier: 
-  ScreenMargin: 0.1
-  MaxItemSize: 100
+  Background: {fileID: 6043183499475138125, guid: 69dcafb854ca0824ba1bcabf6738c635,
+    type: 3}
+  GridCell: {fileID: 2309103353383928594, guid: f5c7dcc681f8be347bb0b2ca8457ca22,
+    type: 3}
   DefaultFieldBG: {fileID: 21300000, guid: e239656ab9106d744a94af4756221ea4, type: 3}
+  LightCellBg: {fileID: 21300000, guid: 2863f575f783f444c97be08598063922, type: 3}
+  DarkCellBg: {fileID: 21300000, guid: aad3c802aea623148a5577c73b8781bf, type: 3}
+  ScreenMargin: 0.1
+  MaxChipSizeInUnits: 0.5

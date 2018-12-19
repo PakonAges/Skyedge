@@ -23,12 +23,13 @@ public class DefaultFieldSceneController : IFieldSceneController
     {
         ShowBackGround();
         GameField = _fieldGenerator.GenerateField(_fieldGenerationRules);
-        _fieldVisualization.ShowField(GameField); // or _fieldGenerationRules?
+        //_fieldVisualization.ShowField(GameField); // or _fieldGenerationRules?
     }
 
     public void ShowBackGround()
     {
         _fieldVisualization.ShowBackGround(_fieldGenerationRules.BackgroundImage);
+        _fieldVisualization.ShowEmptyGrid(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
     }
 
     public void ResetField()

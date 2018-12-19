@@ -35,6 +35,7 @@ public class MatchFieldInstaller : MonoInstaller
         Container.Bind<IChipSpawner>().To<ChipSpawner>().FromComponentOn(FieldVisualizatonSetup).WhenInjectedInto<DefaultFieldVisualization>();
         Container.Bind<ChipTypesCollection>().FromInstance(ItemCollection).WhenInjectedInto<ChipPrefabProvider>();
         Container.Bind<FieldVisualizationParameters>().FromInstance(VisualizationParameters).WhenInjectedInto<ChipWorldPositionProvider>();
+        Container.Bind<FieldVisualizationParameters>().FromInstance(VisualizationParameters).WhenInjectedInto<DefaultFieldVisualization>();//Or use Singleton istead of WhenInjectedInto??
 
         //BG spawner
         Container.Bind<IFieldBGScaleProvider>().To<VerticalFieldBGScaleProvider>().WhenInjectedInto<DefaultFieldVisualization>();

@@ -2,29 +2,35 @@
 
 public class ChipWorldPositionProvider : IChipPositionProvider
 {
-    public FieldVisualizationParameters VisualParameters { get; private set; }
+    readonly FieldVisualizationParameters _fieldVisualizationParameters;
+    readonly int _screenSizeX;
+    readonly int _screenSizeY;
+    readonly float _worldScreenHeight;
+    readonly float _worldScreenWidth;
+    Vector2 _spawningOffset;
+    float _itemSize;
 
-    public int ScreenSizeX { get; private set; }
-    public int ScreenSizeY { get; private set; }
-    public Vector2 SpawningOffset { get; private set; }
-    private float itemSize;
-
-    public ChipWorldPositionProvider(FieldVisualizationParameters visualizationParameters)
+    public ChipWorldPositionProvider(   FieldVisualizationParameters visualizationParameters,
+                                        Camera camera)
     {
-        ScreenSizeX = Screen.width;
-        ScreenSizeY = Screen.height;
-        VisualParameters = visualizationParameters;
-        Debug.LogFormat("Screen Size detected: X = {0}, Y = {1}", ScreenSizeX, ScreenSizeY);
+        _screenSizeX = Screen.width;
+        _screenSizeY = Screen.height;
+        _fieldVisualizationParameters = visualizationParameters;
+        //Debug.LogFormat("Screen Size detected: X = {0}, Y = {1}", ScreenSizeX, ScreenSizeY);
+
+        _worldScreenHeight = camera.orthographicSize * 2.0f;
+        _worldScreenWidth = _worldScreenHeight / Screen.height * Screen.width;
+        //Debug.LogFormat("World Screen Size detected: width = {0}, Height = {1}", _worldScreenWidth, _worldScreenHeight);
     }
 
     public Vector3 GetPosition(int elementX, int elementY)
     {
         var Position = new Vector3
         {
-            x = SpawningOffset.x + elementX * itemSize,
+            x = _spawningOffset.x + elementX * _itemSize,
             //x = elementX * itemSize,
 
-            y = SpawningOffset.y + elementY * itemSize,
+            y = _spawningOffset.y - elementY * _itemSize,
             //y = elementY * itemSize,
             z = 1
         };
@@ -32,33 +38,37 @@ public class ChipWorldPositionProvider : IChipPositionProvider
         return Position;
     }
 
-
-    public float CalculateItemSize(Camera came, int fieldTotalItemsX, int fieldTotalItemsY)
+    /// <summary>
+    /// Assumes that 128 pixels = 1 Unit (image import settings)
+    /// </summary>
+    /// <param name="fieldTotalItemsX"></param>
+    /// <param name="fieldTotalItemsY"></param>
+    /// <returns></returns>
+    public float CalculateChipSize(int fieldTotalItemsX, int fieldTotalItemsY)
     {
-        var worldScreenHeight = came.orthographicSize * 2.0;
-        var worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
-
         //Calculate Field Bounds. Field always square! even 2x8 or 8x2
-        //Screen is always vertical. At least in this implementation
-        var FieldBound = (float)worldScreenWidth - VisualParameters.ScreenMargin * 2;
+        var FieldBound = ((_worldScreenWidth > _worldScreenHeight) ? _worldScreenHeight : _worldScreenWidth) - _fieldVisualizationParameters.ScreenMargin * 2;
 
         //Find element size, based on bounds 
-        itemSize = (fieldTotalItemsX > fieldTotalItemsY) ? (FieldBound / fieldTotalItemsX) : (FieldBound / fieldTotalItemsX);
+        _itemSize = (fieldTotalItemsX > fieldTotalItemsY) ? (FieldBound / fieldTotalItemsX) : (FieldBound / fieldTotalItemsX);
 
-        //Clalculate offset
-        SpawningOffset = new Vector2(FieldBound * (-0.5f) + itemSize * 0.5f, FieldBound * (-0.5f) + itemSize * 0.5f);
+        _itemSize = ChipSizeCheckForLimits();
+        FieldBound = FieldBoundCheckForLimits((fieldTotalItemsX > fieldTotalItemsY) ? fieldTotalItemsX : fieldTotalItemsY);
 
-        return itemSize;
+        //Clalculate offset, so that element [0:0] would be at top level corner
+        //TODO: Still wrong calculations when field isn't square
+        _spawningOffset = new Vector2(FieldBound * (-0.5f) + _itemSize * 0.5f, FieldBound * (0.5f) + _itemSize * 0.5f);
 
-        //TODO : check for limits! 
-        //Offest would be different
+        return _itemSize;
     }
 
-    //Vector2 CalculateOffset(float itemSize, int fieldTotalItemsX, int fieldTotalItemsY)
-    //{
-    //    Vector2 offset = new Vector2();
-    //    offset.x = (-0.5f) * itemSize * fieldTotalItemsX;
-    //    offset.y = (-0.5f) * itemSize * fieldTotalItemsY;
-    //    return offset;
-    //}
+    float ChipSizeCheckForLimits()
+    {
+        return (_itemSize > _fieldVisualizationParameters.MaxChipSizeInUnits) ? _fieldVisualizationParameters.MaxChipSizeInUnits : _itemSize;
+    }
+
+    float FieldBoundCheckForLimits(int largerFieldSize)
+    {
+        return (_itemSize > _fieldVisualizationParameters.MaxChipSizeInUnits) ? _fieldVisualizationParameters.MaxChipSizeInUnits* largerFieldSize : _itemSize * largerFieldSize;
+    }
 }

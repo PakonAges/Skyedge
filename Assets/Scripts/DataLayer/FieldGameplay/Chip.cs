@@ -21,6 +21,7 @@
 
     public ChipType ChipType { get; }
     ChipMovement _movementComponent;
+    NormalChipType _normalChip;
 
     //Field refference?
     //Is it MonoBehaviour?

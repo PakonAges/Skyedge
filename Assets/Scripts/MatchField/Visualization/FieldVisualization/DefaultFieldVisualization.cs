@@ -5,43 +5,46 @@
 /// </summary>
 public class DefaultFieldVisualization : IFieldVisualization
 {
-    readonly IChipPositionProvider _itemPositioner;
+    readonly IChipPositionProvider _chipPositioner;
     readonly IChipPrefabProvider _chipPrefabProvider;
-    readonly IChipVisualProvider _fieldItemVisualProvider;
-    readonly IChipSpawner _fieldItemSpawner;
+    readonly IChipVisualProvider _chipVisualProvider;
+    readonly IChipSpawner _chipSpawner;
     readonly IFieldBGScaleProvider _fieldBGScaleProvider;
-
-    private GameObject _fieldBackGround;
+    readonly FieldVisualizationParameters _visualizationParameters;
     readonly Camera _mainCamera;
+
+    GameObject _backGround;
 
     public DefaultFieldVisualization(   IChipPositionProvider fieldItemWorldPositionProvider,
                                         IChipPrefabProvider chipPrefabProvider,
                                         IChipVisualProvider fieldItemVisualProvider,
                                         IChipSpawner fieldItemSpawner,
                                         IFieldBGScaleProvider fieldBGScaleProvider,
+                                        FieldVisualizationParameters fieldVisualizationParameters,
                                         Camera camera)
     {
-        _itemPositioner = fieldItemWorldPositionProvider;
+        _chipPositioner = fieldItemWorldPositionProvider;
         _chipPrefabProvider = chipPrefabProvider;
-        _fieldItemVisualProvider = fieldItemVisualProvider;
-        _fieldItemSpawner = fieldItemSpawner;
+        _chipVisualProvider = fieldItemVisualProvider;
+        _chipSpawner = fieldItemSpawner;
         _fieldBGScaleProvider = fieldBGScaleProvider;
+        _visualizationParameters = fieldVisualizationParameters;
         _mainCamera = camera;
     }
 
     public void ShowField(Field fieldData)
     {
-        float ItemSize = _itemPositioner.CalculateItemSize(_mainCamera, fieldData.Xsize, fieldData.Ysize);
+        float _chipSize = _chipPositioner.CalculateChipSize(fieldData.Xsize, fieldData.Ysize);
 
         for (int x = 0; x < fieldData.Xsize; x++)
         {
             for (int y = 0; y < fieldData.Ysize; y++)
             {
-                var pos = _itemPositioner.GetPosition(x, y);
+                var pos = _chipPositioner.GetPosition(x, y);
                 var prefab = _chipPrefabProvider.GetPrefab(fieldData.FieldMatrix[x, y].ChipType);
                 prefab.name = "Chip [" + x + ";" + y + "]";
                 //prefab.transform.parent = _fieldBackGround.transform;
-                _fieldItemSpawner.SpawnChip(prefab, pos, ItemSize);
+                _chipSpawner.SpawnChip(prefab, pos, _chipSize);
             }
         }
 
@@ -56,13 +59,25 @@ public class DefaultFieldVisualization : IFieldVisualization
 
     public void ShowBackGround(Sprite image)
     {
-        _fieldBackGround = new GameObject("BackGround");
-        var sr = _fieldBackGround.AddComponent<SpriteRenderer>();
+        _backGround = _chipSpawner.SpawnChip(_visualizationParameters.Background, Vector3.zero, _fieldBGScaleProvider.CalculateBGScale(_mainCamera, image));
+        var sr = _backGround.GetComponentInChildren<SpriteRenderer>();
         sr.sprite = image;
-        sr.sortingLayerName = "BackGround";
+    }
 
-        float BgScale = _fieldBGScaleProvider.CalculateBGScale(_mainCamera, image);
+    public void ShowEmptyGrid(int Xsize, int Ysize)
+    {
+        float _chipSize = _chipPositioner.CalculateChipSize(Xsize, Ysize);
 
-        _fieldBackGround.transform.localScale = new Vector3(BgScale,BgScale,1);
+        for (int x = 0; x < Xsize; x++)
+        {
+            for (int y = 0; y < Ysize; y++)
+            {
+                var pos = _chipPositioner.GetPosition(x, y);
+                var cell = _chipSpawner.SpawnChip(_visualizationParameters.GridCell, pos, _chipSize);
+                cell.name = "Cell[" + x + ";" + y + "]";
+                cell.transform.parent = _backGround.transform;
+                //change sprite to make chessboard-like
+            }
+        }
     }
 }
