@@ -53,11 +53,9 @@ public class ChipWorldPositionProvider : IChipPositionProvider
         _itemSize = (fieldTotalItemsX > fieldTotalItemsY) ? (FieldBound / fieldTotalItemsX) : (FieldBound / fieldTotalItemsX);
 
         _itemSize = ChipSizeCheckForLimits();
-        FieldBound = FieldBoundCheckForLimits((fieldTotalItemsX > fieldTotalItemsY) ? fieldTotalItemsX : fieldTotalItemsY);
 
         //Clalculate offset, so that element [0:0] would be at top level corner
-        //TODO: Still wrong calculations when field isn't square
-        _spawningOffset = new Vector2(FieldBound * (-0.5f) + _itemSize * 0.5f, FieldBound * (0.5f) + _itemSize * 0.5f);
+        _spawningOffset = new Vector2(fieldTotalItemsX * _itemSize * (-0.5f) + _itemSize * 0.5f, fieldTotalItemsY * _itemSize * (0.5f) - _itemSize * 0.5f);
 
         return _itemSize;
     }
@@ -65,10 +63,5 @@ public class ChipWorldPositionProvider : IChipPositionProvider
     float ChipSizeCheckForLimits()
     {
         return (_itemSize > _fieldVisualizationParameters.MaxChipSizeInUnits) ? _fieldVisualizationParameters.MaxChipSizeInUnits : _itemSize;
-    }
-
-    float FieldBoundCheckForLimits(int largerFieldSize)
-    {
-        return (_itemSize > _fieldVisualizationParameters.MaxChipSizeInUnits) ? _fieldVisualizationParameters.MaxChipSizeInUnits* largerFieldSize : _itemSize * largerFieldSize;
     }
 }

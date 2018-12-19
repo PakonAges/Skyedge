@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 /// <summary>
 /// Visualizes Field based on it's Data
@@ -6,6 +7,7 @@
 public class DefaultFieldVisualization : IFieldVisualization
 {
     readonly IChipPositionProvider _chipPositioner;
+    readonly IChipSpriteChanger _chipSpriteChanger;
     readonly IChipPrefabProvider _chipPrefabProvider;
     readonly IChipVisualProvider _chipVisualProvider;
     readonly IChipSpawner _chipSpawner;
@@ -16,6 +18,7 @@ public class DefaultFieldVisualization : IFieldVisualization
     GameObject _backGround;
 
     public DefaultFieldVisualization(   IChipPositionProvider fieldItemWorldPositionProvider,
+                                        IChipSpriteChanger chipSpriteChanger,
                                         IChipPrefabProvider chipPrefabProvider,
                                         IChipVisualProvider fieldItemVisualProvider,
                                         IChipSpawner fieldItemSpawner,
@@ -24,6 +27,7 @@ public class DefaultFieldVisualization : IFieldVisualization
                                         Camera camera)
     {
         _chipPositioner = fieldItemWorldPositionProvider;
+        _chipSpriteChanger = chipSpriteChanger;
         _chipPrefabProvider = chipPrefabProvider;
         _chipVisualProvider = fieldItemVisualProvider;
         _chipSpawner = fieldItemSpawner;
@@ -76,8 +80,23 @@ public class DefaultFieldVisualization : IFieldVisualization
                 var cell = _chipSpawner.SpawnChip(_visualizationParameters.GridCell, pos, _chipSize);
                 cell.name = "Cell[" + x + ";" + y + "]";
                 cell.transform.parent = _backGround.transform;
+
                 //change sprite to make chessboard-like
+                if (IsOdd(x,y))
+                {
+                    _chipSpriteChanger.ChangeImage(cell, _visualizationParameters.DarkCellBg);
+                }
+                else
+                {
+                    _chipSpriteChanger.ChangeImage(cell, _visualizationParameters.LightCellBg);
+                }
+                
             }
         }
+    }
+
+    bool IsOdd(int x, int y)
+    {
+        return (x + y) % 2 != 0;
     }
 }

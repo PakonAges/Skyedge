@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f744d0c2478b34d880e5fb80a2bdab, type: 3}
   m_Name: TestGenerationInput
   m_EditorClassIdentifier: 
-  Xsize: 2
+  Xsize: 8
   Ysize: 8
   BackgroundImage: {fileID: 21300000, guid: e239656ab9106d744a94af4756221ea4, type: 3}
   Chips: 0100000000000000
