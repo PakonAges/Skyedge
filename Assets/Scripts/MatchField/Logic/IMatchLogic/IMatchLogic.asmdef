@@ -1,5 +1,5 @@
 {
-    "name": "IChipMovement",
+    "name": "IMatchLogic",
     "references": [
         "DataLayer"
     ],

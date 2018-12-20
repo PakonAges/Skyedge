@@ -1,7 +1,7 @@
 {
-    "name": "ChipMovement",
+    "name": "MatchLogic",
     "references": [
-        "IChipMovement",
+        "IMatchLogic",
         "IFieldVisualization",
         "DataLayer"
     ],

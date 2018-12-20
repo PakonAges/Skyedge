@@ -3,7 +3,7 @@
     "references": [
         "IFieldVisualization",
         "DataLayer",
-        "IChipMovement"
+        "IMatchLogic"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

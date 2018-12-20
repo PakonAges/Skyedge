@@ -28,17 +28,15 @@ public class MatchFieldInstaller : MonoInstaller
     }
     private void InstallVisualization()
     {
-        Container.Bind<IChipPositionProvider>().To<ChipWorldPositionProvider>().WhenInjectedInto<DefaultFieldVisualization>();
+        Container.Bind<IChipPositionProvider>().To<ChipWorldPositionProvider>().AsSingle();
         Container.Bind<IChipSpriteChanger>().To<ChipSpriteChanger>().WhenInjectedInto<DefaultFieldVisualization>();
         Container.Bind<IChipPrefabProvider>().To<ChipPrefabProvider>().WhenInjectedInto<DefaultFieldVisualization>();
         Container.Bind<IChipVisualProvider>().To<ChipVisualProvider>().WhenInjectedInto<DefaultFieldVisualization>();
         Container.Bind<NormalChipCollection>().FromInstance(NormalChipsCollection).WhenInjectedInto<ChipVisualProvider>();
         Container.Bind<IChipSpawner>().To<ChipSpawner>().FromComponentOn(FieldVisualizatonSetup).WhenInjectedInto<DefaultFieldVisualization>();
         Container.Bind<ChipTypesCollection>().FromInstance(ItemCollection).WhenInjectedInto<ChipPrefabProvider>();
-        Container.Bind<FieldVisualizationParameters>().FromInstance(VisualizationParameters).WhenInjectedInto<ChipWorldPositionProvider>();
-        Container.Bind<FieldVisualizationParameters>().FromInstance(VisualizationParameters).WhenInjectedInto<DefaultFieldVisualization>();//Or use Singleton istead of WhenInjectedInto??
+        Container.Bind<FieldVisualizationParameters>().FromInstance(VisualizationParameters).AsSingle();
         Container.Bind<IChipMovement>().To<ChipMovement>().WhenInjectedInto<DefaultFieldVisualization>();
-        Container.Bind<IChipPositionProvider>().To<ChipWorldPositionProvider>().WhenInjectedInto<ChipMovement>(); //or use singletopn
 
         //BG spawner
         Container.Bind<IFieldBGScaleProvider>().To<VerticalFieldBGScaleProvider>().WhenInjectedInto<DefaultFieldVisualization>();

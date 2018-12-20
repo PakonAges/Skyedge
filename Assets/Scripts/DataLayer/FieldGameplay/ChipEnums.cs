@@ -14,3 +14,11 @@ public enum NormalChipType
     Logs,
     Potion
 }
+
+public enum FieldFillDirection
+{
+    TopToBot,
+    BotToTop,
+    LeftToRight,
+    RightToLeft
+}

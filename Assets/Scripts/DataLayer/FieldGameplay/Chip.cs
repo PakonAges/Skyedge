@@ -8,22 +8,18 @@ public class Chip
     public int X
     {
         get { return _x; }
-        set { if (_isMoveable) { _x = value; } }
+        set { if (IsMoveable) { _x = value; } }
     }
 
     private int _y;
     public int Y
     {
         get { return _y; }
-        set { if (_isMoveable) { _y = value; } }
+        set { if (IsMoveable) { _y = value; } }
     }
-
-    private bool _isMoveable;
-    public bool IsMoveable
-    {
+    public bool IsMoveable {
         //get { return (_movementComponent != null) ? true : false; }
-        set { _isMoveable = value; }
-    }
+        get; set; }
 
     public ChipType ChipType { get; }
     //NormalChipType _normalChip;
