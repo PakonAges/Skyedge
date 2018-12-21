@@ -16,7 +16,9 @@ public class FieldBgSetup : IFieldBGSetup
     {
         if (_backGroundGO == null)
         {
-            //Create new BackGround
+            Debug.LogErrorFormat("Didn't receive BG prefab: ",_backGroundGO);
+            
+            //Should Spawn!
         }
 
         var sr = _backGroundGO.GetComponentInChildren<SpriteRenderer>();

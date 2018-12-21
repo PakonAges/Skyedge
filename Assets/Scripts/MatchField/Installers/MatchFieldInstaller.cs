@@ -31,6 +31,7 @@ public class MatchFieldInstaller : MonoInstaller
 
     void InstallControllers()
     {
+        Container.Bind<IInitializable>().To<DefaultFieldSceneController>().WhenInjectedInto<HotKeyInput>();
         Container.Bind<IFieldSceneController>().To<DefaultFieldSceneController>().WhenInjectedInto<HotKeyInput>();
     }
 
@@ -48,7 +49,8 @@ public class MatchFieldInstaller : MonoInstaller
     void InstallFieldVisualization()
     {
         Container.Bind<IFieldVisualization>().To<DefaultFieldVisualization>().AsSingle();
-        Container.Bind<IChipPositionProvider>().To<ChipWorldPositionProvider>().AsSingle();
+        Container.Bind<IChipPositionProvider>().To<ChipPositionProvider>().AsSingle();
+        Container.Bind<IChipSizeProvider>().To<ChipSizeProvider>().AsSingle();
         Container.Bind<IChipSpriteChanger>().To<ChipSpriteChanger>().WhenInjectedInto<DefaultFieldVisualization>();
         Container.Bind<IChipPrefabProvider>().To<ChipPrefabProvider>().WhenInjectedInto<DefaultFieldVisualization>();
         Container.Bind<IChipVisualProvider>().To<ChipVisualProvider>().WhenInjectedInto<DefaultFieldVisualization>();

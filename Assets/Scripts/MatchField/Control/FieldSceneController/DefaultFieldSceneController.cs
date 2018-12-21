@@ -1,7 +1,8 @@
-﻿/// <summary>
+﻿using Zenject;
+/// <summary>
 /// Passing commands to change Global Field State. Doesn't care about implementation details of modules
 /// </summary>
-public class DefaultFieldSceneController : IFieldSceneController
+public class DefaultFieldSceneController : IFieldSceneController, IInitializable
 {
     readonly IFieldBGSetup _fieldBGSetup;
     readonly IFieldGenerator _fieldGenerator;
@@ -22,10 +23,14 @@ public class DefaultFieldSceneController : IFieldSceneController
         _fieldGenerationRules = fieldDataProvider.GetGenerationRules();
     }
 
+    public void Initialize()
+    {
+        _fieldVisualization.SetupVisualization(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
+    }
+
     public void GenerateField()
     {
         ShowBackGround();
-
         GameField = _fieldGenerator.GenerateField(_fieldGenerationRules);
         //_fieldVisualization.ShowField(GameField); // or _fieldGenerationRules?
     }

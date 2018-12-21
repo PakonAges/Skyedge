@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Visualizes Field based on it's Data
@@ -13,8 +12,7 @@ public class DefaultFieldVisualization : IFieldVisualization
     readonly IChipMovement _chipMovement;
     readonly FieldVisualizationParameters _visualizationParameters;
 
-    public DefaultFieldVisualization(   
-                                        IChipPositionProvider fieldItemWorldPositionProvider,
+    public DefaultFieldVisualization(   IChipPositionProvider fieldItemWorldPositionProvider,
                                         IChipSpriteChanger chipSpriteChanger,
                                         IChipVisualProvider fieldItemVisualProvider,
                                         IChipSpawner fieldItemSpawner,
@@ -29,20 +27,23 @@ public class DefaultFieldVisualization : IFieldVisualization
         _visualizationParameters = fieldVisualizationParameters;
     }
 
+    public void SetupVisualization(int FieldSizeX, int FieldSizeY)
+    {
+        _chipPositioner.SetupChipParameters(FieldSizeX, FieldSizeY);
+    }
+
     public void ShowField(Field fieldData)
     {
-        float _chipSize = _chipPositioner.CalculateChipSize(fieldData.Xsize, fieldData.Ysize);
-
         for (int x = 0; x < fieldData.Xsize; x++)
         {
             for (int y = 0; y < fieldData.Ysize; y++)
             {
-                var prefab = _chipPrefabProvider.GetPrefab(fieldData.FieldMatrix[x, y].ChipType);
-                var ChipGO = _chipSpawner.SpawnChip(prefab, Vector3.zero, _chipSize);
-                fieldData.FieldMatrix[x, y].ChipTransform = ChipGO.transform;
-                ChipGO.name = "Chip [" + x + ";" + y + "]";
+                //var prefab = _chipPrefabProvider.GetPrefab(fieldData.FieldMatrix[x, y].ChipType);
+                //var ChipGO = _chipSpawner.SpawnChip(prefab, Vector3.zero, ChipSize);
+                //fieldData.FieldMatrix[x, y].ChipTransform = ChipGO.transform;
+                //ChipGO.name = "Chip [" + x + ";" + y + "]";
 
-                _chipMovement.Move(fieldData.FieldMatrix[x, y], x, y);
+                //_chipMovement.Move(fieldData.FieldMatrix[x, y], x, y);
             }
         }
 
@@ -57,26 +58,24 @@ public class DefaultFieldVisualization : IFieldVisualization
 
     public void ShowEmptyGrid(int Xsize, int Ysize)
     {
-        float _chipSize = _chipPositioner.CalculateChipSize(Xsize, Ysize);
-
         for (int x = 0; x < Xsize; x++)
         {
             for (int y = 0; y < Ysize; y++)
             {
-                var pos = _chipPositioner.GetPosition(x, y);
-                var cell = _chipSpawner.SpawnChip(_visualizationParameters.GridCell, pos, _chipSize);
-                cell.name = "Cell[" + x + ";" + y + "]";
-                cell.transform.parent = _backGround.transform;
+                //var pos = _chipPositioner.GetPosition(x, y);
+                //var cell = _chipSpawner.SpawnChip(_visualizationParameters.GridCell, pos, _chipSize);
+                //cell.name = "Cell[" + x + ";" + y + "]";
+                //cell.transform.parent = _backGround.transform;
 
-                //change sprite to make chessboard-like
-                if (IsOdd(x,y))
-                {
-                    _chipSpriteChanger.ChangeImage(cell, _visualizationParameters.DarkCellBg);
-                }
-                else
-                {
-                    _chipSpriteChanger.ChangeImage(cell, _visualizationParameters.LightCellBg);
-                }
+                ////change sprite to make chessboard-like
+                //if (IsOdd(x,y))
+                //{
+                //    _chipSpriteChanger.ChangeImage(cell, _visualizationParameters.DarkCellBg);
+                //}
+                //else
+                //{
+                //    _chipSpriteChanger.ChangeImage(cell, _visualizationParameters.LightCellBg);
+                //}
                 
             }
         }
