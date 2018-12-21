@@ -5,31 +5,37 @@
 /// </summary>
 public class DefaultFieldVisualization : IFieldVisualization
 {
+    readonly IFieldGridGenerator _fieldGridGenerator;
     readonly IChipPositionProvider _chipPositioner;
     readonly IChipSpriteChanger _chipSpriteChanger;
     readonly IChipVisualProvider _chipVisualProvider;
     readonly IChipSpawner _chipSpawner;
     readonly IChipMovement _chipMovement;
-    readonly FieldVisualizationParameters _visualizationParameters;
 
-    public DefaultFieldVisualization(   IChipPositionProvider fieldItemWorldPositionProvider,
+    public DefaultFieldVisualization(   IFieldGridGenerator fieldGridGenerator,
+                                        IChipPositionProvider fieldItemWorldPositionProvider,
                                         IChipSpriteChanger chipSpriteChanger,
                                         IChipVisualProvider fieldItemVisualProvider,
                                         IChipSpawner fieldItemSpawner,
-                                        IChipMovement chipMovement,
-                                        FieldVisualizationParameters fieldVisualizationParameters)
+                                        IChipMovement chipMovement)
     {
+        _fieldGridGenerator = fieldGridGenerator;
         _chipPositioner = fieldItemWorldPositionProvider;
         _chipSpriteChanger = chipSpriteChanger;
         _chipVisualProvider = fieldItemVisualProvider;
         _chipSpawner = fieldItemSpawner;
         _chipMovement = chipMovement;
-        _visualizationParameters = fieldVisualizationParameters;
+
     }
 
     public void SetupVisualization(int FieldSizeX, int FieldSizeY)
     {
         _chipPositioner.SetupChipParameters(FieldSizeX, FieldSizeY);
+    }
+
+    public void ShowEmptyGrid(int FieldSizeX, int FieldSizeY)
+    {
+        _fieldGridGenerator.ShowEmptyGrid(FieldSizeX, FieldSizeY);
     }
 
     public void ShowField(Field fieldData)
@@ -54,35 +60,5 @@ public class DefaultFieldVisualization : IFieldVisualization
     {
         //Way to reset? clear all!
         Debug.Log("Field Resetted from field visualization");
-    }
-
-    public void ShowEmptyGrid(int Xsize, int Ysize)
-    {
-        for (int x = 0; x < Xsize; x++)
-        {
-            for (int y = 0; y < Ysize; y++)
-            {
-                //var pos = _chipPositioner.GetPosition(x, y);
-                //var cell = _chipSpawner.SpawnChip(_visualizationParameters.GridCell, pos, _chipSize);
-                //cell.name = "Cell[" + x + ";" + y + "]";
-                //cell.transform.parent = _backGround.transform;
-
-                ////change sprite to make chessboard-like
-                //if (IsOdd(x,y))
-                //{
-                //    _chipSpriteChanger.ChangeImage(cell, _visualizationParameters.DarkCellBg);
-                //}
-                //else
-                //{
-                //    _chipSpriteChanger.ChangeImage(cell, _visualizationParameters.LightCellBg);
-                //}
-                
-            }
-        }
-    }
-
-    bool IsOdd(int x, int y)
-    {
-        return (x + y) % 2 != 0;
     }
 }

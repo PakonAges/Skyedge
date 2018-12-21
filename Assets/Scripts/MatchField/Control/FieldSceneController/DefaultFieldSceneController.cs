@@ -7,7 +7,6 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     readonly IFieldBGSetup _fieldBGSetup;
     readonly IFieldGenerator _fieldGenerator;
     readonly IFieldVisualization _fieldVisualization;
-
     readonly FieldGenerationRules _fieldGenerationRules;
 
     public Field GameField;
