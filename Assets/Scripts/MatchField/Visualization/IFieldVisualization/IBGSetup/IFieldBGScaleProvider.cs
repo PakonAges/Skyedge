@@ -2,5 +2,5 @@
 
 public interface IFieldBGScaleProvider
 {
-    float CalculateBGScale(Camera cam, Sprite image);
+    float CalculateBGScale(Sprite image);
 }

@@ -8,35 +8,25 @@ public class DefaultFieldVisualization : IFieldVisualization
 {
     readonly IChipPositionProvider _chipPositioner;
     readonly IChipSpriteChanger _chipSpriteChanger;
-    readonly IChipPrefabProvider _chipPrefabProvider;
     readonly IChipVisualProvider _chipVisualProvider;
     readonly IChipSpawner _chipSpawner;
-    readonly IFieldBGScaleProvider _fieldBGScaleProvider;
     readonly IChipMovement _chipMovement;
     readonly FieldVisualizationParameters _visualizationParameters;
-    readonly Camera _mainCamera;
 
-    GameObject _backGround;
-
-    public DefaultFieldVisualization(   IChipPositionProvider fieldItemWorldPositionProvider,
+    public DefaultFieldVisualization(   
+                                        IChipPositionProvider fieldItemWorldPositionProvider,
                                         IChipSpriteChanger chipSpriteChanger,
-                                        IChipPrefabProvider chipPrefabProvider,
                                         IChipVisualProvider fieldItemVisualProvider,
                                         IChipSpawner fieldItemSpawner,
-                                        IFieldBGScaleProvider fieldBGScaleProvider,
                                         IChipMovement chipMovement,
-                                        FieldVisualizationParameters fieldVisualizationParameters,
-                                        Camera camera)
+                                        FieldVisualizationParameters fieldVisualizationParameters)
     {
         _chipPositioner = fieldItemWorldPositionProvider;
         _chipSpriteChanger = chipSpriteChanger;
-        _chipPrefabProvider = chipPrefabProvider;
         _chipVisualProvider = fieldItemVisualProvider;
         _chipSpawner = fieldItemSpawner;
-        _fieldBGScaleProvider = fieldBGScaleProvider;
         _chipMovement = chipMovement;
         _visualizationParameters = fieldVisualizationParameters;
-        _mainCamera = camera;
     }
 
     public void ShowField(Field fieldData)
@@ -63,13 +53,6 @@ public class DefaultFieldVisualization : IFieldVisualization
     {
         //Way to reset? clear all!
         Debug.Log("Field Resetted from field visualization");
-    }
-
-    public void ShowBackGround(Sprite image)
-    {
-        _backGround = _chipSpawner.SpawnChip(_visualizationParameters.Background, Vector3.zero, _fieldBGScaleProvider.CalculateBGScale(_mainCamera, image));
-        var sr = _backGround.GetComponentInChildren<SpriteRenderer>();
-        sr.sprite = image;
     }
 
     public void ShowEmptyGrid(int Xsize, int Ysize)

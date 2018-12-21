@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Zenject;
 
 public class Chip
 {
@@ -49,4 +50,6 @@ public class Chip
         //Move on the Display
         //_movementComponent.Move(newX, newY);
     }
+
+    //public class Factory : PlaceholderFactory<Chip> { }
 }

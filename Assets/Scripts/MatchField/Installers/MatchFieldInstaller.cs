@@ -6,6 +6,7 @@ public class MatchFieldInstaller : MonoInstaller
     public Camera MainCamera;
 
     [Header("Visualization refferences")]
+    public GameObject BackGroundGO;
     public GameObject FieldVisualizatonSetup;
     public FieldVisualizationParameters VisualizationParameters;
 
@@ -18,16 +19,35 @@ public class MatchFieldInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        Container.Bind<Camera>().FromInstance(MainCamera);
+
+        InstallControllers();
+        InstallFieldGeneration();
+        InstalBackGroundSetup();
+        InstallFieldVisualization();
+    }
+
+
+
+    void InstallControllers()
+    {
         Container.Bind<IFieldSceneController>().To<DefaultFieldSceneController>().WhenInjectedInto<HotKeyInput>();
+    }
+
+
+
+    void InstallFieldGeneration()
+    {
         Container.Bind<IFieldGenerator>().To<FieldGenerator>().AsSingle();
         Container.Bind<IFieldGenerationRulesProvider>().To<SOGenerationRulesProvider>().AsSingle(); //Debug only
         Container.Bind<SOFieldGenerationRules>().FromInstance(DebugFieldRules).WhenInjectedInto<SOGenerationRulesProvider>();
-        Container.Bind<IFieldVisualization>().To<DefaultFieldVisualization>().AsSingle();
-
-        InstallVisualization();
     }
-    private void InstallVisualization()
+
+
+
+    void InstallFieldVisualization()
     {
+        Container.Bind<IFieldVisualization>().To<DefaultFieldVisualization>().AsSingle();
         Container.Bind<IChipPositionProvider>().To<ChipWorldPositionProvider>().AsSingle();
         Container.Bind<IChipSpriteChanger>().To<ChipSpriteChanger>().WhenInjectedInto<DefaultFieldVisualization>();
         Container.Bind<IChipPrefabProvider>().To<ChipPrefabProvider>().WhenInjectedInto<DefaultFieldVisualization>();
@@ -38,10 +58,17 @@ public class MatchFieldInstaller : MonoInstaller
         Container.Bind<FieldVisualizationParameters>().FromInstance(VisualizationParameters).AsSingle();
         Container.Bind<IChipMovement>().To<ChipMovement>().WhenInjectedInto<DefaultFieldVisualization>();
 
-        //BG spawner
-        Container.Bind<IFieldBGScaleProvider>().To<VerticalFieldBGScaleProvider>().WhenInjectedInto<DefaultFieldVisualization>();
-        //Container.Bind<Sprite>().FromInstance(VisualizationParameters.DefaultFieldBG).WhenInjectedInto<FieldDataProvider>();
-        Container.Bind<Camera>().FromInstance(MainCamera);
+        //ChipSpawner
+        //Container.BindFactory<Chip, Chip.Factory>();
+    }
+
+
+
+    void InstalBackGroundSetup()
+    {
+        Container.Bind<IFieldBGSetup>().To<FieldBgSetup>().AsSingle();
+        Container.Bind<IFieldBGScaleProvider>().To<BgScaleProvider>().AsSingle();
+        Container.Bind<GameObject>().FromInstance(BackGroundGO).WhenInjectedInto<FieldBgSetup>();
     }
 
     //void InstallNullObjects()
