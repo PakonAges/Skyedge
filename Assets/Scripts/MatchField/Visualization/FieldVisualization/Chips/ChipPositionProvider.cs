@@ -4,6 +4,7 @@ public class ChipPositionProvider : IChipPositionProvider
 {
     readonly IChipSizeProvider _chipSizeProvider;
 
+    //TODO: Add some default ot try/catch to props. cos can be zeros
     public float ChipSize { get; set; }
     public Vector2 SpawnOffset { get; set; }
     public int FieldSizeX { get; set; }

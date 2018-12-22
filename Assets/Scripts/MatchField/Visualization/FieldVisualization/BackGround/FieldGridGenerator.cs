@@ -35,10 +35,10 @@ public class FieldGridGenerator : IFieldGridGenerator
             {
                 var newCell = _gridCellFactory.Create();
                 newCell.name = "Cell[" + x + ";" + y + "]";
-                SceneManager.MoveGameObjectToScene(newCell.gameObject, _gridScene);
                 newCell.Scale = _chipPositionProvider.ChipSize;
                 newCell.Position = _chipPositionProvider.GetPosition(x, y);
                 newCell.Image = GetChestLikeSprite(x, y);
+                SceneManager.MoveGameObjectToScene(newCell.gameObject, _gridScene);
             }
         }
     }

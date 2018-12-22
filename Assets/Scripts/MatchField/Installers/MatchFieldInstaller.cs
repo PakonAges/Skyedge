@@ -32,8 +32,7 @@ public class MatchFieldInstaller : MonoInstaller
 
     void InstallControllers()
     {
-        Container.Bind<IInitializable>().To<DefaultFieldSceneController>().WhenInjectedInto<HotKeyInput>();
-        Container.Bind<IFieldSceneController>().To<DefaultFieldSceneController>().WhenInjectedInto<HotKeyInput>();
+        Container.BindInterfacesAndSelfTo<DefaultFieldSceneController>().AsSingle();
     }
 
 
