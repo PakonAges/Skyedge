@@ -301,6 +301,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 519420031}
   BackGroundGO: {fileID: 1239737485}
+  GridCell: {fileID: 2309103353383928594, guid: f5c7dcc681f8be347bb0b2ca8457ca22,
+    type: 3}
   FieldVisualizatonSetup: {fileID: 1670375603}
   VisualizationParameters: {fileID: 11400000, guid: fd520e7e20c3c4b478cf2f2631ca8e9c,
     type: 2}
@@ -320,7 +322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
+  _scriptableObjectInstallers:
+  - {fileID: 11400000, guid: 7c21876fc09a49940b4c914ea626df7a, type: 2}
   _monoInstallers:
   - {fileID: 1657495044}
   _installerPrefabs: []

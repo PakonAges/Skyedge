@@ -3,7 +3,8 @@
     "references": [
         "IFieldVisualization",
         "DataLayer",
-        "IMatchLogic"
+        "IMatchLogic",
+        "Zenject"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

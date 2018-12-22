@@ -7,6 +7,7 @@ public class MatchFieldInstaller : MonoInstaller
 
     [Header("Visualization refferences")]
     public GameObject BackGroundGO;
+    public GameObject GridCell;
     public GameObject FieldVisualizatonSetup;
     public FieldVisualizationParameters VisualizationParameters;
 
@@ -71,6 +72,9 @@ public class MatchFieldInstaller : MonoInstaller
         Container.Bind<IFieldBGSetup>().To<FieldBgSetup>().AsSingle();
         Container.Bind<IFieldBGScaleProvider>().To<BgScaleProvider>().AsSingle();
         Container.Bind<GameObject>().FromInstance(BackGroundGO).WhenInjectedInto<FieldBgSetup>();
+
+        Container.Bind<IFieldGridGenerator>().To<FieldGridGenerator>().AsSingle();
+        Container.BindFactory<GridCell, GridCell.Factory>().FromComponentInNewPrefab(GridCell);
     }
 
     //void InstallNullObjects()

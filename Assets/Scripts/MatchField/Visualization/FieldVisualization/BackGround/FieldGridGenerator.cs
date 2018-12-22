@@ -1,13 +1,30 @@
-﻿public class FieldGridGenerator : IFieldGridGenerator
+﻿using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class FieldGridGenerator : IFieldGridGenerator
 {
     readonly FieldVisualizationParameters _visualizationParameters;
-    readonly IChipSpawner _chipSpawner;
+    readonly GridCell.Factory _gridCellFactory;
+    readonly IChipPositionProvider _chipPositionProvider;
+
+    Scene _gridScene;
+
+    [Serializable]
+    public class Settings
+    {
+        //public GameObject AsteroidPrefab;
+    }
 
     public FieldGridGenerator(  FieldVisualizationParameters fieldVisualizationParameters,
-                                IChipSpawner chipSpawner)
+                                GridCell.Factory cellFactory,
+                                IChipPositionProvider chipPositionProvider)
     {
         _visualizationParameters = fieldVisualizationParameters;
-        _chipSpawner = chipSpawner;
+        _gridCellFactory = cellFactory;
+        _chipPositionProvider = chipPositionProvider;
+
+        _gridScene = SceneManager.CreateScene("Grid");
     }
 
     public void ShowEmptyGrid(int Xsize, int Ysize)
@@ -16,23 +33,25 @@
         {
             for (int y = 0; y < Ysize; y++)
             {
-                _chipSpawner.SpawnChip();
-                var pos = _chipPositionProvider.GetPosition(x, y);
-                var cell = _chipSpawner.SpawnChip(_visualizationParameters.GridCell, pos, _chipSize);
-                cell.name = "Cell[" + x + ";" + y + "]";
-                cell.transform.parent = _backGround.transform;
-
-                //change sprite to make chessboard-like
-                if (IsOdd(x, y))
-                {
-                    _chipSpriteChanger.ChangeImage(cell, _visualizationParameters.DarkCellBg);
-                }
-                else
-                {
-                    _chipSpriteChanger.ChangeImage(cell, _visualizationParameters.LightCellBg);
-                }
-
+                var newCell = _gridCellFactory.Create();
+                newCell.name = "Cell[" + x + ";" + y + "]";
+                SceneManager.MoveGameObjectToScene(newCell.gameObject, _gridScene);
+                newCell.Scale = _chipPositionProvider.ChipSize;
+                newCell.Position = _chipPositionProvider.GetPosition(x, y);
+                newCell.Image = GetChestLikeSprite(x, y);
             }
+        }
+    }
+
+    private Sprite GetChestLikeSprite(int x, int y)
+    {
+        if (IsOdd(x, y))
+        {
+            return _visualizationParameters.DarkCellBg;
+        }
+        else
+        {
+           return _visualizationParameters.LightCellBg;
         }
     }
 
