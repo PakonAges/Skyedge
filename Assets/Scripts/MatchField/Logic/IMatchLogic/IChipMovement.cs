@@ -1,4 +1,4 @@
 ﻿public interface IChipMovement
 {
-    void Move(int newX, int newY);
+    void Move(Chip chip, int newX, int newY);
 }

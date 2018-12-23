@@ -1,19 +1,16 @@
 ﻿public class ChipMovement : IChipMovement
 {
-    readonly Chip _chip;
     readonly IChipPositionProvider _chipPositionProvider;
 
-    public ChipMovement (   Chip chip,
-                            IChipPositionProvider chipPositionProvider)
+    public ChipMovement (   IChipPositionProvider chipPositionProvider)
     {
-        _chip = chip;
         _chipPositionProvider = chipPositionProvider;
     }
 
-    public void Move(int newX, int newY)
+    public void Move(Chip chip, int newX, int newY)
     {
-        _chip.X = newX;
-        _chip.Y = newY;
-        _chip.Position = _chipPositionProvider.GetPosition(newX, newY);
+        chip.X = newX;
+        chip.Y = newY;
+        chip.Position = _chipPositionProvider.GetPosition(newX, newY);
     }
 }

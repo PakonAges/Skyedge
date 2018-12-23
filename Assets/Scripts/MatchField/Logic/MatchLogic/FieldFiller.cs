@@ -33,7 +33,7 @@
 
                         if (prevChip.ChipType == ChipType.EmptyCell)
                         {
-                            _chipMovement.Move(chip, x, y + 1);
+                            //_chipMovement.Move(chip, x, y + 1);
                             GameField.FieldMatrix[x, y + 1] = chip;
                             //_chipSpawner.SpawnChip(ChipType.EmptyCell, x, y);
                             movedChip = true;

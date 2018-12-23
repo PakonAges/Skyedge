@@ -3,9 +3,10 @@
     "references": [
         "DataLayer",
         "IFieldSceneController",
-        "IFieldGeneration",
         "IFieldVisualization",
-        "IFieldGenerationRules"
+        "IFieldGenerationRules",
+        "IMatchLogic",
+        "FieldEntities"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

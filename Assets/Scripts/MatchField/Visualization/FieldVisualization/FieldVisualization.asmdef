@@ -4,7 +4,8 @@
         "IFieldVisualization",
         "DataLayer",
         "IMatchLogic",
-        "Zenject"
+        "Zenject",
+        "FieldEntities"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

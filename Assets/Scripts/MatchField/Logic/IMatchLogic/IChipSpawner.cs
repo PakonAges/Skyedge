@@ -2,7 +2,6 @@
 
 public interface IChipSpawner
 {
-    //GameObject SpawnChip(ChipType Chip, int Xpos, int Ypos);
     Chip SpawnChip(ChipType Chip, int Xpos, int Ypos);
     void SetupChip(Sprite Image, float Scale);
 }

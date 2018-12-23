@@ -1,7 +1,8 @@
 {
     "name": "IMatchLogic",
     "references": [
-        "DataLayer"
+        "DataLayer",
+        "FieldEntities"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

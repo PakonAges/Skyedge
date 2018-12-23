@@ -1,11 +1,8 @@
 {
-    "name": "MatchLogic",
+    "name": "FieldEntities",
     "references": [
-        "IMatchLogic",
-        "IFieldVisualization",
         "DataLayer",
-        "Zenject",
-        "FieldEntities"
+        "Zenject"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
