@@ -1,4 +1,4 @@
-﻿public class Field
+﻿public class Field : IField
 {
     public int Xsize { get; }
     public int Ysize { get; }

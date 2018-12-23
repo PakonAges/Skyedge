@@ -1,7 +1,8 @@
 {
     "name": "IFieldVisualization",
     "references": [
-        "DataLayer"
+        "DataLayer",
+        "FieldEntities"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

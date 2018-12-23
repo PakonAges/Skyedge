@@ -1,7 +1,12 @@
-﻿using UnityEngine;
-
-public class FieldGenerator : IFieldGenerator
+﻿public class FieldGenerator : IFieldGenerator
 {
+    readonly IChipSpawner _chipSpawner;
+    
+    public FieldGenerator (IChipSpawner chipSpawner)
+    {
+        _chipSpawner = chipSpawner;
+    }
+
     public Field GenerateField(FieldGenerationRules rules)
     {
         var NewField = new Field(rules.Xsize, rules.Ysize);
@@ -10,7 +15,7 @@ public class FieldGenerator : IFieldGenerator
         {
             for (int y = 0; y < rules.Ysize; y++)
             {
-                NewField.FieldMatrix[x, y] = new Chip(x, y, ChipType.NormalChip);
+                NewField.FieldMatrix[x, y] = _chipSpawner.SpawnChip(ChipType.NormalChip, x, y); //pass reference to MyField?
             }
         }
 

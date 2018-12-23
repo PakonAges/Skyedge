@@ -44,11 +44,11 @@ public class DefaultFieldVisualization : IFieldVisualization
         {
             for (int y = 0; y < fieldData.Ysize; y++)
             {
+                //_chipSpawner.SpawnChip(fieldData.FieldMatrix[x, y].ChipType, x, y);
+
                 //var prefab = _chipPrefabProvider.GetPrefab(fieldData.FieldMatrix[x, y].ChipType);
                 //var ChipGO = _chipSpawner.SpawnChip(prefab, Vector3.zero, ChipSize);
                 //fieldData.FieldMatrix[x, y].ChipTransform = ChipGO.transform;
-                //ChipGO.name = "Chip [" + x + ";" + y + "]";
-
                 //_chipMovement.Move(fieldData.FieldMatrix[x, y], x, y);
             }
         }

@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class Chip
+public class Chip : MonoBehaviour, IChip
 {
-    public Transform ChipTransform { get; set; }
+    public Vector3 Position { set { transform.position = value; } } //Shpuld change in Move method, not directly
+    public float Scale { set { GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(value, value, 1); } }
+    public ChipType ChipType { get; set; }
+    public Field MyField { get; set; }
+    public IChipMovement ChipMovemet { get; set; }
 
     private int _x;
     public int X
@@ -18,27 +22,10 @@ public class Chip
         get { return _y; }
         set { if (IsMoveable) { _y = value; } }
     }
+
     public bool IsMoveable {
         //get { return (_movementComponent != null) ? true : false; }
-        get; set; }
-
-    public ChipType ChipType { get; }
-    //NormalChipType _normalChip;
-
-    //IChipMovement _movementComponent;
-
-    //Field refference?
-
-    public Chip(int x, int y, ChipType chiptype)
-    {
-        X = x;
-        Y = y;
-        ChipType = chiptype;
-
-        if (chiptype == ChipType.NormalChip)
-        {
-            //_movementComponent = new ChipMovement(ChipTransform);
-        }
+        get; set;
     }
 
     public void Move (int newX, int newY)
@@ -51,5 +38,5 @@ public class Chip
         //_movementComponent.Move(newX, newY);
     }
 
-    //public class Factory : PlaceholderFactory<Chip> { }
+    public class Factory : PlaceholderFactory<Chip> { }
 }

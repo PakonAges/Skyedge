@@ -1,25 +1,19 @@
-﻿using UnityEngine;
-
-public class ChipMovement : IChipMovement
+﻿public class ChipMovement : IChipMovement
 {
-    //private Transform _chipTransform;
-    private IChipPositionProvider _chipPositionProvider;
+    readonly Chip _chip;
+    readonly IChipPositionProvider _chipPositionProvider;
 
-    public ChipMovement (   //Transform chipTransform,
-                            IChipPositionProvider chipPositionProvider
-                            )
+    public ChipMovement (   Chip chip,
+                            IChipPositionProvider chipPositionProvider)
     {
-        //_chipTransform = chipTransform;
+        _chip = chip;
         _chipPositionProvider = chipPositionProvider;
     }
 
-    //public void Move(Chip Chip, Vector3 Position)
-    //{
-    //    Chip.ChipTransform.localPosition = Position;
-    //}
-
-    public void Move(Chip Chip, int newX, int newY)
+    public void Move(int newX, int newY)
     {
-        Chip.ChipTransform.localPosition = _chipPositionProvider.GetPosition(newX, newY);
+        _chip.X = newX;
+        _chip.Y = newY;
+        _chip.Position = _chipPositionProvider.GetPosition(newX, newY);
     }
 }
