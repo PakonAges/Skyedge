@@ -7,6 +7,9 @@ public class Chip : MonoBehaviour
     public float Scale { set { GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(value, value, 1); } }
     public ChipType ChipType { get; set; }
     public Field MyField { get; set; }
+    public bool IsMoveable { get; set; }
+    public bool IsColored { get; set; }
+    public NormalChipType NormalChipType { get; set; }
 
     private int _x;
     public int X
@@ -22,7 +25,6 @@ public class Chip : MonoBehaviour
         set { if (IsMoveable) { _y = value; } }
     }
 
-    public bool IsMoveable { get; set; }
 
     public class Factory : PlaceholderFactory<Chip> { }
 }

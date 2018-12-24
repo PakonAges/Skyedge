@@ -51,12 +51,13 @@ public class MatchFieldInstaller : MonoInstaller
         Container.Bind<IFieldVisualization>().To<DefaultFieldVisualization>().AsSingle();
         Container.Bind<IChipPositionProvider>().To<ChipPositionProvider>().AsSingle();
         Container.Bind<IChipSizeProvider>().To<ChipSizeProvider>().AsSingle();
-        Container.Bind<IChipSpriteChanger>().To<ChipSpriteChanger>().AsSingle();
         Container.Bind<IChipPrefabProvider>().To<ChipPrefabProvider>().AsSingle();
         Container.Bind<IChipVisualProvider>().To<ChipVisualProvider>().AsSingle();
         Container.Bind<NormalChipCollection>().FromInstance(NormalChipsCollection).AsSingle();
         Container.Bind<ChipTypesCollection>().FromInstance(ItemCollection).AsSingle();
         Container.Bind<FieldVisualizationParameters>().FromInstance(VisualizationParameters).AsSingle();
+
+        Container.Bind<INormalChipPainter>().To<NormalChipPainter>().AsSingle();
         Container.Bind<IChipMovement>().To<ChipMovement>().AsSingle();
 
         //ChipSpawner

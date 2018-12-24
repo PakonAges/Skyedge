@@ -12,7 +12,8 @@ public enum NormalChipType
     Crystal,
     Gold,
     Logs,
-    Potion
+    Potion,
+    Total
 }
 
 public enum FieldFillDirection
