@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public class NormalChipPainter : INormalChipPainter
+public class ChipPainter : IChipPainter
 {
     readonly IChipVisualProvider _chipVisualProvider;
 
-    public NormalChipPainter(IChipVisualProvider chipVisualProvider)
+    public ChipPainter(IChipVisualProvider chipVisualProvider)
     {
         _chipVisualProvider = chipVisualProvider;
     }
@@ -14,6 +14,12 @@ public class NormalChipPainter : INormalChipPainter
         var sr = chip.GetComponentInChildren<SpriteRenderer>();
         sr.sprite = _chipVisualProvider.GetChipSprite(newType);
         chip.NormalChipType = newType;
+    }
+
+    public void PaintEmptyChip(Chip chip)
+    {
+        var sr = chip.GetComponentInChildren<SpriteRenderer>();
+        sr.enabled = false;
     }
 
     public void PaintRandomType(Chip chip)

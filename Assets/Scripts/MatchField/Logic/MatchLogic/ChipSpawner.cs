@@ -1,18 +1,16 @@
-﻿using UnityEngine;
-
-public class ChipSpawner : IChipSpawner
+﻿public class ChipSpawner : IChipSpawner
 {
     readonly Chip.Factory _chipFactory;
     readonly IChipPrefabProvider _chipPrefabProvider;
     readonly IChipPositionProvider _chipPositioner;
     readonly IChipMovement _chipMovement;
-    readonly INormalChipPainter _normalChipPainter;
-    
+    readonly IChipPainter _normalChipPainter;
+
     public ChipSpawner( Chip.Factory chipFactory,
                         IChipPrefabProvider chipPrefabProvider,
                         IChipPositionProvider chipPositionProvider,
                         IChipMovement chipMovement,
-                        INormalChipPainter normalChipPainter)
+                        IChipPainter normalChipPainter)
     {
         _chipFactory = chipFactory;
         _chipPrefabProvider = chipPrefabProvider;
@@ -24,22 +22,26 @@ public class ChipSpawner : IChipSpawner
     public Chip SpawnChip(ChipType Chip, int Xpos, int Ypos)
     {
         var newChip = _chipFactory.Create(/*Chip*/);
+        newChip.ChipType = Chip;
         newChip.name = "Chip [" + Xpos + ";" + Ypos + "]";
         newChip.Scale = _chipPositioner.ChipSize;
-        newChip.ChipType = Chip;
+        newChip.Position = _chipPositioner.GetPosition(Xpos, Ypos);
+
+        if (Chip == ChipType.EmptyCell)
+        {
+            newChip.IsMoveable = false;
+            _normalChipPainter.PaintEmptyChip(newChip);
+            return newChip;
+        }
 
         if (Chip == ChipType.NormalChip)
         {
             newChip.IsMoveable = true;
-            _chipMovement.Move(newChip, Xpos, Ypos);
+            //_chipMovement.Move(newChip, Xpos, Ypos);
             _normalChipPainter.PaintRandomType(newChip);
+            return newChip;
         }
 
         return newChip;
-    }
-
-    public void SetupChip(Sprite Image, float Scale)
-    {
-        //?
     }
 }
