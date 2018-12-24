@@ -1,5 +1,5 @@
 ﻿public interface IFieldFiller
 {
     bool FillStep();
-    void FullFill();
+    void FullFill(Field field);
 }

@@ -30,6 +30,7 @@
         if (Chip == ChipType.EmptyCell)
         {
             newChip.IsMoveable = false;
+            newChip.IsColored = false;
             _normalChipPainter.PaintEmptyChip(newChip);
             return newChip;
         }
@@ -37,6 +38,7 @@
         if (Chip == ChipType.NormalChip)
         {
             newChip.IsMoveable = true;
+            newChip.IsColored = true;
             //_chipMovement.Move(newChip, Xpos, Ypos);
             _normalChipPainter.PaintRandomType(newChip);
             return newChip;

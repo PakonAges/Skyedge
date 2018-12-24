@@ -16,6 +16,8 @@
     public bool FillStep()
     {
         bool movedChip = false;
+        //deBug
+        FillDirection = FieldFillDirection.TopToBot;
 
         //Point to refactor sometime
         switch (FillDirection)
@@ -29,20 +31,31 @@
 
                     if (chip.IsMoveable)
                     {
-                        Chip prevChip = GameField.FieldMatrix[x, y + 1];
+                        Chip chipBelow = GameField.FieldMatrix[x, y + 1];
 
-                        if (prevChip.ChipType == ChipType.EmptyCell)
+                        if (chipBelow.ChipType == ChipType.EmptyCell)
                         {
-                            //_chipMovement.Move(chip, x, y + 1);
+                            _chipMovement.Move(chip, x, y + 1);
                             GameField.FieldMatrix[x, y + 1] = chip;
-                            //_chipSpawner.SpawnChip(ChipType.EmptyCell, x, y);
+                            GameField.FieldMatrix[x, y] = _chipSpawner.SpawnChip(ChipType.EmptyCell, x, y);
                             movedChip = true;
                         }
                     }
                 }
             }
 
-            
+            //Check Top Row
+            for (int x = 0; x < GameField.Xsize; x++)
+            {
+                Chip chipBelow = GameField.FieldMatrix[x, 0];
+
+                if (chipBelow.ChipType == ChipType.EmptyCell)
+                {
+                    var newChip = _chipSpawner.SpawnChip(ChipType.NormalChip, x, 0);
+                    GameField.FieldMatrix[x, 0] = newChip;
+                    movedChip = true;
+                }
+            }
 
             break;
 
@@ -62,8 +75,10 @@
         return movedChip;
     }
 
-    public void FullFill()
+    public void FullFill(Field field)
     {
+        GameField = field;
+
         while (FillStep())
         {
             //fill untill all field filled

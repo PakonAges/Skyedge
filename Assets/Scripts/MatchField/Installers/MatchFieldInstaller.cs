@@ -26,6 +26,7 @@ public class MatchFieldInstaller : MonoInstaller
         InstallFieldGeneration();
         InstalBackGroundSetup();
         InstallFieldVisualization();
+        InstallFIeldLogic();
     }
 
 
@@ -77,6 +78,13 @@ public class MatchFieldInstaller : MonoInstaller
         //Grid Generation
         Container.Bind<IFieldGridGenerator>().To<FieldGridGenerator>().AsSingle();
         Container.BindFactory<GridCell, GridCell.Factory>().FromComponentInNewPrefab(GridCell);
+    }
+
+
+
+    void InstallFIeldLogic()
+    {
+        Container.Bind<IFieldFiller>().To<FieldFiller>().AsSingle();
     }
 
     //void InstallNullObjects()

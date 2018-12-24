@@ -6,6 +6,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
 {
     readonly IFieldBGSetup _fieldBGSetup;
     readonly IFieldGenerator _fieldGenerator;
+    readonly IFieldFiller _fieldFiller;
     readonly IFieldVisualization _fieldVisualization;
     readonly FieldGenerationRules _fieldGenerationRules;
 
@@ -13,11 +14,13 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
 
     public DefaultFieldSceneController( IFieldBGSetup fieldBGSetup,
                                         IFieldGenerator fieldGenerator,
+                                        IFieldFiller fieldFiller,
                                         IFieldGenerationRulesProvider fieldDataProvider,
                                         IFieldVisualization fieldVisualization)
     {
         _fieldBGSetup = fieldBGSetup;
         _fieldGenerator = fieldGenerator;
+        _fieldFiller = fieldFiller;
         _fieldVisualization = fieldVisualization;
         _fieldGenerationRules = fieldDataProvider.GetGenerationRules();
     }
@@ -31,6 +34,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     {
         ShowBackGround();
         GameField = _fieldGenerator.GenerateField(_fieldGenerationRules);
+        _fieldFiller.FullFill(GameField);
         //_fieldVisualization.ShowField(GameField); // or _fieldGenerationRules?
     }
 
