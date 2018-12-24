@@ -13,7 +13,7 @@ public class ChipMovement : IChipMovement
     {
         chip.X = newX;
         chip.Y = newY;
-        //chip.Position = _chipPositionProvider.GetPosition(newX, newY);
-        chip.gameObject.transform.DOMove(_chipPositionProvider.GetPosition(newX, newY),1);
+        chip.Position = _chipPositionProvider.GetPosition(newX, newY);
+        //chip.gameObject.transform.DOMove(_chipPositionProvider.GetPosition(newX, newY),1);
     }
 }

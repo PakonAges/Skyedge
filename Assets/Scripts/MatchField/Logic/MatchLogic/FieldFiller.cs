@@ -1,4 +1,5 @@
-﻿public class FieldFiller : IFieldFiller
+﻿
+public class FieldFiller : IFieldFiller
 {
     public Field GameField { get; set; }
     public FieldFillDirection FillDirection { get; set; }
@@ -13,7 +14,7 @@
         _chipSpawner = chipSpawner;
     }
 
-    public bool FillStep()
+    bool FillStep()
     {
         bool movedChip = false;
         //deBug
@@ -71,7 +72,6 @@
             default:
             break;
         }
-
         return movedChip;
     }
 
@@ -81,6 +81,7 @@
 
         while (FillStep())
         {
+
             //fill untill all field filled
         }
     }
