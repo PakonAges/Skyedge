@@ -1,4 +1,6 @@
-﻿public class ChipMovement : IChipMovement
+﻿using DG.Tweening;
+
+public class ChipMovement : IChipMovement
 {
     readonly IChipPositionProvider _chipPositionProvider;
 
@@ -11,6 +13,7 @@
     {
         chip.X = newX;
         chip.Y = newY;
-        chip.Position = _chipPositionProvider.GetPosition(newX, newY);
+        //chip.Position = _chipPositionProvider.GetPosition(newX, newY);
+        chip.gameObject.transform.DOMove(_chipPositionProvider.GetPosition(newX, newY),1);
     }
 }
