@@ -1,4 +1,6 @@
-﻿public interface IChipMovement
+﻿using System.Threading.Tasks;
+
+public interface IChipMovement
 {
-    void Move(Chip chip, int newX, int newY);
+    Task Move(Chip chip, int newX, int newY);
 }
