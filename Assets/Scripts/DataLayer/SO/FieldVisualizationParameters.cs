@@ -15,4 +15,7 @@ public class FieldVisualizationParameters : ScriptableObject
     [Header("Size setup")]
     public float ScreenMargin = 0.1f;
     public float MaxChipSizeInUnits = 1;
+
+    [Header("Movement setup")]
+    public float MovementDuration = 0.5f;
 }

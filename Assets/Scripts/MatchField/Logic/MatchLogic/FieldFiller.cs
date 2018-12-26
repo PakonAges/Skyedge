@@ -1,4 +1,5 @@
-﻿
+﻿using System.Threading.Tasks;
+
 public class FieldFiller : IFieldFiller
 {
     public Field GameField { get; set; }
@@ -14,7 +15,19 @@ public class FieldFiller : IFieldFiller
         _chipSpawner = chipSpawner;
     }
 
-    bool FillStep()
+    public async void FullFill(Field field)
+    {
+        GameField = field;
+        bool needFeelStep = await FillStep();
+
+        while (needFeelStep)
+        {
+            needFeelStep = await FillStep();
+            //fill untill all field filled
+        }
+    }
+
+    async Task<bool> FillStep()
     {
         bool movedChip = false;
         //deBug
@@ -36,7 +49,7 @@ public class FieldFiller : IFieldFiller
 
                         if (chipBelow.ChipType == ChipType.EmptyCell)
                         {
-                            _chipMovement.Move(chip, x, y + 1);
+                            var movemet = await _chipMovement.Move(chip, x, y + 1);
                             GameField.FieldMatrix[x, y + 1] = chip;
                             GameField.FieldMatrix[x, y] = _chipSpawner.SpawnChip(ChipType.EmptyCell, x, y);
                             movedChip = true;
@@ -73,16 +86,5 @@ public class FieldFiller : IFieldFiller
             break;
         }
         return movedChip;
-    }
-
-    public void FullFill(Field field)
-    {
-        GameField = field;
-
-        while (FillStep())
-        {
-
-            //fill untill all field filled
-        }
     }
 }

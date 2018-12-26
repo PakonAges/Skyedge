@@ -15,7 +15,7 @@
         {
             for (int y = 0; y < rules.Ysize; y++)
             {
-                NewField.FieldMatrix[x, y] = _chipSpawner.SpawnChip(ChipType.EmptyCell, x, y); //pass reference to MyField?
+                NewField.FieldMatrix[x, y] = _chipSpawner.SpawnChip(ChipType.NormalChip, x, y);
             }
         }
 
@@ -23,7 +23,4 @@
 
         return NewField;
     }
-
-    //Create Chip at the place
-    //If this is a Normal Piece - add component Moveable? Or is it easier to make it monobehavior?
 }

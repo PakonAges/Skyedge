@@ -2,5 +2,5 @@
 
 public interface IChipMovement
 {
-    Task Move(Chip chip, int newX, int newY);
+    Task<bool> Move(Chip chip, int newX, int newY);
 }
