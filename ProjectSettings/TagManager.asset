@@ -50,3 +50,6 @@ TagManager:
   - name: Chips
     uniqueID: 703029439
     locked: 0
+  - name: SelectedChip
+    uniqueID: 967145285
+    locked: 0

@@ -2,7 +2,8 @@
     "name": "Input",
     "references": [
         "IFieldSceneController",
-        "IInput"
+        "IInput",
+        "Fingers"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
