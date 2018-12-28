@@ -18,7 +18,8 @@ public class TouchInput : MonoBehaviour, ITouchInput
     {
         _camera = cam;
         _selectedChipVisualizationPrefab = fieldVisualizationParameters.SelectedChip;
-        CreateTapGesture();
+        InitTapGesture();
+        InitSelectionView();
     }
 
     void TapGestureCallback(GestureRecognizer gesture)
@@ -40,35 +41,55 @@ public class TouchInput : MonoBehaviour, ITouchInput
         }
     }
 
-    void CreateTapGesture()
+    void InitTapGesture()
     {
         _tapGesture = new TapGestureRecognizer();
         _tapGesture.StateUpdated += TapGestureCallback;
         FingersScript.Instance.AddGesture(_tapGesture);
     }
 
+    void InitSelectionView()
+    {
+        _selectionVisual = Instantiate(_selectedChipVisualizationPrefab) as GameObject;
+        _selectionVisual.name = "Selection";
+        _selectionVisual.SetActive(false);
+        _alreadyHasSelection = false;
+    }
+
     void SelectObject(GameObject selectedGo)
     {
-        _selectedObject = selectedGo;
-
-        if (!_alreadyHasSelection)
+        if (_selectedObject == selectedGo)
         {
-            _selectionVisual = CreateSelectionView(selectedGo.transform.position);
-            _alreadyHasSelection = true;
+            HideSelection();
         }
         else
         {
-            MoveSelection(selectedGo.transform.position);
+            _selectedObject = selectedGo;
+
+            if (!_alreadyHasSelection)
+            {
+                ShowSelectionAt(selectedGo.transform.position);
+                _alreadyHasSelection = true;
+            }
+            else
+            {
+                MoveSelection(selectedGo.transform.position);
+            }
         }
     }
 
 
-    GameObject CreateSelectionView(Vector3 position)
+    void ShowSelectionAt(Vector3 position)
     {
-        GameObject o = Instantiate(_selectedChipVisualizationPrefab) as GameObject;
-        o.name = "Selection";
-        o.transform.position = position;
-        return o;
+        _selectionVisual.SetActive(true);
+        _selectionVisual.transform.position = position;
+    }
+
+    void HideSelection()
+    {
+        _selectionVisual.SetActive(false);
+        _selectedObject = null;
+        _alreadyHasSelection = false;
     }
 
     void MoveSelection(Vector3 newPosition)
