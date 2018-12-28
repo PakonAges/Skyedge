@@ -12,8 +12,8 @@ public class Chip : MonoBehaviour
         }
     }
     public ChipType ChipType { get; set; }
-    public Field MyField { get; set; }
-    public bool IsMoveable { get; set; }
+    //public Field MyField { get; set; }
+    public bool IsMovable { get; set; }
     public bool IsColored { get; set; }
     public NormalChipType NormalChipType { get; set; }
 
@@ -21,14 +21,20 @@ public class Chip : MonoBehaviour
     public int X
     {
         get { return _x; }
-        set { if (IsMoveable) { _x = value; } }
+        set { if (IsMovable) { _x = value; } }
     }
 
     private int _y;
     public int Y
     {
         get { return _y; }
-        set { if (IsMoveable) { _y = value; } }
+        set { if (IsMovable) { _y = value; } }
+    }
+
+    public void InitChip(int Xpos, int Ypos) //SHould move all inittialization here
+    {
+        _x = Xpos;
+        _y = Ypos;
     }
 
     public class Factory : PlaceholderFactory<Chip> { }

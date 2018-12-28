@@ -43,7 +43,7 @@ public class FieldFiller : IFieldFiller
                 {
                     Chip chip = GameField.FieldMatrix[x, y];
 
-                    if (chip.IsMoveable)
+                    if (chip.IsMovable)
                     {
                         Chip chipBelow = GameField.FieldMatrix[x, y + 1];
 

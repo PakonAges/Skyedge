@@ -5,7 +5,8 @@
         "IInput",
         "Fingers",
         "DataLayer",
-        "FieldEntities"
+        "FieldEntities",
+        "IMatchLogic"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

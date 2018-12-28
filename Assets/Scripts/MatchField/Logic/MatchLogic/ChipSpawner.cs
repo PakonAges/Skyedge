@@ -26,10 +26,11 @@
         newChip.name = "Chip [" + Xpos + ";" + Ypos + "]";
         newChip.Scale = _chipPositioner.ChipSize;
         newChip.Position = _chipPositioner.GetPosition(Xpos, Ypos);
+        newChip.InitChip(Xpos, Ypos);
 
         if (Chip == ChipType.EmptyCell)
         {
-            newChip.IsMoveable = false;
+            newChip.IsMovable = false;
             newChip.IsColored = false;
             _normalChipPainter.PaintEmptyChip(newChip);
             return newChip;
@@ -37,7 +38,7 @@
 
         if (Chip == ChipType.NormalChip)
         {
-            newChip.IsMoveable = true;
+            newChip.IsMovable = true;
             newChip.IsColored = true;
             //_chipMovement.Move(newChip, Xpos, Ypos);
             _normalChipPainter.PaintRandomType(newChip);
