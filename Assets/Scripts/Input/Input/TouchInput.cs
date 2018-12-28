@@ -4,57 +4,82 @@ using Zenject;
 
 public class TouchInput : MonoBehaviour, ITouchInput
 {
-    //public Chip SelectedChip;
-    public GameObject test;
+    GameObject _selectedObject = null;
+    bool _alreadyHasSelection = false;
+    GameObject _selectionVisual;
 
-    private TapGestureRecognizer tapGesture;
-
+    GameObject _selectedChipVisualizationPrefab;
+    TapGestureRecognizer _tapGesture;
     Camera _camera;
 
     [Inject]
-    public void Construct(Camera cam)
+    public void Construct(  Camera cam,
+                            FieldVisualizationParameters fieldVisualizationParameters)
     {
         _camera = cam;
+        _selectedChipVisualizationPrefab = fieldVisualizationParameters.SelectedChip;
         CreateTapGesture();
     }
 
-    private void TapGestureCallback(GestureRecognizer gesture)
+    void TapGestureCallback(GestureRecognizer gesture)
     {
         if (gesture.State == GestureRecognizerState.Ended)
         {
-            Debug.LogFormat("Tapped at {0}, {1}", gesture.FocusX, gesture.FocusY);
-            CreateAsteroid(gesture.FocusX, gesture.FocusY);
+            Vector3 pos = new Vector3(gesture.FocusX, gesture.FocusY, 0.0f);
+            pos = _camera.ScreenToWorldPoint(pos);
+            RaycastHit2D hit = Physics2D.Raycast(pos, Vector3.zero);
+            if (hit.transform != null)
+            {
+                SelectObject(hit.transform.gameObject);
+                //Debug.LogFormat("Clicked on: {0}", hit.transform);
+            }
+            else
+            {
+                _tapGesture.Reset();
+            }
         }
     }
 
-    private void CreateTapGesture()
+    void CreateTapGesture()
     {
-        tapGesture = new TapGestureRecognizer();
-        tapGesture.StateUpdated += TapGestureCallback;
-        FingersScript.Instance.AddGesture(tapGesture);
+        _tapGesture = new TapGestureRecognizer();
+        _tapGesture.StateUpdated += TapGestureCallback;
+        FingersScript.Instance.AddGesture(_tapGesture);
     }
 
-    private GameObject CreateAsteroid(float screenX, float screenY)
+    void SelectObject(GameObject selectedGo)
     {
-        GameObject o = GameObject.Instantiate(test) as GameObject;
-        o.name = "Test";
+        _selectedObject = selectedGo;
 
-        if (screenX == float.MinValue || screenY == float.MinValue)
+        if (!_alreadyHasSelection)
         {
-            float x = Random.Range(_camera.rect.min.x, _camera.rect.max.x);
-            float y = Random.Range(_camera.rect.min.y, _camera.rect.max.y);
-            Vector3 pos = new Vector3(x, y, 0.0f);
-            pos = _camera.ViewportToWorldPoint(pos);
-            pos.z = o.transform.position.z;
-            o.transform.position = pos;
+            _selectionVisual = CreateSelectionView(selectedGo.transform.position);
+            _alreadyHasSelection = true;
         }
         else
         {
-            Vector3 pos = new Vector3(screenX, screenY, 0.0f);
-            pos = _camera.ScreenToWorldPoint(pos);
-            pos.z = o.transform.position.z;
-            o.transform.position = pos;
+            MoveSelection(selectedGo.transform.position);
         }
+    }
+
+
+    GameObject CreateSelectionView(Vector3 position)
+    {
+        GameObject o = Instantiate(_selectedChipVisualizationPrefab) as GameObject;
+        o.name = "Selection";
+        o.transform.position = position;
         return o;
+    }
+
+    void MoveSelection(Vector3 newPosition)
+    {
+        if (_selectionVisual)
+        {
+            _selectionVisual.transform.position = newPosition;
+        }
+        else
+        {
+            Debug.LogError("Trying to move Selection View, but there is no one");
+        }
     }
 }

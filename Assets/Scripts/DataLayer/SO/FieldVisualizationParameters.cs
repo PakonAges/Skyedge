@@ -6,6 +6,7 @@ public class FieldVisualizationParameters : ScriptableObject
     [Header("Prefab refferences")]
     public GameObject Background;
     public GameObject GridCell;
+    public GameObject SelectedChip;
 
     [Header("Sprite refferences")]
     public Sprite DefaultFieldBG;

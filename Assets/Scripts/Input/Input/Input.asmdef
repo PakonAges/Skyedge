@@ -3,7 +3,9 @@
     "references": [
         "IFieldSceneController",
         "IInput",
-        "Fingers"
+        "Fingers",
+        "DataLayer",
+        "FieldEntities"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
