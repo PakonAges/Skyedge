@@ -43,10 +43,11 @@ public class ChipMovement : IChipMovement
 
             chip1.gameObject.transform.DOMove(_chipPositionProvider.GetPosition(chip1.X, chip1.Y), _movementDuration);
             chip2.gameObject.transform.DOMove(_chipPositionProvider.GetPosition(chip2.X, chip2.Y), _movementDuration);
+            await new WaitForSeconds(_movementDuration);
         }
-
-        await new WaitForSeconds(_movementDuration);
         return OnMovementDone();
+
+        //Change movement direction!
     }
 
     private bool OnMovementDone()

@@ -22,11 +22,10 @@
     public Chip SpawnChip(ChipType Chip, int Xpos, int Ypos)
     {
         var newChip = _chipFactory.Create(/*Chip*/);
-        newChip.ChipType = Chip;
         newChip.name = "Chip [" + Xpos + ";" + Ypos + "]";
         newChip.Scale = _chipPositioner.ChipSize;
         newChip.Position = _chipPositioner.GetPosition(Xpos, Ypos);
-        newChip.InitChip(Xpos, Ypos);
+        newChip.InitChip(Chip, Xpos, Ypos);
 
         if (Chip == ChipType.EmptyCell)
         {

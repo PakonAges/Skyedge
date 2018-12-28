@@ -31,8 +31,11 @@ public class Chip : MonoBehaviour
         set { if (IsMovable) { _y = value; } }
     }
 
-    public void InitChip(int Xpos, int Ypos) //SHould move all inittialization here
+    public void InitChip(   ChipType type,
+                            int Xpos,
+                            int Ypos) //SHould move all inittialization here
     {
+        this.ChipType = type;
         _x = Xpos;
         _y = Ypos;
     }
