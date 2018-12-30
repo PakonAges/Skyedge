@@ -8,7 +8,7 @@ public class ChipMovement : IChipMovement
     readonly float _movementDuration;
     public Field GameField { get; set; }
 
-    public ChipMovement(IChipPositionProvider chipPositionProvider,
+    public ChipMovement(    IChipPositionProvider chipPositionProvider,
                             FieldVisualizationParameters fieldVisualizationParameters)
     {
         _chipPositionProvider = chipPositionProvider;

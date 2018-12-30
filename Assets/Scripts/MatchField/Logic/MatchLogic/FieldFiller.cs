@@ -51,7 +51,7 @@ public class FieldFiller : IFieldFiller
                         {
                             var movemet = await _chipMovement.Move(chip, x, y + 1);
                             GameField.FieldMatrix[x, y + 1] = chip;
-                            GameField.FieldMatrix[x, y] = _chipSpawner.SpawnChip(ChipType.EmptyCell, x, y);
+                            GameField.FieldMatrix[x, y] = _chipSpawner.SpawnEmptyChip(x, y);
                             movedChip = true;
                         }
                     }
@@ -65,7 +65,7 @@ public class FieldFiller : IFieldFiller
 
                 if (chipBelow.ChipType == ChipType.EmptyCell)
                 {
-                    var newChip = _chipSpawner.SpawnChip(ChipType.NormalChip, x, 0);
+                    var newChip = _chipSpawner.SpawnRandomChip(x, 0);
                     GameField.FieldMatrix[x, 0] = newChip;
                     movedChip = true;
                 }

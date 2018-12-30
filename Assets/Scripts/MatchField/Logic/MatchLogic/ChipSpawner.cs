@@ -19,30 +19,47 @@
         _normalChipPainter = normalChipPainter;
     }
 
-    public Chip SpawnChip(ChipType Chip, int Xpos, int Ypos)
+    public Chip SpawnEmptyChip(int Xpos, int Ypos)
     {
-        var newChip = _chipFactory.Create(/*Chip*/);
+        var newChip = _chipFactory.Create();
         newChip.name = "Chip [" + Xpos + ";" + Ypos + "]";
         newChip.Scale = _chipPositioner.ChipSize;
         newChip.Position = _chipPositioner.GetPosition(Xpos, Ypos);
-        newChip.InitChip(Chip, Xpos, Ypos);
+        newChip.InitChip(ChipType.EmptyCell, Xpos, Ypos);
+        newChip.IsMovable = false;
+        newChip.IsColored = false;
+        newChip.IsClearable = false;
+        _normalChipPainter.PaintEmptyChip(newChip);
 
-        if (Chip == ChipType.EmptyCell)
-        {
-            newChip.IsMovable = false;
-            newChip.IsColored = false;
-            _normalChipPainter.PaintEmptyChip(newChip);
-            return newChip;
-        }
+        return newChip;
+    }
 
-        if (Chip == ChipType.NormalChip)
-        {
-            newChip.IsMovable = true;
-            newChip.IsColored = true;
-            //_chipMovement.Move(newChip, Xpos, Ypos);
-            _normalChipPainter.PaintRandomType(newChip);
-            return newChip;
-        }
+    public Chip SpawnRandomChip(int Xpos, int Ypos)
+    {
+        var newChip = _chipFactory.Create();
+        newChip.name = "Chip [" + Xpos + ";" + Ypos + "]";
+        newChip.Scale = _chipPositioner.ChipSize;
+        newChip.Position = _chipPositioner.GetPosition(Xpos, Ypos);
+        newChip.InitChip(ChipType.NormalChip, Xpos, Ypos);
+        newChip.IsMovable = true;
+        newChip.IsColored = true;
+        newChip.IsClearable = true;
+        _normalChipPainter.PaintRandomType(newChip);
+
+        return newChip;
+    }
+
+    public Chip SpawnNormalChip(NormalChipType normalType, int Xpos, int Ypos)
+    {
+        var newChip = _chipFactory.Create();
+        newChip.name = "Chip [" + Xpos + ";" + Ypos + "]";
+        newChip.Scale = _chipPositioner.ChipSize;
+        newChip.Position = _chipPositioner.GetPosition(Xpos, Ypos);
+        newChip.InitChip(ChipType.NormalChip, Xpos, Ypos);
+        newChip.IsMovable = true;
+        newChip.IsColored = true;
+        newChip.IsClearable = true;
+        _normalChipPainter.Paint(newChip, normalType);
 
         return newChip;
     }

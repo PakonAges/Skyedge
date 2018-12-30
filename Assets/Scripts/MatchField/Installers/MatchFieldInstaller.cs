@@ -85,6 +85,8 @@ public class MatchFieldInstaller : MonoInstaller
     void InstallFIeldLogic()
     {
         Container.Bind<IFieldFiller>().To<FieldFiller>().AsSingle();
+        Container.Bind<IMatchChecker>().To<MatchChecker>().AsSingle();
+        Container.Bind<IFieldCleaner>().To<FIeldCleaner>().AsSingle();
     }
 
     //void InstallNullObjects()

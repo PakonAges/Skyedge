@@ -11,11 +11,12 @@ public class Chip : MonoBehaviour
             GetComponent<BoxCollider2D>().size = new Vector2(value, value);
         }
     }
+
     public ChipType ChipType { get; set; }
-    //public Field MyField { get; set; }
+    public NormalChipType NormalChipType { get; set; }
     public bool IsMovable { get; set; }
     public bool IsColored { get; set; }
-    public NormalChipType NormalChipType { get; set; }
+    public bool IsClearable { get; set; }
 
     private int _x;
     public int X

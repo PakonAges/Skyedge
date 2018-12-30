@@ -9,6 +9,8 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     readonly IFieldFiller _fieldFiller;
     readonly IFieldVisualization _fieldVisualization;
     readonly IChipMovement _chipMovement;
+    readonly IMatchChecker _matchChecker;
+    readonly IFieldCleaner _fieldCleaner;
     readonly FieldGenerationRules _fieldGenerationRules;
 
     public Field GameField;
@@ -18,13 +20,17 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
                                         IFieldFiller fieldFiller,
                                         IFieldGenerationRulesProvider fieldDataProvider,
                                         IFieldVisualization fieldVisualization,
-                                        IChipMovement chipMovement)
+                                        IChipMovement chipMovement,
+                                        IMatchChecker matchChecker,
+                                        IFieldCleaner fieldCleaner)
     {
         _fieldBGSetup = fieldBGSetup;
         _fieldGenerator = fieldGenerator;
         _fieldFiller = fieldFiller;
         _fieldVisualization = fieldVisualization;
         _chipMovement = chipMovement;
+        _matchChecker = matchChecker;
+        _fieldCleaner = fieldCleaner;
         _fieldGenerationRules = fieldDataProvider.GetGenerationRules();
 
     }
@@ -39,6 +45,8 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         ShowBackGround();
         GameField = _fieldGenerator.GenerateField(_fieldGenerationRules);
         _chipMovement.GameField = this.GameField;
+        _matchChecker.GameField = this.GameField;
+        _fieldCleaner.GameField = this.GameField;
         _fieldFiller.FullFill(GameField);
         //_fieldVisualization.ShowField(GameField); // or _fieldGenerationRules?
     }

@@ -12,16 +12,19 @@ public class TouchInput : MonoBehaviour, ITouchInput
     GameObject _selectedChipVisualizationPrefab;
     TapGestureRecognizer _tapGesture;
     Camera _camera;
-    IChipMovement _chipMovement; 
+    IChipMovement _chipMovement;
+    IFieldCleaner _fieldCleaner;
 
     [Inject]
     public void Construct(  Camera cam,
                             FieldVisualizationParameters fieldVisualizationParameters,
-                            IChipMovement chipMovement)
+                            IChipMovement chipMovement,
+                            IFieldCleaner fieldCleaner)
     {
         _camera = cam;
         _selectedChipVisualizationPrefab = fieldVisualizationParameters.SelectedChip;
         _chipMovement = chipMovement;
+        _fieldCleaner = fieldCleaner;
         InitTapGesture();
         InitSelectionView();
     }
@@ -49,6 +52,7 @@ public class TouchInput : MonoBehaviour, ITouchInput
                     Debug.Log("Adjacement!");
                     SwapChips(_selectedObject, hit.transform.gameObject);
                     Deselect();
+                    _fieldCleaner.ClearAllValidMathces();
                 }
                 else //Second chip is not Adjacement
                 {
