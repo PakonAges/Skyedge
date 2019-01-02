@@ -48,7 +48,6 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         _matchChecker.GameField = this.GameField;
         _fieldCleaner.GameField = this.GameField;
         _fieldFiller.FullFill(GameField);
-        //_fieldVisualization.ShowField(GameField); // or _fieldGenerationRules?
     }
 
     public void ShowBackGround()

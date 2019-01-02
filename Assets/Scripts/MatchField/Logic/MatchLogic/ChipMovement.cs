@@ -19,7 +19,6 @@ public class ChipMovement : IChipMovement
     {
         chip.X = newX;
         chip.Y = newY;
-        //chip.Position = _chipPositionProvider.GetPosition(newX, newY);
 
         chip.gameObject.transform.DOMove(_chipPositionProvider.GetPosition(newX, newY), _movementDuration);
         await new WaitForSeconds(_movementDuration);

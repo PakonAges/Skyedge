@@ -61,6 +61,6 @@ public class FIeldCleaner : IFieldCleaner
 
     void RemoveChip(Chip chip)
     {
-        chip.gameObject.SetActive(false);
+        chip.gameObject.SetActive(false); //debug
     }
 }

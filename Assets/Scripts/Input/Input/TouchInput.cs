@@ -49,9 +49,8 @@ public class TouchInput : MonoBehaviour, ITouchInput
                 }
                 else if (_chipMovement.GameField.IsAdjacement(_selectedObject.GetComponent<Chip>(),hit.transform.gameObject.GetComponent<Chip>())) //Second Chip is Adjacement
                 {
-                    Debug.Log("Adjacement!");
-                    SwapChips(_selectedObject, hit.transform.gameObject);
                     Deselect();
+                    SwapChips(_selectedObject, hit.transform.gameObject);
                     _fieldCleaner.ClearAllValidMathces();
                 }
                 else //Second chip is not Adjacement

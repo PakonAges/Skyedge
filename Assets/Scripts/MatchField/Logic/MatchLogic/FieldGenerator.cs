@@ -74,11 +74,15 @@ public class FieldGenerator : IFieldGenerator
     {
         List<NormalChipType> possibleTypes = new List<NormalChipType>();
 
-        foreach (NormalChipType t in (NormalChipType[])Enum.GetValues(typeof(NormalChipType)))
+        //foreach (NormalChipType t in (NormalChipType[])Enum.GetValues(typeof(NormalChipType)))
+        foreach (NormalChipType t in Enum.GetValues(typeof(NormalChipType)))
         {
             if (t != bannedType)
             {
-                possibleTypes.Add(t);
+                if (t != NormalChipType.Total)
+                {
+                    possibleTypes.Add(t);
+                }
             }
         }
 
