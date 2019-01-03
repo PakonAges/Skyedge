@@ -32,41 +32,53 @@ public class FieldGenerator : IFieldGenerator
     {
         var Type = GetRandomType();
 
-        if (x < 3 || y < 3)
+        if (x < 2 && y < 2)
         {
             return Type;
         }
         else
         {
-            if (NoMatches(field, Type, x, y))
+            if (HasMatchNeedsToChange(field, Type, x, y))
             {
-                return Type;
+                var newType = NewTypeWithout(Type);
+
+                if (HasMatchNeedsToChange(field, newType, x, y))
+                {
+                    return NewTypeWithout(Type, newType);
+                }
+                else
+                {
+                    return newType;
+                }
             }
             else
             {
-                return NewTypeWithout(Type);
+                return Type;
             }
         }
     }
 
-
-    private bool NoMatches(Field field, NormalChipType type, int x, int y)
+    private bool HasMatchNeedsToChange(Field field, NormalChipType type, int x, int y)
     {
         //check left
-
-        if (field.FieldMatrix[x-1,y].NormalChipType == type && field.FieldMatrix[x - 2, y].NormalChipType == type)
+        if (x >= 2)
         {
-            return false;
+            if (field.FieldMatrix[x - 1, y].NormalChipType == type && field.FieldMatrix[x - 2, y].NormalChipType == type)
+            {
+                return true;
+            }
         }
 
         //check top
-        if (field.FieldMatrix[x, y - 1].NormalChipType == type && field.FieldMatrix[x, y - 2].NormalChipType == type)
+        if (y >= 2)
         {
-            return false;
+            if (field.FieldMatrix[x, y - 1].NormalChipType == type && field.FieldMatrix[x, y - 2].NormalChipType == type)
+            {
+                return true;
+            }
         }
 
-        return true;
-        
+        return false;        
     }
 
 
@@ -82,6 +94,29 @@ public class FieldGenerator : IFieldGenerator
                 if (t != NormalChipType.Total)
                 {
                     possibleTypes.Add(t);
+                }
+            }
+        }
+
+        int i = UnityEngine.Random.Range(0, possibleTypes.Count);
+        return possibleTypes[i];
+    }
+
+    private NormalChipType NewTypeWithout(NormalChipType type, NormalChipType newType)
+    {
+        List<NormalChipType> possibleTypes = new List<NormalChipType>();
+        //foreach (NormalChipType t in (NormalChipType[])Enum.GetValues(typeof(NormalChipType)))
+
+        foreach (NormalChipType t in Enum.GetValues(typeof(NormalChipType)))
+        {
+            if (t != type)
+            {
+                if (t != newType)
+                {
+                    if (t != NormalChipType.Total)
+                    {
+                        possibleTypes.Add(t);
+                    }
                 }
             }
         }

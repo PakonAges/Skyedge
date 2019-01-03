@@ -33,6 +33,7 @@ public class TouchInput : MonoBehaviour, ITouchInput
     {
         if (gesture.State == GestureRecognizerState.Ended)
         {
+            Debug.Log("Gesture Ended");
             Vector3 pos = new Vector3(gesture.FocusX, gesture.FocusY, 0.0f);
             pos = _camera.ScreenToWorldPoint(pos);
             RaycastHit2D hit = Physics2D.Raycast(pos, Vector3.zero);
@@ -58,10 +59,6 @@ public class TouchInput : MonoBehaviour, ITouchInput
                     ChangeSelection(hit.transform.gameObject);
                 }
                 //Debug.LogFormat("Clicked on: {0}", hit.transform);
-            }
-            else
-            {
-                _tapGesture.Reset();
             }
         }
     }
@@ -141,11 +138,10 @@ public class TouchInput : MonoBehaviour, ITouchInput
             Chip chip1 = chipObj1.GetComponent<Chip>();
             Chip chip2 = chipObj2.GetComponent<Chip>();
             var swap = await _chipMovement.Swap(chip1, chip2);
-
         }
         catch
         {
-            Debug.LogErrorFormat("Trying to spwap {0} and {1}", chipObj1, chipObj2);
+            Debug.LogErrorFormat("Trying to swap {0} and {1}", chipObj1, chipObj2);
         }
     }
 }
