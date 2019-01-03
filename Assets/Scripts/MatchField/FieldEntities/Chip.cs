@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Zenject;
 
-public class Chip : MonoBehaviour
+public class Chip : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable
 {
+    IMemoryPool _pool;
+
     public Vector3 Position { set { transform.position = value; } } //Should change in Move method, not directly
     public float Scale
     {
@@ -39,6 +42,24 @@ public class Chip : MonoBehaviour
         this.ChipType = type;
         _x = Xpos;
         _y = Ypos;
+    }
+
+
+    public void OnSpawned(IMemoryPool pool)
+    {
+        _pool = pool;
+        //Init
+    }
+
+    public void OnDespawned()
+    {
+        _pool = null;
+        //reset
+    }
+
+    public void Dispose()
+    {
+        _pool.Despawn(this);
     }
 
     public class Factory : PlaceholderFactory<Chip> { }

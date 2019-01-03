@@ -8,13 +8,13 @@ public class DefaultFieldVisualization : IFieldVisualization
     readonly IFieldGridGenerator _fieldGridGenerator;
     readonly IChipPositionProvider _chipPositioner;
     readonly IChipVisualProvider _chipVisualProvider;
-    readonly IChipSpawner _chipSpawner;
+    readonly IChipManager _chipSpawner;
     readonly IChipMovement _chipMovement;
 
     public DefaultFieldVisualization(   IFieldGridGenerator fieldGridGenerator,
                                         IChipPositionProvider fieldItemWorldPositionProvider,
                                         IChipVisualProvider fieldItemVisualProvider,
-                                        IChipSpawner fieldItemSpawner,
+                                        IChipManager fieldItemSpawner,
                                         IChipMovement chipMovement)
     {
         _fieldGridGenerator = fieldGridGenerator;

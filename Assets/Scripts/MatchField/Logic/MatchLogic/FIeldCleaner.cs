@@ -3,14 +3,14 @@
 public class FIeldCleaner : IFieldCleaner
 {
     public Field GameField { get; set; }
-    readonly IChipSpawner _chipSpawner;
+    readonly IChipManager _chipManager;
     readonly IMatchChecker _matchChecker;
     List<Chip> _matches;
 
-    public FIeldCleaner(IChipSpawner chipSpawner,
+    public FIeldCleaner(IChipManager chipManager,
                         IMatchChecker matchChecker)
     {
-        _chipSpawner = chipSpawner;
+        _chipManager = chipManager;
         _matchChecker = matchChecker;
         _matches = new List<Chip>();
     }
@@ -50,7 +50,7 @@ public class FIeldCleaner : IFieldCleaner
         if (GameField.FieldMatrix[x, y].IsClearable) //check for isBeingCleared?
         {
             RemoveChip(GameField.FieldMatrix[x, y]);
-            _chipSpawner.SpawnEmptyChip(x, y);
+            _chipManager.SpawnEmptyChip(x, y);
             return true;
         }
         else
@@ -61,6 +61,6 @@ public class FIeldCleaner : IFieldCleaner
 
     void RemoveChip(Chip chip)
     {
-        chip.gameObject.SetActive(false); //debug
+        _chipManager.RemoveChip(chip);
     }
 }

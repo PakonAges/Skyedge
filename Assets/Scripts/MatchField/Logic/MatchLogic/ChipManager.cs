@@ -1,12 +1,15 @@
-﻿public class ChipSpawner : IChipSpawner
+﻿using System.Collections.Generic;
+
+public class ChipManager : IChipManager
 {
     readonly Chip.Factory _chipFactory;
+    readonly List<Chip> _chips = new List<Chip>();
     readonly IChipPrefabProvider _chipPrefabProvider;
     readonly IChipPositionProvider _chipPositioner;
     readonly IChipMovement _chipMovement;
     readonly IChipPainter _normalChipPainter;
 
-    public ChipSpawner( Chip.Factory chipFactory,
+    public ChipManager( Chip.Factory chipFactory,
                         IChipPrefabProvider chipPrefabProvider,
                         IChipPositionProvider chipPositionProvider,
                         IChipMovement chipMovement,
@@ -30,6 +33,7 @@
         newChip.IsColored = false;
         newChip.IsClearable = false;
         _normalChipPainter.PaintEmptyChip(newChip);
+        _chips.Add(newChip);
 
         return newChip;
     }
@@ -45,6 +49,7 @@
         newChip.IsColored = true;
         newChip.IsClearable = true;
         _normalChipPainter.PaintRandomType(newChip);
+        _chips.Add(newChip);
 
         return newChip;
     }
@@ -60,7 +65,14 @@
         newChip.IsColored = true;
         newChip.IsClearable = true;
         _normalChipPainter.Paint(newChip, normalType);
+        _chips.Add(newChip);
 
         return newChip;
+    }
+
+    public void RemoveChip(Chip chip)
+    {
+        chip.Dispose();
+        _chips.Remove(chip);
     }
 }

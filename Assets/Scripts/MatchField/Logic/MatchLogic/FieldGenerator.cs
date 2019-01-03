@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 public class FieldGenerator : IFieldGenerator
 {
-    readonly IChipSpawner _chipSpawner;
+    readonly IChipManager _chipSpawner;
     
-    public FieldGenerator (IChipSpawner chipSpawner)
+    public FieldGenerator (IChipManager chipSpawner)
     {
         _chipSpawner = chipSpawner;
     }

@@ -6,10 +6,10 @@ public class FieldFiller : IFieldFiller
     public FieldFillDirection FillDirection { get; set; }
 
     readonly IChipMovement _chipMovement;
-    readonly IChipSpawner _chipSpawner;
+    readonly IChipManager _chipSpawner;
 
     public FieldFiller( IChipMovement chipMovement,
-                        IChipSpawner chipSpawner)
+                        IChipManager chipSpawner)
     {
         _chipMovement = chipMovement;
         _chipSpawner = chipSpawner;
