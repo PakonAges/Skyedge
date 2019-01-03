@@ -19,6 +19,7 @@ public class MatchChecker : IMatchChecker
                 CheckVertical(chip, chipColor, newX, newY);
             }
             //Don't forget to initialize = get field ref + install checkker + add checking after
+            return _matchinngChips;
         }
 
         return null;
