@@ -5,14 +5,25 @@ public class FIeldCleaner : IFieldCleaner
     public Field GameField { get; set; }
     readonly IChipManager _chipManager;
     readonly IMatchChecker _matchChecker;
+    readonly IFieldFiller _fieldFiller;
     List<Chip> _matches;
 
     public FIeldCleaner(IChipManager chipManager,
-                        IMatchChecker matchChecker)
+                        IMatchChecker matchChecker,
+                        IFieldFiller fieldFiller)
     {
         _chipManager = chipManager;
         _matchChecker = matchChecker;
+        _fieldFiller = fieldFiller;
         _matches = new List<Chip>();
+    }
+
+    public void ClearAndRefillBoard()
+    {
+        if (ClearAllValidMathces())
+        {
+            _fieldFiller.FullFill(GameField);
+        }
     }
 
     public bool ClearAllValidMathces()
