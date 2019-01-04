@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 public class FIeldCleaner : IFieldCleaner
 {
@@ -22,17 +23,30 @@ public class FIeldCleaner : IFieldCleaner
     {
         bool NeedsToRefill = ClearAllMathcesAndNeedsToRefill();
 
-        while (NeedsToRefill)
-        {
-            _fieldFiller.FullFill();
-            NeedsToRefill = ClearAllMathcesAndNeedsToRefill();
-        }
+        //while (NeedsToRefill)
+        ////if (NeedsToRefill)
+        //{
+        //    _fieldFiller.FullFill();
+        //    NeedsToRefill = ClearAllMathcesAndNeedsToRefill();
+        //}
     }
 
     public bool ClearAllMathcesAndNeedsToRefill()
     {
         bool needsRefill = false;
         _matches.Clear();
+
+        //Nailed it! return null so erased my List. I'll keep it here for a while and see.
+
+        //if (_matches != null) //Need to find why this hapeens? I tried to swap normal chips without combos. maybe some threading?async stUff?
+        //{
+        //    _matches.Clear();
+        //}
+        //else
+        //{
+        //    _matches = new List<Chip>();
+        //    UnityEngine.Debug.LogFormat("Created new List {0}", _matches);
+        //}
 
         for (int y = 0; y < GameField.Ysize; y++)
         {
@@ -42,7 +56,7 @@ public class FIeldCleaner : IFieldCleaner
                 {
                     _matches = _matchChecker.GetMatch(GameField.FieldMatrix[x, y], x, y);
 
-                    if (_matches != null)
+                    if (_matches != null && _matches.Any())
                     {
                         for (int i = 0; i < _matches.Count; i++)
                         {

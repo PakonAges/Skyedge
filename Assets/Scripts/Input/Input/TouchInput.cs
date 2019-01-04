@@ -1,4 +1,5 @@
 ﻿using DigitalRubyShared;
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -138,8 +139,9 @@ public class TouchInput : MonoBehaviour, ITouchInput
             //if no combos -> return
             _fieldCleaner.ClearAndRefillBoard();
         }
-        catch
+        catch (Exception e)
         {
+            Debug.LogErrorFormat("{0} Exception caught.", e);
             Debug.LogErrorFormat("Trying to swap {0} and {1}", chipObj1, chipObj2);
         }
     }

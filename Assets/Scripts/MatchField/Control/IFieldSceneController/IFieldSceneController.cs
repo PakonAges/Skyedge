@@ -2,4 +2,5 @@
 {
     void GenerateField();
     void ResetField();
+    void FindCombos();//debug?
 }

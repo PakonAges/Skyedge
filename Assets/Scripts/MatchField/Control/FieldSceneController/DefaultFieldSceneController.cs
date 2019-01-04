@@ -62,4 +62,9 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         //Field.Reset();
         //_fieldVisualization.ResetField(Field.FieldData);
     }
+
+    public void FindCombos()
+    {
+        _fieldCleaner.ClearAndRefillBoard();
+    }
 }
