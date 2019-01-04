@@ -14,6 +14,7 @@ public class ChipPainter : IChipPainter
         var sr = chip.GetComponentInChildren<SpriteRenderer>();
         sr.sprite = _chipVisualProvider.GetChipSprite(newType);
         chip.NormalChipType = newType;
+        sr.enabled = true;
     }
 
     public void PaintEmptyChip(Chip chip)
@@ -28,5 +29,6 @@ public class ChipPainter : IChipPainter
         var newType = (NormalChipType)Random.Range(0, (int)NormalChipType.Total);
         sr.sprite = _chipVisualProvider.GetChipSprite(newType);
         chip.NormalChipType = newType;
+        sr.enabled = true;
     }
 }

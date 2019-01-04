@@ -20,13 +20,16 @@ public class FIeldCleaner : IFieldCleaner
 
     public void ClearAndRefillBoard()
     {
-        if (ClearAllValidMathces())
+        bool NeedsToRefill = ClearAllMathcesAndNeedsToRefill();
+
+        while (NeedsToRefill)
         {
-            _fieldFiller.FullFill(GameField);
+            _fieldFiller.FullFill();
+            NeedsToRefill = ClearAllMathcesAndNeedsToRefill();
         }
     }
 
-    public bool ClearAllValidMathces()
+    public bool ClearAllMathcesAndNeedsToRefill()
     {
         bool needsRefill = false;
         _matches.Clear();

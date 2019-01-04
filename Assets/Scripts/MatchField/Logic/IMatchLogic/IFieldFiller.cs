@@ -1,4 +1,5 @@
 ﻿public interface IFieldFiller
 {
-    void FullFill(Field field);
+    Field GameField { get; set; }
+    void FullFill();
 }

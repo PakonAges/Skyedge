@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -15,14 +16,13 @@ public class ChipMovement : IChipMovement
         _movementDuration = fieldVisualizationParameters.MovementDuration;
     }
 
-    public async Task<bool> Move(Chip chip, int newX, int newY)
+    public async Task MoveAsync(Chip chip, int newX, int newY)
     {
         chip.X = newX;
         chip.Y = newY;
 
         chip.gameObject.transform.DOMove(_chipPositionProvider.GetPosition(newX, newY), _movementDuration);
-        await new WaitForSeconds(_movementDuration);
-        return OnMovementDone();
+        await new WaitForFixedUpdate();
     }
 
     public async Task<bool> Swap(Chip chip1, Chip chip2)
@@ -53,4 +53,5 @@ public class ChipMovement : IChipMovement
     {
         return true;
     }
+
 }

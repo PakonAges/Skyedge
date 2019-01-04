@@ -6,32 +6,35 @@ public class FieldFiller : IFieldFiller
     public FieldFillDirection FillDirection { get; set; }
 
     readonly IChipMovement _chipMovement;
-    readonly IChipManager _chipSpawner;
+    readonly IChipManager _chipManager;
 
     public FieldFiller( IChipMovement chipMovement,
-                        IChipManager chipSpawner)
+                        IChipManager chipManager)
     {
         _chipMovement = chipMovement;
-        _chipSpawner = chipSpawner;
+        _chipManager = chipManager;
     }
 
-    public async void FullFill(Field field)
+    public async void FullFill()
     {
-        GameField = field;
-        bool needFeelStep = await FillStep();
+        await FullFillAsync();
+    }
+
+    async Task FullFillAsync()
+    {
+        bool needFeelStep = await FillStepAsync();
 
         while (needFeelStep)
         {
-            needFeelStep = await FillStep();
             //fill untill all field filled
+            needFeelStep = await FillStepAsync();
         }
     }
 
-    async Task<bool> FillStep()
+    async Task<bool> FillStepAsync()
     {
         bool movedChip = false;
-        //deBug
-        FillDirection = FieldFillDirection.TopToBot;
+        FillDirection = FieldFillDirection.TopToBot; //Debuging!
 
         //Point to refactor sometime
         switch (FillDirection)
@@ -49,9 +52,13 @@ public class FieldFiller : IFieldFiller
 
                         if (chipBelow.ChipType == ChipType.EmptyCell)
                         {
-                            var movemet = await _chipMovement.Move(chip, x, y + 1);
+                            _chipManager.RemoveChip(chipBelow);
+
+                            await _chipMovement.MoveAsync(chip, x, y + 1);
                             GameField.FieldMatrix[x, y + 1] = chip;
-                            GameField.FieldMatrix[x, y] = _chipSpawner.SpawnEmptyChip(x, y);
+
+                            GameField.FieldMatrix[x, y] = _chipManager.SpawnEmptyChip(x, y);
+                            //await _chipMovement.Swap(chip, chipBelow);
                             movedChip = true;
                         }
                     }
@@ -61,16 +68,16 @@ public class FieldFiller : IFieldFiller
             //Check Top Row
             for (int x = 0; x < GameField.Xsize; x++)
             {
-                Chip chipBelow = GameField.FieldMatrix[x, 0];
+                Chip TopRowChip = GameField.FieldMatrix[x, 0];
 
-                if (chipBelow.ChipType == ChipType.EmptyCell)
+                if (TopRowChip.ChipType == ChipType.EmptyCell)
                 {
-                    var newChip = _chipSpawner.SpawnRandomChip(x, 0);
+                    _chipManager.RemoveChip(TopRowChip);
+                    var newChip = _chipManager.SpawnRandomChip(x, 0);
                     GameField.FieldMatrix[x, 0] = newChip;
                     movedChip = true;
                 }
             }
-
             break;
 
             case FieldFillDirection.BotToTop:

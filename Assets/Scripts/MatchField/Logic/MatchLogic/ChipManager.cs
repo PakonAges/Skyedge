@@ -25,7 +25,7 @@ public class ChipManager : IChipManager
     public Chip SpawnEmptyChip(int Xpos, int Ypos)
     {
         var newChip = _chipFactory.Create();
-        newChip.name = "Chip [" + Xpos + ";" + Ypos + "]";
+        newChip.name = "Empty Chip [" + Xpos + ";" + Ypos + "]";
         newChip.Scale = _chipPositioner.ChipSize;
         newChip.Position = _chipPositioner.GetPosition(Xpos, Ypos);
         newChip.InitChip(ChipType.EmptyCell, Xpos, Ypos);
@@ -41,7 +41,7 @@ public class ChipManager : IChipManager
     public Chip SpawnRandomChip(int Xpos, int Ypos)
     {
         var newChip = _chipFactory.Create();
-        newChip.name = "Chip [" + Xpos + ";" + Ypos + "]";
+        newChip.name = "Rand Chip [" + Xpos + ";" + Ypos + "]";
         newChip.Scale = _chipPositioner.ChipSize;
         newChip.Position = _chipPositioner.GetPosition(Xpos, Ypos);
         newChip.InitChip(ChipType.NormalChip, Xpos, Ypos);
@@ -57,7 +57,7 @@ public class ChipManager : IChipManager
     public Chip SpawnNormalChip(NormalChipType normalType, int Xpos, int Ypos)
     {
         var newChip = _chipFactory.Create();
-        newChip.name = "Chip [" + Xpos + ";" + Ypos + "]";
+        newChip.name = "N Chip [" + Xpos + ";" + Ypos + "]";
         newChip.Scale = _chipPositioner.ChipSize;
         newChip.Position = _chipPositioner.GetPosition(Xpos, Ypos);
         newChip.InitChip(ChipType.NormalChip, Xpos, Ypos);

@@ -47,7 +47,8 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         _chipMovement.GameField = this.GameField;
         _matchChecker.GameField = this.GameField;
         _fieldCleaner.GameField = this.GameField;
-        _fieldFiller.FullFill(GameField);
+        _fieldFiller.GameField = this.GameField;
+        //_fieldFiller.FullFill();
     }
 
     public void ShowBackGround()
