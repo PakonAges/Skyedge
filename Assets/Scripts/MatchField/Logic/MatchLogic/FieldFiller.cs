@@ -73,7 +73,7 @@ public class FieldFiller : IFieldFiller
                 if (TopRowChip.ChipType == ChipType.EmptyCell)
                 {
                     _chipManager.RemoveChip(TopRowChip);
-                    var newChip = _chipManager.SpawnRandomChip(x, 0);
+                    var newChip = await _chipManager.SpawnRandomChip(x, 0);
                     GameField.FieldMatrix[x, 0] = newChip;
                     movedChip = true;
                 }

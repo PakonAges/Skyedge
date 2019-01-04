@@ -19,4 +19,5 @@ public class FieldVisualizationParameters : ScriptableObject
 
     [Header("Movement setup")]
     public float MovementDuration = 0.5f;
+    public float SpawnDuration = 0.1f;
 }
