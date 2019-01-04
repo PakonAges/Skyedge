@@ -24,11 +24,11 @@ public class FIeldCleaner : IFieldCleaner
         bool NeedsToRefill = ClearAllMathcesAndNeedsToRefill();
 
         //while (NeedsToRefill)
-        ////if (NeedsToRefill)
-        //{
-        //    _fieldFiller.FullFill();
-        //    NeedsToRefill = ClearAllMathcesAndNeedsToRefill();
-        //}
+        if (NeedsToRefill)
+        {
+            _fieldFiller.FullFill();
+            NeedsToRefill = ClearAllMathcesAndNeedsToRefill();
+        }
     }
 
     public bool ClearAllMathcesAndNeedsToRefill()
