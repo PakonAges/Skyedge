@@ -107,4 +107,15 @@ public class FIeldCleaner : IFieldCleaner
             Debug.LogErrorFormat("Can't Detect Fill Direction with chip1[{0};{1}] and chip2[{2};{3}]", chip1_x, chip1_y, chip2_x, chip2_y);
         }
     }
+
+    public void ClearAllBoard()
+    {
+        for (int y = 0; y < GameField.Ysize; y++)
+        {
+            for (int x = 0; x < GameField.Xsize; x++)
+            {
+                RemoveChip(GameField.FieldMatrix[x, y]);
+            }
+        }
+    }
 }

@@ -42,13 +42,20 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
 
     public void GenerateField()
     {
-        ShowBackGround();
+        if (GameField != null)
+        {
+            ResetField();
+        }
+        else
+        {
+            ShowBackGround();
+        }
+
         GameField = _fieldGenerator.GenerateField(_fieldGenerationRules);
         _chipMovement.GameField = this.GameField;
         _matchChecker.GameField = this.GameField;
         _fieldCleaner.GameField = this.GameField;
         _fieldFiller.GameField = this.GameField;
-        //_fieldFiller.FullFill();
     }
 
     public void ShowBackGround()
@@ -59,8 +66,10 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
 
     public void ResetField()
     {
-        //Field.Reset();
-        //_fieldVisualization.ResetField(Field.FieldData);
+        if (GameField != null)
+        {
+            _fieldCleaner.ClearAllBoard();
+        }
     }
 
     public void FindCombos()
