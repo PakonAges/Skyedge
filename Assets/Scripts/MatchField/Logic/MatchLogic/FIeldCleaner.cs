@@ -82,4 +82,29 @@ public class FIeldCleaner : IFieldCleaner
     {
         _chipManager.RemoveChip(chip);
     }
+
+    public void ChangeFillDirection(int chip1_x, int chip1_y, int chip2_x, int chip2_y)
+    {
+        if (chip1_x == chip2_x && chip1_y < chip2_y)
+        {
+            _fieldFiller.FillDirection = FieldFillDirection.TopToBot;
+
+        }
+        else if (chip1_x == chip2_x && chip1_y > chip2_y)
+        {
+            _fieldFiller.FillDirection = FieldFillDirection.BotToTop;
+        }
+        else if (chip1_x < chip2_x && chip1_y == chip2_y)
+        {
+            _fieldFiller.FillDirection = FieldFillDirection.LeftToRight;
+        }
+        else if (chip1_x > chip2_x && chip1_y == chip2_y)
+        {
+            _fieldFiller.FillDirection = FieldFillDirection.RightToLeft;
+        }
+        else
+        {
+            Debug.LogErrorFormat("Can't Detect Fill Direction with chip1[{0};{1}] and chip2[{2};{3}]", chip1_x, chip1_y, chip2_x, chip2_y);
+        }
+    }
 }

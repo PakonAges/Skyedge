@@ -29,7 +29,7 @@ public class FieldFiller : IFieldFiller
     async Task<bool> FillStepAsync()
     {
         bool movedChip = false;
-        FillDirection = FieldFillDirection.RightToLeft; //Debuging!
+        //FillDirection = FieldFillDirection.RightToLeft; //Debuging!
 
         //Point to refactor sometime
         switch (FillDirection)
