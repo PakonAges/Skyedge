@@ -7,7 +7,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     readonly IFieldBGSetup _fieldBGSetup;
     readonly IFieldGenerator _fieldGenerator;
     readonly IFieldFiller _fieldFiller;
-    readonly IFieldVisualization _fieldVisualization;
+    readonly IChipPositionProvider _chipPositioner;
     readonly IChipMovement _chipMovement;
     readonly IMatchChecker _matchChecker;
     readonly IFieldCleaner _fieldCleaner;
@@ -19,7 +19,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
                                         IFieldGenerator fieldGenerator,
                                         IFieldFiller fieldFiller,
                                         IFieldGenerationRulesProvider fieldDataProvider,
-                                        IFieldVisualization fieldVisualization,
+                                        IChipPositionProvider chipPositioner,
                                         IChipMovement chipMovement,
                                         IMatchChecker matchChecker,
                                         IFieldCleaner fieldCleaner)
@@ -27,7 +27,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         _fieldBGSetup = fieldBGSetup;
         _fieldGenerator = fieldGenerator;
         _fieldFiller = fieldFiller;
-        _fieldVisualization = fieldVisualization;
+        _chipPositioner = chipPositioner;
         _chipMovement = chipMovement;
         _matchChecker = matchChecker;
         _fieldCleaner = fieldCleaner;
@@ -37,7 +37,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
 
     public void Initialize()
     {
-        _fieldVisualization.SetupVisualization(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
+        _chipPositioner.SetupChipParameters(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
     }
 
     public void GenerateField()
@@ -61,7 +61,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     public void ShowBackGround()
     {
         _fieldBGSetup.SetupBackGround(_fieldGenerationRules.BackgroundImage);
-        _fieldVisualization.ShowEmptyGrid(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
+        _fieldBGSetup.ShowEmptyGrid(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
     }
 
     public void ResetField()

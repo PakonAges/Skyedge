@@ -7,7 +7,7 @@ public class MatchChecker : IMatchChecker
     List<Chip> _verticalChips = new List<Chip>();
     List<Chip> _matchingChips = new List<Chip>();
 
-    public List<Chip> GetMatch(Chip chip, int newX, int newY)
+    public List<Chip> GetMatch(Chip chip)
     {
         CleanUp();
 
@@ -25,14 +25,14 @@ public class MatchChecker : IMatchChecker
                     int x;
 
                     //Left dir
-                    if (dir == 0)   { x = newX - xOffset; }
+                    if (dir == 0)   { x = chip.X - xOffset; }
                     //Right dir
-                    else            { x = newX + xOffset; }
+                    else            { x = chip.X + xOffset; }
                     if (x < 0 || x >= GameField.Xsize) break;
 
-                    if (GameField.FieldMatrix[x, newY].IsColored && GameField.FieldMatrix[x, newY].NormalChipType == color)
+                    if (GameField.FieldMatrix[x, chip.Y].IsColored && GameField.FieldMatrix[x, chip.Y].NormalChipType == color)
                     {
-                        _horizontalChips.Add(GameField.FieldMatrix[x, newY]);
+                        _horizontalChips.Add(GameField.FieldMatrix[x, chip.Y]);
                     }
                     else break;
                 }
@@ -59,9 +59,9 @@ public class MatchChecker : IMatchChecker
                             int y;
 
                             //Up
-                            if (dir == 0) { y = newY - yOffset; }
+                            if (dir == 0) { y = chip.Y - yOffset; }
                             //Down
-                            else { y = newY + yOffset; }
+                            else { y = chip.Y + yOffset; }
                             if (y < 0 || y >= GameField.Ysize) break;
 
                             if (GameField.FieldMatrix[_horizontalChips[i].X, y].IsColored && GameField.FieldMatrix[_horizontalChips[i].X, y].NormalChipType == color)
@@ -106,13 +106,13 @@ public class MatchChecker : IMatchChecker
                 {
                     int y;
 
-                    if (dir == 0) { y = newY - yOffset; }
-                    else { y = newY + yOffset; }
+                    if (dir == 0) { y = chip.Y - yOffset; }
+                    else { y = chip.Y + yOffset; }
                     if (y < 0 || y >= GameField.Ysize) break;
 
-                    if (GameField.FieldMatrix[newX, y].IsColored && GameField.FieldMatrix[newX, y].NormalChipType == color)
+                    if (GameField.FieldMatrix[chip.X, y].IsColored && GameField.FieldMatrix[chip.X, y].NormalChipType == color)
                     {
-                        _verticalChips.Add(GameField.FieldMatrix[newX, y]);
+                        _verticalChips.Add(GameField.FieldMatrix[chip.X, y]);
                     }
                     else break;
                 }
@@ -137,9 +137,9 @@ public class MatchChecker : IMatchChecker
                         {
                             int x;
                             //left
-                            if (dir == 0) { x = newX - xOffset; }
+                            if (dir == 0) { x = chip.X - xOffset; }
                             //Right
-                            else { x = newX + xOffset; }
+                            else { x = chip.X + xOffset; }
                             if (x < 0 || x >= GameField.Xsize) break;
 
                             if (GameField.FieldMatrix[x, _verticalChips[i].Y].IsColored && GameField.FieldMatrix[x, _verticalChips[i].Y].NormalChipType == color)

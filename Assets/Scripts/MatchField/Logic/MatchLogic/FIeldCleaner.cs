@@ -44,7 +44,7 @@ public class FIeldCleaner : IFieldCleaner
             {
                 if (GameField.FieldMatrix[x,y].IsClearable)
                 {
-                    _matches = _matchChecker.GetMatch(GameField.FieldMatrix[x, y], x, y);
+                    _matches = _matchChecker.GetMatch(GameField.FieldMatrix[x, y]);
 
                     if (_matches != null && _matches.Any())
                     {

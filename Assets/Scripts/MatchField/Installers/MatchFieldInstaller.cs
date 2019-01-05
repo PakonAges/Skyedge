@@ -49,7 +49,6 @@ public class MatchFieldInstaller : MonoInstaller
 
     void InstallFieldVisualization()
     {
-        Container.Bind<IFieldVisualization>().To<DefaultFieldVisualization>().AsSingle();
         Container.Bind<IChipPositionProvider>().To<ChipPositionProvider>().AsSingle();
         Container.Bind<IChipSizeProvider>().To<ChipSizeProvider>().AsSingle();
         Container.Bind<IChipPrefabProvider>().To<ChipPrefabProvider>().AsSingle();

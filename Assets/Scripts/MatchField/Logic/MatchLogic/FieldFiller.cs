@@ -67,7 +67,7 @@ public class FieldFiller : IFieldFiller
                 if (TopRowChip.ChipType == ChipType.EmptyCell)
                 {
                     _chipManager.RemoveChip(TopRowChip);
-                    var newChip = await _chipManager.SpawnRandomChip(x, -1);
+                    var newChip = await _chipManager.SpawnRandomChipAsync(x, -1);
                     await _chipMovement.MoveAsync(newChip, x, 0);
                     GameField.FieldMatrix[x, 0] = newChip;
                     movedChip = true;
@@ -109,7 +109,7 @@ public class FieldFiller : IFieldFiller
                 if (BotRowChip.ChipType == ChipType.EmptyCell)
                 {
                     _chipManager.RemoveChip(BotRowChip);
-                    var newChip = await _chipManager.SpawnRandomChip(x, GameField.Ysize);
+                    var newChip = await _chipManager.SpawnRandomChipAsync(x, GameField.Ysize);
                     await _chipMovement.MoveAsync(newChip, x, GameField.Ysize - 1);
                     GameField.FieldMatrix[x, GameField.Ysize - 1] = newChip;
                     movedChip = true;
@@ -151,7 +151,7 @@ public class FieldFiller : IFieldFiller
                 if (LeftColumnChip.ChipType == ChipType.EmptyCell)
                 {
                     _chipManager.RemoveChip(LeftColumnChip);
-                    var newChip = await _chipManager.SpawnRandomChip(-1, y);
+                    var newChip = await _chipManager.SpawnRandomChipAsync(-1, y);
                     await _chipMovement.MoveAsync(newChip, 0, y);
                     GameField.FieldMatrix[0, y] = newChip;
                     movedChip = true;
@@ -194,7 +194,7 @@ public class FieldFiller : IFieldFiller
                 if (RightColumnChip.ChipType == ChipType.EmptyCell)
                 {
                     _chipManager.RemoveChip(RightColumnChip);
-                    var newChip = await _chipManager.SpawnRandomChip(GameField.Xsize, y);
+                    var newChip = await _chipManager.SpawnRandomChipAsync(GameField.Xsize, y);
                     await _chipMovement.MoveAsync(newChip, GameField.Xsize - 1, y);
                     GameField.FieldMatrix[GameField.Xsize - 1, y] = newChip;
                     movedChip = true;

@@ -27,7 +27,7 @@ public class ChipMovement : IChipMovement
         await new WaitForEndOfFrame();
     }
 
-    public async Task<bool> Swap(Chip chip1, Chip chip2)
+    public async Task<bool> SwapAsync(Chip chip1, Chip chip2)
     {
         int tempX = chip1.X;
         int tempY = chip1.Y;

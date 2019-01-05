@@ -43,7 +43,7 @@ public class ChipManager : IChipManager
         return newChip;
     }
 
-    public async Task<Chip> SpawnRandomChip(int Xpos, int Ypos)
+    public async Task<Chip> SpawnRandomChipAsync(int Xpos, int Ypos)
     {
         try
         {

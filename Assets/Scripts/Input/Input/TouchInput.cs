@@ -135,7 +135,7 @@ public class TouchInput : MonoBehaviour, ITouchInput
         {
             Chip chip1 = chipObj1.GetComponent<Chip>();
             Chip chip2 = chipObj2.GetComponent<Chip>();
-            var swap = await _chipMovement.Swap(chip1, chip2);
+            var swap = await _chipMovement.SwapAsync(chip1, chip2);
             //if no combos -> return
             _fieldCleaner.ChangeFillDirection(  chipObj2.GetComponent<Chip>().X,
                                                 chipObj2.GetComponent<Chip>().Y,
