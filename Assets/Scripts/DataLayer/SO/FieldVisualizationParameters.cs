@@ -18,6 +18,7 @@ public class FieldVisualizationParameters : ScriptableObject
     public float MaxChipSizeInUnits = 1;
 
     [Header("Movement setup")]
-    public float MovementDuration = 0.5f;
+    public float MovementDuration = 0.2f;
+    public float SwapDuration = 0.5f;
     public float SpawnDuration = 0.1f;
 }

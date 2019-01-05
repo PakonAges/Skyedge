@@ -89,7 +89,7 @@ public class MatchChecker : IMatchChecker
 
             if (_matchingChips.Count >= 3)
             {
-                UnityEngine.Debug.LogFormat("Found {0} chips in HORIZONTAL combo", _matchingChips.Count);
+                //UnityEngine.Debug.LogFormat("Found {0} chips in HORIZONTAL combo", _matchingChips.Count);
                 return _matchingChips;
             }
 
@@ -167,7 +167,7 @@ public class MatchChecker : IMatchChecker
 
             if (_matchingChips.Count >= 3)
             {
-                UnityEngine.Debug.LogFormat("Found {0} chips in VERTICAL combo",_matchingChips.Count);
+                //UnityEngine.Debug.LogFormat("Found {0} chips in VERTICAL combo",_matchingChips.Count);
                 return _matchingChips;
             }
         }

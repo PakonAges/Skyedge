@@ -7,6 +7,7 @@ public class ChipMovement : IChipMovement
 {
     readonly IChipPositionProvider _chipPositionProvider;
     readonly float _movementDuration;
+    readonly float _swapDuration;
     public Field GameField { get; set; }
 
     public ChipMovement(    IChipPositionProvider chipPositionProvider,
@@ -14,6 +15,7 @@ public class ChipMovement : IChipMovement
     {
         _chipPositionProvider = chipPositionProvider;
         _movementDuration = fieldVisualizationParameters.MovementDuration;
+        _swapDuration = fieldVisualizationParameters.SwapDuration;
     }
 
     public async Task MoveAsync(Chip chip, int newX, int newY)
@@ -22,7 +24,7 @@ public class ChipMovement : IChipMovement
         chip.Y = newY;
 
         chip.gameObject.transform.DOMove(_chipPositionProvider.GetPosition(newX, newY), _movementDuration);
-        await new WaitForFixedUpdate();
+        await new WaitForEndOfFrame();
     }
 
     public async Task<bool> Swap(Chip chip1, Chip chip2)
@@ -40,9 +42,9 @@ public class ChipMovement : IChipMovement
             chip2.X = tempX;
             chip2.Y = tempY;
 
-            chip1.gameObject.transform.DOMove(_chipPositionProvider.GetPosition(chip1.X, chip1.Y), _movementDuration);
-            chip2.gameObject.transform.DOMove(_chipPositionProvider.GetPosition(chip2.X, chip2.Y), _movementDuration);
-            await new WaitForSeconds(_movementDuration);
+            chip1.gameObject.transform.DOMove(_chipPositionProvider.GetPosition(chip1.X, chip1.Y), _swapDuration);
+            chip2.gameObject.transform.DOMove(_chipPositionProvider.GetPosition(chip2.X, chip2.Y), _swapDuration);
+            await new WaitForSeconds(_swapDuration);
         }
         return OnMovementDone();
 
