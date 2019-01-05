@@ -1,5 +1,7 @@
-﻿public interface IFieldFiller
+﻿using System.Threading.Tasks;
+
+public interface IFieldFiller
 {
     Field GameField { get; set; }
-    void FullFill();
+    Task FullFillAsync();
 }

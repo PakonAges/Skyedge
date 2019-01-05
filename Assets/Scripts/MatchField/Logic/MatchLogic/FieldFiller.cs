@@ -15,12 +15,7 @@ public class FieldFiller : IFieldFiller
         _chipManager = chipManager;
     }
 
-    public async void FullFill()
-    {
-        await FullFillAsync();
-    }
-
-    async Task FullFillAsync()
+    public async Task FullFillAsync()
     {
         bool needFeelStep = await FillStepAsync();
 

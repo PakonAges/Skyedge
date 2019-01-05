@@ -1,7 +1,9 @@
-﻿public interface IFieldCleaner
+﻿using System.Threading.Tasks;
+
+public interface IFieldCleaner
 {
     Field GameField { get; set; }
     void ClearAndRefillBoard();
-    bool ClearChip(int x, int y);
-    bool ClearAllMathcesAndNeedsToRefill();
+    Task<bool> ClearChipAsync(int x, int y);
+    Task<bool> ClearAllMathcesAndNeedsToRefillAsync();
 }
