@@ -1,4 +1,6 @@
-﻿public interface IFieldGenerator {
+﻿using System.Threading.Tasks;
 
-    Field GenerateField(FieldGenerationRules fieldGenerationRules);
+public interface IFieldGenerator {
+
+    Task<Field> GenerateFieldAsync(FieldGenerationRules fieldGenerationRules);
 }

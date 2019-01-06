@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine;
 
 public class FieldGenerator : IFieldGenerator
 {
-    readonly IChipManager _chipSpawner;
+    readonly IChipManager _chipManager;
     
-    public FieldGenerator (IChipManager chipSpawner)
+    public FieldGenerator (IChipManager chipManager)
     {
-        _chipSpawner = chipSpawner;
+        _chipManager = chipManager;
     }
 
-    public Field GenerateField(FieldGenerationRules rules)
+    public async Task<Field> GenerateFieldAsync(FieldGenerationRules rules)
     {
         var NewField = new Field(rules.Xsize, rules.Ysize);
 
@@ -19,12 +21,12 @@ public class FieldGenerator : IFieldGenerator
             for (int y = 0; y < rules.Ysize; y++)
             {
                 NormalChipType type = GetTypeWithoutMatches(NewField, x, y);
-                NewField.FieldMatrix[x, y] = _chipSpawner.SpawnNormalChip(type, x, y);
+                NewField.FieldMatrix[x, y] = _chipManager.SpawnNormalChip(type, x, y);
             }
         }
 
         //Debug.LogFormat("Field [{0},{1}] with {2} elements Generated in Field Generator", rules.Xsize, rules.Ysize, rules.ChipTypes.Count);
-
+        await new WaitForEndOfFrame();
         return NewField;
     }
 

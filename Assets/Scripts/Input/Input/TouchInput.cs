@@ -145,7 +145,7 @@ public class TouchInput : MonoBehaviour, ITouchInput
         }
         catch (Exception e)
         {
-            Debug.LogErrorFormat("{0} Exception caught.", e);
+            Debug.LogErrorFormat("AHTUNG: {0}", e);
             Debug.LogErrorFormat("Trying to swap {0} and {1}", chipObj1, chipObj2);
         }
     }

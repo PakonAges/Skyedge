@@ -17,7 +17,7 @@ public class HotKeyInput : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(GenerateField))
         {
-            _fieldSceneController.GenerateField();
+            _fieldSceneController.GenerateFieldAsync();
         }
         else if (Input.GetKeyDown(FindCombos))
         {

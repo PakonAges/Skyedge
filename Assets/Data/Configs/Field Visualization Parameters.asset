@@ -23,6 +23,6 @@ MonoBehaviour:
   DarkCellBg: {fileID: 21300000, guid: aad3c802aea623148a5577c73b8781bf, type: 3}
   ScreenMargin: 0.1
   MaxChipSizeInUnits: 1
-  MovementDuration: 0.1
+  MovementDuration: 0.16
   SwapDuration: 0.3
   SpawnDuration: 0.1

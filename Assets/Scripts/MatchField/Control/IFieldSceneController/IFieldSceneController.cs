@@ -1,6 +1,8 @@
-﻿public interface IFieldSceneController
+﻿using System.Threading.Tasks;
+
+public interface IFieldSceneController
 {
-    void GenerateField();
+    Task GenerateFieldAsync();
     void ResetField();
     void FindCombos();//debug?
 }

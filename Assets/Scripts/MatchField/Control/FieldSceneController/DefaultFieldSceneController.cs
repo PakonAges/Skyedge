@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using System.Threading.Tasks;
+using Zenject;
 /// <summary>
 /// Passing commands to change Global Field State. Doesn't care about implementation details of modules
 /// </summary>
@@ -40,7 +41,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         _chipPositioner.SetupChipParameters(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
     }
 
-    public void GenerateField()
+    public async Task GenerateFieldAsync()
     {
         if (GameField != null)
         {
@@ -51,7 +52,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
             ShowBackGround();
         }
 
-        GameField = _fieldGenerator.GenerateField(_fieldGenerationRules);
+        GameField = await _fieldGenerator.GenerateFieldAsync(_fieldGenerationRules);
         _chipMovement.GameField = this.GameField;
         _matchChecker.GameField = this.GameField;
         _fieldCleaner.GameField = this.GameField;
