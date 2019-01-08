@@ -2,11 +2,12 @@
 using UnityEngine;
 using Zenject;
 
-public class Chip : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable
+public class Chip : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable, IChip
 {
     IMemoryPool _pool;
 
-    public Vector3 Position { set { transform.position = value; } } //Should change in Move method, not directly
+    public Vector3 Position {set { transform.position = value; } } //Should change in Move method, not directly
+
     public float Scale
     {
         set
