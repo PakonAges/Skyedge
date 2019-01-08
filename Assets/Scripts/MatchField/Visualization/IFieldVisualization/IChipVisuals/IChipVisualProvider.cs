@@ -2,6 +2,6 @@
 
 public interface IChipVisualProvider
 {
-    Sprite GetChipSprite(NormalChipType fieldItemType);
+    Sprite GetChipSprite(ChipColor fieldItemType);
 
 }

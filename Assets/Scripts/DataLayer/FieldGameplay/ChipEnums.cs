@@ -6,7 +6,7 @@
     Enemy
 }
 
-public enum NormalChipType
+public enum ChipColor
 {
     Food,
     Crystal,

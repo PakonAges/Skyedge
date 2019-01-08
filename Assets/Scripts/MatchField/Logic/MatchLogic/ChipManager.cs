@@ -75,7 +75,7 @@ public class ChipManager : IChipManager
         return null;
     }
 
-    public Chip SpawnNormalChip(NormalChipType normalType, int Xpos, int Ypos)
+    public Chip SpawnNormalChip(ChipColor normalType, int Xpos, int Ypos)
     {
         try
         {

@@ -9,7 +9,7 @@ public class ChipPainter : IChipPainter
         _chipVisualProvider = chipVisualProvider;
     }
 
-    public void Paint(Chip chip, NormalChipType newType)
+    public void Paint(Chip chip, ChipColor newType)
     {
         var sr = chip.GetComponentInChildren<SpriteRenderer>();
         sr.sprite = _chipVisualProvider.GetChipSprite(newType);
@@ -26,7 +26,7 @@ public class ChipPainter : IChipPainter
     public void PaintRandomType(Chip chip)
     {
         var sr = chip.GetComponentInChildren<SpriteRenderer>();
-        var newType = (NormalChipType)Random.Range(0, (int)NormalChipType.Total);
+        var newType = (ChipColor)Random.Range(0, (int)ChipColor.Total);
         sr.sprite = _chipVisualProvider.GetChipSprite(newType);
         chip.NormalChipType = newType;
         sr.enabled = true;

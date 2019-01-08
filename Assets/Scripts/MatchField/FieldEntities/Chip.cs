@@ -7,7 +7,7 @@ public class Chip : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable, IChip
     IMemoryPool _pool;
 
     public Vector3 Position {set { transform.position = value; } } //Should change in Move method, not directly
-
+    public GameObject MyGo => throw new System.NotImplementedException();
     public float Scale
     {
         set
@@ -17,7 +17,7 @@ public class Chip : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable, IChip
     }
 
     public ChipType ChipType { get; set; }
-    public NormalChipType NormalChipType { get; set; }
+    public ChipColor NormalChipType { get; set; }
     public bool IsMovable { get; set; }
     public bool IsColored { get; set; }
     public bool IsClearable { get; set; }

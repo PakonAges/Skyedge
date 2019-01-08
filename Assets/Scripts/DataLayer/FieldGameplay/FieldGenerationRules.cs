@@ -7,7 +7,7 @@ public class FieldGenerationRules
     public int Ysize { get; }
     public Sprite BackgroundImage { get; }
     public List<ChipType> ChipTypes;
-    public IHeroSpawnStrategy HeroSpawnStrategy { get; }
+    //public IHeroSpawnStrategy HeroSpawnStrategy { get; }
     //Possible Items
     //Predefined position
     //Win/Lose Conditions

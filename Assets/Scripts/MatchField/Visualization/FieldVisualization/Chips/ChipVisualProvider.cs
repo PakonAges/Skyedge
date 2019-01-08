@@ -9,7 +9,7 @@ public class ChipVisualProvider : IChipVisualProvider
         _fieldItemCollection = fieldItemCollection;
     }
 
-    public Sprite GetChipSprite(NormalChipType type)
+    public Sprite GetChipSprite(ChipColor type)
     {
         return _fieldItemCollection.GetChipImage(type);
     }

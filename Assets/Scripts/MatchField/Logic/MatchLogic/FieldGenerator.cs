@@ -20,7 +20,7 @@ public class FieldGenerator : IFieldGenerator
         {
             for (int y = 0; y < rules.Ysize; y++)
             {
-                NormalChipType type = GetTypeWithoutMatches(NewField, x, y);
+                ChipColor type = GetTypeWithoutMatches(NewField, x, y);
                 NewField.FieldMatrix[x, y] = _chipManager.SpawnNormalChip(type, x, y);
             }
         }
@@ -30,7 +30,7 @@ public class FieldGenerator : IFieldGenerator
         return NewField;
     }
 
-    NormalChipType GetTypeWithoutMatches(Field field, int x, int y)
+    ChipColor GetTypeWithoutMatches(Field field, int x, int y)
     {
         var Type = GetRandomType();
 
@@ -60,12 +60,14 @@ public class FieldGenerator : IFieldGenerator
         }
     }
 
-    private bool HasMatchNeedsToChange(Field field, NormalChipType type, int x, int y)
+    private bool HasMatchNeedsToChange(Field field, ChipColor type, int x, int y)
     {
         //check left
         if (x >= 2)
         {
             if (field.FieldMatrix[x - 1, y].NormalChipType == type && field.FieldMatrix[x - 2, y].NormalChipType == type)
+                // so if it is a normal chip? if not -> break. ok
+                //But! how can I compare IChip with IChip?
             {
                 return true;
             }
@@ -84,16 +86,16 @@ public class FieldGenerator : IFieldGenerator
     }
 
 
-    private NormalChipType NewTypeWithout(NormalChipType bannedType)
+    private ChipColor NewTypeWithout(ChipColor bannedType)
     {
-        List<NormalChipType> possibleTypes = new List<NormalChipType>();
+        List<ChipColor> possibleTypes = new List<ChipColor>();
 
         //foreach (NormalChipType t in (NormalChipType[])Enum.GetValues(typeof(NormalChipType)))
-        foreach (NormalChipType t in Enum.GetValues(typeof(NormalChipType)))
+        foreach (ChipColor t in Enum.GetValues(typeof(ChipColor)))
         {
             if (t != bannedType)
             {
-                if (t != NormalChipType.Total)
+                if (t != ChipColor.Total)
                 {
                     possibleTypes.Add(t);
                 }
@@ -104,18 +106,18 @@ public class FieldGenerator : IFieldGenerator
         return possibleTypes[i];
     }
 
-    private NormalChipType NewTypeWithout(NormalChipType type, NormalChipType newType)
+    private ChipColor NewTypeWithout(ChipColor type, ChipColor newType)
     {
-        List<NormalChipType> possibleTypes = new List<NormalChipType>();
+        List<ChipColor> possibleTypes = new List<ChipColor>();
         //foreach (NormalChipType t in (NormalChipType[])Enum.GetValues(typeof(NormalChipType)))
 
-        foreach (NormalChipType t in Enum.GetValues(typeof(NormalChipType)))
+        foreach (ChipColor t in Enum.GetValues(typeof(ChipColor)))
         {
             if (t != type)
             {
                 if (t != newType)
                 {
-                    if (t != NormalChipType.Total)
+                    if (t != ChipColor.Total)
                     {
                         possibleTypes.Add(t);
                     }
@@ -127,8 +129,8 @@ public class FieldGenerator : IFieldGenerator
         return possibleTypes[i];
     }
 
-    NormalChipType GetRandomType()
+    ChipColor GetRandomType()
     {
-        return (NormalChipType)UnityEngine.Random.Range(0, (int)NormalChipType.Total);
+        return (ChipColor)UnityEngine.Random.Range(0, (int)ChipColor.Total);
     }
 }

@@ -9,7 +9,7 @@ public class NormalChipCollection : ScriptableObject
     [Header("Normal Chips Mapping")]
     public NormalChipVisual[] NormalChipVisual;
 
-    public Sprite GetChipImage(NormalChipType type)
+    public Sprite GetChipImage(ChipColor type)
     {
         for (int i = 0; i < NormalChipVisual.Length; i++)
         {
@@ -27,6 +27,6 @@ public class NormalChipCollection : ScriptableObject
 [System.Serializable]
 public struct NormalChipVisual
 {
-    public NormalChipType Type;
+    public ChipColor Type;
     public Sprite Image;
 }

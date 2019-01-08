@@ -13,7 +13,7 @@ public class MatchChecker : IMatchChecker
 
         if (chip.IsColored)
         {
-            NormalChipType color = chip.NormalChipType;
+            ChipColor color = chip.NormalChipType;
 
             //Check Horizontal
             _horizontalChips.Add(chip);
