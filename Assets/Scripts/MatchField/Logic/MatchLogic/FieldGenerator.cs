@@ -6,10 +6,13 @@ using UnityEngine;
 public class FieldGenerator : IFieldGenerator
 {
     readonly IChipManager _chipManager;
+    readonly IChipInfoService _chipComparer;
     
-    public FieldGenerator (IChipManager chipManager)
+    public FieldGenerator ( IChipManager chipManager,
+                            IChipInfoService chipComparer)
     {
         _chipManager = chipManager;
+        _chipComparer = chipComparer;
     }
 
     public async Task<Field> GenerateFieldAsync(FieldGenerationRules rules)
@@ -32,7 +35,7 @@ public class FieldGenerator : IFieldGenerator
 
     ChipColor GetTypeWithoutMatches(Field field, int x, int y)
     {
-        var Type = GetRandomType();
+        var Type = GetRandomColor();
 
         if (x < 2 && y < 2)
         {
@@ -46,7 +49,7 @@ public class FieldGenerator : IFieldGenerator
 
                 if (HasMatchNeedsToChange(field, newType, x, y))
                 {
-                    return NewTypeWithout(Type, newType);
+                    return NewColorWithout(Type, newType);
                 }
                 else
                 {
@@ -60,14 +63,16 @@ public class FieldGenerator : IFieldGenerator
         }
     }
 
-    private bool HasMatchNeedsToChange(Field field, ChipColor type, int x, int y)
+
+    private bool HasMatchNeedsToChange(Field field, ChipColor color, int x, int y)
     {
-        //check left
+        /// The board is filled from Left to Right, and from Top to Bottom.
+        /// So I need to check only chips to the left and above new Chip for combos.
+        /// And I can skip first 2 chips 
+
         if (x >= 2)
         {
-            if (field.FieldMatrix[x - 1, y].NormalChipType == type && field.FieldMatrix[x - 2, y].NormalChipType == type)
-                // so if it is a normal chip? if not -> break. ok
-                //But! how can I compare IChip with IChip?
+            if (_chipComparer.IsColored(field.FieldMatrix[x - 1, y], color) && _chipComparer.IsColored(field.FieldMatrix[x - 2, y], color))
             {
                 return true;
             }
@@ -76,7 +81,7 @@ public class FieldGenerator : IFieldGenerator
         //check top
         if (y >= 2)
         {
-            if (field.FieldMatrix[x, y - 1].NormalChipType == type && field.FieldMatrix[x, y - 2].NormalChipType == type)
+            if (_chipComparer.IsColored(field.FieldMatrix[x, y - 1], color) && _chipComparer.IsColored(field.FieldMatrix[x, y - 2], color))
             {
                 return true;
             }
@@ -86,50 +91,49 @@ public class FieldGenerator : IFieldGenerator
     }
 
 
-    private ChipColor NewTypeWithout(ChipColor bannedType)
+    private ChipColor NewTypeWithout(ChipColor bannedColor)
     {
-        List<ChipColor> possibleTypes = new List<ChipColor>();
+        List<ChipColor> possibleColors = new List<ChipColor>();
 
         //foreach (NormalChipType t in (NormalChipType[])Enum.GetValues(typeof(NormalChipType)))
         foreach (ChipColor t in Enum.GetValues(typeof(ChipColor)))
         {
-            if (t != bannedType)
+            if (t != bannedColor)
             {
                 if (t != ChipColor.Total)
                 {
-                    possibleTypes.Add(t);
+                    possibleColors.Add(t);
                 }
             }
         }
 
-        int i = UnityEngine.Random.Range(0, possibleTypes.Count);
-        return possibleTypes[i];
+        int i = UnityEngine.Random.Range(0, possibleColors.Count);
+        return possibleColors[i];
     }
 
-    private ChipColor NewTypeWithout(ChipColor type, ChipColor newType)
+    private ChipColor NewColorWithout(ChipColor color, ChipColor newColor)
     {
-        List<ChipColor> possibleTypes = new List<ChipColor>();
-        //foreach (NormalChipType t in (NormalChipType[])Enum.GetValues(typeof(NormalChipType)))
+        List<ChipColor> possibleColors = new List<ChipColor>();
 
         foreach (ChipColor t in Enum.GetValues(typeof(ChipColor)))
         {
-            if (t != type)
+            if (t != color)
             {
-                if (t != newType)
+                if (t != newColor)
                 {
                     if (t != ChipColor.Total)
                     {
-                        possibleTypes.Add(t);
+                        possibleColors.Add(t);
                     }
                 }
             }
         }
 
-        int i = UnityEngine.Random.Range(0, possibleTypes.Count);
-        return possibleTypes[i];
+        int i = UnityEngine.Random.Range(0, possibleColors.Count);
+        return possibleColors[i];
     }
 
-    ChipColor GetRandomType()
+    ChipColor GetRandomColor()
     {
         return (ChipColor)UnityEngine.Random.Range(0, (int)ChipColor.Total);
     }

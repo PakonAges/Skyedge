@@ -35,7 +35,6 @@ public class FieldFiller : IFieldFiller
     async Task<bool> FillStepAsync()
     {
         bool movedChip = false;
-        //FillDirection = FieldFillDirection.RightToLeft; //Debuging!
 
         //Point to refactor sometime
         switch (FillDirection)
@@ -45,11 +44,11 @@ public class FieldFiller : IFieldFiller
             {
                 for (int x = 0; x < GameField.Xsize; x++)
                 {
-                    Chip chip = GameField.FieldMatrix[x, y];
+                    Chip chip = GameField.FieldMatrix[x, y].MyGo.GetComponent<Chip>();
 
                     if (chip.IsMovable)
                     {
-                        Chip chipBelow = GameField.FieldMatrix[x, y + 1];
+                        Chip chipBelow = GameField.FieldMatrix[x, y + 1].MyGo.GetComponent<Chip>();
 
                         if (chipBelow.ChipType == ChipType.EmptyCell)
                         {
@@ -68,7 +67,7 @@ public class FieldFiller : IFieldFiller
             //Check Top Row
             for (int x = 0; x < GameField.Xsize; x++)
             {
-                Chip TopRowChip = GameField.FieldMatrix[x, 0];
+                Chip TopRowChip = GameField.FieldMatrix[x, 0].MyGo.GetComponent<Chip>();
 
                 if (TopRowChip.ChipType == ChipType.EmptyCell)
                 {
@@ -87,11 +86,11 @@ public class FieldFiller : IFieldFiller
             {
                 for (int x = 0; x < GameField.Xsize; x++)
                 {
-                    Chip chip = GameField.FieldMatrix[x, y];
+                    Chip chip = GameField.FieldMatrix[x, y].MyGo.GetComponent<Chip>();
 
                     if (chip.IsMovable)
                     {
-                        Chip chipAbove = GameField.FieldMatrix[x, y - 1];
+                        Chip chipAbove = GameField.FieldMatrix[x, y - 1].MyGo.GetComponent<Chip>();
 
                         if (chipAbove.ChipType == ChipType.EmptyCell)
                         {
@@ -110,7 +109,7 @@ public class FieldFiller : IFieldFiller
             //Check Bot Row
             for (int x = 0; x < GameField.Xsize; x++)
             {
-                Chip BotRowChip = GameField.FieldMatrix[x, GameField.Ysize - 1];
+                Chip BotRowChip = GameField.FieldMatrix[x, GameField.Ysize - 1].MyGo.GetComponent<Chip>();
 
                 if (BotRowChip.ChipType == ChipType.EmptyCell)
                 {
@@ -129,11 +128,11 @@ public class FieldFiller : IFieldFiller
             {
                 for (int y = 0; y < GameField.Ysize; y++)
                 {
-                    Chip chip = GameField.FieldMatrix[x, y];
+                    Chip chip = GameField.FieldMatrix[x, y].MyGo.GetComponent<Chip>();
 
                     if (chip.IsMovable)
                     {
-                        Chip chipToTheRight = GameField.FieldMatrix[x +1, y];
+                        Chip chipToTheRight = GameField.FieldMatrix[x +1, y].MyGo.GetComponent<Chip>();
 
                         if (chipToTheRight.ChipType == ChipType.EmptyCell)
                         {
@@ -152,7 +151,7 @@ public class FieldFiller : IFieldFiller
             //Check Left Column
             for (int y = 0; y < GameField.Ysize; y++)
             {
-                Chip LeftColumnChip = GameField.FieldMatrix[0, y];
+                Chip LeftColumnChip = GameField.FieldMatrix[0, y].MyGo.GetComponent<Chip>();
 
                 if (LeftColumnChip.ChipType == ChipType.EmptyCell)
                 {
@@ -172,11 +171,11 @@ public class FieldFiller : IFieldFiller
             {
                 for (int y = 0; y < GameField.Ysize; y++)
                 {
-                    Chip chip = GameField.FieldMatrix[x, y];
+                    Chip chip = GameField.FieldMatrix[x, y].MyGo.GetComponent<Chip>();
 
                     if (chip.IsMovable)
                     {
-                        Chip chipToTheLeft = GameField.FieldMatrix[x - 1, y];
+                        Chip chipToTheLeft = GameField.FieldMatrix[x - 1, y].MyGo.GetComponent<Chip>();
 
                         if (chipToTheLeft.ChipType == ChipType.EmptyCell)
                         {
@@ -195,7 +194,7 @@ public class FieldFiller : IFieldFiller
             //Check Right Column
             for (int y = 0; y < GameField.Ysize; y++)
             {
-                Chip RightColumnChip = GameField.FieldMatrix[GameField.Xsize - 1, y];
+                Chip RightColumnChip = GameField.FieldMatrix[GameField.Xsize - 1, y].MyGo.GetComponent<Chip>();
 
                 if (RightColumnChip.ChipType == ChipType.EmptyCell)
                 {

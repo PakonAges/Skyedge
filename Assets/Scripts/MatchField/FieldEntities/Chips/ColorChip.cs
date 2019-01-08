@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
-
+/// <summary>
+/// Color is a generic chip to fill the board and do matches
+/// </summary>
 public class ColorChip : MonoBehaviour, IChip
 {
     //IChip properties

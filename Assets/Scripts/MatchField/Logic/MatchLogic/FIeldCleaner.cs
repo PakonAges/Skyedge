@@ -6,19 +6,19 @@ using UnityEngine;
 public class FIeldCleaner : IFieldCleaner
 {
     public Field GameField { get; set; }
-    readonly IChipManager _chipManager;
+    readonly IChipManager _colorChipManager;
     readonly IMatchChecker _matchChecker;
     readonly IFieldFiller _fieldFiller;
-    List<Chip> _matches;
+    List<ColorChip> _matches;
 
     public FIeldCleaner(IChipManager chipManager,
                         IMatchChecker matchChecker,
                         IFieldFiller fieldFiller)
     {
-        _chipManager = chipManager;
+        _colorChipManager = chipManager;
         _matchChecker = matchChecker;
         _fieldFiller = fieldFiller;
-        _matches = new List<Chip>();
+        _matches = new List<ColorChip>();
     }
 
     public async void ClearAndRefillBoard()
@@ -68,7 +68,7 @@ public class FIeldCleaner : IFieldCleaner
         if (GameField.FieldMatrix[x, y].IsClearable) //check for isBeingCleared?
         {
             RemoveChip(GameField.FieldMatrix[x, y]);
-            _chipManager.SpawnEmptyChip(x, y);
+            _colorChipManager.SpawnEmptyChip(x, y);
             await new WaitForEndOfFrame();
             return true;
         }
@@ -78,9 +78,26 @@ public class FIeldCleaner : IFieldCleaner
         }
     }
 
-    void RemoveChip(Chip chip)
+    void RemoveChip(IChip chip)
     {
-        _chipManager.RemoveChip(chip);
+        switch (chip.ChipType)
+        {
+            case ChipType.ColorChip:
+            _colorChipManager.RemoveChip(chip.MyGo.GetComponent<Chip>());
+            break;
+
+            case ChipType.EmptyCell:
+            break;
+
+            case ChipType.Hero:
+            break;
+
+            case ChipType.Enemy:
+            break;
+
+            default:
+            break;
+        }
     }
 
     public void ChangeFillDirection(int chip1_x, int chip1_y, int chip2_x, int chip2_y)

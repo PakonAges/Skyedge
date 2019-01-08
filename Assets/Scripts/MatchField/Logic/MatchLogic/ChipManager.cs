@@ -59,7 +59,7 @@ public class ChipManager : IChipManager
             newChip.name = "Rand Chip [" + Xpos + ";" + Ypos + "]";
             newChip.Scale = _chipPositioner.ChipSize;
             newChip.Position = _chipPositioner.GetPosition(Xpos, Ypos);
-            newChip.InitChip(ChipType.NormalChip, Xpos, Ypos);
+            newChip.InitChip(ChipType.ColorChip, Xpos, Ypos);
             newChip.IsMovable = true;
             newChip.IsColored = true;
             newChip.IsClearable = true;
@@ -83,7 +83,7 @@ public class ChipManager : IChipManager
             newChip.name = "N Chip [" + Xpos + ";" + Ypos + "]";
             newChip.Scale = _chipPositioner.ChipSize;
             newChip.Position = _chipPositioner.GetPosition(Xpos, Ypos);
-            newChip.InitChip(ChipType.NormalChip, Xpos, Ypos);
+            newChip.InitChip(ChipType.ColorChip, Xpos, Ypos);
             newChip.IsMovable = true;
             newChip.IsColored = true;
             newChip.IsClearable = true;

@@ -2,21 +2,34 @@
 
 public class MatchChecker : IMatchChecker
 {
-    public Field GameField { get; set; }
-    List<Chip> _horizontalChips = new List<Chip>();
-    List<Chip> _verticalChips = new List<Chip>();
-    List<Chip> _matchingChips = new List<Chip>();
+    readonly IChipInfoService _chipServise;
 
-    public List<Chip> GetMatch(Chip chip)
+    public Field GameField { get; set; }
+    List<ColorChip> _horizontalChips = new List<ColorChip>();
+    List<ColorChip> _verticalChips = new List<ColorChip>();
+    List<ColorChip> _matchingChips = new List<ColorChip>();
+
+    public MatchChecker (IChipInfoService chipComparer)
+    {
+        _chipServise = chipComparer;
+    }
+
+    /// <summary>
+    /// I can check any Ichip from the Field!
+    /// But only Color Chips create Combos
+    /// </summary>
+    /// <param name="chip"></param>
+    /// <returns>List of Matched Chips, if there is any</returns>
+    public List<ColorChip> GetMatch(IChip chip)
     {
         CleanUp();
 
-        if (chip.IsColored)
+        if (chip.ChipType == ChipType.ColorChip)
         {
-            ChipColor color = chip.NormalChipType;
+            ChipColor color = _chipServise.GetTypeData<ColorChip>(chip).Color;
 
             //Check Horizontal
-            _horizontalChips.Add(chip);
+            _horizontalChips.Add(_chipServise.GetTypeData<ColorChip>(chip));
 
             for (int dir = 0; dir <= 1; dir++)
             {
@@ -30,9 +43,9 @@ public class MatchChecker : IMatchChecker
                     else            { x = chip.X + xOffset; }
                     if (x < 0 || x >= GameField.Xsize) break;
 
-                    if (GameField.FieldMatrix[x, chip.Y].IsColored && GameField.FieldMatrix[x, chip.Y].NormalChipType == color)
+                    if (_chipServise.IsColored(GameField.FieldMatrix[x, chip.Y],color))
                     {
-                        _horizontalChips.Add(GameField.FieldMatrix[x, chip.Y]);
+                        _horizontalChips.Add(_chipServise.GetTypeData<ColorChip>(GameField.FieldMatrix[x, chip.Y]));
                     }
                     else break;
                 }
@@ -64,9 +77,9 @@ public class MatchChecker : IMatchChecker
                             else { y = chip.Y + yOffset; }
                             if (y < 0 || y >= GameField.Ysize) break;
 
-                            if (GameField.FieldMatrix[_horizontalChips[i].X, y].IsColored && GameField.FieldMatrix[_horizontalChips[i].X, y].NormalChipType == color)
+                            if (_chipServise.IsColored(GameField.FieldMatrix[_horizontalChips[i].X, y], color))
                             {
-                                _verticalChips.Add(GameField.FieldMatrix[_horizontalChips[i].X, y]);
+                                _verticalChips.Add(_chipServise.GetTypeData<ColorChip>(GameField.FieldMatrix[_horizontalChips[i].X, y]));
                             }
                             else break;
                         }
@@ -97,7 +110,7 @@ public class MatchChecker : IMatchChecker
             // so now check vertically
             _horizontalChips.Clear();
             _verticalChips.Clear();
-            _verticalChips.Add(chip);
+            _verticalChips.Add(_chipServise.GetTypeData<ColorChip>(chip));
 
             //dir 0 = Up, 1 = Down
             for (int dir = 0; dir <= 1; dir++)
@@ -110,9 +123,9 @@ public class MatchChecker : IMatchChecker
                     else { y = chip.Y + yOffset; }
                     if (y < 0 || y >= GameField.Ysize) break;
 
-                    if (GameField.FieldMatrix[chip.X, y].IsColored && GameField.FieldMatrix[chip.X, y].NormalChipType == color)
+                    if(_chipServise.IsColored(GameField.FieldMatrix[chip.X, y],color))
                     {
-                        _verticalChips.Add(GameField.FieldMatrix[chip.X, y]);
+                        _verticalChips.Add(_chipServise.GetTypeData<ColorChip>(GameField.FieldMatrix[chip.X, y]));
                     }
                     else break;
                 }
@@ -142,9 +155,9 @@ public class MatchChecker : IMatchChecker
                             else { x = chip.X + xOffset; }
                             if (x < 0 || x >= GameField.Xsize) break;
 
-                            if (GameField.FieldMatrix[x, _verticalChips[i].Y].IsColored && GameField.FieldMatrix[x, _verticalChips[i].Y].NormalChipType == color)
+                            if(_chipServise.IsColored(GameField.FieldMatrix[x, _verticalChips[i].Y],color))
                             {
-                                _horizontalChips.Add(GameField.FieldMatrix[x, _verticalChips[i].Y]);
+                                _horizontalChips.Add(_chipServise.GetTypeData<ColorChip>(GameField.FieldMatrix[x, _verticalChips[i].Y]));
                             }
                             else break;
                         }

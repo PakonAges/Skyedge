@@ -3,5 +3,5 @@
 public interface IMatchChecker
 {
     Field GameField { get; set; }
-    List<Chip> GetMatch(Chip chip);
+    List<ColorChip> GetMatch(IChip chip);
 }
