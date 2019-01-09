@@ -8,7 +8,13 @@ using Zenject;
 public class ColorChip : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable, IChip
 {
     //IChip properties
-    public ChipType ChipType { get {return ChipType; } private set { value = ChipType.ColorChip; } }
+    ChipType _chipType;
+    public ChipType ChipType
+    {
+        get {return _chipType; }
+        private set { _chipType = ChipType.ColorChip; }
+    }
+
     public int X { get; set; }
     public int Y { get; set; }
     public bool IsMovable { get; set; }

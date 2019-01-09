@@ -3,7 +3,12 @@
 public class Hero : MonoBehaviour, IChip
 {
     //IChip properties
-    public ChipType ChipType { get { return ChipType; } private set { value = ChipType.Hero; } }
+    ChipType _chipType;
+    public ChipType ChipType
+    {
+        get { return _chipType; }
+        private set { _chipType = ChipType.Hero; }
+    }
     public int X { get; set; }
     public int Y { get; set; }
     public bool IsMovable { get; set; }
