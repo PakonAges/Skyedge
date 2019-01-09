@@ -20,8 +20,11 @@ public class EmptyChip : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable, ICh
     //Empty Chip properties
     IMemoryPool _pool;
 
-    public void InitChip(float Scale, Vector3 Position)
+    public void InitChip(int Xpos, int Ypos, float Scale, Vector3 Position)
     {
+        X = Xpos;
+        Y = Ypos;
+
         //Setup Scale
         GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(Scale, Scale, 1);
         GetComponent<BoxCollider2D>().size = new Vector2(Scale, Scale);

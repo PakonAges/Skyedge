@@ -30,8 +30,10 @@ public class ColorChip : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable, ICh
         _pool.Despawn(this);
     }
 
-    public void InitChip(float Scale, Vector3 Position)
+    public void InitChip(int Xpos, int Ypos, float Scale, Vector3 Position)
     {
+        X = Xpos;
+        Y = Ypos;
         //Setup Scale
         GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(Scale, Scale, 1);
         GetComponent<BoxCollider2D>().size = new Vector2(Scale, Scale);

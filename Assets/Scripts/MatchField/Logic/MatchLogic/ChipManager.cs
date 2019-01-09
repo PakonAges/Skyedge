@@ -37,9 +37,7 @@ public class ChipManager : IChipManager
         {
             var newChip = _emptyChipFactory.Create();
             newChip.name = "Empty Chip [" + Xpos + ";" + Ypos + "]";
-            newChip.X = Xpos;
-            newChip.Y = Ypos;
-            newChip.InitChip(_chipPositioner.ChipSize, _chipPositioner.GetPosition(Xpos, Ypos));
+            newChip.InitChip(Xpos, Ypos, _chipPositioner.ChipSize, _chipPositioner.GetPosition(Xpos, Ypos));
             newChip.IsMovable = false;
             newChip.IsClearable = false;
             _emptyChips.Add(newChip);
@@ -59,7 +57,7 @@ public class ChipManager : IChipManager
         {
             var newChip = _colorChipFactory.Create();
             newChip.name = "Rand Chip [" + Xpos + ";" + Ypos + "]";
-            newChip.InitChip(_chipPositioner.ChipSize, _chipPositioner.GetPosition(Xpos, Ypos));
+            newChip.InitChip(Xpos, Ypos, _chipPositioner.ChipSize, _chipPositioner.GetPosition(Xpos, Ypos));
             newChip.IsMovable = true;
             newChip.IsClearable = true;
             _normalChipPainter.PaintRandomColor(newChip);
@@ -80,7 +78,7 @@ public class ChipManager : IChipManager
         {
             var newChip = _colorChipFactory.Create();
             newChip.name = "Rand Chip [" + Xpos + ";" + Ypos + "]";
-            newChip.InitChip(_chipPositioner.ChipSize, _chipPositioner.GetPosition(Xpos, Ypos));
+            newChip.InitChip(Xpos, Ypos, _chipPositioner.ChipSize, _chipPositioner.GetPosition(Xpos, Ypos));
             newChip.IsMovable = true;
             newChip.IsClearable = true;
             _normalChipPainter.Paint(newChip, color);
