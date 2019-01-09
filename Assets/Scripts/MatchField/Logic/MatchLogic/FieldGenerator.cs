@@ -6,12 +6,15 @@ using UnityEngine;
 public class FieldGenerator : IFieldGenerator
 {
     readonly IChipManager _chipManager;
+    readonly IHeroSpawner _heroSpawner;
     readonly IChipInfoService _chipComparer;
     
     public FieldGenerator ( IChipManager chipManager,
+                            IHeroSpawner heroSpawner,
                             IChipInfoService chipComparer)
     {
         _chipManager = chipManager;
+        _heroSpawner = heroSpawner;
         _chipComparer = chipComparer;
     }
 
@@ -20,15 +23,21 @@ public class FieldGenerator : IFieldGenerator
         try
         {
             var NewField = new Field(rules.Xsize, rules.Ysize);
+            NewField.FieldMatrix[0, 0] = _heroSpawner.SpawnHero(0, 0);
 
             for (int x = 0; x < rules.Xsize; x++)
             {
                 for (int y = 0; y < rules.Ysize; y++)
                 {
-                    ChipColor type = GetTypeWithoutMatches(NewField, x, y);
-                    NewField.FieldMatrix[x, y] = _chipManager.SpawnColorChip(type, x, y);
+                    if (NewField.FieldMatrix[x,y] == null)
+                    {
+                        ChipColor type = GetTypeWithoutMatches(NewField, x, y);
+                        NewField.FieldMatrix[x, y] = _chipManager.SpawnColorChip(type, x, y);
+                    }
                 }
             }
+
+            
 
             //Debug.LogFormat("Field [{0},{1}] with {2} elements Generated in Field Generator", rules.Xsize, rules.Ysize, rules.ChipTypes.Count);
             await new WaitForEndOfFrame();

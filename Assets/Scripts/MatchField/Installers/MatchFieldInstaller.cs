@@ -14,6 +14,7 @@ public class MatchFieldInstaller : MonoInstaller
     [Header("Chips references")]
     public GameObject ColorChip;
     public GameObject EmptyChip;
+    public GameObject Hero;
 
     [Header("Assets Collection")]
     public ChipTypesCollection ItemCollection;
@@ -72,9 +73,11 @@ public class MatchFieldInstaller : MonoInstaller
     {
         //ChipSpawner
         Container.Bind<IChipManager>().To<ChipManager>().AsSingle();
+        Container.Bind<IHeroSpawner>().To<HeroSpawner>().AsSingle();
         //Container.BindFactory<Chip, Chip.Factory>().FromMonoPoolableMemoryPool<Chip>(x => x.WithInitialSize(64).FromComponentInNewPrefab(Chip));
         Container.BindFactory<ColorChip, ColorChip.Factory>().FromMonoPoolableMemoryPool<ColorChip>(x => x.WithInitialSize(64).FromComponentInNewPrefab(ColorChip));
         Container.BindFactory<EmptyChip, EmptyChip.Factory>().FromMonoPoolableMemoryPool<EmptyChip>(x => x.WithInitialSize(16).FromComponentInNewPrefab(EmptyChip));
+        Container.BindFactory<Hero, Hero.Factory>().FromMonoPoolableMemoryPool<Hero>(x => x.WithInitialSize(1).FromComponentInNewPrefab(Hero));
 
     }
 

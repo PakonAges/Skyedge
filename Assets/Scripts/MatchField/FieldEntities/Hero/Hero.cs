@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Zenject;
 
-public class Hero : MonoBehaviour, IChip
+public class Hero : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable, IChip
 {
     //IChip properties
     public ChipType ChipType { get; private set; }
@@ -10,6 +12,9 @@ public class Hero : MonoBehaviour, IChip
     public bool IsClearable { get; set; }
     public GameObject MyGo { get { return gameObject; } }
 
+    //Hero Properties
+    IMemoryPool _pool;
+
     public void InitChip(ChipType type, int Xpos, int Ypos, float Scale, Vector3 Position)
     {
         ChipType = type;
@@ -17,6 +22,9 @@ public class Hero : MonoBehaviour, IChip
         Y = Ypos;
 
         //Setup Scale
+
+        //TODO~ Add check for compoment!!
+        
         GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(Scale, Scale, 1);
         GetComponent<BoxCollider2D>().size = new Vector2(Scale, Scale);
 
@@ -26,6 +34,20 @@ public class Hero : MonoBehaviour, IChip
 
     public void Dispose()
     {
-        //Dispose
+        _pool.Despawn(this);
     }
+
+    public void OnSpawned(IMemoryPool pool)
+    {
+        _pool = pool;
+        //Init
+    }
+
+    public void OnDespawned()
+    {
+        _pool = null;
+        //reset
+    }
+
+    public class Factory : PlaceholderFactory<Hero> { }
 }
