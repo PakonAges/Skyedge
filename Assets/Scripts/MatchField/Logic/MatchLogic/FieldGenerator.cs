@@ -17,20 +17,29 @@ public class FieldGenerator : IFieldGenerator
 
     public async Task<Field> GenerateFieldAsync(FieldGenerationRules rules)
     {
-        var NewField = new Field(rules.Xsize, rules.Ysize);
-
-        for (int x = 0; x < rules.Xsize; x++)
+        try
         {
-            for (int y = 0; y < rules.Ysize; y++)
-            {
-                ChipColor type = GetTypeWithoutMatches(NewField, x, y);
-                NewField.FieldMatrix[x, y] = _chipManager.SpawnColorChip(type, x, y);
-            }
-        }
+            var NewField = new Field(rules.Xsize, rules.Ysize);
 
-        //Debug.LogFormat("Field [{0},{1}] with {2} elements Generated in Field Generator", rules.Xsize, rules.Ysize, rules.ChipTypes.Count);
-        await new WaitForEndOfFrame();
-        return NewField;
+            for (int x = 0; x < rules.Xsize; x++)
+            {
+                for (int y = 0; y < rules.Ysize; y++)
+                {
+                    ChipColor type = GetTypeWithoutMatches(NewField, x, y);
+                    NewField.FieldMatrix[x, y] = _chipManager.SpawnColorChip(type, x, y);
+                }
+            }
+
+            //Debug.LogFormat("Field [{0},{1}] with {2} elements Generated in Field Generator", rules.Xsize, rules.Ysize, rules.ChipTypes.Count);
+            await new WaitForEndOfFrame();
+            return NewField;
+
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e);
+            throw;
+        }
     }
 
     ChipColor GetTypeWithoutMatches(Field field, int x, int y)
