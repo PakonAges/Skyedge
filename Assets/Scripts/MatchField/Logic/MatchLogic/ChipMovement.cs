@@ -18,16 +18,16 @@ public class ChipMovement : IChipMovement
         _swapDuration = fieldVisualizationParameters.SwapDuration;
     }
 
-    public async Task MoveAsync(Chip chip, int newX, int newY)
+    public async Task MoveAsync(IChip chip, int newX, int newY)
     {
         chip.X = newX;
         chip.Y = newY;
 
-        chip.gameObject.transform.DOMove(_chipPositionProvider.GetPosition(newX, newY), _movementDuration);
+        chip.MyGo.transform.DOMove(_chipPositionProvider.GetPosition(newX, newY), _movementDuration);
         await new WaitForEndOfFrame();
     }
 
-    public async Task<bool> SwapAsync(Chip chip1, Chip chip2)
+    public async Task<bool> SwapAsync(IChip chip1, IChip chip2)
     {
         int tempX = chip1.X;
         int tempY = chip1.Y;
@@ -42,8 +42,8 @@ public class ChipMovement : IChipMovement
             chip2.X = tempX;
             chip2.Y = tempY;
 
-            chip1.gameObject.transform.DOMove(_chipPositionProvider.GetPosition(chip1.X, chip1.Y), _swapDuration);
-            chip2.gameObject.transform.DOMove(_chipPositionProvider.GetPosition(chip2.X, chip2.Y), _swapDuration);
+            chip1.MyGo.transform.DOMove(_chipPositionProvider.GetPosition(chip1.X, chip1.Y), _swapDuration);
+            chip2.MyGo.transform.DOMove(_chipPositionProvider.GetPosition(chip2.X, chip2.Y), _swapDuration);
             await new WaitForSeconds(_swapDuration);
         }
         return OnMovementDone();

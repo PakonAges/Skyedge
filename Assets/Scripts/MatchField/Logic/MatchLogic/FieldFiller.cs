@@ -44,13 +44,13 @@ public class FieldFiller : IFieldFiller
             {
                 for (int x = 0; x < GameField.Xsize; x++)
                 {
-                    Chip chip = GameField.FieldMatrix[x, y].MyGo.GetComponent<Chip>();
+                    IChip chip = GameField.FieldMatrix[x, y];
 
                     if (chip.IsMovable)
                     {
-                        Chip chipBelow = GameField.FieldMatrix[x, y + 1].MyGo.GetComponent<Chip>();
+                        IChip chipBelow = GameField.FieldMatrix[x, y + 1];
 
-                        if (chipBelow.ChipType == ChipType.EmptyCell)
+                        if (chipBelow.ChipType == ChipType.EmptyChip)
                         {
                             _chipManager.RemoveChip(chipBelow);
 
@@ -67,9 +67,9 @@ public class FieldFiller : IFieldFiller
             //Check Top Row
             for (int x = 0; x < GameField.Xsize; x++)
             {
-                Chip TopRowChip = GameField.FieldMatrix[x, 0].MyGo.GetComponent<Chip>();
+                IChip TopRowChip = GameField.FieldMatrix[x, 0];
 
-                if (TopRowChip.ChipType == ChipType.EmptyCell)
+                if (TopRowChip.ChipType == ChipType.EmptyChip)
                 {
                     _chipManager.RemoveChip(TopRowChip);
                     var newChip = _chipManager.SpawnRandomChip(x, -1);
@@ -86,13 +86,13 @@ public class FieldFiller : IFieldFiller
             {
                 for (int x = 0; x < GameField.Xsize; x++)
                 {
-                    Chip chip = GameField.FieldMatrix[x, y].MyGo.GetComponent<Chip>();
+                    IChip chip = GameField.FieldMatrix[x, y];
 
                     if (chip.IsMovable)
                     {
-                        Chip chipAbove = GameField.FieldMatrix[x, y - 1].MyGo.GetComponent<Chip>();
+                        IChip chipAbove = GameField.FieldMatrix[x, y - 1];
 
-                        if (chipAbove.ChipType == ChipType.EmptyCell)
+                        if (chipAbove.ChipType == ChipType.EmptyChip)
                         {
                             _chipManager.RemoveChip(chipAbove); //!
 
@@ -109,9 +109,9 @@ public class FieldFiller : IFieldFiller
             //Check Bot Row
             for (int x = 0; x < GameField.Xsize; x++)
             {
-                Chip BotRowChip = GameField.FieldMatrix[x, GameField.Ysize - 1].MyGo.GetComponent<Chip>();
+                IChip BotRowChip = GameField.FieldMatrix[x, GameField.Ysize - 1];
 
-                if (BotRowChip.ChipType == ChipType.EmptyCell)
+                if (BotRowChip.ChipType == ChipType.EmptyChip)
                 {
                     _chipManager.RemoveChip(BotRowChip);
                     var newChip = _chipManager.SpawnRandomChip(x, GameField.Ysize);
@@ -128,13 +128,13 @@ public class FieldFiller : IFieldFiller
             {
                 for (int y = 0; y < GameField.Ysize; y++)
                 {
-                    Chip chip = GameField.FieldMatrix[x, y].MyGo.GetComponent<Chip>();
+                    IChip chip = GameField.FieldMatrix[x, y];
 
                     if (chip.IsMovable)
                     {
-                        Chip chipToTheRight = GameField.FieldMatrix[x +1, y].MyGo.GetComponent<Chip>();
+                        IChip chipToTheRight = GameField.FieldMatrix[x +1, y];
 
-                        if (chipToTheRight.ChipType == ChipType.EmptyCell)
+                        if (chipToTheRight.ChipType == ChipType.EmptyChip)
                         {
                             _chipManager.RemoveChip(chipToTheRight);
 
@@ -151,9 +151,9 @@ public class FieldFiller : IFieldFiller
             //Check Left Column
             for (int y = 0; y < GameField.Ysize; y++)
             {
-                Chip LeftColumnChip = GameField.FieldMatrix[0, y].MyGo.GetComponent<Chip>();
+                IChip LeftColumnChip = GameField.FieldMatrix[0, y];
 
-                if (LeftColumnChip.ChipType == ChipType.EmptyCell)
+                if (LeftColumnChip.ChipType == ChipType.EmptyChip)
                 {
                     _chipManager.RemoveChip(LeftColumnChip);
                     var newChip = _chipManager.SpawnRandomChip(-1, y);
@@ -171,13 +171,13 @@ public class FieldFiller : IFieldFiller
             {
                 for (int y = 0; y < GameField.Ysize; y++)
                 {
-                    Chip chip = GameField.FieldMatrix[x, y].MyGo.GetComponent<Chip>();
+                    IChip chip = GameField.FieldMatrix[x, y];
 
                     if (chip.IsMovable)
                     {
-                        Chip chipToTheLeft = GameField.FieldMatrix[x - 1, y].MyGo.GetComponent<Chip>();
+                        IChip chipToTheLeft = GameField.FieldMatrix[x - 1, y];
 
-                        if (chipToTheLeft.ChipType == ChipType.EmptyCell)
+                        if (chipToTheLeft.ChipType == ChipType.EmptyChip)
                         {
                             _chipManager.RemoveChip(chipToTheLeft);
 
@@ -194,9 +194,9 @@ public class FieldFiller : IFieldFiller
             //Check Right Column
             for (int y = 0; y < GameField.Ysize; y++)
             {
-                Chip RightColumnChip = GameField.FieldMatrix[GameField.Xsize - 1, y].MyGo.GetComponent<Chip>();
+                IChip RightColumnChip = GameField.FieldMatrix[GameField.Xsize - 1, y];
 
-                if (RightColumnChip.ChipType == ChipType.EmptyCell)
+                if (RightColumnChip.ChipType == ChipType.EmptyChip)
                 {
                     _chipManager.RemoveChip(RightColumnChip);
                     var newChip = _chipManager.SpawnRandomChip(GameField.Xsize, y);

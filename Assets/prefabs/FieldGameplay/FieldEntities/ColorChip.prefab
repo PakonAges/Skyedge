@@ -93,10 +93,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7465138680491725331}
-  - component: {fileID: 2333036981322950231}
   - component: {fileID: 3300762024857159126}
+  - component: {fileID: 5351773960895870237}
   m_Layer: 0
-  m_Name: Chip
+  m_Name: ColorChip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117,18 +117,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2333036981322950231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5634782991181554590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e348b4305b459a54a80bfa51f6915e77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &3300762024857159126
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -155,3 +143,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5351773960895870237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5634782991181554590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2659f9259d96d141882aba5d58a0d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

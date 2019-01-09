@@ -1,14 +1,46 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Zenject;
 
-public class EmptyChip : IChip
+public class EmptyChip : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable, IChip
 {
-    public int X { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-    public int Y { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-    public ChipType ChipType { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-    public bool IsMovable { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-    public bool IsClearable { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    //IChip properties
+    public ChipType ChipType { get { return ChipType; } private set { value = ChipType.EmptyChip; } }
+    public int X { get; set; }
+    public int Y { get; set; }
+    public bool IsMovable { get; set; }
+    public bool IsClearable { get; set; }
+    public GameObject MyGo { get { return gameObject; } }
 
-    public GameObject MyGo => throw new System.NotImplementedException();
+    //Empty Chip properties
+    IMemoryPool _pool;
 
-    GameObject IChip.MyGo => throw new System.NotImplementedException();
+    public void InitChip(float Scale, Vector3 Position)
+    {
+        //Setup Scale
+        GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(Scale, Scale, 1);
+        GetComponent<BoxCollider2D>().size = new Vector2(Scale, Scale);
+
+        //Setup World Position
+        MyGo.transform.position = Position;
+    }
+
+    public void Dispose()
+    {
+        _pool.Despawn(this);
+    }
+
+    public void OnSpawned(IMemoryPool pool)
+    {
+        _pool = pool;
+        //Init
+    }
+
+    public void OnDespawned()
+    {
+        _pool = null;
+        //reset
+    }
+
+    public class Factory : PlaceholderFactory<EmptyChip> { }
 }

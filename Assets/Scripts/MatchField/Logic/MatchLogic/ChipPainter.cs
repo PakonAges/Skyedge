@@ -9,26 +9,26 @@ public class ChipPainter : IChipPainter
         _chipVisualProvider = chipVisualProvider;
     }
 
-    public void Paint(Chip chip, ChipColor newType)
+    public void Paint(ColorChip chip, ChipColor color)
     {
         var sr = chip.GetComponentInChildren<SpriteRenderer>();
-        sr.sprite = _chipVisualProvider.GetChipSprite(newType);
-        chip.NormalChipType = newType;
+        sr.sprite = _chipVisualProvider.GetChipSprite(color);
+        chip.Color = color;
         sr.enabled = true;
     }
 
-    public void PaintEmptyChip(Chip chip)
-    {
-        var sr = chip.GetComponentInChildren<SpriteRenderer>();
-        sr.enabled = false;
-    }
+    //public void PaintEmptyChip(Chip chip)
+    //{
+    //    var sr = chip.GetComponentInChildren<SpriteRenderer>();
+    //    sr.enabled = false;
+    //}
 
-    public void PaintRandomType(Chip chip)
+    public void PaintRandomColor(ColorChip chip)
     {
         var sr = chip.GetComponentInChildren<SpriteRenderer>();
-        var newType = (ChipColor)Random.Range(0, (int)ChipColor.Total);
-        sr.sprite = _chipVisualProvider.GetChipSprite(newType);
-        chip.NormalChipType = newType;
+        var newColor = (ChipColor)Random.Range(0, (int)ChipColor.Total);
+        sr.sprite = _chipVisualProvider.GetChipSprite(newColor);
+        chip.Color = newColor;
         sr.enabled = true;
     }
 }

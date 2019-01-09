@@ -6,7 +6,7 @@ using UnityEngine;
 public class FIeldCleaner : IFieldCleaner
 {
     public Field GameField { get; set; }
-    readonly IChipManager _colorChipManager;
+    readonly IChipManager _chipManager;
     readonly IMatchChecker _matchChecker;
     readonly IFieldFiller _fieldFiller;
     List<ColorChip> _matches;
@@ -15,7 +15,7 @@ public class FIeldCleaner : IFieldCleaner
                         IMatchChecker matchChecker,
                         IFieldFiller fieldFiller)
     {
-        _colorChipManager = chipManager;
+        _chipManager = chipManager;
         _matchChecker = matchChecker;
         _fieldFiller = fieldFiller;
         _matches = new List<ColorChip>();
@@ -68,7 +68,7 @@ public class FIeldCleaner : IFieldCleaner
         if (GameField.FieldMatrix[x, y].IsClearable) //check for isBeingCleared?
         {
             RemoveChip(GameField.FieldMatrix[x, y]);
-            _colorChipManager.SpawnEmptyChip(x, y);
+            _chipManager.SpawnEmptyChip(x, y);
             await new WaitForEndOfFrame();
             return true;
         }
@@ -83,10 +83,10 @@ public class FIeldCleaner : IFieldCleaner
         switch (chip.ChipType)
         {
             case ChipType.ColorChip:
-            _colorChipManager.RemoveChip(chip.MyGo.GetComponent<Chip>());
+            _chipManager.RemoveChip(chip);
             break;
 
-            case ChipType.EmptyCell:
+            case ChipType.EmptyChip:
             break;
 
             case ChipType.Hero:

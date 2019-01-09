@@ -5,42 +5,44 @@ using UnityEngine;
 public class ChipManager : IChipManager
 {
     readonly float _spawnDuraion;
-    readonly Chip.Factory _chipFactory;
-    readonly List<Chip> _chips = new List<Chip>();
+    readonly ColorChip.Factory _colorChipFactory;
+    readonly EmptyChip.Factory _emptyChipFactory;
+    readonly List<ColorChip> _colorChips = new List<ColorChip>();
+    readonly List<EmptyChip> _emptyChips = new List<EmptyChip>();
     readonly IChipPrefabProvider _chipPrefabProvider;
     readonly IChipPositionProvider _chipPositioner;
     readonly IChipMovement _chipMovement;
     readonly IChipPainter _normalChipPainter;
 
-    public ChipManager( Chip.Factory chipFactory,
+    public ChipManager( ColorChip.Factory colorChipFactory,
+                        EmptyChip.Factory emptyChipFactory,
                         IChipPrefabProvider chipPrefabProvider,
                         IChipPositionProvider chipPositionProvider,
                         IChipMovement chipMovement,
                         IChipPainter normalChipPainter,
                         FieldVisualizationParameters fieldVisualizationParameters)
     {
-        _chipFactory = chipFactory;
+        _colorChipFactory = colorChipFactory;
+        _emptyChipFactory = emptyChipFactory;
         _chipPrefabProvider = chipPrefabProvider;
         _chipPositioner = chipPositionProvider;
         _chipMovement = chipMovement;
         _normalChipPainter = normalChipPainter;
         _spawnDuraion = fieldVisualizationParameters.SpawnDuration;
     }
-
-    public Chip SpawnEmptyChip(int Xpos, int Ypos)
+    
+    public IChip SpawnEmptyChip(int Xpos, int Ypos)
     {
         try
         {
-            var newChip = _chipFactory.Create();
+            var newChip = _emptyChipFactory.Create();
             newChip.name = "Empty Chip [" + Xpos + ";" + Ypos + "]";
-            newChip.Scale = _chipPositioner.ChipSize;
-            newChip.Position = _chipPositioner.GetPosition(Xpos, Ypos);
-            newChip.InitChip(ChipType.EmptyCell, Xpos, Ypos);
+            newChip.X = Xpos;
+            newChip.Y = Ypos;
+            newChip.InitChip(_chipPositioner.ChipSize, _chipPositioner.GetPosition(Xpos, Ypos));
             newChip.IsMovable = false;
-            newChip.IsColored = false;
             newChip.IsClearable = false;
-            _normalChipPainter.PaintEmptyChip(newChip);
-            _chips.Add(newChip);
+            _emptyChips.Add(newChip);
             return newChip;
         }
         catch (Exception e)
@@ -51,20 +53,17 @@ public class ChipManager : IChipManager
         return null;
     }
 
-    public Chip SpawnRandomChip(int Xpos, int Ypos)
+    public IChip SpawnRandomChip(int Xpos, int Ypos)
     {
         try
         {
-            var newChip = _chipFactory.Create();
+            var newChip = _colorChipFactory.Create();
             newChip.name = "Rand Chip [" + Xpos + ";" + Ypos + "]";
-            newChip.Scale = _chipPositioner.ChipSize;
-            newChip.Position = _chipPositioner.GetPosition(Xpos, Ypos);
-            newChip.InitChip(ChipType.ColorChip, Xpos, Ypos);
+            newChip.InitChip(_chipPositioner.ChipSize, _chipPositioner.GetPosition(Xpos, Ypos));
             newChip.IsMovable = true;
-            newChip.IsColored = true;
             newChip.IsClearable = true;
-            _normalChipPainter.PaintRandomType(newChip);
-            _chips.Add(newChip);
+            _normalChipPainter.PaintRandomColor(newChip);
+            _colorChips.Add(newChip);
             return newChip;
         }
         catch (Exception e)
@@ -75,20 +74,17 @@ public class ChipManager : IChipManager
         return null;
     }
 
-    public Chip SpawnNormalChip(ChipColor normalType, int Xpos, int Ypos)
+    public IChip SpawnColorChip(ChipColor color, int Xpos, int Ypos)
     {
         try
         {
-            var newChip = _chipFactory.Create();
-            newChip.name = "N Chip [" + Xpos + ";" + Ypos + "]";
-            newChip.Scale = _chipPositioner.ChipSize;
-            newChip.Position = _chipPositioner.GetPosition(Xpos, Ypos);
-            newChip.InitChip(ChipType.ColorChip, Xpos, Ypos);
+            var newChip = _colorChipFactory.Create();
+            newChip.name = "Rand Chip [" + Xpos + ";" + Ypos + "]";
+            newChip.InitChip(_chipPositioner.ChipSize, _chipPositioner.GetPosition(Xpos, Ypos));
             newChip.IsMovable = true;
-            newChip.IsColored = true;
             newChip.IsClearable = true;
-            _normalChipPainter.Paint(newChip, normalType);
-            _chips.Add(newChip);
+            _normalChipPainter.Paint(newChip, color);
+            _colorChips.Add(newChip);
             return newChip;
         }
         catch (Exception e)
@@ -99,9 +95,16 @@ public class ChipManager : IChipManager
         return null;
     }
 
-    public void RemoveChip(Chip chip)
+    public void RemoveChip(IChip chip)
     {
         chip.Dispose();
-        _chips.Remove(chip);
+
+        if (chip.ChipType == ChipType.EmptyChip)
+        {
+            _emptyChips.Remove(chip.MyGo.GetComponent<EmptyChip>());
+        } else if (chip.ChipType == ChipType.ColorChip)
+        {
+            _colorChips.Remove(chip.MyGo.GetComponent<ColorChip>());
+        }
     }
 }

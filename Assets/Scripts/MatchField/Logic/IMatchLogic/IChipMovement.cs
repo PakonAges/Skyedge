@@ -3,6 +3,6 @@
 public interface IChipMovement
 {
     Field GameField { get; set; }
-    Task MoveAsync(Chip chip, int newX, int newY);
-    Task<bool> SwapAsync(Chip chip1, Chip chip2);
+    Task MoveAsync(IChip chip, int newX, int newY);
+    Task<bool> SwapAsync(IChip chip1, IChip chip2);
 }

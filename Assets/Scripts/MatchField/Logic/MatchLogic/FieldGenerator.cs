@@ -24,7 +24,7 @@ public class FieldGenerator : IFieldGenerator
             for (int y = 0; y < rules.Ysize; y++)
             {
                 ChipColor type = GetTypeWithoutMatches(NewField, x, y);
-                NewField.FieldMatrix[x, y] = _chipManager.SpawnNormalChip(type, x, y);
+                NewField.FieldMatrix[x, y] = _chipManager.SpawnColorChip(type, x, y);
             }
         }
 
@@ -35,21 +35,21 @@ public class FieldGenerator : IFieldGenerator
 
     ChipColor GetTypeWithoutMatches(Field field, int x, int y)
     {
-        var Type = GetRandomColor();
+        var Color = GetRandomColor();
 
         if (x < 2 && y < 2)
         {
-            return Type;
+            return Color;
         }
         else
         {
-            if (HasMatchNeedsToChange(field, Type, x, y))
+            if (HasMatchNeedsToChange(field, Color, x, y))
             {
-                var newType = NewTypeWithout(Type);
+                var newType = NewTypeWithout(Color);
 
                 if (HasMatchNeedsToChange(field, newType, x, y))
                 {
-                    return NewColorWithout(Type, newType);
+                    return NewColorWithout(Color, newType);
                 }
                 else
                 {
@@ -58,7 +58,7 @@ public class FieldGenerator : IFieldGenerator
             }
             else
             {
-                return Type;
+                return Color;
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿public enum ChipType
 {
     ColorChip,
-    EmptyCell,
+    EmptyChip,
     Hero,
     Enemy
 }

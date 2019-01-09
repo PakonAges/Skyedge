@@ -5,11 +5,15 @@ public class MatchFieldInstaller : MonoInstaller
 {
     public Camera MainCamera;
 
-    [Header("Visualization refferences")]
+    [Header("Visualization references")]
     public GameObject BackGroundGO;
     public GameObject GridCell;
-    public GameObject Chip;
+    //public GameObject Chip;
     public FieldVisualizationParameters VisualizationParameters;
+
+    [Header("Chips references")]
+    public GameObject ColorChip;
+    public GameObject EmptyChip;
 
     [Header("Assets Collection")]
     public ChipTypesCollection ItemCollection;
@@ -26,6 +30,7 @@ public class MatchFieldInstaller : MonoInstaller
         InstallFieldGeneration();
         InstalBackGroundSetup();
         InstallFieldVisualization();
+        InstallChipFabrics();
         InstallFIeldLogic();
     }
 
@@ -61,12 +66,17 @@ public class MatchFieldInstaller : MonoInstaller
         Container.Bind<IChipPainter>().To<ChipPainter>().AsSingle();
         Container.Bind<IChipMovement>().To<ChipMovement>().AsSingle();
 
-        //ChipSpawner
-        Container.Bind<IChipManager>().To<ChipManager>().AsSingle();
-        Container.BindFactory<Chip, Chip.Factory>().FromMonoPoolableMemoryPool<Chip>(x => x.WithInitialSize(64).FromComponentInNewPrefab(Chip));
     }
 
+    void InstallChipFabrics()
+    {
+        //ChipSpawner
+        Container.Bind<IChipManager>().To<ChipManager>().AsSingle();
+        //Container.BindFactory<Chip, Chip.Factory>().FromMonoPoolableMemoryPool<Chip>(x => x.WithInitialSize(64).FromComponentInNewPrefab(Chip));
+        Container.BindFactory<ColorChip, ColorChip.Factory>().FromMonoPoolableMemoryPool(x => x.WithInitialSize(64).FromComponentInNewPrefab(ColorChip));
+        Container.BindFactory<EmptyChip, EmptyChip.Factory>().FromMonoPoolableMemoryPool(x => x.WithInitialSize(16).FromComponentInNewPrefab(EmptyChip));
 
+    }
 
     void InstalBackGroundSetup()
     {

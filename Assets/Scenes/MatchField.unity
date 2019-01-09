@@ -339,9 +339,12 @@ MonoBehaviour:
   BackGroundGO: {fileID: 1239737485}
   GridCell: {fileID: 2309103353383928594, guid: f5c7dcc681f8be347bb0b2ca8457ca22,
     type: 3}
-  Chip: {fileID: 5634782991181554590, guid: 7b031d8f6a68c1e44ba79fb523491280, type: 3}
   VisualizationParameters: {fileID: 11400000, guid: fd520e7e20c3c4b478cf2f2631ca8e9c,
     type: 2}
+  ColorChip: {fileID: 5634782991181554590, guid: 7b031d8f6a68c1e44ba79fb523491280,
+    type: 3}
+  EmptyChip: {fileID: 2262557996239262330, guid: 9b1cef36a35d56b44a3238a82a4c4eef,
+    type: 3}
   ItemCollection: {fileID: 11400000, guid: b057e7260d3c00a40acc6d45702f824f, type: 2}
   NormalChipsCollection: {fileID: 11400000, guid: 195092ac773e0794589a9f3b5e5dda54,
     type: 2}
@@ -412,7 +415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GenerateField: 103
-  ResetField: 114
+  FindCombos: 102
 --- !u!4 &1696511217
 Transform:
   m_ObjectHideFlags: 0

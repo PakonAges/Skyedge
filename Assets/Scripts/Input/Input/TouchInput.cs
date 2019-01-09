@@ -47,7 +47,7 @@ public class TouchInput : MonoBehaviour, ITouchInput
                 {
                     Deselect();
                 }
-                else if (_chipMovement.GameField.IsAdjacement(_selectedObject.GetComponent<Chip>(),hit.transform.gameObject.GetComponent<Chip>())) //Second Chip is Adjacement
+                else if (_chipMovement.GameField.IsAdjacement(_selectedObject.GetComponent<IChip>(),hit.transform.gameObject.GetComponent<IChip>())) //Second Chip is Adjacement
                 {
                     SwapChips(_selectedObject, hit.transform.gameObject);
                     Deselect();
@@ -133,14 +133,14 @@ public class TouchInput : MonoBehaviour, ITouchInput
     {
         try
         {
-            Chip chip1 = chipObj1.GetComponent<Chip>();
-            Chip chip2 = chipObj2.GetComponent<Chip>();
+            IChip chip1 = chipObj1.GetComponent<IChip>();
+            IChip chip2 = chipObj2.GetComponent<IChip>();
             var swap = await _chipMovement.SwapAsync(chip1, chip2);
             //if no combos -> return
-            _fieldCleaner.ChangeFillDirection(  chipObj2.GetComponent<Chip>().X,
-                                                chipObj2.GetComponent<Chip>().Y,
-                                                chipObj1.GetComponent<Chip>().X,
-                                                chipObj1.GetComponent<Chip>().Y);
+            _fieldCleaner.ChangeFillDirection(  chipObj2.GetComponent<IChip>().X,
+                                                chipObj2.GetComponent<IChip>().Y,
+                                                chipObj1.GetComponent<IChip>().X,
+                                                chipObj1.GetComponent<IChip>().Y);
             _fieldCleaner.ClearAndRefillBoard();
         }
         catch (Exception e)
