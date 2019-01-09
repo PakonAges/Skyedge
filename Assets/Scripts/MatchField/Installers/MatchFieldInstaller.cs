@@ -73,8 +73,8 @@ public class MatchFieldInstaller : MonoInstaller
         //ChipSpawner
         Container.Bind<IChipManager>().To<ChipManager>().AsSingle();
         //Container.BindFactory<Chip, Chip.Factory>().FromMonoPoolableMemoryPool<Chip>(x => x.WithInitialSize(64).FromComponentInNewPrefab(Chip));
-        Container.BindFactory<ColorChip, ColorChip.Factory>().FromMonoPoolableMemoryPool(x => x.WithInitialSize(64).FromComponentInNewPrefab(ColorChip));
-        Container.BindFactory<EmptyChip, EmptyChip.Factory>().FromMonoPoolableMemoryPool(x => x.WithInitialSize(16).FromComponentInNewPrefab(EmptyChip));
+        Container.BindFactory<ColorChip, ColorChip.Factory>().FromMonoPoolableMemoryPool<ColorChip>(x => x.WithInitialSize(64).FromComponentInNewPrefab(ColorChip));
+        Container.BindFactory<EmptyChip, EmptyChip.Factory>().FromMonoPoolableMemoryPool<EmptyChip>(x => x.WithInitialSize(16).FromComponentInNewPrefab(EmptyChip));
 
     }
 

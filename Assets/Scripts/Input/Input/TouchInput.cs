@@ -149,4 +149,15 @@ public class TouchInput : MonoBehaviour, ITouchInput
             Debug.LogErrorFormat("Trying to swap {0} and {1}", chipObj1, chipObj2);
         }
     }
+
+
+    //DEBUG
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            _fieldCleaner.ClearChipAsync(_selectedObject.GetComponent<IChip>().X, _selectedObject.GetComponent<IChip>().Y);
+            Deselect();
+        }
+    }
 }

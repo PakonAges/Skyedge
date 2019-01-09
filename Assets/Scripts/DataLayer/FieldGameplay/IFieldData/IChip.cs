@@ -11,6 +11,6 @@ public interface IChip
     bool IsClearable { get; set; }
     GameObject MyGo { get; }
 
-    void InitChip(int Xpos, int Ypos, float Scale, Vector3 Position);
+    void InitChip(ChipType type, int Xpos, int Ypos, float Scale, Vector3 Position);
     void Dispose();
 }

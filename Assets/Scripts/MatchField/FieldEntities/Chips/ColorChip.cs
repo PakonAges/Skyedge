@@ -7,13 +7,7 @@ using Zenject;
 /// </summary>
 public class ColorChip : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable, IChip
 {
-    //IChip properties
-    ChipType _chipType;
-    public ChipType ChipType
-    {
-        get {return _chipType; }
-        private set { _chipType = ChipType.ColorChip; }
-    }
+    public ChipType ChipType { get; private set; }
 
     public int X { get; set; }
     public int Y { get; set; }
@@ -30,8 +24,9 @@ public class ColorChip : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable, ICh
         _pool.Despawn(this);
     }
 
-    public void InitChip(int Xpos, int Ypos, float Scale, Vector3 Position)
+    public void InitChip(ChipType type, int Xpos, int Ypos, float Scale, Vector3 Position)
     {
+        ChipType = type;
         X = Xpos;
         Y = Ypos;
         //Setup Scale

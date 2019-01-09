@@ -5,12 +5,7 @@ using Zenject;
 public class EmptyChip : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable, IChip
 {
     //IChip properties
-    ChipType _chipType;
-    public ChipType ChipType
-    {
-        get { return _chipType; }
-        private set { _chipType = ChipType.EmptyChip; }
-    }
+    public ChipType ChipType { get; private set; }
     public int X { get; set; }
     public int Y { get; set; }
     public bool IsMovable { get; set; }
@@ -20,14 +15,15 @@ public class EmptyChip : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable, ICh
     //Empty Chip properties
     IMemoryPool _pool;
 
-    public void InitChip(int Xpos, int Ypos, float Scale, Vector3 Position)
+    public void InitChip(ChipType type, int Xpos, int Ypos, float Scale, Vector3 Position)
     {
+        ChipType = type;
         X = Xpos;
         Y = Ypos;
 
         //Setup Scale
-        GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(Scale, Scale, 1);
-        GetComponent<BoxCollider2D>().size = new Vector2(Scale, Scale);
+        //GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(Scale, Scale, 1);
+        //GetComponent<BoxCollider2D>().size = new Vector2(Scale, Scale);
 
         //Setup World Position
         MyGo.transform.position = Position;

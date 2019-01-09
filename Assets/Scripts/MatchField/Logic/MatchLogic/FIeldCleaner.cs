@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -50,9 +51,17 @@ public class FIeldCleaner : IFieldCleaner
                     {
                         for (int i = 0; i < _matches.Count; i++)
                         {
-                            if (await ClearChipAsync(_matches[i].X, _matches[i].Y))
+                            try
                             {
-                                needsRefill = true;
+                                if (await ClearChipAsync(_matches[i].X, _matches[i].Y))
+                                {
+                                    needsRefill = true;
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.LogErrorFormat("AHTUNG: {0}", e);
+                                Debug.LogErrorFormat("Trying to Clear Chip {0}", _matches[i]);
                             }
                         }
                     }
@@ -67,10 +76,20 @@ public class FIeldCleaner : IFieldCleaner
     {
         if (GameField.FieldMatrix[x, y].IsClearable) //check for isBeingCleared?
         {
-            RemoveChip(GameField.FieldMatrix[x, y]);
-            _chipManager.SpawnEmptyChip(x, y);
-            await new WaitForEndOfFrame();
-            return true;
+            try
+            {
+                RemoveChip(GameField.FieldMatrix[x, y]);
+                GameField.FieldMatrix[x, y] = _chipManager.SpawnEmptyChip(x, y);
+                await new WaitForEndOfFrame();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.LogErrorFormat("AHTUNG: {0}", e);
+                Debug.LogErrorFormat("Trying to clear Chip {0}", GameField.FieldMatrix[x, y]);
+            }
+            return false;
+
         }
         else
         {
@@ -80,24 +99,7 @@ public class FIeldCleaner : IFieldCleaner
 
     void RemoveChip(IChip chip)
     {
-        switch (chip.ChipType)
-        {
-            case ChipType.ColorChip:
-            _chipManager.RemoveChip(chip);
-            break;
-
-            case ChipType.EmptyChip:
-            break;
-
-            case ChipType.Hero:
-            break;
-
-            case ChipType.Enemy:
-            break;
-
-            default:
-            break;
-        }
+        _chipManager.RemoveChip(chip);
     }
 
     public void ChangeFillDirection(int chip1_x, int chip1_y, int chip2_x, int chip2_y)

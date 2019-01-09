@@ -3,20 +3,16 @@
 public class Enemy : MonoBehaviour, IChip
 {
     //IChip properties
-    ChipType _chipType;
-    public ChipType ChipType
-    {
-        get { return _chipType; }
-        private set { _chipType = ChipType.Enemy; }
-    }
+    public ChipType ChipType { get; private set; }
     public int X { get; set; }
     public int Y { get; set; }
     public bool IsMovable { get; set; }
     public bool IsClearable { get; set; }
     public GameObject MyGo { get { return gameObject; } }
 
-    public void InitChip(int Xpos, int Ypos, float Scale, Vector3 Position)
+    public void InitChip(ChipType type, int Xpos, int Ypos, float Scale, Vector3 Position)
     {
+        ChipType = type;
         X = Xpos;
         Y = Ypos;
 
