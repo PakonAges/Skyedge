@@ -22,11 +22,25 @@ public class Hero : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable, IChip
         Y = Ypos;
 
         //Setup Scale
+        var sr = GetComponentInChildren<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.transform.localScale = new Vector3(Scale, Scale, 1);
+        }
+        else
+        {
+            Debug.LogError("Trying to Find SpriteRenderer but can't");
+        }
 
-        //TODO~ Add check for compoment!!
-        
-        GetComponentInChildren<SpriteRenderer>().transform.localScale = new Vector3(Scale, Scale, 1);
-        GetComponent<BoxCollider2D>().size = new Vector2(Scale, Scale);
+        var col = GetComponent<BoxCollider2D>();
+        if (col != null)
+        {
+            GetComponent<BoxCollider2D>().size = new Vector2(Scale, Scale);
+        }
+        else
+        {
+            Debug.LogError("Trying to Find Collider but can't");
+        }
 
         //Setup World Position
         MyGo.transform.position = Position;

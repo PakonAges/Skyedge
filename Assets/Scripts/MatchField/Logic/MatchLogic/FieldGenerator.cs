@@ -6,15 +6,12 @@ using UnityEngine;
 public class FieldGenerator : IFieldGenerator
 {
     readonly IChipManager _chipManager;
-    readonly IHeroSpawner _heroSpawner;
     readonly IChipInfoService _chipComparer;
     
     public FieldGenerator ( IChipManager chipManager,
-                            IHeroSpawner heroSpawner,
                             IChipInfoService chipComparer)
     {
         _chipManager = chipManager;
-        _heroSpawner = heroSpawner;
         _chipComparer = chipComparer;
     }
 
@@ -23,7 +20,6 @@ public class FieldGenerator : IFieldGenerator
         try
         {
             var NewField = new Field(rules.Xsize, rules.Ysize);
-            NewField.FieldMatrix[0, 0] = _heroSpawner.SpawnHero(0, 0);
 
             for (int x = 0; x < rules.Xsize; x++)
             {
@@ -36,8 +32,6 @@ public class FieldGenerator : IFieldGenerator
                     }
                 }
             }
-
-            
 
             //Debug.LogFormat("Field [{0},{1}] with {2} elements Generated in Field Generator", rules.Xsize, rules.Ysize, rules.ChipTypes.Count);
             await new WaitForEndOfFrame();
@@ -81,8 +75,7 @@ public class FieldGenerator : IFieldGenerator
         }
     }
 
-
-    private bool HasMatchNeedsToChange(Field field, ChipColor color, int x, int y)
+    bool HasMatchNeedsToChange(Field field, ChipColor color, int x, int y)
     {
         /// The board is filled from Left to Right, and from Top to Bottom.
         /// So I need to check only chips to the left and above new Chip for combos.
@@ -108,8 +101,7 @@ public class FieldGenerator : IFieldGenerator
         return false;        
     }
 
-
-    private ChipColor NewTypeWithout(ChipColor bannedColor)
+    ChipColor NewTypeWithout(ChipColor bannedColor)
     {
         List<ChipColor> possibleColors = new List<ChipColor>();
 
@@ -129,7 +121,7 @@ public class FieldGenerator : IFieldGenerator
         return possibleColors[i];
     }
 
-    private ChipColor NewColorWithout(ChipColor color, ChipColor newColor)
+    ChipColor NewColorWithout(ChipColor color, ChipColor newColor)
     {
         List<ChipColor> possibleColors = new List<ChipColor>();
 

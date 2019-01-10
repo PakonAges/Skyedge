@@ -12,6 +12,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     readonly IChipMovement _chipMovement;
     readonly IMatchChecker _matchChecker;
     readonly IFieldCleaner _fieldCleaner;
+    readonly IHeroSpawner _heroSpawner;
     readonly FieldGenerationRules _fieldGenerationRules;
 
     public Field GameField;
@@ -23,7 +24,8 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
                                         IChipPositionProvider chipPositioner,
                                         IChipMovement chipMovement,
                                         IMatchChecker matchChecker,
-                                        IFieldCleaner fieldCleaner)
+                                        IFieldCleaner fieldCleaner,
+                                        IHeroSpawner heroSpawner)
     {
         _fieldBGSetup = fieldBGSetup;
         _fieldGenerator = fieldGenerator;
@@ -32,6 +34,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         _chipMovement = chipMovement;
         _matchChecker = matchChecker;
         _fieldCleaner = fieldCleaner;
+        _heroSpawner = heroSpawner;
         _fieldGenerationRules = fieldDataProvider.GetGenerationRules();
 
     }
@@ -57,6 +60,8 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         _matchChecker.GameField = this.GameField;
         _fieldCleaner.GameField = this.GameField;
         _fieldFiller.GameField = this.GameField;
+
+        SpawnHero();
     }
 
     public void ShowBackGround()
@@ -76,5 +81,14 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     public void FindCombos()
     {
         _fieldCleaner.ClearAndRefillBoard();
+    }
+
+    void SpawnHero()
+    {
+        int x = 0;
+        int y = 0;
+
+        _fieldCleaner.ClearChipAsync(x, y);
+        GameField.FieldMatrix[x,y] = _heroSpawner.SpawnHero(x, y);
     }
 }
