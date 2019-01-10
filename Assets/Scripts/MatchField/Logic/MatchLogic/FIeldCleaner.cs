@@ -127,6 +127,21 @@ public class FIeldCleaner : IFieldCleaner
         }
     }
 
+    public async Task ClearChipAndRefillAsync(int x, int y)
+    {
+        try
+        {
+            await ClearChipAsync(x, y);
+            await _fieldFiller.FullFillAsync();
+            ClearAndRefillBoard();
+        }
+        catch (Exception e)
+        {
+            Debug.LogErrorFormat("AHTUNG: {0}", e);
+            Debug.LogErrorFormat("Trying to clear one Chip and refill");
+        }
+    }
+
     public void ClearAllBoard()
     {
         for (int y = 0; y < GameField.Ysize; y++)

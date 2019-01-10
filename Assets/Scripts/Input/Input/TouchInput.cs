@@ -156,7 +156,7 @@ public class TouchInput : MonoBehaviour, ITouchInput
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            _fieldCleaner.ClearChipAsync(_selectedObject.GetComponent<IChip>().X, _selectedObject.GetComponent<IChip>().Y);
+            _fieldCleaner.ClearChipAndRefillAsync(_selectedObject.GetComponent<IChip>().X, _selectedObject.GetComponent<IChip>().Y);
             Deselect();
         }
     }
