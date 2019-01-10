@@ -19,6 +19,9 @@ public class SOFieldGenerationRules : ScriptableObject
     [Header("Possible basic Chip Types")]
     public List<ChipType> Chips;
 
+    [Header("Hero Spawn Position")]
+    public HeroSpawnOption HeroSpawnOption;
+    public Vector2Int ConcreteHeroSpawnPosition;
     //Default items position
     //Win/lose conditions
     //Hero/enemies/loot

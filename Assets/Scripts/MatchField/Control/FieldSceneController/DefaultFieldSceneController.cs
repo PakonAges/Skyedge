@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using UnityEngine;
 using Zenject;
 /// <summary>
 /// Passing commands to change Global Field State. Doesn't care about implementation details of modules
@@ -85,10 +86,15 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
 
     void SpawnHero()
     {
-        int x = 0;
-        int y = 0;
+        var Position = _fieldGenerationRules.GetHeroSpawnPosition();
 
-        _fieldCleaner.ClearChipAsync(x, y);
-        GameField.FieldMatrix[x,y] = _heroSpawner.SpawnHero(x, y);
+        //Just checking for errors
+        if (Position.x < 0 || Position.y < 0 || Position.x >= GameField.Xsize || Position.y >= GameField.Ysize)
+        {
+            Debug.LogErrorFormat("Hero Position from Generation Rules is out of the Field. X = {0}, Y = {1}",Position.x, Position.y);
+        }
+
+        _fieldCleaner.ClearChipAsync(Position.x, Position.y);
+        GameField.FieldMatrix[Position.x, Position.y] = _heroSpawner.SpawnHero(Position.x, Position.y);
     }
 }

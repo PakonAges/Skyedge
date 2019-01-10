@@ -23,3 +23,13 @@ public enum FieldFillDirection
     LeftToRight,
     RightToLeft
 }
+
+public enum HeroSpawnOption
+{
+    Random,
+    Concrete,
+    RandomLeftSide,
+    RandomRightSide,
+    RandomTopSide,
+    RandomBotSide
+}

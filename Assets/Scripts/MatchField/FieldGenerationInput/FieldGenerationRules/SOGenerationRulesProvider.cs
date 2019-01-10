@@ -3,19 +3,22 @@
 /// </summary>
 public class SOGenerationRulesProvider : IFieldGenerationRulesProvider
 {
-    private SOFieldGenerationRules _fieldGenerationInputSO;
+    readonly SOFieldGenerationRules _fieldGenerationInputSO;
 
     public SOGenerationRulesProvider(SOFieldGenerationRules fieldGenerationInputSO)
     {
         _fieldGenerationInputSO = fieldGenerationInputSO;
     }
 
+
     public FieldGenerationRules GetGenerationRules()
     {
         var newRules = new FieldGenerationRules(    _fieldGenerationInputSO.Xsize,
                                                     _fieldGenerationInputSO.Ysize,
                                                     _fieldGenerationInputSO.BackgroundImage,
-                                                    _fieldGenerationInputSO.Chips);
+                                                    _fieldGenerationInputSO.Chips,
+                                                    _fieldGenerationInputSO.HeroSpawnOption,
+                                                    _fieldGenerationInputSO.ConcreteHeroSpawnPosition);
         return newRules;
     }
 }
