@@ -22,7 +22,8 @@ public class SOFieldGenerationRules : ScriptableObject
     [Header("Hero Spawn Position")]
     public HeroSpawnOption HeroSpawnOption;
     public Vector2Int ConcreteHeroSpawnPosition;
-    //Default items position
-    //Win/lose conditions
-    //Hero/enemies/loot
+
+    [Header("Level Setup")]
+    public int TurnsLimit;
+    public MatchLevelType LevelType;
 }

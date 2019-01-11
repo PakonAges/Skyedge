@@ -8,13 +8,25 @@ public class FieldGenerationRules
     public Sprite BackgroundImage { get; }
     public List<ChipType> ChipTypes;
     public HeroSpawnOption HeroSpawnOption;
-    public Vector2Int ConcreteHeroSpawnPosition;
+    public Vector2Int ConcreteHeroSpawnPosition; //It is optional, so I could move it inside new class -> HeroSpawnOption
+
     //Possible Items
+
     //Predefined position
+
     //Win/Lose Conditions
+    public int TurnsLimit { get; }
+    public MatchLevelType LevelType { get; }
+
     //Enemies generation data
 
-    public FieldGenerationRules(int x, int y, Sprite bgImg, List<ChipType> chips, HeroSpawnOption heroSpawnOption, Vector2Int concreteHeroSpawnPosition)
+    public FieldGenerationRules(int x, int y,
+                                Sprite bgImg,
+                                List<ChipType> chips,
+                                HeroSpawnOption heroSpawnOption,
+                                Vector2Int concreteHeroSpawnPosition,
+                                int turnsLimit,
+                                MatchLevelType matchLevelType)
     {
         Xsize = x;
         Ysize = y;
@@ -22,6 +34,8 @@ public class FieldGenerationRules
         ChipTypes = chips;
         HeroSpawnOption = heroSpawnOption;
         ConcreteHeroSpawnPosition = concreteHeroSpawnPosition;
+        TurnsLimit = turnsLimit;
+        LevelType = matchLevelType;
     }
 
     public Vector2Int GetHeroSpawnPosition()

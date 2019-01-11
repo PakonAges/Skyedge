@@ -17,11 +17,11 @@ public class HotKeyInput : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(GenerateField))
         {
-            _fieldSceneController.GenerateFieldAsync();
+            _fieldSceneController.StartMatchAsync();
         }
         else if (Input.GetKeyDown(FindCombos))
         {
-            _fieldSceneController.FindCombos();
+            //_fieldSceneController.FindCombos();
         }
     }
 }

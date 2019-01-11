@@ -32,6 +32,7 @@ public class MatchFieldInstaller : MonoInstaller
         InstallFieldVisualization();
         InstallChipFabrics();
         InstallFIeldLogic();
+        InstallLevelLogic();
     }
 
 
@@ -98,6 +99,14 @@ public class MatchFieldInstaller : MonoInstaller
         Container.Bind<IMatchChecker>().To<MatchChecker>().AsSingle();
         Container.Bind<IFieldCleaner>().To<FIeldCleaner>().AsSingle();
     }
+
+
+
+    void InstallLevelLogic()
+    {
+        Container.Bind<ILevelGenerator>().To<LevelGenerator>().AsSingle();
+    }
+
 
     //void InstallNullObjects()
     //{

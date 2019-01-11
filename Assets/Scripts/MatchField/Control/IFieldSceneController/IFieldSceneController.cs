@@ -2,7 +2,8 @@
 
 public interface IFieldSceneController
 {
-    Task GenerateFieldAsync();
-    void ResetField();
-    void FindCombos();//debug?
+    Task StartMatchAsync();
+    //Task GenerateFieldAsync();
+    void ResetMatch();
+    //void FindCombos();//debug?
 }

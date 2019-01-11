@@ -33,3 +33,8 @@ public enum HeroSpawnOption
     RandomTopSide,
     RandomBotSide
 }
+
+public enum MatchLevelType
+{
+    TurnsLimit
+}

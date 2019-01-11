@@ -15,9 +15,11 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     readonly IMatchChecker _matchChecker;
     readonly IFieldCleaner _fieldCleaner;
     readonly IHeroSpawner _heroSpawner;
+    readonly ILevelGenerator _levelGenerator;
     readonly FieldGenerationRules _fieldGenerationRules;
 
     public Field GameField;
+    MatchLevel _matchLevel;
 
     public DefaultFieldSceneController( IFieldBGSetup fieldBGSetup,
                                         IFieldGenerator fieldGenerator,
@@ -27,7 +29,8 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
                                         IChipMovement chipMovement,
                                         IMatchChecker matchChecker,
                                         IFieldCleaner fieldCleaner,
-                                        IHeroSpawner heroSpawner)
+                                        IHeroSpawner heroSpawner,
+                                        ILevelGenerator levelGenerator)
     {
         _fieldBGSetup = fieldBGSetup;
         _fieldGenerator = fieldGenerator;
@@ -37,6 +40,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         _matchChecker = matchChecker;
         _fieldCleaner = fieldCleaner;
         _heroSpawner = heroSpawner;
+        _levelGenerator = levelGenerator;
         _fieldGenerationRules = fieldDataProvider.GetGenerationRules();
 
     }
@@ -46,11 +50,18 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         _chipPositioner.SetupChipParameters(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
     }
 
-    public async Task GenerateFieldAsync()
+    public async Task StartMatchAsync()
+    {
+        await GenerateFieldAsync();
+        SpawnHero();
+        GenerateLevel();
+    }
+
+    async Task GenerateFieldAsync()
     {
         if (GameField != null)
         {
-            ResetField();
+            ResetMatch();
         }
         else
         {
@@ -62,28 +73,28 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         _matchChecker.GameField = this.GameField;
         _fieldCleaner.GameField = this.GameField;
         _fieldFiller.GameField = this.GameField;
-
-        SpawnHero();
     }
 
-    public void ShowBackGround()
+    void ShowBackGround()
     {
         _fieldBGSetup.SetupBackGround(_fieldGenerationRules.BackgroundImage);
         _fieldBGSetup.ShowEmptyGrid(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
     }
 
-    public void ResetField()
+    public void ResetMatch()
     {
         if (GameField != null)
         {
             _fieldCleaner.ClearAllBoard();
         }
+
+        _levelGenerator.ResetLevel(_matchLevel, _fieldGenerationRules);
     }
 
-    public void FindCombos() //Debug
-    {
-        _fieldCleaner.ClearAndRefillBoard();
-    }
+    //public void FindCombos() //Debug
+    //{
+    //    _fieldCleaner.ClearAndRefillBoard();
+    //}
 
     void SpawnHero()
     {
@@ -97,5 +108,10 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
 
         _fieldCleaner.ClearChipAsync(Position.x, Position.y);
         GameField.FieldMatrix[Position.x, Position.y] = _heroSpawner.SpawnHero(Position.x, Position.y);
+    }
+
+    void GenerateLevel()
+    {
+        _matchLevel = _levelGenerator.GenerateLevel(_fieldGenerationRules);
     }
 }

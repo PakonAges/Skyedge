@@ -18,7 +18,9 @@ public class SOGenerationRulesProvider : IFieldGenerationRulesProvider
                                                     _fieldGenerationInputSO.BackgroundImage,
                                                     _fieldGenerationInputSO.Chips,
                                                     _fieldGenerationInputSO.HeroSpawnOption,
-                                                    _fieldGenerationInputSO.ConcreteHeroSpawnPosition);
+                                                    _fieldGenerationInputSO.ConcreteHeroSpawnPosition,
+                                                    _fieldGenerationInputSO.TurnsLimit,
+                                                    _fieldGenerationInputSO.LevelType);
         return newRules;
     }
 }
