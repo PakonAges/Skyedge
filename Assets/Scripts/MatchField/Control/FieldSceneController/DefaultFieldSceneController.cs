@@ -16,6 +16,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     readonly IFieldCleaner _fieldCleaner;
     readonly IHeroSpawner _heroSpawner;
     readonly ILevelGenerator _levelGenerator;
+    readonly ILevelFSM _levelFSM;
     readonly FieldGenerationRules _fieldGenerationRules;
 
     public Field GameField;
@@ -30,6 +31,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
                                         IMatchChecker matchChecker,
                                         IFieldCleaner fieldCleaner,
                                         IHeroSpawner heroSpawner,
+                                        ILevelFSM levelFSM,
                                         ILevelGenerator levelGenerator)
     {
         _fieldBGSetup = fieldBGSetup;
@@ -41,6 +43,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         _fieldCleaner = fieldCleaner;
         _heroSpawner = heroSpawner;
         _levelGenerator = levelGenerator;
+        _levelFSM = levelFSM;
         _fieldGenerationRules = fieldDataProvider.GetGenerationRules();
 
     }
@@ -48,15 +51,20 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     public void Initialize()
     {
         _chipPositioner.SetupChipParameters(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
+
     }
 
     public async Task StartMatchAsync()
     {
+        //_levelFSM.CurrentState = LevelInitState... hm? Where to get this state refference? Or should it be in FSM?
+        //OR! should it be all in MatchLevel Class? Yes!
         await GenerateFieldAsync();
-        SpawnHero();
+
         GenerateLevel();
+        SpawnHero();
     }
 
+    //GameField must be generated first. Because I send null object atm 
     async Task GenerateFieldAsync()
     {
         if (GameField != null)
@@ -106,7 +114,12 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
             Debug.LogErrorFormat("Hero Position from Generation Rules is out of the Field. X = {0}, Y = {1}",Position.x, Position.y);
         }
 
-        _fieldCleaner.ClearChipAsync(Position.x, Position.y);
+        //In case we want to spawn Hero first
+        if (GameField.FieldMatrix[Position.x, Position.y] != null)
+        {
+            _fieldCleaner.ClearChipAsync(Position.x, Position.y);
+        }
+
         GameField.FieldMatrix[Position.x, Position.y] = _heroSpawner.SpawnHero(Position.x, Position.y);
     }
 
