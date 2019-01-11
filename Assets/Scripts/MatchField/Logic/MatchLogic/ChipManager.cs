@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Spawn and Kills all kind of Chips: Color, Empty, Hero and Enemies
+/// </summary>
 public class ChipManager : IChipManager
 {
     readonly float _spawnDuraion;

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
+/// <summary>
+/// Generates Match Field and Fills it with Color pieces, according to the Generatiob Rules. Without Combos
+/// </summary>
 public class FieldGenerator : IFieldGenerator
 {
     readonly IChipManager _chipManager;

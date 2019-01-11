@@ -16,3 +16,5 @@ MonoBehaviour:
   Ysize: 8
   BackgroundImage: {fileID: 21300000, guid: e239656ab9106d744a94af4756221ea4, type: 3}
   Chips: 0100000000000000
+  HeroSpawnOption: 2
+  ConcreteHeroSpawnPosition: {x: 0, y: 0}

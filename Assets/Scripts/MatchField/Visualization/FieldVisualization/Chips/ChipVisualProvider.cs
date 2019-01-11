@@ -2,9 +2,9 @@
 
 public class ChipVisualProvider : IChipVisualProvider
 {
-    private NormalChipCollection _fieldItemCollection;
+    private ColorChipCollection _fieldItemCollection;
 
-    public ChipVisualProvider(NormalChipCollection fieldItemCollection)
+    public ChipVisualProvider(ColorChipCollection fieldItemCollection)
     {
         _fieldItemCollection = fieldItemCollection;
     }

@@ -2,7 +2,8 @@
 using UnityEngine;
 using Zenject;
 /// <summary>
-/// Passing commands to change Global Field State. Doesn't care about implementation details of modules
+/// Passing commands to change Game Field State. Doesn't care about implementation details of modules
+/// Generates Field, Reset Field, Spawns Hero
 /// </summary>
 public class DefaultFieldSceneController : IFieldSceneController, IInitializable
 {
@@ -79,7 +80,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         }
     }
 
-    public void FindCombos()
+    public void FindCombos() //Debug
     {
         _fieldCleaner.ClearAndRefillBoard();
     }

@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Element of the Board: Color chip, Empty chip, Hero, Enemy
+/// </summary>
 public interface IChip
 {
     ChipType ChipType { get; }

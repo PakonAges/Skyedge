@@ -1,4 +1,7 @@
-﻿public class ChipInfoService : IChipInfoService
+﻿/// <summary>
+/// Helper class to compare IChip pieces
+/// </summary>
+public class ChipInfoService : IChipInfoService
 {
     public bool IsColored(IChip chip, ChipColor color)
     {

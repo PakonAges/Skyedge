@@ -8,7 +8,6 @@ public class MatchFieldInstaller : MonoInstaller
     [Header("Visualization references")]
     public GameObject BackGroundGO;
     public GameObject GridCell;
-    //public GameObject Chip;
     public FieldVisualizationParameters VisualizationParameters;
 
     [Header("Chips references")]
@@ -17,8 +16,8 @@ public class MatchFieldInstaller : MonoInstaller
     public GameObject Hero;
 
     [Header("Assets Collection")]
-    public ChipTypesCollection ItemCollection;
-    public NormalChipCollection NormalChipsCollection;
+    public ChipTypesCollection ChipsCollection;
+    public ColorChipCollection ColorChipsCollection;
 
     [Header("Test Configs")]
     public SOFieldGenerationRules DebugFieldRules;
@@ -60,8 +59,8 @@ public class MatchFieldInstaller : MonoInstaller
         Container.Bind<IChipSizeProvider>().To<ChipSizeProvider>().AsSingle();
         Container.Bind<IChipPrefabProvider>().To<ChipPrefabProvider>().AsSingle();
         Container.Bind<IChipVisualProvider>().To<ChipVisualProvider>().AsSingle();
-        Container.Bind<NormalChipCollection>().FromInstance(NormalChipsCollection).AsSingle();
-        Container.Bind<ChipTypesCollection>().FromInstance(ItemCollection).AsSingle();
+        Container.Bind<ColorChipCollection>().FromInstance(ColorChipsCollection).AsSingle();
+        Container.Bind<ChipTypesCollection>().FromInstance(ChipsCollection).AsSingle();
         Container.Bind<FieldVisualizationParameters>().FromInstance(VisualizationParameters).AsSingle();
 
         Container.Bind<IChipPainter>().To<ChipPainter>().AsSingle();
@@ -71,10 +70,8 @@ public class MatchFieldInstaller : MonoInstaller
 
     void InstallChipFabrics()
     {
-        //ChipSpawner
         Container.Bind<IChipManager>().To<ChipManager>().AsSingle();
         Container.Bind<IHeroSpawner>().To<HeroSpawner>().AsSingle();
-        //Container.BindFactory<Chip, Chip.Factory>().FromMonoPoolableMemoryPool<Chip>(x => x.WithInitialSize(64).FromComponentInNewPrefab(Chip));
         Container.BindFactory<ColorChip, ColorChip.Factory>().FromMonoPoolableMemoryPool<ColorChip>(x => x.WithInitialSize(64).FromComponentInNewPrefab(ColorChip));
         Container.BindFactory<EmptyChip, EmptyChip.Factory>().FromMonoPoolableMemoryPool<EmptyChip>(x => x.WithInitialSize(5).FromComponentInNewPrefab(EmptyChip));
         Container.BindFactory<Hero, Hero.Factory>().FromMonoPoolableMemoryPool<Hero>(x => x.WithInitialSize(1).FromComponentInNewPrefab(Hero));

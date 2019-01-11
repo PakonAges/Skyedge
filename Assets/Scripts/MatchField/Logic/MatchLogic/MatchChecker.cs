@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 
+/// <summary>
+/// Checks field for a standard Chip combinations: 3-5 in a row, L-shape, T-shape
+/// </summary>
 public class MatchChecker : IMatchChecker
 {
     readonly IChipInfoService _chipServise;
