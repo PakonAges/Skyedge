@@ -12,6 +12,7 @@ public class LevelEnemyMoveState : ILevelState
     public void OnStateEnter()
     {
         Debug.Log("Enter Enemy Move State");
+        OnStateExit();
         //Decide what to do
         //All enemies move the same turn?
     }

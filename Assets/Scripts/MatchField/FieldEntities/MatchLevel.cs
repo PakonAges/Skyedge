@@ -22,6 +22,7 @@ public class MatchLevel
 
     public void StartNewTurn()
     {
+        CurrentTurn++;
         int TurnsLeft = TurnsLimit - CurrentTurn;
 
         if (TurnsLeft > 0)

@@ -14,17 +14,20 @@ public class TouchInput : MonoBehaviour, ITouchInput
     Camera _camera;
     IChipMovement _chipMovement;
     IFieldCleaner _fieldCleaner;
+    IPlayerController _playerController;
 
     [Inject]
     public void Construct(  Camera cam,
                             FieldVisualizationParameters fieldVisualizationParameters,
                             IChipMovement chipMovement,
-                            IFieldCleaner fieldCleaner)
+                            IFieldCleaner fieldCleaner,
+                            IPlayerController playerController)
     {
         _camera = cam;
         _selectedChipVisualizationPrefab = fieldVisualizationParameters.SelectedChip;
         _chipMovement = chipMovement;
         _fieldCleaner = fieldCleaner;
+        _playerController = playerController;
         InitTapGesture();
         InitSelectionView();
     }
@@ -49,7 +52,10 @@ public class TouchInput : MonoBehaviour, ITouchInput
                 }
                 else if (_chipMovement.GameField.IsAdjacement(_selectedObject.GetComponent<IChip>(),hit.transform.gameObject.GetComponent<IChip>())) //Second Chip is Adjacement
                 {
+                    //TODO: Add check for swap, can I? or no combos -> return
+                    //OR inside SwapChips method
                     SwapChips(_selectedObject, hit.transform.gameObject);
+                    _playerController.MoveAction();
                     Deselect();
                 }
                 else //Second chip is not Adjacement

@@ -17,6 +17,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     readonly IHeroSpawner _heroSpawner;
     readonly ILevelGenerator _levelGenerator;
     readonly ILevelFSM _levelFSM;
+    readonly IPlayerController _playerController;
     readonly FieldGenerationRules _fieldGenerationRules;
 
     public Field GameField;
@@ -32,6 +33,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
                                         IFieldCleaner fieldCleaner,
                                         IHeroSpawner heroSpawner,
                                         ILevelFSM levelFSM,
+                                        IPlayerController playerController,
                                         ILevelGenerator levelGenerator)
     {
         _fieldBGSetup = fieldBGSetup;
@@ -44,6 +46,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         _heroSpawner = heroSpawner;
         _levelGenerator = levelGenerator;
         _levelFSM = levelFSM;
+        _playerController = playerController;
         _fieldGenerationRules = fieldDataProvider.GetGenerationRules();
 
     }
@@ -51,14 +54,12 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     public void Initialize()
     {
         _chipPositioner.SetupChipParameters(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
-
+        GenerateLevel();
     }
 
     public async Task StartMatchAsync()
     {
        await GenerateFieldAsync();
-
-        GenerateLevel();
         SpawnHero();
         _levelFSM.ChangeState(MatchLevelState.PlayerMove);
     }

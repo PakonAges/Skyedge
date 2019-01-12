@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class HeroSpawner : IHeroSpawner
 {
-    readonly Hero.Factory _heroFactory;
+    readonly HeroChip.Factory _heroFactory;
     readonly IChipPositionProvider _chipPositioner;
-    Hero _hero;
+    HeroChip _hero;
 
-    public HeroSpawner( Hero.Factory factory,
+    public HeroSpawner( HeroChip.Factory factory,
                         IChipPositionProvider chipPositionProvider)
     {
         _heroFactory = factory;
@@ -35,7 +35,7 @@ public class HeroSpawner : IHeroSpawner
         return null;
     }
 
-    public void RemoveHero(Hero hero)
+    public void RemoveHero(HeroChip hero)
     {
         hero.Dispose();
         _hero = null;

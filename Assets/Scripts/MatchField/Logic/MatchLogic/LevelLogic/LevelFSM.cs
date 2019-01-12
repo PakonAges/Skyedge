@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using Zenject;
 
-public class LevelFSM : ILevelFSM
+public class LevelFSM : ILevelFSM, IInitializable
 {
     public ILevelState CurrentState{ get; set; }
     public MatchLevel Level { get; set; }
@@ -13,8 +14,13 @@ public class LevelFSM : ILevelFSM
 
     public LevelFSM()
     {
+
+    }
+
+    public void Initialize()
+    {
         _init = new LevelInitState();
-        _playerMove = new LevelPlayerMoveState();
+        _playerMove = new LevelPlayerMoveState(Level);
         _enemyMove = new LevelEnemyMoveState(Level);
         _levelEnd = new LevelEndState();
         _pause = new LevelPauseState();
@@ -63,5 +69,6 @@ public class LevelFSM : ILevelFSM
             return null;
         }
     }
+
 
 }

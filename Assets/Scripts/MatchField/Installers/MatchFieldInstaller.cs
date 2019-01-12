@@ -75,7 +75,7 @@ public class MatchFieldInstaller : MonoInstaller
         Container.Bind<IHeroSpawner>().To<HeroSpawner>().AsSingle();
         Container.BindFactory<ColorChip, ColorChip.Factory>().FromMonoPoolableMemoryPool<ColorChip>(x => x.WithInitialSize(64).FromComponentInNewPrefab(ColorChip));
         Container.BindFactory<EmptyChip, EmptyChip.Factory>().FromMonoPoolableMemoryPool<EmptyChip>(x => x.WithInitialSize(5).FromComponentInNewPrefab(EmptyChip));
-        Container.BindFactory<Hero, Hero.Factory>().FromMonoPoolableMemoryPool<Hero>(x => x.WithInitialSize(1).FromComponentInNewPrefab(Hero));
+        Container.BindFactory<HeroChip, HeroChip.Factory>().FromMonoPoolableMemoryPool<HeroChip>(x => x.WithInitialSize(1).FromComponentInNewPrefab(Hero));
 
     }
 
@@ -105,7 +105,8 @@ public class MatchFieldInstaller : MonoInstaller
     void InstallLevelLogic()
     {
         Container.Bind<ILevelGenerator>().To<LevelGenerator>().AsSingle();
-        Container.Bind<ILevelFSM>().To<LevelFSM>().AsSingle();
+        Container.BindInterfacesAndSelfTo<LevelFSM>().AsSingle();
+        Container.Bind<IPlayerController>().To<PlayerController>().AsSingle();
     }
 
 

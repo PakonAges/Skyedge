@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Zenject;
 
-public class Enemy : MonoBehaviour, IChip
+public class HeroChip : MonoBehaviour, IPoolable<IMemoryPool>, IDisposable, IChip, IHero
 {
     //IChip properties
     public ChipType ChipType { get; private set; }
@@ -9,6 +11,9 @@ public class Enemy : MonoBehaviour, IChip
     public bool IsMovable { get; set; }
     public bool IsClearable { get; set; }
     public GameObject MyGo { get { return gameObject; } }
+
+    //Hero Properties
+    IMemoryPool _pool;
 
     public void InitChip(ChipType type, int Xpos, int Ypos, float Scale, Vector3 Position)
     {
@@ -43,6 +48,20 @@ public class Enemy : MonoBehaviour, IChip
 
     public void Dispose()
     {
-        //Dispose
+        _pool.Despawn(this);
     }
+
+    public void OnSpawned(IMemoryPool pool)
+    {
+        _pool = pool;
+        //Init
+    }
+
+    public void OnDespawned()
+    {
+        _pool = null;
+        //reset
+    }
+
+    public class Factory : PlaceholderFactory<HeroChip> { }
 }
