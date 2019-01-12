@@ -38,3 +38,13 @@ public enum MatchLevelType
 {
     TurnsLimit
 }
+
+public enum MatchLevelState
+{
+    Unknown,
+    LevelInit,
+    PlayerMove,
+    EnemyMove,
+    LevelEnd,
+    Pause
+}

@@ -7,7 +7,7 @@
 
     public void ResetLevel(MatchLevel matchLevel, FieldGenerationRules Rules)
     {
-        matchLevel.CurrentTurn = 0;
+        matchLevel.ResetLevel();
         matchLevel.TurnsLimit = Rules.TurnsLimit;
         matchLevel.LevelType = Rules.LevelType;
     }

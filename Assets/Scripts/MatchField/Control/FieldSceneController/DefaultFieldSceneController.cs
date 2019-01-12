@@ -56,12 +56,11 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
 
     public async Task StartMatchAsync()
     {
-        //_levelFSM.CurrentState = LevelInitState... hm? Where to get this state refference? Or should it be in FSM?
-        //OR! should it be all in MatchLevel Class? Yes!
-        await GenerateFieldAsync();
+       await GenerateFieldAsync();
 
         GenerateLevel();
         SpawnHero();
+        _levelFSM.ChangeState(MatchLevelState.PlayerMove);
     }
 
     //GameField must be generated first. Because I send null object atm 
@@ -126,5 +125,6 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     void GenerateLevel()
     {
         _matchLevel = _levelGenerator.GenerateLevel(_fieldGenerationRules);
+        _levelFSM.Level = _matchLevel;
     }
 }
