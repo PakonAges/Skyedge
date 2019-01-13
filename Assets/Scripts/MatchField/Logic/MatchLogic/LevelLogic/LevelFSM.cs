@@ -4,7 +4,7 @@ using Zenject;
 public class LevelFSM : ILevelFSM, IInitializable
 {
     public ILevelState CurrentState{ get; set; }
-    public MatchLevel Level { get; set; }
+    MatchLevel _level;
 
     ILevelState _init;
     ILevelState _playerMove;
@@ -20,10 +20,20 @@ public class LevelFSM : ILevelFSM, IInitializable
     public void Initialize()
     {
         _init = new LevelInitState();
-        _playerMove = new LevelPlayerMoveState(Level);
-        _enemyMove = new LevelEnemyMoveState(Level);
+        _playerMove = new LevelPlayerMoveState();
+        _enemyMove = new LevelEnemyMoveState();
         _levelEnd = new LevelEndState();
         _pause = new LevelPauseState();
+    }
+
+    public void SetupFSM(MatchLevel level)
+    {
+        _level = level;
+        _init.Level = _level;
+        _playerMove.Level = _level;
+        _enemyMove.Level = _level;
+        _levelEnd.Level = _level;
+        _pause.Level = _level;
 
         CurrentState = _init;
         CurrentState.OnStateEnter();

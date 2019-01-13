@@ -11,7 +11,6 @@ public class MatchLevel
         CurrentTurn = 0;
         TurnsLimit = turns;
         LevelType = levelType;
-        Debug.LogFormat("Turns Left: {0}",TurnsLimit);
     }
 
     public void ResetLevel()

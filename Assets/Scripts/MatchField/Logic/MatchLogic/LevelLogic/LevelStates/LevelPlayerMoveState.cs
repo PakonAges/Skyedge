@@ -2,23 +2,18 @@
 
 public class LevelPlayerMoveState : ILevelState
 {
-    readonly MatchLevel _level;
-
-    public LevelPlayerMoveState(MatchLevel level)
-    {
-        _level = level;
-    }
+    public MatchLevel Level { get; set; }
 
     public void OnStateEnter()
     {
-        Debug.Log("Enter PlayerMove State");
+        Debug.LogFormat("Enter PlayerMove State. Curent turn: {0}",Level.CurrentTurn);
         //Ready To rumble
     }
 
     public void OnStateExit()
     {
         Debug.Log("PlayerMove State Exit");
-        _level.StartNewTurn();
+        Level.StartNewTurn();
         //Time for enemies to move
     }
 }

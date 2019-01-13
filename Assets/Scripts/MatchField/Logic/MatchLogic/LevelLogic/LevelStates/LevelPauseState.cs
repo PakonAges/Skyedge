@@ -2,6 +2,8 @@
 
 public class LevelPauseState : ILevelState
 {
+    public MatchLevel Level { get; set; }
+
     public void OnStateEnter()
     {
         Debug.Log("Enter Level Pause State");

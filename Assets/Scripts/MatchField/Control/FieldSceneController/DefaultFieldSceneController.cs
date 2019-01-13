@@ -54,13 +54,13 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     public void Initialize()
     {
         _chipPositioner.SetupChipParameters(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
-        GenerateLevel();
     }
 
     public async Task StartMatchAsync()
     {
-       await GenerateFieldAsync();
+        await GenerateFieldAsync();
         SpawnHero();
+        GenerateLevel();
         _levelFSM.ChangeState(MatchLevelState.PlayerMove);
     }
 
@@ -126,6 +126,6 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     void GenerateLevel()
     {
         _matchLevel = _levelGenerator.GenerateLevel(_fieldGenerationRules);
-        _levelFSM.Level = _matchLevel;
+        _levelFSM.SetupFSM(_matchLevel);
     }
 }

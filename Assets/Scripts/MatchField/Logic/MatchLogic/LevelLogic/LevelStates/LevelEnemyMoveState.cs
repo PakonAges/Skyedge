@@ -2,12 +2,9 @@
 
 public class LevelEnemyMoveState : ILevelState
 {
-    readonly MatchLevel _level;
+    public MatchLevel Level { get; set; }
 
-    public LevelEnemyMoveState(MatchLevel level)
-    {
-        _level = level;
-    }
+    //Enemies Controller
 
     public void OnStateEnter()
     {
@@ -19,8 +16,7 @@ public class LevelEnemyMoveState : ILevelState
 
     public void OnStateExit()
     {
-        _level.StartNewTurn();
-
+        //Enemies Controller. Move ACtion
         Debug.Log("Enemy Move State Exit");
         //Back to Player
     }
