@@ -105,8 +105,9 @@ public class MatchFieldInstaller : MonoInstaller
     void InstallLevelLogic()
     {
         Container.Bind<ILevelGenerator>().To<LevelGenerator>().AsSingle();
-        Container.BindInterfacesAndSelfTo<LevelFSM>().AsSingle();
+        Container.Bind<ILevelFSM>().To<LevelFSM>().AsSingle();
         Container.Bind<IPlayerController>().To<PlayerController>().AsSingle();
+        Container.Bind<IEnemiesController>().To<EnemiesController>().AsSingle();
     }
 
 

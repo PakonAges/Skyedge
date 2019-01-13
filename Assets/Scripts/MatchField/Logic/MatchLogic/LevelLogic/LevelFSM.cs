@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using Zenject;
 
-public class LevelFSM : ILevelFSM, IInitializable
+public class LevelFSM : ILevelFSM
 {
-    public ILevelState CurrentState{ get; set; }
+    public ILevelState CurrentState{ get; private set; }
     MatchLevel _level;
 
     ILevelState _init;
@@ -13,11 +12,6 @@ public class LevelFSM : ILevelFSM, IInitializable
     ILevelState _pause;
 
     public LevelFSM()
-    {
-
-    }
-
-    public void Initialize()
     {
         _init = new LevelInitState();
         _playerMove = new LevelPlayerMoveState();

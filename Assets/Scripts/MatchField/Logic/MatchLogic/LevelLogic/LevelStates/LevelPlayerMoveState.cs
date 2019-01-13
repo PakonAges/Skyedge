@@ -13,7 +13,7 @@ public class LevelPlayerMoveState : ILevelState
     public void OnStateExit()
     {
         Debug.Log("PlayerMove State Exit");
-        Level.StartNewTurn();
+        Level.EndOfPlayerMove();
         //Time for enemies to move
     }
 }

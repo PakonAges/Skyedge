@@ -1,4 +1,4 @@
 ﻿public interface IEnemiesController
 {
-    void MoveAction();
+    void StartMove();
 }

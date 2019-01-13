@@ -19,7 +19,7 @@ public class MatchLevel
         Debug.LogFormat("Restart Level. Turns Left: {0}", TurnsLimit);
     }
 
-    public void StartNewTurn()
+    public void EndOfPlayerMove()
     {
         CurrentTurn++;
         int TurnsLeft = TurnsLimit - CurrentTurn;
