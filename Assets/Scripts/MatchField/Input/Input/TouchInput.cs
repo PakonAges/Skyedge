@@ -14,6 +14,7 @@ public class TouchInput : MonoBehaviour, ITouchInput
     Camera _camera;
     IChipMovement _chipMovement;
     IFieldCleaner _fieldCleaner;
+    IMatchChecker _matchChecker;
     IPlayerController _playerController;
 
     [Inject]
@@ -21,12 +22,14 @@ public class TouchInput : MonoBehaviour, ITouchInput
                             FieldVisualizationParameters fieldVisualizationParameters,
                             IChipMovement chipMovement,
                             IFieldCleaner fieldCleaner,
+                            IMatchChecker matchChecker,
                             IPlayerController playerController)
     {
         _camera = cam;
         _selectedChipVisualizationPrefab = fieldVisualizationParameters.SelectedChip;
         _chipMovement = chipMovement;
         _fieldCleaner = fieldCleaner;
+        _matchChecker = matchChecker;
         _playerController = playerController;
         InitTapGesture();
         InitSelectionView();
@@ -52,11 +55,7 @@ public class TouchInput : MonoBehaviour, ITouchInput
                 }
                 else if (_chipMovement.GameField.IsAdjacement(_selectedObject.GetComponent<IChip>(),hit.transform.gameObject.GetComponent<IChip>())) //Second Chip is Adjacement
                 {
-                    //TODO: Add check for swap, can I? or no combos -> return
-                    //OR inside SwapChips method
                     SwapChips(_selectedObject, hit.transform.gameObject);
-                    _playerController.MoveAction();
-                    Deselect();
                 }
                 else //Second chip is not Adjacement
                 {
@@ -139,15 +138,27 @@ public class TouchInput : MonoBehaviour, ITouchInput
     {
         try
         {
+
             IChip chip1 = chipObj1.GetComponent<IChip>();
             IChip chip2 = chipObj2.GetComponent<IChip>();
+
+            Deselect();
+
             var swap = await _chipMovement.SwapAsync(chip1, chip2);
-            //if no combos -> return
-            _fieldCleaner.ChangeFillDirection(  chipObj2.GetComponent<IChip>().X,
-                                                chipObj2.GetComponent<IChip>().Y,
-                                                chipObj1.GetComponent<IChip>().X,
-                                                chipObj1.GetComponent<IChip>().Y);
-            _fieldCleaner.ClearAndRefillBoard();
+
+            if (_matchChecker.GetMatch(chip1).Count >= 3 || _matchChecker.GetMatch(chip2).Count >= 3)
+            {
+                _fieldCleaner.ChangeFillDirection(  chipObj2.GetComponent<IChip>().X,
+                                                    chipObj2.GetComponent<IChip>().Y,
+                                                    chipObj1.GetComponent<IChip>().X,
+                                                    chipObj1.GetComponent<IChip>().Y);
+                _fieldCleaner.ClearAndRefillBoard();
+                _playerController.MoveAction();
+            }
+            else
+            {
+                var swapback = await _chipMovement.SwapAsync(chip2, chip1);
+            }
         }
         catch (Exception e)
         {
