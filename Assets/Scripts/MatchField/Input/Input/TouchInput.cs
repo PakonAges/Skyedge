@@ -152,7 +152,7 @@ public class TouchInput : MonoBehaviour, ITouchInput
                                                     chipObj2.GetComponent<IChip>().Y,
                                                     chipObj1.GetComponent<IChip>().X,
                                                     chipObj1.GetComponent<IChip>().Y);
-                _fieldCleaner.ClearAndRefillBoard();
+                await _fieldCleaner.ClearAndRefillBoardAsync();
                 _playerController.MoveAction();
             }
             else

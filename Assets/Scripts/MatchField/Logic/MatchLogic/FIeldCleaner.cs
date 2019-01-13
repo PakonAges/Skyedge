@@ -22,7 +22,7 @@ public class FIeldCleaner : IFieldCleaner
         _matches = new List<ColorChip>();
     }
 
-    public async void ClearAndRefillBoard()
+    public async Task ClearAndRefillBoardAsync()
     {
         bool NeedsToRefill = await ClearAllMathcesAndNeedsToRefillAsync();
 
@@ -133,7 +133,7 @@ public class FIeldCleaner : IFieldCleaner
         {
             await ClearChipAsync(x, y);
             await _fieldFiller.FullFillAsync();
-            ClearAndRefillBoard();
+            await ClearAndRefillBoardAsync();
         }
         catch (Exception e)
         {
