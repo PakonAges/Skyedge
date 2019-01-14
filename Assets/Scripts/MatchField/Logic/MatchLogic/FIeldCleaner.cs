@@ -43,7 +43,7 @@ public class FIeldCleaner : IFieldCleaner
         {
             for (int x = 0; x < GameField.Xsize; x++)
             {
-                if (GameField.FieldMatrix[x,y].IsClearable)
+                if (GameField.FieldMatrix[x, y].IsClearable)
                 {
                     _matches = _matchChecker.GetMatch(GameField.FieldMatrix[x, y]);
 
@@ -106,25 +106,30 @@ public class FIeldCleaner : IFieldCleaner
     {
         if (chip1_x == chip2_x && chip1_y < chip2_y)
         {
-            _fieldFiller.FillDirection = FieldFillDirection.TopToBot;
+            _fieldFiller.FillDirection = MoveDirection.TopToBot;
 
         }
         else if (chip1_x == chip2_x && chip1_y > chip2_y)
         {
-            _fieldFiller.FillDirection = FieldFillDirection.BotToTop;
+            _fieldFiller.FillDirection = MoveDirection.BotToTop;
         }
         else if (chip1_x < chip2_x && chip1_y == chip2_y)
         {
-            _fieldFiller.FillDirection = FieldFillDirection.LeftToRight;
+            _fieldFiller.FillDirection = MoveDirection.LeftToRight;
         }
         else if (chip1_x > chip2_x && chip1_y == chip2_y)
         {
-            _fieldFiller.FillDirection = FieldFillDirection.RightToLeft;
+            _fieldFiller.FillDirection = MoveDirection.RightToLeft;
         }
         else
         {
             Debug.LogErrorFormat("Can't Detect Fill Direction with chip1[{0};{1}] and chip2[{2};{3}]", chip1_x, chip1_y, chip2_x, chip2_y);
         }
+    }
+
+    public void ChangeFillDirection(MoveDirection moveDirection)
+    {
+        _fieldFiller.FillDirection = moveDirection;
     }
 
     public async Task ClearChipAndRefillAsync(int x, int y)

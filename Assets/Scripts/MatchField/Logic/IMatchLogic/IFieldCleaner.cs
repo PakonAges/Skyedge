@@ -9,4 +9,5 @@ public interface IFieldCleaner
     Task ClearChipAndRefillAsync(int x, int y);
     Task<bool> ClearAllMathcesAndNeedsToRefillAsync();
     void ChangeFillDirection(int chip1_x, int chip1_y, int chip2_x, int chip2_y);
+    void ChangeFillDirection(MoveDirection moveDirection);
 }

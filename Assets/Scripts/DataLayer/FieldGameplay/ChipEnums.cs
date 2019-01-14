@@ -16,7 +16,7 @@ public enum ChipColor
     Total
 }
 
-public enum FieldFillDirection
+public enum MoveDirection
 {
     TopToBot,
     BotToTop,

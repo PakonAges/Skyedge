@@ -4,7 +4,7 @@ using UnityEngine;
 public class FieldFiller : IFieldFiller
 {
     public Field GameField { get; set; }
-    public FieldFillDirection FillDirection { get; set; }
+    public MoveDirection FillDirection { get; set; }
 
     readonly IChipMovement _chipMovement;
     readonly IChipManager _chipManager;
@@ -39,7 +39,7 @@ public class FieldFiller : IFieldFiller
         //Point to refactor sometime
         switch (FillDirection)
         {
-            case FieldFillDirection.TopToBot:
+            case MoveDirection.TopToBot:
             for (int y = GameField.Ysize - 2; y >= 0; y--)
             {
                 for (int x = 0; x < GameField.Xsize; x++)
@@ -81,7 +81,7 @@ public class FieldFiller : IFieldFiller
             break;
 
 
-            case FieldFillDirection.BotToTop:
+            case MoveDirection.BotToTop:
             for (int y = 1; y < GameField.Ysize ; y++)
             {
                 for (int x = 0; x < GameField.Xsize; x++)
@@ -123,7 +123,7 @@ public class FieldFiller : IFieldFiller
             break;
 
 
-            case FieldFillDirection.LeftToRight:
+            case MoveDirection.LeftToRight:
             for (int x = GameField.Xsize - 2; x >= 0; x--)
             {
                 for (int y = 0; y < GameField.Ysize; y++)
@@ -166,7 +166,7 @@ public class FieldFiller : IFieldFiller
 
 
 
-            case FieldFillDirection.RightToLeft:
+            case MoveDirection.RightToLeft:
             for (int x = 1; x < GameField.Xsize; x++)
             {
                 for (int y = 0; y < GameField.Ysize; y++)

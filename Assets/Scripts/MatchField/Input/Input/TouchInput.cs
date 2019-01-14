@@ -9,7 +9,7 @@ public class TouchInput : MonoBehaviour, ITouchInput
     bool _alreadyHasSelection = false;
     GameObject _selectionVisual;
 
-    float _panDeadZone = 1.0f;
+    float _panDeadZone = 4.0f;
 
     GameObject _selectedChipVisualizationPrefab;
     TapGestureRecognizer _tapGesture;
@@ -52,25 +52,25 @@ public class TouchInput : MonoBehaviour, ITouchInput
     {
         if (tapGesture.State == GestureRecognizerState.Ended)
         {
-            var tapTransform = GestureHit(tapGesture);
+            var tappedTransform = GestureHit(tapGesture);
 
-            if (tapTransform != null) // no hit
+            if (tappedTransform != null) // no hit
             {
                 if (_selectedObject == null) //no selection
                 {
-                    SelectObject(tapTransform.gameObject);
+                    SelectObject(tappedTransform.gameObject);
                 }
-                else if (_selectedObject == tapTransform.gameObject) //clicked the same item
+                else if (_selectedObject == tappedTransform.gameObject) //clicked the same item
                 {
                     Deselect();
                 }
-                else if (_chipMovement.GameField.IsAdjacement(_selectedObject.GetComponent<IChip>(), tapTransform.gameObject.GetComponent<IChip>())) //Second Chip is Adjacement
+                else if (_chipMovement.GameField.IsAdjacement(_selectedObject.GetComponent<IChip>(), tappedTransform.gameObject.GetComponent<IChip>())) //Second Chip is Adjacement
                 {
-                    SwapChips(_selectedObject, tapTransform.gameObject);
+                    SwapChips(_selectedObject, tappedTransform.gameObject);
                 }
                 else //Second chip is not Adjacement
                 {
-                    ChangeSelection(tapTransform.gameObject);
+                    ChangeSelection(tappedTransform.gameObject);
                 }
             }
         }
@@ -78,36 +78,29 @@ public class TouchInput : MonoBehaviour, ITouchInput
 
     void PanGestureCallback(GestureRecognizer panGesture)
     {
+        if (panGesture.State == GestureRecognizerState.Began)
+        {
+            var pannedTransform = GestureHit(panGesture);
 
-
-
-        //if (panGesture.State == GestureRecognizerState.Ended)
-        //{
-        //    Vector3 pos = new Vector3(panGesture.FocusX, panGesture.FocusY, 0.0f);
-        //    pos = _camera.ScreenToWorldPoint(pos);
-        //    RaycastHit2D hit = Physics2D.Raycast(pos, Vector3.zero);
-
-        //    if (hit.transform != null) // no hit
-        //    {
-        //        if (_selectedObject == null) //no selection
-        //        {
-        //            SelectObject(hit.transform.gameObject);
-        //        }
-        //        else if (_selectedObject == hit.transform.gameObject) //clicked the same item
-        //        {
-        //            Deselect();
-        //        }
-        //        else if (_chipMovement.GameField.IsAdjacement(_selectedObject.GetComponent<IChip>(), hit.transform.gameObject.GetComponent<IChip>())) //Second Chip is Adjacement
-        //        {
-        //            SwapChips(_selectedObject, hit.transform.gameObject);
-        //        }
-        //        else //Second chip is not Adjacement
-        //        {
-        //            ChangeSelection(hit.transform.gameObject);
-        //        }
-        //        //Debug.LogFormat("Clicked on: {0}", hit.transform);
-        //    }
-        //}
+            //Hitted something
+            if (pannedTransform != null)
+            {
+                //ok, let's try without showing selection
+                if (panGesture.DeltaX > _panDeadZone)
+                {
+                    SwapChipInDirection(pannedTransform.gameObject, MoveDirection.LeftToRight);
+                } else if (-1 * panGesture.DeltaX > _panDeadZone)
+                {
+                    SwapChipInDirection(pannedTransform.gameObject, MoveDirection.RightToLeft);
+                } else if (panGesture.DeltaY > _panDeadZone)
+                {
+                    SwapChipInDirection(pannedTransform.gameObject, MoveDirection.BotToTop);
+                } else if (-1 * panGesture.DeltaY > _panDeadZone)
+                {
+                    SwapChipInDirection(pannedTransform.gameObject, MoveDirection.TopToBot);
+                }
+            }
+        }
     }
 
     void InitTapGesture()
@@ -190,7 +183,6 @@ public class TouchInput : MonoBehaviour, ITouchInput
     {
         try
         {
-
             IChip chip1 = chipObj1.GetComponent<IChip>();
             IChip chip2 = chipObj2.GetComponent<IChip>();
 
@@ -219,6 +211,79 @@ public class TouchInput : MonoBehaviour, ITouchInput
         }
     }
 
+    async void SwapChipInDirection(GameObject chip, MoveDirection direction)
+    {
+        try
+        {
+            IChip chip1 = chip.GetComponent<IChip>();
+            IChip chip2 = null;
+
+            if (CantSwap(chip1, direction))
+            {
+                Deselect();
+                return;
+            }
+
+            if (direction == MoveDirection.TopToBot)
+            {
+                chip2 = _chipMovement.GameField.FieldMatrix[chip1.X, chip1.Y + 1];
+            }
+            else if (direction == MoveDirection.BotToTop)
+            {
+                chip2 = _chipMovement.GameField.FieldMatrix[chip1.X, chip1.Y - 1];
+            }
+            else if (direction == MoveDirection.RightToLeft)
+            {
+                chip2 = _chipMovement.GameField.FieldMatrix[chip1.X - 1, chip1.Y];
+            }
+            else if (direction == MoveDirection.LeftToRight)
+            {
+                chip2 = _chipMovement.GameField.FieldMatrix[chip1.X + 1, chip1.Y];
+            }
+
+            Deselect();
+
+            var swap = await _chipMovement.SwapAsync(chip1, chip2);
+
+            if (_matchChecker.GetMatch(chip1).Count >= 3 || _matchChecker.GetMatch(chip2).Count >= 3)
+            {
+                _fieldCleaner.ChangeFillDirection(direction);
+                await _fieldCleaner.ClearAndRefillBoardAsync();
+                _playerController.MoveAction();
+            }
+            else
+            {
+                var swapback = await _chipMovement.SwapAsync(chip2, chip1);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogErrorFormat("AHTUNG: {0}", e);
+            Debug.LogErrorFormat("Trying to swap {0} in Direction {1}", chip, direction);
+        }
+    }
+
+    private bool CantSwap(IChip chip1, MoveDirection direction)
+    {
+        if (chip1.X == 0 && direction == MoveDirection.RightToLeft)
+        {
+            return true;
+        }
+        if (chip1.X == _matchChecker.GameField.Xsize - 1 && direction == MoveDirection.LeftToRight)
+        {
+            return true;
+        }
+        if (chip1.Y == 0 && direction == MoveDirection.BotToTop)
+        {
+            return true;
+        }
+        if (chip1.Y == _matchChecker.GameField.Ysize - 1 && direction == MoveDirection.TopToBot)
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     //DEBUG
     void Update()

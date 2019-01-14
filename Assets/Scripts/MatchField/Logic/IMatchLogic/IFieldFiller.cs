@@ -3,6 +3,6 @@
 public interface IFieldFiller
 {
     Field GameField { get; set; }
-    FieldFillDirection FillDirection { get; set; }
+    MoveDirection FillDirection { get; set; }
     Task FullFillAsync();
 }
