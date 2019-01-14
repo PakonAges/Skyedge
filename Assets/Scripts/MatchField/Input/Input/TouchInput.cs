@@ -9,14 +9,17 @@ public class TouchInput : MonoBehaviour, ITouchInput
     bool _alreadyHasSelection = false;
     GameObject _selectionVisual;
 
+    float _panDeadZone = 1.0f;
+
     GameObject _selectedChipVisualizationPrefab;
     TapGestureRecognizer _tapGesture;
+    PanGestureRecognizer _panGesture;
     Camera _camera;
     IChipMovement _chipMovement;
     IFieldCleaner _fieldCleaner;
     IMatchChecker _matchChecker;
     IPlayerController _playerController;
-
+    
     [Inject]
     public void Construct(  Camera cam,
                             FieldVisualizationParameters fieldVisualizationParameters,
@@ -32,38 +35,79 @@ public class TouchInput : MonoBehaviour, ITouchInput
         _matchChecker = matchChecker;
         _playerController = playerController;
         InitTapGesture();
+        InitPanGesture();
         InitSelectionView();
     }
 
-    void TapGestureCallback(GestureRecognizer gesture)
+    Transform GestureHit(GestureRecognizer gesture)
     {
-        if (gesture.State == GestureRecognizerState.Ended)
-        {
-            Vector3 pos = new Vector3(gesture.FocusX, gesture.FocusY, 0.0f);
-            pos = _camera.ScreenToWorldPoint(pos);
-            RaycastHit2D hit = Physics2D.Raycast(pos, Vector3.zero);
+        Vector3 pos = new Vector3(gesture.FocusX, gesture.FocusY, 0.0f);
+        pos = _camera.ScreenToWorldPoint(pos);
+        RaycastHit2D hit = Physics2D.Raycast(pos, Vector3.zero);
 
-            if (hit.transform != null) // no hit
+        return hit.transform;
+    }
+
+    void TapGestureCallback(GestureRecognizer tapGesture)
+    {
+        if (tapGesture.State == GestureRecognizerState.Ended)
+        {
+            var tapTransform = GestureHit(tapGesture);
+
+            if (tapTransform != null) // no hit
             {
                 if (_selectedObject == null) //no selection
                 {
-                    SelectObject(hit.transform.gameObject);
+                    SelectObject(tapTransform.gameObject);
                 }
-                else if (_selectedObject == hit.transform.gameObject) //clicked the same item
+                else if (_selectedObject == tapTransform.gameObject) //clicked the same item
                 {
                     Deselect();
                 }
-                else if (_chipMovement.GameField.IsAdjacement(_selectedObject.GetComponent<IChip>(),hit.transform.gameObject.GetComponent<IChip>())) //Second Chip is Adjacement
+                else if (_chipMovement.GameField.IsAdjacement(_selectedObject.GetComponent<IChip>(), tapTransform.gameObject.GetComponent<IChip>())) //Second Chip is Adjacement
                 {
-                    SwapChips(_selectedObject, hit.transform.gameObject);
+                    SwapChips(_selectedObject, tapTransform.gameObject);
                 }
                 else //Second chip is not Adjacement
                 {
-                    ChangeSelection(hit.transform.gameObject);
+                    ChangeSelection(tapTransform.gameObject);
                 }
-                //Debug.LogFormat("Clicked on: {0}", hit.transform);
             }
         }
+    }
+
+    void PanGestureCallback(GestureRecognizer panGesture)
+    {
+
+
+
+        //if (panGesture.State == GestureRecognizerState.Ended)
+        //{
+        //    Vector3 pos = new Vector3(panGesture.FocusX, panGesture.FocusY, 0.0f);
+        //    pos = _camera.ScreenToWorldPoint(pos);
+        //    RaycastHit2D hit = Physics2D.Raycast(pos, Vector3.zero);
+
+        //    if (hit.transform != null) // no hit
+        //    {
+        //        if (_selectedObject == null) //no selection
+        //        {
+        //            SelectObject(hit.transform.gameObject);
+        //        }
+        //        else if (_selectedObject == hit.transform.gameObject) //clicked the same item
+        //        {
+        //            Deselect();
+        //        }
+        //        else if (_chipMovement.GameField.IsAdjacement(_selectedObject.GetComponent<IChip>(), hit.transform.gameObject.GetComponent<IChip>())) //Second Chip is Adjacement
+        //        {
+        //            SwapChips(_selectedObject, hit.transform.gameObject);
+        //        }
+        //        else //Second chip is not Adjacement
+        //        {
+        //            ChangeSelection(hit.transform.gameObject);
+        //        }
+        //        //Debug.LogFormat("Clicked on: {0}", hit.transform);
+        //    }
+        //}
     }
 
     void InitTapGesture()
@@ -71,6 +115,14 @@ public class TouchInput : MonoBehaviour, ITouchInput
         _tapGesture = new TapGestureRecognizer();
         _tapGesture.StateUpdated += TapGestureCallback;
         FingersScript.Instance.AddGesture(_tapGesture);
+    }
+
+    void InitPanGesture()
+    {
+        _panGesture = new PanGestureRecognizer();
+        _panGesture.StateUpdated += PanGestureCallback;
+        _panGesture.MaximumNumberOfTouchesToTrack = 2;
+        FingersScript.Instance.AddGesture(_panGesture);
     }
 
     void InitSelectionView()
