@@ -12,8 +12,10 @@ public class TouchInput : MonoBehaviour, ITouchInput
     float _panDeadZone = 4.0f;
 
     GameObject _selectedChipVisualizationPrefab;
+    //GestureTouch _touchGesture;
     TapGestureRecognizer _tapGesture;
     PanGestureRecognizer _panGesture;
+
     Camera _camera;
     IChipMovement _chipMovement;
     IFieldCleaner _fieldCleaner;
@@ -102,6 +104,8 @@ public class TouchInput : MonoBehaviour, ITouchInput
             }
         }
     }
+
+
 
     void InitTapGesture()
     {
@@ -288,10 +292,21 @@ public class TouchInput : MonoBehaviour, ITouchInput
     //DEBUG
     void Update()
     {
+        //ProcessTouches();
+
         if (Input.GetKeyDown(KeyCode.K))
         {
             _fieldCleaner.ClearChipAndRefillAsync(_selectedObject.GetComponent<IChip>().X, _selectedObject.GetComponent<IChip>().Y);
             Deselect();
         }
     }
+
+    //private void ProcessTouches()
+    //{
+    //    for (int i = 0; i < Input.touchCount; i++)
+    //    {
+    //        Touch t = Input.GetTouch(i);
+    //        var tras = GestureHit();
+    //    }
+    //}
 }
