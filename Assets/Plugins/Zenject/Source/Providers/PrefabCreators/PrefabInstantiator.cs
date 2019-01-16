@@ -17,12 +17,14 @@ namespace Zenject
         readonly List<TypeValuePair> _extraArguments;
         readonly GameObjectCreationParameters _gameObjectBindInfo;
         readonly Type _argumentTarget;
+        readonly List<Type> _instantiateCallbackTypes;
         readonly Action<InjectContext, object> _instantiateCallback;
 
         public PrefabInstantiator(
             DiContainer container,
             GameObjectCreationParameters gameObjectBindInfo,
             Type argumentTarget,
+            IEnumerable<Type> instantiateCallbackTypes,
             IEnumerable<TypeValuePair> extraArguments,
             IPrefabProvider prefabProvider,
             Action<InjectContext, object> instantiateCallback)
@@ -32,6 +34,7 @@ namespace Zenject
             _container = container;
             _gameObjectBindInfo = gameObjectBindInfo;
             _argumentTarget = argumentTarget;
+            _instantiateCallbackTypes = instantiateCallbackTypes.ToList();
             _instantiateCallback = instantiateCallback;
         }
 
@@ -55,9 +58,10 @@ namespace Zenject
             return _prefabProvider.GetPrefab();
         }
 
-        public GameObject Instantiate(List<TypeValuePair> args, out Action injectAction)
+        public GameObject Instantiate(InjectContext context, List<TypeValuePair> args, out Action injectAction)
         {
-            var context = new InjectContext(_container, _argumentTarget, null);
+            Assert.That(_argumentTarget == null || _argumentTarget.DerivesFromOrEqual(context.MemberType));
+
             bool shouldMakeActive;
             var gameObject = _container.CreateAndParentPrefab(
                 GetPrefab(), _gameObjectBindInfo, context, out shouldMakeActive);
@@ -103,17 +107,26 @@ namespace Zenject
                     }
                 }
 
-                if (_instantiateCallback != null && _argumentTarget != null)
+                if (_instantiateCallback != null)
                 {
-                    if (targetComponent == null)
+                    var callbackObjects = ZenPools.SpawnHashSet<object>();
+
+                    foreach (var type in _instantiateCallbackTypes)
                     {
-                        targetComponent = gameObject.GetComponentInChildren(_argumentTarget);
+                        var obj = gameObject.GetComponentInChildren(type);
+
+                        if (obj != null)
+                        {
+                            callbackObjects.Add(obj);
+                        }
                     }
 
-                    if (targetComponent != null)
+                    foreach (var obj in callbackObjects)
                     {
-                        _instantiateCallback(context, targetComponent);
+                        _instantiateCallback(context, obj);
                     }
+
+                    ZenPools.DespawnHashSet(callbackObjects);
                 }
             };
 

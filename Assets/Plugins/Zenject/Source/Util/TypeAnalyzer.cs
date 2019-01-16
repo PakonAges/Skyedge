@@ -24,12 +24,10 @@ namespace Zenject
     {
         static Dictionary<Type, InjectTypeInfo> _typeInfo = new Dictionary<Type, InjectTypeInfo>();
 
-#if UNITY_EDITOR
         // We store this separately from InjectTypeInfo because this flag is needed for contract
         // types whereas InjectTypeInfo is only needed for types that are instantiated, and
         // we want to minimize the types that generate InjectTypeInfo for
         static Dictionary<Type, bool> _allowDuringValidation = new Dictionary<Type, bool>();
-#endif
 
         // Use double underscores for generated methods since this is also what the C# compiler does
         // for things like anonymous methods
@@ -49,12 +47,6 @@ namespace Zenject
             return ShouldAllowDuringValidation(typeof(T));
         }
 
-#if !UNITY_EDITOR
-        public static bool ShouldAllowDuringValidation(Type type)
-        {
-            return false;
-        }
-#else
         public static bool ShouldAllowDuringValidation(Type type)
         {
             bool shouldAllow;
@@ -89,7 +81,6 @@ namespace Zenject
 
             return type.HasAttribute<ZenjectAllowDuringValidationAttribute>();
         }
-#endif
 
         public static bool HasInfo<T>()
         {
@@ -146,7 +137,7 @@ namespace Zenject
 
                 var baseType = type.BaseType();
 
-                if (baseType != null && ShouldAnalyzeType(baseType))
+                if (baseType != null && !ShouldSkipTypeAnalysis(baseType))
                 {
                     info.BaseTypeInfo = TryGetInfo(baseType);
                 }
@@ -164,7 +155,7 @@ namespace Zenject
 
         static InjectTypeInfo GetInfoInternal(Type type)
         {
-            if (!ShouldAnalyzeType(type))
+            if (ShouldSkipTypeAnalysis(type))
             {
                 return null;
             }
@@ -222,35 +213,17 @@ namespace Zenject
             }
         }
 
-        public static bool ShouldAnalyzeType(Type type)
+        public static bool ShouldSkipTypeAnalysis(Type type)
         {
-            if (type == null || type.IsEnum() || type.IsArray || type.IsInterface()
+            return type == null || type.IsEnum() || type.IsArray || type.IsInterface()
                 || type.ContainsGenericParameters() || IsStaticType(type)
-                || type == typeof(object))
-            {
-                return false;
-            }
-
-            return ShouldAnalyzeNamespace(type.Namespace);
+                || type == typeof(object);
         }
 
         static bool IsStaticType(Type type)
         {
             // Apparently this is unique to static classes
             return type.IsAbstract() && type.IsSealed();
-        }
-
-        public static bool ShouldAnalyzeNamespace(string ns)
-        {
-            if (ns == null)
-            {
-                return true;
-            }
-
-            return ns != "System" && !ns.StartsWith("System.")
-                && ns != "UnityEngine" && !ns.StartsWith("UnityEngine.")
-                && ns != "UnityEditor" && !ns.StartsWith("UnityEditor.")
-                && ns != "UnityStandardAssets" && !ns.StartsWith("UnityStandardAssets.");
         }
 
         static InjectTypeInfo CreateTypeInfoFromReflection(Type type)
