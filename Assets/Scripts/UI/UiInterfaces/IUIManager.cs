@@ -1,7 +1,7 @@
-﻿public interface IUIManager
+﻿public interface IUiManager
 {
-    void OpenWindow(IView window);
-    void CloseWindow(IView window);
+    void OpenWindow(IWindow window);
+    void CloseWindow(IWindow window);
     void CloseTopWindow();
     void CloseAll();
 }

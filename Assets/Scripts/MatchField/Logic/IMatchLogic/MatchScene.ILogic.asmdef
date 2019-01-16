@@ -1,0 +1,15 @@
+{
+    "name": "MatchScene.ILogic",
+    "references": [
+        "MatchScene.DataLayer",
+        "MatchScene.Entities"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

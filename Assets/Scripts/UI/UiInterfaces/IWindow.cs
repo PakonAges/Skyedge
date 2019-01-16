@@ -1,4 +1,4 @@
-﻿public interface IView
+﻿public interface IWindow
 {
     //When Open another View -> don't kill this,  just hide it
     void Hide();

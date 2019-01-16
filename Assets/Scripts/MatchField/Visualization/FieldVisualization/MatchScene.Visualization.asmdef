@@ -1,11 +1,11 @@
 {
-    "name": "FieldVisualization",
+    "name": "MatchScene.Visualization",
     "references": [
-        "IFieldVisualization",
-        "DataLayer",
-        "IMatchLogic",
+        "MatchScene.IVisualization",
+        "MatchScene.DataLayer",
+        "MatchScene.ILogic",
         "Zenject",
-        "FieldEntities"
+        "MatchScene.Entities"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

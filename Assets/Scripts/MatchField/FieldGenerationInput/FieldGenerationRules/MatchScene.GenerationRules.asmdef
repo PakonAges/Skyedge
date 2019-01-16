@@ -1,7 +1,8 @@
 {
-    "name": "IInput",
+    "name": "MatchScene.GenerationRules",
     "references": [
-        "FieldEntities"
+        "MatchScene.IGenerationRules",
+        "MatchScene.DataLayer"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

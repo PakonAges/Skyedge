@@ -1,8 +1,7 @@
 {
-    "name": "IFieldVisualization",
+    "name": "myUI.Implementations",
     "references": [
-        "DataLayer",
-        "FieldEntities"
+        "myUI.Interfaces"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

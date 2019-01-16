@@ -1,12 +1,8 @@
 {
-    "name": "MatchLogic",
+    "name": "MatchScene.Entities",
     "references": [
-        "IMatchLogic",
-        "IFieldVisualization",
-        "DataLayer",
-        "Zenject",
-        "FieldEntities",
-        "AsyncAwaitUtil"
+        "MatchScene.DataLayer",
+        "Zenject"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

@@ -1,8 +1,8 @@
 {
-    "name": "FieldEntities",
+    "name": "MatchScene.IVisualization",
     "references": [
-        "DataLayer",
-        "Zenject"
+        "MatchScene.DataLayer",
+        "MatchScene.Entities"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class HotKeyInput : MonoBehaviour {
+public class HotKeyInput : MonoBehaviour, IKeyboardInput {
 
     public KeyCode GenerateField = KeyCode.G;
     public KeyCode FindCombos = KeyCode.F;

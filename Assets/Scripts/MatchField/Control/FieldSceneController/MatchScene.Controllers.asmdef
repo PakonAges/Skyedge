@@ -1,7 +1,12 @@
 {
-    "name": "UiImplementation",
+    "name": "MatchScene.Controllers",
     "references": [
-        "IUi"
+        "MatchScene.DataLayer",
+        "MatchScene.IControllers",
+        "MatchScene.IVisualization",
+        "MatchScene.IGenerationRules",
+        "MatchScene.ILogic",
+        "MatchScene.Entities"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

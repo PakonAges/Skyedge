@@ -1,12 +1,12 @@
 {
-    "name": "FieldSceneController",
+    "name": "MatchScene.Logic",
     "references": [
-        "DataLayer",
-        "IFieldSceneController",
-        "IFieldVisualization",
-        "IFieldGenerationRules",
-        "IMatchLogic",
-        "FieldEntities"
+        "MatchScene.ILogic",
+        "MatchScene.IVisualization",
+        "MatchScene.DataLayer",
+        "Zenject",
+        "MatchScene.Entities",
+        "AsyncAwaitUtil"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

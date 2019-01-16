@@ -1,8 +1,7 @@
 {
-    "name": "IMatchLogic",
+    "name": "IInput",
     "references": [
-        "DataLayer",
-        "FieldEntities"
+        "MatchScene.Entities"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

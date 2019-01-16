@@ -1,9 +1,6 @@
 {
-    "name": "FieldGenerationRules",
-    "references": [
-        "IFieldGenerationRules",
-        "DataLayer"
-    ],
+    "name": "myUI.DataLayer",
+    "references": [],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],

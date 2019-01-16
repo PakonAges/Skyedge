@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MatchLevelUIManager : IUIManager
+public class MatchLevelUIManager : IUiManager
 {
-    readonly Stack<IView> _menuStack = new Stack<IView>();
+    readonly Stack<IWindow> _menuStack = new Stack<IWindow>();
 
-    public void OpenWindow(IView window)
+    public void OpenWindow(IWindow window)
     {
         GameObject WindowPrefab = GetPrefab(window);
         //Instantiate(WindowPrefab);
@@ -23,13 +23,13 @@ public class MatchLevelUIManager : IUIManager
         _menuStack.Push(window);
     }
 
-    private GameObject GetPrefab(IView window)
+    private GameObject GetPrefab(IWindow window)
     {
         //Get prefab based on name of Window?
         return null;
     }
 
-    public void CloseWindow(IView window)
+    public void CloseWindow(IWindow window)
     {
         //var topView = _menuStack.Pop();
         //Destroy(topView.gameObject);

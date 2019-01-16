@@ -1,7 +1,7 @@
 {
-    "name": "IFieldSceneController",
+    "name": "myUI.Interfaces",
     "references": [
-        "DataLayer"
+        "myUI.DataLayer"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

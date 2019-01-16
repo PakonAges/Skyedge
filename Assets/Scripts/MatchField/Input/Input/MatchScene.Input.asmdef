@@ -1,12 +1,12 @@
 {
-    "name": "Input",
+    "name": "MatchScene.Input",
     "references": [
-        "IFieldSceneController",
+        "MatchScene.IControllers",
         "IInput",
         "Fingers",
-        "DataLayer",
-        "FieldEntities",
-        "IMatchLogic"
+        "MatchScene.DataLayer",
+        "MatchScene.Entities",
+        "MatchScene.ILogic"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

@@ -1,8 +1,8 @@
-﻿public class MatchLevelEndView : IView
+﻿public class MatchLevelEndView : IWindow
 {
-    readonly IUIManager _uiManager;
+    readonly IUiManager _uiManager;
 
-    public MatchLevelEndView(IUIManager uIManager)
+    public MatchLevelEndView(IUiManager uIManager)
     {
         _uiManager = uIManager;
     }
