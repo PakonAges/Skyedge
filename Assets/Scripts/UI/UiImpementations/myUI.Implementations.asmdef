@@ -1,7 +1,9 @@
 {
     "name": "myUI.Implementations",
     "references": [
-        "myUI.Interfaces"
+        "myUI.DataLayer",
+        "myUI.Interfaces",
+        "Unity.Addressables"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

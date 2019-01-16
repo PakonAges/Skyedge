@@ -2,5 +2,5 @@
 
 public interface IUiPrefabProvider
 {
-    GameObject GetViewResource(UIViewType type);
+    GameObject GetViewResourceAsync(UIViewType type);
 }
