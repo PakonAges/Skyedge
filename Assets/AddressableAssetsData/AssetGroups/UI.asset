@@ -16,7 +16,11 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: f3c2d7dcb3bce5340aef7046f2b9e8e8
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: da21013f3f7d4334a9158be7406f5a60
+    m_Address: Assets/Prefabs/UI/Match_HUD.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 949de0eccec8e124e882b1796de112e9, type: 2}
   m_SchemaSet:
