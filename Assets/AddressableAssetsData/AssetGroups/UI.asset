@@ -10,15 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: UI
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
+  m_GroupName: UI
   m_Data:
     m_SerializedData: []
   m_GUID: f3c2d7dcb3bce5340aef7046f2b9e8e8
   m_SerializeEntries:
+  - m_GUID: 28d23f3624c910148be598dc3bd27dae
+    m_Address: PauseMenu
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   - m_GUID: da21013f3f7d4334a9158be7406f5a60
-    m_Address: Assets/Prefabs/UI/Match_HUD.prefab
+    m_Address: Match_HUD
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

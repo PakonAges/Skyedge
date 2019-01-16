@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 468a46d0ae32c3544b7d98094e6448a9, type: 3}
   m_Name: AddressableAssetSettings
   m_EditorClassIdentifier: 
-  m_DefaultGroup: f3c2d7dcb3bce5340aef7046f2b9e8e8
+  m_DefaultGroup: dbebe5e5f4dfe984b91e154e03b45791
   m_groups: []
   m_GroupAssets:
   - {fileID: 11400000, guid: 8f4a63593ad63d043ae90ed05455c2b3, type: 2}
   - {fileID: 11400000, guid: c97bd4a972318b445ac6ed4423e8705e, type: 2}
+  - {fileID: 11400000, guid: c49bbfc9b439c564986fd68d39a8147f, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
