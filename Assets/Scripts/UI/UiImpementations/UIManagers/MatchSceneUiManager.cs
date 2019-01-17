@@ -7,6 +7,7 @@ public class MatchSceneUiManager : IUiManager
 {
     readonly IUiPrefabProvider _prefabProvider;
     readonly Stack<IUiView> _menuStack = new Stack<IUiView>();
+    readonly Dictionary<UIViewType, IUiView> _cachedMenus = new Dictionary<UIViewType, IUiView>();
 
     public MatchSceneUiManager (IUiPrefabProvider uiPrefabProvider)
     {
@@ -15,18 +16,26 @@ public class MatchSceneUiManager : IUiManager
 
     public async Task OpenWindowAsync(UIViewType window)
     {
-        GameObject WindowPrefab = await _prefabProvider.GetViewResourceAsync(window);
-        GameObject.Instantiate(WindowPrefab);
-
-        //CHeck if window is already created but disabled in the Stack
-
         //De-activate top View
-        if (_menuStack.Count > 0)
-        {
-            _menuStack.Peek().Close();
-        }
+        //if (_menuStack.Count > 0)
+        //{
+        //    _menuStack.Peek().Close();
+        //}
 
-        _menuStack.Push(WindowPrefab.GetComponent<IUiView>());
+        if (_cachedMenus.ContainsKey(window))
+        {
+            _cachedMenus[window].Show();
+            _menuStack.Push(_cachedMenus[window]);
+            _cachedMenus.Remove(window);
+
+        }
+        else
+        {
+            //add proper Try catch
+            GameObject WindowPrefab = await _prefabProvider.GetViewResourceAsync(window);
+            GameObject.Instantiate(WindowPrefab);
+            _menuStack.Push(WindowPrefab.GetComponent<IUiView>());
+        }
     }
 
     public void CloseWindow(IUiView window)
@@ -37,7 +46,20 @@ public class MatchSceneUiManager : IUiManager
         //Re-activate top View
         if (_menuStack.Count > 0)
         {
-            _menuStack.Peek().Open();
+            _menuStack.Peek().Show();
+        }
+    }
+
+    public void HideAndCacheWindow(IUiView window)
+    {
+        if (_cachedMenus.ContainsKey(window.ViewType))
+        {
+            Debug.LogErrorFormat("Trying to hide and Cache View, byt Already cached this: {0}", window);
+        }
+        else
+        {
+            _cachedMenus.Add(window.ViewType, window);
+            window.Close();
         }
     }
 

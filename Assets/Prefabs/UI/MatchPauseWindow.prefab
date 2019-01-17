@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8781914011249607508}
   - component: {fileID: 4943579764788767199}
   m_Layer: 5
-  m_Name: PauseMenu
+  m_Name: MatchPauseWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -214,7 +214,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8443602608102543254}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 934644235583479654}
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &5817955186397568468
@@ -388,6 +399,7 @@ GameObject:
   - component: {fileID: 2704326208842464108}
   - component: {fileID: 1547779029594622522}
   - component: {fileID: 3009569152281813885}
+  - component: {fileID: 934644235583479654}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -452,3 +464,15 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &934644235583479654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6928217059296663385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0332cd4ca02659048967aeac34f35f64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -240,6 +240,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1208590395}
   - component: {fileID: 1208590394}
+  - component: {fileID: 1208590396}
   m_Layer: 0
   m_Name: UiInstaller
   m_TagString: Untagged
@@ -273,6 +274,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1208590396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208590393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96a459610c6ba664098f009ed431f8ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1239737484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -460,6 +473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GenerateField: 103
   FindCombos: 102
+  ShowmatchHUD: 104
 --- !u!4 &1696511217
 Transform:
   m_ObjectHideFlags: 0
