@@ -1,6 +1,8 @@
-﻿public interface IUiManager
+﻿using System.Threading.Tasks;
+
+public interface IUiManager
 {
-    void OpenWindow(IWindow window);
+    Task OpenWindowAsync(UIViewType window);
     void CloseWindow(IWindow window);
     void CloseTopWindow();
     void CloseAll();

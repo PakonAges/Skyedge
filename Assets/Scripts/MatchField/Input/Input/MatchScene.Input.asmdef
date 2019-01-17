@@ -6,7 +6,9 @@
         "Fingers",
         "MatchScene.DataLayer",
         "MatchScene.Entities",
-        "MatchScene.ILogic"
+        "MatchScene.ILogic",
+        "myUI.Interfaces",
+        "myUI.DataLayer"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

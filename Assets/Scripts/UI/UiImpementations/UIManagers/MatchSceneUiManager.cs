@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
-public class MatchLevelUIManager : IUiManager
+public class MatchSceneUiManager : IUiManager
 {
+    readonly IUiPrefabProvider _prefabProvider;
     readonly Stack<IWindow> _menuStack = new Stack<IWindow>();
 
-    public void OpenWindow(IWindow window)
+    public MatchSceneUiManager (IUiPrefabProvider uiPrefabProvider)
     {
-        GameObject WindowPrefab = GetPrefab(window);
+        _prefabProvider = uiPrefabProvider;
+    }
+
+    public async Task OpenWindowAsync(UIViewType window)
+    {
+        GameObject WindowPrefab = await _prefabProvider.GetViewResourceAsync(window);
+        GameObject.Instantiate(WindowPrefab);
         //Instantiate(WindowPrefab);
 
         //CHeck if window is already created but disabled?
@@ -20,13 +28,7 @@ public class MatchLevelUIManager : IUiManager
             _menuStack.Peek().Hide();
         }
 
-        _menuStack.Push(window);
-    }
-
-    private GameObject GetPrefab(IWindow window)
-    {
-        //Get prefab based on name of Window?
-        return null;
+        _menuStack.Push(WindowPrefab.GetComponent<IWindow>());
     }
 
     public void CloseWindow(IWindow window)
