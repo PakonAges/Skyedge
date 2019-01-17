@@ -6,7 +6,7 @@ using UnityEngine;
 public class MatchSceneUiManager : IUiManager
 {
     readonly IUiPrefabProvider _prefabProvider;
-    readonly Stack<IWindow> _menuStack = new Stack<IWindow>();
+    readonly Stack<IUiView> _menuStack = new Stack<IUiView>();
 
     public MatchSceneUiManager (IUiPrefabProvider uiPrefabProvider)
     {
@@ -17,21 +17,19 @@ public class MatchSceneUiManager : IUiManager
     {
         GameObject WindowPrefab = await _prefabProvider.GetViewResourceAsync(window);
         GameObject.Instantiate(WindowPrefab);
-        //Instantiate(WindowPrefab);
 
-        //CHeck if window is already created but disabled?
-        //Or in the Stack?
+        //CHeck if window is already created but disabled in the Stack
 
         //De-activate top View
         if (_menuStack.Count > 0)
         {
-            _menuStack.Peek().Hide();
+            _menuStack.Peek().Close();
         }
 
-        _menuStack.Push(WindowPrefab.GetComponent<IWindow>());
+        _menuStack.Push(WindowPrefab.GetComponent<IUiView>());
     }
 
-    public void CloseWindow(IWindow window)
+    public void CloseWindow(IUiView window)
     {
         //var topView = _menuStack.Pop();
         //Destroy(topView.gameObject);
@@ -39,7 +37,7 @@ public class MatchSceneUiManager : IUiManager
         //Re-activate top View
         if (_menuStack.Count > 0)
         {
-            _menuStack.Peek().Show();
+            _menuStack.Peek().Open();
         }
     }
 
@@ -47,7 +45,7 @@ public class MatchSceneUiManager : IUiManager
     {
         if (_menuStack.Count > 0)
         {
-            _menuStack.Peek().OnBackPressed();
+            _menuStack.Peek().Close();
         }
         else
         {

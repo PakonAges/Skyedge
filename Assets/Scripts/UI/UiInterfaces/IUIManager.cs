@@ -3,7 +3,7 @@
 public interface IUiManager
 {
     Task OpenWindowAsync(UIViewType window);
-    void CloseWindow(IWindow window);
+    void CloseWindow(IUiView window);
     void CloseTopWindow();
     void CloseAll();
 }

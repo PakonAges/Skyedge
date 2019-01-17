@@ -1,13 +1,13 @@
-﻿public class MatchLevelEndView : IWindow
+﻿public class MatchGameOver : IUiView
 {
     readonly IUiManager _uiManager;
 
-    public MatchLevelEndView(IUiManager uIManager)
+    public MatchGameOver(IUiManager uIManager)
     {
         _uiManager = uIManager;
     }
 
-    public void Show()
+    public void Open()
     {
         Open();
     }
@@ -18,7 +18,7 @@
         //else Show?
     }
 
-    public void Hide()
+    public void Close()
     {
         //Set Active = false
         //Or Destroy?
