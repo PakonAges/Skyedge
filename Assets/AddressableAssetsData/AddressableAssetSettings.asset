@@ -59,6 +59,7 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - UiWindow
   m_SchemaTemplates:
   - m_DisplayName: Packed Assets
     m_Description: Pack assets into asset bundles.

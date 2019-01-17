@@ -16,15 +16,16 @@ public class UiPrefabProvider : IUiPrefabProvider
         }
         else
         {
-            Addressables.LoadAsset<GameObject>(type.ToString()).Completed += onLoadDone => { return window; };
+            window = await Addressables.LoadAsset<GameObject>(type.ToString()) as GameObject;
+            //Addressables.LoadAsset<GameObject>(type.ToString()).Completed += onLoadDone => { return window; };
             return window;
         }
 
         throw new System.NotImplementedException();
     }
 
-    void onLoadDone(UnityEngine.ResourceManagement.IAsyncOperation<GameObject> obj)
-    {
-        window = obj.Result;
-    }
+    //void onLoadDone(UnityEngine.ResourceManagement.IAsyncOperation<GameObject> obj)
+    //{
+    //    window = obj.Result;
+    //}
 }

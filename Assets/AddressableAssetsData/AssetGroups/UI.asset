@@ -20,11 +20,13 @@ MonoBehaviour:
   - m_GUID: 28d23f3624c910148be598dc3bd27dae
     m_Address: PauseMenu
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UiWindow
   - m_GUID: da21013f3f7d4334a9158be7406f5a60
     m_Address: Match_HUD
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UiWindow
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 949de0eccec8e124e882b1796de112e9, type: 2}
   m_SchemaSet:

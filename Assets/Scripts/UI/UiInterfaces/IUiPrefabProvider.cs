@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Threading.Tasks;
+using UnityEngine;
 
 public interface IUiPrefabProvider
 {
-    GameObject GetViewResourceAsync(UIViewType type);
+    Task<GameObject> GetViewResourceAsync(UIViewType type);
 }
