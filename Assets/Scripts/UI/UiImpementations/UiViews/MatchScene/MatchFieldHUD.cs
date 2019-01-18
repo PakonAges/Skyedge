@@ -1,22 +1,43 @@
-﻿public class MatchFieldHUD : MyUiView
-{
-    public new UIViewType ViewType { get; private set; }
-    readonly new IUiManager _uiManager;
+﻿using UnityEngine;
+using Zenject;
 
-    public MatchFieldHUD(IUiManager uIManager) : base(uIManager)
+public class MatchFieldHUD : MonoBehaviour, IUiView
+{
+    public IUiManager UiManager { get; private set; }
+    public UIViewType ViewType { get; private set; }
+    public bool DestroyWhenClosed { get; private set; }
+
+    [Inject]
+    public void Construct()
     {
-        _uiManager = uIManager;
         ViewType = UIViewType.MatchFieldHUD;
     }
 
 
-    public override void OnBackPressed()
+    public void Init(IUiManager uiManager, UIViewType type, bool DestroyOnClosed)
     {
-        //DO my stuff
+        UiManager = uiManager;
+        //ViewType = type;
+        DestroyWhenClosed = DestroyOnClosed;
     }
 
     public void OpenPauseMenu()
     {
-        _uiManager.OpenWindowAsync(UIViewType.MatchPauseWindow);
+        UiManager.OpenWindowAsync(UIViewType.MatchPauseWindow);
+    }
+
+    public void Close()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Show()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnBackPressed()
+    {
+        throw new System.NotImplementedException();
     }
 }

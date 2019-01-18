@@ -31,10 +31,18 @@ public class MatchSceneUiManager : IUiManager
         }
         else
         {
-            //add proper Try catch
-            GameObject WindowPrefab = await _prefabProvider.GetViewResourceAsync(window);
-            GameObject.Instantiate(WindowPrefab);
-            _menuStack.Push(WindowPrefab.GetComponent<IUiView>());
+            try
+            {
+                GameObject WindowPrefab = await _prefabProvider.GetViewResourceAsync(window);
+                GameObject.Instantiate(WindowPrefab);
+                IUiView WindowView = WindowPrefab.GetComponent<IUiView>();
+                WindowView.Init(this, window, false);
+                _menuStack.Push(WindowView);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
         }
     }
 

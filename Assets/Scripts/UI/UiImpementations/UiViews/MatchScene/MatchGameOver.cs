@@ -2,9 +2,9 @@
 {
     public new UIViewType ViewType { get; private set; }
 
-    public MatchGameOver(IUiManager uIManager) : base(uIManager)
+    public override void Construct(IUiManager uIManager)
     {
-        _uiManager = uIManager;
+        base.Construct(uIManager);
         ViewType = UIViewType.MatchGameOver;
     }
 }

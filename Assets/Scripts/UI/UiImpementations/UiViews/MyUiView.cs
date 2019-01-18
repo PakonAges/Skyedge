@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using Zenject;
 
-public abstract class MyUiView : MonoBehaviour, IUiView
+public abstract class MyUiView : MonoBehaviour
 {
     public bool DestroyWhenClosed { get; private set; }
     //[Tooltip("Disable menus that are under this one in the stack")]
@@ -9,28 +10,24 @@ public abstract class MyUiView : MonoBehaviour, IUiView
 
     protected IUiManager _uiManager;
 
-    public MyUiView(IUiManager uIManager)
+    [Inject]
+    public virtual void Construct(IUiManager uIManager)
     {
         _uiManager = uIManager;
         ViewType = UIViewType.Invalid;
         DestroyWhenClosed = false;
     }
 
-    //public virtual void Open()
-    //{
-    //    _uiManager.OpenWindowAsync(_viewType);
-    //}
-
     public virtual void Close()
     {
-        if (DestroyWhenClosed)
-        {
-            _uiManager.CloseWindow(this);
-        }
-        else
-        {
-            _uiManager.HideAndCacheWindow(this);
-        }
+        //if (DestroyWhenClosed)
+        //{
+        //    _uiManager.CloseWindow(this);
+        //}
+        //else
+        //{
+        //    _uiManager.HideAndCacheWindow(this);
+        //}
     }
 
     public virtual void OnBackPressed()
