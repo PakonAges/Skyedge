@@ -18,17 +18,17 @@ MonoBehaviour:
   m_GUID: f3c2d7dcb3bce5340aef7046f2b9e8e8
   m_SerializeEntries:
   - m_GUID: 28d23f3624c910148be598dc3bd27dae
-    m_Address: MatchPauseWindow
+    m_Address: MatchPauseView
     m_ReadOnly: 0
     m_SerializedLabels:
     - UiWindow
   - m_GUID: 7dcbde00b41494243a8fd674273ffaeb
-    m_Address: MatchGameOver
+    m_Address: MatchEndView
     m_ReadOnly: 0
     m_SerializedLabels:
     - UiWindow
   - m_GUID: da21013f3f7d4334a9158be7406f5a60
-    m_Address: MatchFieldHUD
+    m_Address: MatchHUDView
     m_ReadOnly: 0
     m_SerializedLabels:
     - UiWindow

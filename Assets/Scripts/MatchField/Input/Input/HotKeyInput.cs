@@ -5,17 +5,13 @@ public class HotKeyInput : MonoBehaviour, IKeyboardInput {
 
     public KeyCode GenerateField = KeyCode.G;
     public KeyCode FindCombos = KeyCode.F;
-    public KeyCode ShowmatchHUD = KeyCode.H;
 
     public IFieldSceneController _fieldSceneController;
-    public IUiManager _uiManager;
 	
     [Inject]
-    public void Construct(  IFieldSceneController fieldSceneController,
-                            IUiManager uiManager)
+    public void Construct(  IFieldSceneController fieldSceneController)
     {
         _fieldSceneController = fieldSceneController;
-        _uiManager = uiManager;
     }
 
 	void Update () {
@@ -26,10 +22,6 @@ public class HotKeyInput : MonoBehaviour, IKeyboardInput {
         else if (Input.GetKeyDown(FindCombos))
         {
             //_fieldSceneController.FindCombos();
-        }
-        else if (Input.GetKeyDown(ShowmatchHUD))
-        {
-            _uiManager.OpenWindowAsync(UIViewType.MatchFieldHUD);
         }
     }
 }
