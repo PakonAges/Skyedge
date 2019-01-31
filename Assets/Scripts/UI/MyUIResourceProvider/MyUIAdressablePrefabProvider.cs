@@ -2,11 +2,19 @@
 using UnityEngine.AddressableAssets;
 using System.Threading.Tasks;
 using System;
+using UnityEngine.SceneManagement;
 
 namespace myUI
 {
     public class MyUIAdressablePrefabProvider : IMyUIPrefabProvider
     {
+        public Scene UIScene { get; }
+
+        public MyUIAdressablePrefabProvider()
+        {
+            UIScene = SceneManager.CreateScene("UI");
+        }
+
         public async Task<GameObject> GetWindowPrefab<T>() where T : MyUIViewModel
         {
             try

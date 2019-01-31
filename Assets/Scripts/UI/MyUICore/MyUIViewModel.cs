@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace myUI
@@ -40,6 +41,7 @@ namespace myUI
             {
                 var Prefab = await _prefabProvider.GetWindowPrefab<T>();
                 var ViewGo = GameObject.Instantiate(Prefab);
+                SceneManager.MoveGameObjectToScene(ViewGo, _prefabProvider.UIScene);
                 Canvas = ViewGo.GetComponent<Canvas>();
                 IView = ViewGo.GetComponent<IMyUIView>();
                 IView.SetViewModel(this);

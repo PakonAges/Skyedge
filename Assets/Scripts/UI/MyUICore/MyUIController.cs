@@ -4,7 +4,7 @@ namespace myUI
 {
     public class MyUIController : IMyUIController
     {
-        [Inject] MatchHUDViewModel _HUD;
+        [Inject] MatchHUDViewModel _HUD = null;
 
         public async void ShowHUD()
         {
