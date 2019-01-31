@@ -17,6 +17,11 @@
     <type fullname="TMPro.TMP_FontAsset" preserve="all" />
     <type fullname="TMPro.TextMeshProUGUI" preserve="all" />
   </assembly>
+  <assembly fullname="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="MatchEndView" preserve="all" />
+    <type fullname="MatchPauseView" preserve="all" />
+    <type fullname="MatchHUDView" preserve="all" />
+  </assembly>
   <assembly fullname="UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="UnityEditor.MonoScript" preserve="all" />
   </assembly>

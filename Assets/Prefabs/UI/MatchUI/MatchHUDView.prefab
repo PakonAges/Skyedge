@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 4872733635070969770}
   - component: {fileID: 2727321161139216287}
   m_Layer: 5
-  m_Name: MatchFieldHUD
+  m_Name: MatchHUDView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CacheOnClosed: 0
   HideSubordinates: 0
-  NeedConfirmBeforeClosing: 0
+  NeedConfirmBeforeClosing: 1
 --- !u!1 &8725517503182180685
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,6 +484,7 @@ GameObject:
   - component: {fileID: 3772835265598396560}
   - component: {fileID: 7593277209457200078}
   - component: {fileID: 8365589194833249927}
+  - component: {fileID: 3647440026757679531}
   m_Layer: 5
   m_Name: PauseMenuBtn
   m_TagString: Untagged
@@ -601,3 +602,17 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &3647440026757679531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8725517503182180685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1360956885, guid: 37f8d8a5bbb63f0408b99d56763ce79e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModelMethodName: MatchHUDView.OnPauseBtnClick
+  viewEventName: UnityEngine.UI.Button.onClick
