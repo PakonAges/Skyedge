@@ -104,6 +104,7 @@ public class MatchFieldInstaller : MonoInstaller
 
     void InstallLevelLogic()
     {
+        Container.Bind<ILevelController>().To<LevelController>().AsSingle();
         Container.Bind<ILevelGenerator>().To<LevelGenerator>().AsSingle();
         Container.Bind<ILevelFSM>().To<LevelFSM>().AsSingle();
         Container.Bind<IPlayerController>().To<PlayerController>().AsSingle();
