@@ -3,5 +3,6 @@
     public interface IMyUIController
     {
         void ShowHUD();
+        void BackPressed();
     }
 }

@@ -379,6 +379,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 519420031}
+  InputConfig:
+    m_Asset: {fileID: 11400000, guid: 30e889626c7d8e849b44ce9eb3042a4c, type: 3}
   BackGroundGO: {fileID: 1239737485}
   GridCell: {fileID: 2309103353383928594, guid: f5c7dcc681f8be347bb0b2ca8457ca22,
     type: 3}
@@ -446,7 +448,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1696511216
 MonoBehaviour:
   m_ObjectHideFlags: 0

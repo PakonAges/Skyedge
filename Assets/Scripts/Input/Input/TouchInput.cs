@@ -5,7 +5,7 @@ using Zenject;
 
 public class TouchInput : MonoBehaviour, ITouchInput
 {
-    //GestureTouch _touchGesture;
+    GestureTouch _touchGesture;
     TapGestureRecognizer _tapGesture;
     PanGestureRecognizer _panGesture;
 
