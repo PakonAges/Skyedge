@@ -8,8 +8,7 @@ public class TouchInput : MonoBehaviour, ITouchInput
     GameObject _selectedObject = null;
     bool _alreadyHasSelection = false;
     GameObject _selectionVisual;
-
-    float _panDeadZone = 4.0f;
+    readonly float _panDeadZone = 4.0f;
 
     GameObject _selectedChipVisualizationPrefab;
     //GestureTouch _touchGesture;

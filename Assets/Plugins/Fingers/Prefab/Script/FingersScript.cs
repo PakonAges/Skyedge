@@ -772,15 +772,17 @@ namespace DigitalRubyShared
             origTouchCircles = TouchCircles;
 
             // setup DPI, using a default value if it cannot be determined
-            DeviceInfo.PixelsPerInch = (int)Screen.dpi;
+            DeviceInfo.PixelsPerInch = Screen.dpi;
             if (DeviceInfo.PixelsPerInch > 0)
             {
                 DeviceInfo.UnitMultiplier = DeviceInfo.PixelsPerInch;
+                Debug.LogWarning("Detected DPI of " + DeviceInfo.PixelsPerInch);
             }
             else
             {
                 // pick a sensible dpi since we don't know the actual DPI
                 DeviceInfo.UnitMultiplier = DeviceInfo.PixelsPerInch = DefaultDPI;
+                Debug.LogError("Unable to determine DPI, using default DPI of " + DefaultDPI);
             }
 
             // set the main thread callback so gestures can callback after a delay

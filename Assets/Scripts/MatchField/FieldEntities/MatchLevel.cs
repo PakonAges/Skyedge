@@ -13,12 +13,14 @@ public class MatchLevel
         LevelType = levelType;
     }
 
+    //TO DO: Move to logic layer
     public void ResetLevel()
     {
         CurrentTurn = 0;
         Debug.LogFormat("Restart Level. Turns Left: {0}", TurnsLimit);
     }
 
+    //TO DO: Move to logic layer
     public void EndOfPlayerMove()
     {
         CurrentTurn++;

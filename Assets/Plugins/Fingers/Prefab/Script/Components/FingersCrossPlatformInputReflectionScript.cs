@@ -20,18 +20,30 @@ namespace DigitalRubyShared
         private static Type GetCrossPlatformInputType(string subType)
         {
             Type type = null;
+
+#if !PLATFORM_METRO
+
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
-                type = assembly.GetType("UnityStandardAssets.CrossPlatformInput." + subType, false);
-                if (type == null)
+                try
                 {
-                    type = assembly.GetType("UnitySampleAssets.CrossPlatformInput." + subType, false);
+                    type = assembly.GetType("UnityStandardAssets.CrossPlatformInput." + subType);
+                    if (type == null)
+                    {
+                        type = assembly.GetType("UnitySampleAssets.CrossPlatformInput." + subType);
+                    }
+                    if (type != null)
+                    {
+                        break;
+                    }
                 }
-                if (type != null)
+                catch
                 {
-                    break;
                 }
             }
+
+#endif
+
             return type;
         }
 

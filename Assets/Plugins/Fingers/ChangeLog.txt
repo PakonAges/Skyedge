@@ -1,5 +1,15 @@
 ﻿Changelog
 --------------------
+2.5.8	(2019-01-31)
+		- Bug fixes
+
+2.5.7	(2019-01-11)
+		- Add demo scene with a dimming view that can be tapped to dismiss a content view.
+		- Fix zoom pan camera component script to not flicker.
+
+2.5.6	(2019-01-07)
+		- Log detected DPI upon script startup.
+
 2.5.5	(2018-12-07)
 		- Add interface for virtual touches. Set VirtualTouchCountHandler and VirtualTouchObjectHandler on FingersScript.Instance to inject your own touches (VR, AR, etc.).
 		

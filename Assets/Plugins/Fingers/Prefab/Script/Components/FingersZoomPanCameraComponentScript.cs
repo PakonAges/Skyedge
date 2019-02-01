@@ -122,45 +122,36 @@ namespace DigitalRubyShared
                 return;
             }
 
-            Bounds b = VisibleArea.bounds;
+            Bounds visibleAreaBounds = VisibleArea.bounds;
             Vector3 world1 = _camera.ViewportToWorldPoint(Vector3.zero);
-            Vector3 world2 = _camera.ViewportToWorldPoint(Vector3.one);
+            Vector3 world2 = _camera.ViewportToWorldPoint(new Vector3(1.0f, 1.0f, 0.0f));
             Vector3 pos = _camera.transform.position;
             world1.z = pos.z;
             world2.z = _camera.farClipPlane;
-            Bounds b2 = new Bounds { min = world1, max = world2 };
-            // move the camera so that the visible area is visible, if necessary
+            Bounds cameraVisibleArea = new Bounds { min = world1, max = world2 };
 
             if (_camera.orthographic)
             {
-                // x axis
-                if (b.min.x < b2.min.x)
+                // move the camera so that the visible area is visible, if necessary
+                float leftOverlap = Mathf.Min(0.0f, visibleAreaBounds.max.x - cameraVisibleArea.min.x);
+                float rightOverlap = Mathf.Max(0.0f, visibleAreaBounds.min.x - cameraVisibleArea.max.x);
+                float topOverlap = Mathf.Min(0.0f, visibleAreaBounds.max.y - cameraVisibleArea.min.y);
+                float bottomOverlap = Mathf.Max(0.0f, visibleAreaBounds.min.y - cameraVisibleArea.max.y);
+                if (leftOverlap < 0.0f)
                 {
-                    pos.x -= (b2.min.x - b.min.x);
+                    pos.x += leftOverlap;
                 }
-                else if (b.max.x > b2.max.x)
+                else if (rightOverlap > 0.0f)
                 {
-                    pos.x += (b.max.x - b2.max.x);
+                    pos.x += rightOverlap;
                 }
-
-                // y axis
-                if (b.min.y < b2.min.y)
+                if (topOverlap < 0.0f)
                 {
-                    pos.y -= (b2.min.y - b.min.y);
+                    pos.y += topOverlap;
                 }
-                else if (b.max.y > b2.max.y)
+                else if (bottomOverlap > 0.0f)
                 {
-                    pos.y += (b.max.y - b2.max.y);
-                }
-
-                // z axis
-                if (b.min.z < b2.min.z)
-                {
-                    pos.z -= (b2.min.z - b.min.z);
-                }
-                else if (b.max.z > b2.max.z)
-                {
-                    pos.z += (b.max.z - b2.max.z);
+                    pos.y += bottomOverlap;
                 }
             }
             else
