@@ -1,18 +1,14 @@
 ﻿using myUI;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Experimental.Input;
 using Zenject;
 
-public class KeyboardInputProcessor : IInitializable, IDisposable
+public class MyKeyboardInputProcessor : IInitializable, IDisposable
 {
     readonly NewInputManager _newInputManager;
     readonly IFieldSceneController _fieldSceneController;
     readonly IMyUIController _UIController;
 
-    public KeyboardInputProcessor(  NewInputManager inputManager,
+    public MyKeyboardInputProcessor(  NewInputManager inputManager,
                                     IFieldSceneController fieldSceneController,
                                     IMyUIController myUIController)
     {

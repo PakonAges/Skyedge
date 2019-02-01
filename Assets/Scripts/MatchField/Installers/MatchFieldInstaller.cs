@@ -37,19 +37,20 @@ public class MatchFieldInstaller : MonoInstaller
         InstallLevelLogic();
     }
 
+
     void InstallInput()
     {
         Container.Bind<Camera>().FromInstance(MainCamera);
-        Container.BindInterfacesAndSelfTo<KeyboardInputProcessor>().AsSingle();
+        Container.BindInterfacesAndSelfTo<MyKeyboardInputProcessor>().AsSingle();
         Container.Bind<NewInputManager>().FromInstance(InputConfig).AsSingle();
+        Container.Bind<ITouchProcessor>().To<TouchInputProcessor>().AsSingle();
     }
+
 
     void InstallControllers()
     {
         Container.BindInterfacesAndSelfTo<DefaultFieldSceneController>().AsSingle();
-        Container.Bind<ITouchProcessor>().To<TouchInputProcessor>().AsSingle();
     }
-
 
 
     void InstallFieldGeneration()
