@@ -40,6 +40,7 @@ public class MatchFieldInstaller : MonoInstaller
     void InstallControllers()
     {
         Container.BindInterfacesAndSelfTo<DefaultFieldSceneController>().AsSingle();
+        Container.Bind<ITouchProcessor>().To<TouchInputProcessor>().AsSingle();
     }
 
 
