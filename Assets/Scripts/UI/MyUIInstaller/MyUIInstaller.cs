@@ -1,7 +1,7 @@
 using Zenject;
 using myUI;
 
-public class MyUIInstaller : MonoInstaller
+public class MyUIInstaller : Installer<MyUIInstaller>
 {
     public override void InstallBindings()
     {
@@ -10,7 +10,6 @@ public class MyUIInstaller : MonoInstaller
         Container.Bind<IMyUIPrefabProvider>().To<MyUIAdressablePrefabProvider>().AsSingle();
 
         BindUIViewModels();
-
     }
 
     void BindUIViewModels()

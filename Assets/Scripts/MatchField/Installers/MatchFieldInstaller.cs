@@ -5,9 +5,6 @@ public class MatchFieldInstaller : MonoInstaller
 {
     public Camera MainCamera;
 
-    [Header("Input")]
-    public NewInputManager InputConfig;
-
     [Header("Visualization references")]
     public GameObject BackGroundGO;
     public GameObject GridCell;
@@ -27,7 +24,11 @@ public class MatchFieldInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        InstallInput();
+        Container.Bind<Camera>().FromInstance(MainCamera);
+
+        InputInstaller.Install(Container);
+        MyUIInstaller.Install(Container);
+
         InstallControllers();
         InstallFieldGeneration();
         InstalBackGroundSetup();
@@ -35,15 +36,6 @@ public class MatchFieldInstaller : MonoInstaller
         InstallChipFabrics();
         InstallFIeldLogic();
         InstallLevelLogic();
-    }
-
-
-    void InstallInput()
-    {
-        Container.Bind<Camera>().FromInstance(MainCamera);
-        Container.BindInterfacesAndSelfTo<MyKeyboardInputProcessor>().AsSingle();
-        Container.Bind<NewInputManager>().FromInstance(InputConfig).AsSingle();
-        Container.Bind<ITouchProcessor>().To<TouchInputProcessor>().AsSingle();
     }
 
 
