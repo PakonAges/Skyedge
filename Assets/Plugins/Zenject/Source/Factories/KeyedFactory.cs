@@ -14,7 +14,7 @@ namespace Zenject
         [InjectOptional]
         readonly List<ValuePair<TKey, Type>> _typePairs = null;
 
-        Dictionary<TKey, Type> _typeMap;
+        Dictionary<TKey, Type> _typeMap = null;
 
         [InjectOptional]
         readonly Type _fallbackType = null;
