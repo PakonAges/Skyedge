@@ -21,7 +21,7 @@ namespace DigitalRubyShared
         [Tooltip("The camera to use to convert screen coordinates to world coordinates. Defaults to Camera.main.")]
         public Camera Camera;
 
-        [Tooltip("Whether to bring the object to the front when a gesture executes on it")]
+        [Tooltip("Whether to bring the object to the front when a gesture executes on it. Only used for 2D objects, ignored for 3D objects.")]
         public bool BringToFront = true;
 
         [Tooltip("Scale to increase object by when a drag starts. When drags stops, scale is returned to normal.")]
@@ -33,7 +33,8 @@ namespace DigitalRubyShared
         /// </summary>
         public LongPressGestureRecognizer LongPressGesture { get; private set; }
 
-        private Rigidbody2D rigidBody;
+        private Rigidbody rigidBody;
+        private Rigidbody2D rigidBody2D;
         private SpriteRenderer spriteRenderer;
         private int startSortOrder;
         private float panZ;
@@ -52,17 +53,21 @@ namespace DigitalRubyShared
                     DragStarted.Invoke(this, System.EventArgs.Empty);
                 }
             }
-            if (r.State == GestureRecognizerState.Executing)
+            else if (r.State == GestureRecognizerState.Executing)
             {
                 Vector3 gestureScreenPoint = new Vector3(r.FocusX, r.FocusY, panZ);
                 Vector3 gestureWorldPoint = Camera.ScreenToWorldPoint(gestureScreenPoint) + panOffset;
-                if (rigidBody == null)
+                if (rigidBody != null)
                 {
-                    transform.position = gestureWorldPoint;
+                    rigidBody.MovePosition(gestureWorldPoint);
+                }
+                else if (rigidBody2D != null)
+                {
+                    rigidBody2D.MovePosition(gestureWorldPoint);
                 }
                 else
                 {
-                    rigidBody.MovePosition(gestureWorldPoint);
+                    transform.position = gestureWorldPoint;
                 }
                 if (DragUpdated != null)
                 {
@@ -88,7 +93,8 @@ namespace DigitalRubyShared
             this.Camera = (this.Camera == null ? Camera.main : this.Camera);
             LongPressGesture = new LongPressGestureRecognizer();
             LongPressGesture.StateUpdated += LongPressGestureUpdated;
-            rigidBody = GetComponent<Rigidbody2D>();
+            rigidBody = GetComponent<Rigidbody>();
+            rigidBody2D = GetComponent<Rigidbody2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             if (spriteRenderer != null)
             {
