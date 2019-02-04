@@ -1,6 +1,6 @@
 ﻿public interface ILevelState
 {
-    MatchLevel Level { get; set; }
+    ILevelController LevelController { get; set; }
     void OnStateEnter();
     void OnStateExit();
 }

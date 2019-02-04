@@ -3,9 +3,10 @@
 /// </summary>
 public interface ILevelController
 {
-    //Start Level
-    //Restart Level
-    //Turns?
-    //Save/load?
-    //Level State?
+    MatchLevel CurrentLevel { get; }
+
+    void InitLevel(MatchLevel level);
+    void StartMatch();
+    void ResetLevel();
+    void EndOfPlayerMove();
 }

@@ -3,7 +3,7 @@
 public class LevelFSM : ILevelFSM
 {
     public ILevelState CurrentState{ get; private set; }
-    MatchLevel _level;
+    ILevelController _levelController;
 
     ILevelState _init;
     ILevelState _playerMove;
@@ -20,14 +20,14 @@ public class LevelFSM : ILevelFSM
         _pause = new LevelPauseState();
     }
 
-    public void SetupFSM(MatchLevel level)
+    public void SetupFSM(ILevelController levelController)
     {
-        _level = level;
-        _init.Level = _level;
-        _playerMove.Level = _level;
-        _enemyMove.Level = _level;
-        _levelEnd.Level = _level;
-        _pause.Level = _level;
+        _levelController = levelController;
+        _init.LevelController = _levelController;
+        _playerMove.LevelController = _levelController;
+        _enemyMove.LevelController = _levelController;
+        _levelEnd.LevelController = _levelController;
+        _pause.LevelController = _levelController;
 
         CurrentState = _init;
         CurrentState.OnStateEnter();

@@ -16,9 +16,9 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     readonly IFieldCleaner _fieldCleaner;
     readonly IHeroSpawner _heroSpawner;
     readonly ILevelGenerator _levelGenerator;
-    readonly ILevelFSM _levelFSM;
     readonly IPlayerController _playerController;
     readonly FieldGenerationRules _fieldGenerationRules;
+    readonly ILevelController _levelController;
 
     public Field GameField;
     MatchLevel _matchLevel;
@@ -32,9 +32,9 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
                                         IMatchChecker matchChecker,
                                         IFieldCleaner fieldCleaner,
                                         IHeroSpawner heroSpawner,
-                                        ILevelFSM levelFSM,
                                         IPlayerController playerController,
-                                        ILevelGenerator levelGenerator)
+                                        ILevelGenerator levelGenerator,
+                                        ILevelController levelController)
     {
         _fieldBGSetup = fieldBGSetup;
         _fieldGenerator = fieldGenerator;
@@ -45,9 +45,9 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         _fieldCleaner = fieldCleaner;
         _heroSpawner = heroSpawner;
         _levelGenerator = levelGenerator;
-        _levelFSM = levelFSM;
         _playerController = playerController;
         _fieldGenerationRules = fieldDataProvider.GetGenerationRules();
+        _levelController = levelController;
 
     }
 
@@ -61,7 +61,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         await GenerateFieldAsync();
         SpawnHero();
         GenerateLevel();
-        _levelFSM.ChangeState(MatchLevelState.PlayerMove);
+        _levelController.StartMatch();
     }
 
     //GameField must be generated first. Because I send null object atm 
@@ -126,6 +126,6 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     void GenerateLevel()
     {
         _matchLevel = _levelGenerator.GenerateLevel(_fieldGenerationRules);
-        _levelFSM.SetupFSM(_matchLevel);
+        _levelController.InitLevel(_matchLevel);
     }
 }

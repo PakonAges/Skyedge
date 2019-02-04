@@ -3,5 +3,5 @@
     //MatchLevel Level { get; set; }
     ILevelState CurrentState { get; }
     void ChangeState(MatchLevelState newState);
-    void SetupFSM(MatchLevel level);
+    void SetupFSM(ILevelController levelController);
 }

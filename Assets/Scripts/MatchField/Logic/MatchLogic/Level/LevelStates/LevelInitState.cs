@@ -2,7 +2,7 @@
 
 public class LevelInitState : ILevelState
 {
-    public MatchLevel Level { get; set; }
+    public ILevelController LevelController { get; set; }
 
     public void OnStateEnter()
     {
