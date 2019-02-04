@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TouchInputProcessor : ITouchProcessor
 {
-    readonly float _panDeadZone = 4.0f;
+    readonly float _panDeadZone = 0.0f;
     GameObject _selectedObject = null;
     bool _alreadyHasSelection = false;
     GameObject _selectionVisual;

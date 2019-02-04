@@ -1,11 +1,10 @@
 ﻿using DigitalRubyShared;
-using System;
 using UnityEngine;
 using Zenject;
 
 public class TouchInput : MonoBehaviour, ITouchInput
 {
-    GestureTouch _touchGesture;
+    GestureRecognizer _touchGesture;
     TapGestureRecognizer _tapGesture;
     PanGestureRecognizer _panGesture;
 
@@ -18,6 +17,7 @@ public class TouchInput : MonoBehaviour, ITouchInput
         _camera = cam;
         _touchProcessor = touchProcessor;
 
+        InitTouch();
         InitTapGesture();
         InitPanGesture();
     }
@@ -29,6 +29,28 @@ public class TouchInput : MonoBehaviour, ITouchInput
         RaycastHit2D hit = Physics2D.Raycast(pos, Vector3.zero);
 
         return hit.transform;
+    }
+
+    Transform GestureHit(float FocusX, float FocusY)
+    {
+        Vector3 pos = new Vector3(FocusX, FocusY, 0.0f);
+        pos = _camera.ScreenToWorldPoint(pos);
+        RaycastHit2D hit = Physics2D.Raycast(pos, Vector3.zero);
+
+        return hit.transform;
+    }
+
+    void TouchGestureCallback(GestureRecognizer TouchGesture)
+    {
+        if (TouchGesture.CurrentTrackedTouches.Count > 0)
+        {
+            var tappedTransform = GestureHit(TouchGesture.CurrentTrackedTouches[0].X, TouchGesture.CurrentTrackedTouches[0].Y);
+
+            if (tappedTransform != null) // check for hit
+            {
+                _touchProcessor.TapOnObject(tappedTransform);
+            }
+        }
     }
 
     void TapGestureCallback(GestureRecognizer tapGesture)
@@ -48,7 +70,7 @@ public class TouchInput : MonoBehaviour, ITouchInput
     {
         if (panGesture.State == GestureRecognizerState.Began)
         {
-            var pannedTransform = GestureHit(panGesture);
+            var pannedTransform = GestureHit(panGesture.StartFocusX, panGesture.StartFocusY);
 
             //Hitted something
             if (pannedTransform != null)
@@ -56,6 +78,13 @@ public class TouchInput : MonoBehaviour, ITouchInput
                 _touchProcessor.PanObject(pannedTransform, panGesture.DeltaX, panGesture.DeltaY);
             }
         }
+    }
+
+    void InitTouch()
+    {
+        _touchGesture = new TouchGestureRecognizer();
+        _touchGesture.StateUpdated += TouchGestureCallback;
+        FingersScript.Instance.AddGesture(_touchGesture);
     }
 
     void InitTapGesture()
@@ -69,7 +98,7 @@ public class TouchInput : MonoBehaviour, ITouchInput
     {
         _panGesture = new PanGestureRecognizer();
         _panGesture.StateUpdated += PanGestureCallback;
-        _panGesture.MaximumNumberOfTouchesToTrack = 2;
+        _panGesture.MaximumNumberOfTouchesToTrack = 1;
         FingersScript.Instance.AddGesture(_panGesture);
     }
 }
