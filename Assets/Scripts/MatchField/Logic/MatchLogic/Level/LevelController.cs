@@ -4,6 +4,7 @@ public class LevelController : ILevelController
 {
     public MatchLevel CurrentLevel { get; private set; }
     readonly ILevelFSM _levelFSM;
+    //MatchEndViewModel matchEndViewModel;
 
     public LevelController(ILevelFSM levelFSM)
     {
