@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using Zenject;
 
 public class LevelController : ILevelController
 {
     public MatchLevel CurrentLevel { get; private set; }
     readonly ILevelFSM _levelFSM;
-    //MatchEndViewModel matchEndViewModel;
+    [Inject] readonly MatchEndViewModel _matchEndViewModel = null;
+    [Inject] readonly MatchHUDViewModel _hud = null;
 
     public LevelController(ILevelFSM levelFSM)
     {
@@ -33,12 +35,15 @@ public class LevelController : ILevelController
         CurrentLevel.CurrentTurn++;
         int TurnsLeft = CurrentLevel.TurnsLimit - CurrentLevel.CurrentTurn;
 
+        _hud.UpdateTurnsCounter(TurnsLeft);
+
         if (TurnsLeft > 0)
         {
             Debug.LogFormat("Turns Left: {0}", TurnsLeft);
         }
         else
         {
+            _matchEndViewModel.Open();
             Debug.Log("Game Over. No more turns");
         }
     }

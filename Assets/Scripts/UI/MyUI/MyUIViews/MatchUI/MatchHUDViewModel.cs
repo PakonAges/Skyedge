@@ -35,4 +35,9 @@ public class MatchHUDViewModel : MyUIViewModel<MatchHUDViewModel>
             Debug.LogError(e);
         }
     }
+
+    public void UpdateTurnsCounter(int turnsLeft)
+    {
+        View.UpdateTurnsCounter(turnsLeft);
+    }
 }
