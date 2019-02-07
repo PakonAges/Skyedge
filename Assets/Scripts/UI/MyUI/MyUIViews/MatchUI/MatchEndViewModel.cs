@@ -1,13 +1,16 @@
 ﻿using myUI;
 using UnityEngine;
+using Zenject;
 
 public class MatchEndViewModel : MyUIViewModel<MatchEndViewModel>
 {
+    readonly SignalBus _signalBus;
+
     public MatchEndView View { get { return IView as MatchEndView; } }
-    public MatchEndViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack) : base(prefabProvider, uIViewModelsStack) { }
+    public MatchEndViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack, SignalBus signalBus) : base(prefabProvider, uIViewModelsStack) { _signalBus = signalBus; }
 
     public void RestartLevel()
     {
-        Debug.Log("Here should be the command to restart the game");
+        _signalBus.Fire<LevelRestartSignal>();
     }
 }

@@ -1,16 +1,29 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Zenject;
 
-public class LevelController : ILevelController
+public class LevelController : ILevelController, IInitializable, IDisposable
 {
     public MatchLevel CurrentLevel { get; private set; }
     readonly ILevelFSM _levelFSM;
+    readonly SignalBus _signalBus;
     [Inject] readonly MatchEndViewModel _matchEndViewModel = null;
     [Inject] readonly MatchHUDViewModel _hud = null;
 
-    public LevelController(ILevelFSM levelFSM)
+    public LevelController(ILevelFSM levelFSM, SignalBus signalBus)
     {
         _levelFSM = levelFSM;
+        _signalBus = signalBus;
+    }
+
+    public void Initialize()
+    {
+        _signalBus.Subscribe<LevelRestartSignal>(ResetLevel);
+    }
+
+    public void Dispose()
+    {
+        _signalBus.Unsubscribe<LevelRestartSignal>(ResetLevel);
     }
 
     public void InitLevel(MatchLevel level)
@@ -49,4 +62,5 @@ public class LevelController : ILevelController
             Debug.Log("Game Over. No more turns");
         }
     }
+
 }

@@ -3,7 +3,8 @@
     "references": [
         "Zenject",
         "Unity.Addressables",
-        "AsyncAwaitUtil"
+        "AsyncAwaitUtil",
+        "MatchScene.Signals"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

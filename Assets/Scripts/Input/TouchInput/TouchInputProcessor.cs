@@ -78,6 +78,10 @@ public class TouchInputProcessor : ITouchProcessor
                 SwapChipInDirection(pannedObject.gameObject, MoveDirection.TopToBot);
             }
         }
+        else
+        {
+            Deselect();
+        }
     }
 
     void SelectObject(GameObject selectedGo)
