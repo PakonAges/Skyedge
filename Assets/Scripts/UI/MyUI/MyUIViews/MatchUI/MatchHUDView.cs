@@ -23,9 +23,4 @@ public class MatchHUDView : MyUIView<MatchHUDView>
     {
         ViewModel.ShowPauseView();
     }
-
-    public void UpdateTurnsCounter(int TurnsLeft)
-    {
-        TurnsCounter = "Turns left: " + TurnsLeft.ToString();
-    }
 }

@@ -6,7 +6,8 @@
         "MatchScene.IVisualization",
         "MatchScene.IGenerationRules",
         "MatchScene.ILogic",
-        "MatchScene.Entities"
+        "MatchScene.Entities",
+        "MyUI"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

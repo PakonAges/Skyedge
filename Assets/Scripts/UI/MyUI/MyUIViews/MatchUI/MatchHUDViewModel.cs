@@ -38,6 +38,7 @@ public class MatchHUDViewModel : MyUIViewModel<MatchHUDViewModel>
 
     public void UpdateTurnsCounter(int turnsLeft)
     {
-        View.UpdateTurnsCounter(turnsLeft);
+        var displayString = "Turns left: " + turnsLeft.ToString();
+        View.TurnsCounter = displayString;
     }
 }

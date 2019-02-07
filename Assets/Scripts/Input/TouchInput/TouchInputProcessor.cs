@@ -143,12 +143,13 @@ public class TouchInputProcessor : ITouchProcessor
 
             if (_matchChecker.GetMatch(chip1).Count >= 3 || _matchChecker.GetMatch(chip2).Count >= 3)
             {
+                _playerController.MoveAction();
+
                 _fieldCleaner.ChangeFillDirection(chipObj2.GetComponent<IChip>().X,
                                                     chipObj2.GetComponent<IChip>().Y,
                                                     chipObj1.GetComponent<IChip>().X,
                                                     chipObj1.GetComponent<IChip>().Y);
                 await _fieldCleaner.ClearAndRefillBoardAsync();
-                _playerController.MoveAction();
             }
             else
             {
@@ -198,9 +199,9 @@ public class TouchInputProcessor : ITouchProcessor
 
             if (_matchChecker.GetMatch(chip1).Count >= 3 || _matchChecker.GetMatch(chip2).Count >= 3)
             {
+                _playerController.MoveAction();
                 _fieldCleaner.ChangeFillDirection(direction);
                 await _fieldCleaner.ClearAndRefillBoardAsync();
-                _playerController.MoveAction();
             }
             else
             {

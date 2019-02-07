@@ -1,8 +1,10 @@
-﻿namespace myUI
+﻿using System.Threading.Tasks;
+
+namespace myUI
 {
     public interface IMyUIController
     {
-        void ShowHUD();
+        Task ShowHUD();
         void BackPressed();
     }
 }

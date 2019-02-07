@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using myUI;
+using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 /// <summary>
@@ -19,6 +20,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     readonly IPlayerController _playerController;
     readonly FieldGenerationRules _fieldGenerationRules;
     readonly ILevelController _levelController;
+    readonly IMyUIController _UIController;
 
     public Field GameField;
     MatchLevel _matchLevel;
@@ -34,7 +36,8 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
                                         IHeroSpawner heroSpawner,
                                         IPlayerController playerController,
                                         ILevelGenerator levelGenerator,
-                                        ILevelController levelController)
+                                        ILevelController levelController,
+                                        IMyUIController myUIController)
     {
         _fieldBGSetup = fieldBGSetup;
         _fieldGenerator = fieldGenerator;
@@ -48,7 +51,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         _playerController = playerController;
         _fieldGenerationRules = fieldDataProvider.GetGenerationRules();
         _levelController = levelController;
-
+        _UIController = myUIController;
     }
 
     public void Initialize()
@@ -61,7 +64,6 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         await GenerateFieldAsync();
         SpawnHero();
         GenerateLevel();
-        _levelController.StartMatch();
     }
 
     //GameField must be generated first. Because I send null object atm 
@@ -123,9 +125,11 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
         GameField.FieldMatrix[Position.x, Position.y] = _heroSpawner.SpawnHero(Position.x, Position.y);
     }
 
-    void GenerateLevel()
+    async void GenerateLevel()
     {
         _matchLevel = _levelGenerator.GenerateLevel(_fieldGenerationRules);
         _levelController.InitLevel(_matchLevel);
+        await _UIController.ShowHUD();
+        _levelController.StartMatch();
     }
 }

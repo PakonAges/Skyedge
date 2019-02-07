@@ -21,7 +21,9 @@ public class LevelController : ILevelController
 
     public void StartMatch()
     {
+        CurrentLevel.CurrentTurn = 0;
         _levelFSM.ChangeState(MatchLevelState.PlayerMove);
+        _hud.UpdateTurnsCounter(CurrentLevel.TurnsLimit - CurrentLevel.CurrentTurn);
     }
 
     public void ResetLevel()

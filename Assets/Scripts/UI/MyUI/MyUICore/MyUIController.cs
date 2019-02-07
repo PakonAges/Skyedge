@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using System.Threading.Tasks;
+using Zenject;
 
 namespace myUI
 {
@@ -17,7 +18,7 @@ namespace myUI
             _UIStack.CloseTopView();
         }
 
-        public async void ShowHUD()
+        public async Task ShowHUD()
         {
             await _HUD.Open();
         }
