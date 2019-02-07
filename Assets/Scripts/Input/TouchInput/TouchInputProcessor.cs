@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TouchInputProcessor : ITouchProcessor
 {
-    readonly float _panDeadZone = 0.0f;
+    readonly float _panDeadZone = 0f;
     GameObject _selectedObject = null;
     bool _alreadyHasSelection = false;
     GameObject _selectionVisual;
@@ -58,22 +58,25 @@ public class TouchInputProcessor : ITouchProcessor
 
     public void PanObject(Transform pannedObject, float panX, float panY)
     {
-        //ok, let's try without showing selection
-        if (panX > _panDeadZone)
+        if (_selectedObject.transform == pannedObject)
         {
-            SwapChipInDirection(pannedObject.gameObject, MoveDirection.LeftToRight);
-        }
-        else if (-1 * panX > _panDeadZone)
-        {
-            SwapChipInDirection(pannedObject.gameObject, MoveDirection.RightToLeft);
-        }
-        else if (panY > _panDeadZone)
-        {
-            SwapChipInDirection(pannedObject.gameObject, MoveDirection.BotToTop);
-        }
-        else if (-1 * panY > _panDeadZone)
-        {
-            SwapChipInDirection(pannedObject.gameObject, MoveDirection.TopToBot);
+            //ok, let's try without showing selection
+            if (panX > _panDeadZone)
+            {
+                SwapChipInDirection(pannedObject.gameObject, MoveDirection.LeftToRight);
+            }
+            else if (-1 * panX > _panDeadZone)
+            {
+                SwapChipInDirection(pannedObject.gameObject, MoveDirection.RightToLeft);
+            }
+            else if (panY > _panDeadZone)
+            {
+                SwapChipInDirection(pannedObject.gameObject, MoveDirection.BotToTop);
+            }
+            else if (-1 * panY > _panDeadZone)
+            {
+                SwapChipInDirection(pannedObject.gameObject, MoveDirection.TopToBot);
+            }
         }
     }
 
