@@ -9,6 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/_Loader.unity
     guid: 1ce88506744711545844c034b6a7af65
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 1d02d694599d4e642a791af23a03d031
+  - enabled: 1
+    path: Assets/Scenes/MapScene.unity
+    guid: 9f810ae78c80ba84d84bcfcc011dfbd9
+  - enabled: 1
+    path: Assets/Scenes/LocationScene.unity
+    guid: ee63bf47ba414d240bef1bad64ad8d00
+  - enabled: 1
     path: Assets/Scenes/MatchScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects:

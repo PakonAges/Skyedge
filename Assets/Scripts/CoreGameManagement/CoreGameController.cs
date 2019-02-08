@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 //Manages High Level application
@@ -11,8 +8,8 @@ public class CoreGameController : MonoBehaviour
 {
     private static CoreGameController _coreGameController;
 
-    private string _currentSceneName;
-    private string _nextSceneName;
+    private CoreScene _currentSceneType;
+    private CoreScene _nextSceneType;
     private AsyncOperation _resourceUnloadTask;
     private AsyncOperation _sceneLoadTask;
     private enum SceneState
@@ -31,13 +28,13 @@ public class CoreGameController : MonoBehaviour
     private delegate void UpdateDelegate();
     private UpdateDelegate[] _updateDelegates;
 
-    public static void SwitchScene(string nextSceneName)
+    public static void SwitchScene(CoreScene NextSceneType)
     {
         if (_coreGameController != null)
         {
-            if (_coreGameController._currentSceneName != nextSceneName)
+            if (_coreGameController._currentSceneType != NextSceneType)
             {
-                _coreGameController._nextSceneName = nextSceneName;
+                _coreGameController._nextSceneType = NextSceneType;
             }
         }
     }
@@ -45,7 +42,7 @@ public class CoreGameController : MonoBehaviour
     protected void Awake()
     {
         //Let's keep this alive between scene changes
-        UnityEngine.Object.DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
 
         //Setup Singleton instance
         _coreGameController = this;
@@ -60,7 +57,8 @@ public class CoreGameController : MonoBehaviour
         _updateDelegates[(int)SceneState.Ready] = UpdateSceneReady;
         _updateDelegates[(int)SceneState.Run] = UpdateSceneRun;
 
-        _nextSceneName = "MatchScene";
+        _nextSceneType = CoreScene.MainMenu;
+
         _sceneState = SceneState.Reset;
     }
 
@@ -85,10 +83,7 @@ public class CoreGameController : MonoBehaviour
 
     protected void Update()
     {
-        if (_updateDelegates[(int)_sceneState] != null)
-        {
-            _updateDelegates[(int)_sceneState]();
-        }
+        _updateDelegates[(int)_sceneState]?.Invoke();
     }
 
     /// <summary>
@@ -106,7 +101,7 @@ public class CoreGameController : MonoBehaviour
     /// </summary>
     private void UpdateScenePreload()
     {
-        _sceneLoadTask = SceneManager.LoadSceneAsync(_nextSceneName);
+        _sceneLoadTask = SceneManager.LoadSceneAsync((int)_nextSceneType);
         _sceneState = SceneState.Load;
     }
 
@@ -152,7 +147,7 @@ public class CoreGameController : MonoBehaviour
     /// </summary>
     private void UpdateScenePostload()
     {
-        _currentSceneName = _nextSceneName;
+        _currentSceneType = _nextSceneType;
         _sceneState = SceneState.Ready;
     }
 
@@ -173,9 +168,18 @@ public class CoreGameController : MonoBehaviour
     /// </summary>
     private void UpdateSceneRun()
     {
-        if (_currentSceneName != _nextSceneName)
+        if (_currentSceneType != _nextSceneType)
         {
             _sceneState = SceneState.Reset;
         }
     }
+}
+
+public enum CoreScene
+{
+    Loader = 0,
+    MainMenu = 1,
+    Map = 2,
+    Location = 3,
+    Match = 4
 }
