@@ -249,8 +249,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   _parentNewObjectsUnderSceneContext: 0
   _contractNames: []
-  _parentContractNames:
-  - Loader
+  _parentContractNames: []
 --- !u!4 &1643324299
 Transform:
   m_ObjectHideFlags: 0
