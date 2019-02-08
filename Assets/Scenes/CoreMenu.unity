@@ -122,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 82009696}
   - component: {fileID: 82009698}
+  - component: {fileID: 82009697}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -152,6 +153,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &82009697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82009695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b46b5b27e9692d44b1ff8ffda7001fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &82009698
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -641,7 +654,7 @@ GameObject:
   - component: {fileID: 752961701}
   - component: {fileID: 752961700}
   m_Layer: 5
-  m_Name: MainMenuCanvas
+  m_Name: CoreMenuCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -739,6 +752,7 @@ GameObject:
   - component: {fileID: 1416790255}
   - component: {fileID: 1416790254}
   - component: {fileID: 1416790253}
+  - component: {fileID: 1416790256}
   m_Layer: 5
   m_Name: MapBtn
   m_TagString: Untagged
@@ -845,6 +859,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1416790251}
   m_CullTransparentMesh: 0
+--- !u!114 &1416790256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416790251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1360956885, guid: 37f8d8a5bbb63f0408b99d56763ce79e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModelMethodName: CoreMenuView.OnMapBtn
+  viewEventName: UnityEngine.UI.Button.onClick
 --- !u!1 &1546683592
 GameObject:
   m_ObjectHideFlags: 0
@@ -1089,8 +1117,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1800420084}
   - component: {fileID: 1800420083}
+  - component: {fileID: 1800420085}
   m_Layer: 0
-  m_Name: MainMenuSceneContext
+  m_Name: CoreMenuSceneContext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1109,7 +1138,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 1800420085}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -1149,6 +1179,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1800420085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800420082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f12ed5d793f0ff499458c6c921bf1a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1972579006
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,6 +1203,7 @@ GameObject:
   - component: {fileID: 1972579010}
   - component: {fileID: 1972579009}
   - component: {fileID: 1972579008}
+  - component: {fileID: 1972579011}
   m_Layer: 5
   m_Name: SceneBtn
   m_TagString: Untagged
@@ -1267,6 +1310,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1972579006}
   m_CullTransparentMesh: 0
+--- !u!114 &1972579011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972579006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1360956885, guid: 37f8d8a5bbb63f0408b99d56763ce79e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModelMethodName: CoreMenuView.OnMatchBtn
+  viewEventName: UnityEngine.UI.Button.onClick
 --- !u!1 &2140681954
 GameObject:
   m_ObjectHideFlags: 0
@@ -1279,6 +1336,7 @@ GameObject:
   - component: {fileID: 2140681958}
   - component: {fileID: 2140681957}
   - component: {fileID: 2140681956}
+  - component: {fileID: 2140681959}
   m_Layer: 5
   m_Name: LocationBtn
   m_TagString: Untagged
@@ -1385,3 +1443,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140681954}
   m_CullTransparentMesh: 0
+--- !u!114 &2140681959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140681954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1360956885, guid: 37f8d8a5bbb63f0408b99d56763ce79e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModelMethodName: CoreMenuView.OnLocationBtn
+  viewEventName: UnityEngine.UI.Button.onClick
