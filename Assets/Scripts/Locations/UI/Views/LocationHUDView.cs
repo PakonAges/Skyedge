@@ -8,8 +8,8 @@ public class LocationHUDView : MonoBehaviour
     [Inject] LocationHUDViewModel _viewModel = null;
 
     [Binding]
-    public void OnLocationBtn()
+    public void OnMapBtn()
     {
-        _viewModel.LoadLocationScene();
+        _viewModel.LoadMapScene();
     }
 }

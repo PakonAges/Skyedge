@@ -11,4 +11,10 @@ public class MatchPauseView : MyUIView<MatchPauseView>
     {
         ViewModel.Close();
     }
+
+    [Binding]
+    public void OnExitToMap()
+    {
+        ViewModel.ExitToTheMap();
+    }
 }

@@ -7,8 +7,8 @@
         _coreSceneController = coreSceneController;
     }
 
-    public void LoadLocationScene()
+    public void LoadMapScene()
     {
-        _coreSceneController.SwitchScene(CoreScene.Location);
+        _coreSceneController.SwitchScene(CoreScene.Map);
     }
 }

@@ -1,10 +1,6 @@
 {
-    "name": "MyUI",
+    "name": "CoreSceneController",
     "references": [
-        "Zenject",
-        "Unity.Addressables",
-        "AsyncAwaitUtil",
-        "MatchScene.Signals",
         "ICoreSceneController"
     ],
     "optionalUnityReferences": [],
