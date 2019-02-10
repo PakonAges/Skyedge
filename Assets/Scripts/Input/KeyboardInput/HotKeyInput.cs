@@ -7,10 +7,10 @@ public class HotKeyInput : MonoBehaviour, IKeyboardInput {
     public KeyCode GenerateField = KeyCode.G;
     public KeyCode FindCombos = KeyCode.F;
 
-    public IFieldSceneController _fieldSceneController;
+    public IMatchController _fieldSceneController;
 
     [Inject]
-    public void Construct(  IFieldSceneController fieldSceneController)
+    public void Construct(  IMatchController fieldSceneController)
     {
         _fieldSceneController = fieldSceneController;
     }

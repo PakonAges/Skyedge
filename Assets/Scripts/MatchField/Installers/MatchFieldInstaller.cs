@@ -42,7 +42,7 @@ public class MatchFieldInstaller : MonoInstaller
 
     void InstallControllers()
     {
-        Container.BindInterfacesAndSelfTo<DefaultFieldSceneController>().AsSingle();
+        Container.BindInterfacesAndSelfTo<MatchController>().AsSingle();
     }
 
 

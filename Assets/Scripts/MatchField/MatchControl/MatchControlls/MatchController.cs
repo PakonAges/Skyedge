@@ -7,7 +7,7 @@ using Zenject;
 /// Passing commands to change Game Field State. Doesn't care about implementation details of modules
 /// Generates Field, Reset Field, Spawns Hero
 /// </summary>
-public class DefaultFieldSceneController : IFieldSceneController, IInitializable
+public class MatchController : IMatchController, IInitializable
 {
     readonly IFieldBGSetup _fieldBGSetup;
     readonly IFieldGenerator _fieldGenerator;
@@ -26,7 +26,7 @@ public class DefaultFieldSceneController : IFieldSceneController, IInitializable
     public Field GameField;
     MatchLevel _matchLevel;
 
-    public DefaultFieldSceneController( IFieldBGSetup fieldBGSetup,
+    public MatchController( IFieldBGSetup fieldBGSetup,
                                         IFieldGenerator fieldGenerator,
                                         IFieldFiller fieldFiller,
                                         IFieldGenerationRulesProvider fieldDataProvider,
