@@ -13,6 +13,6 @@ public class RootMatchSceneController : MonoBehaviour
 
     void Start()
     {
-        _matchController.StartMatchAsync();    
+        _matchController.StartMatchAsync();
     }
 }

@@ -67,6 +67,21 @@ public class MatchController : IMatchController, IInitializable
         GenerateLevel();
     }
 
+    public void ResetMatch()
+    {
+        if (GameField != null)
+        {
+            _fieldCleaner.ClearAllBoard();
+        }
+
+        _levelGenerator.ResetLevel(_matchLevel, _fieldGenerationRules);
+    }
+
+    public void EndMatch()
+    {
+
+    }
+
     //GameField must be generated first. Because I send null object atm 
     async Task GenerateFieldAsync()
     {
@@ -91,21 +106,6 @@ public class MatchController : IMatchController, IInitializable
         _fieldBGSetup.SetupBackGround(_fieldGenerationRules.BackgroundImage);
         _fieldBGSetup.ShowEmptyGrid(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
     }
-
-    public void ResetMatch()
-    {
-        if (GameField != null)
-        {
-            _fieldCleaner.ClearAllBoard();
-        }
-
-        _levelGenerator.ResetLevel(_matchLevel, _fieldGenerationRules);
-    }
-
-    //public void FindCombos() //Debug
-    //{
-    //    _fieldCleaner.ClearAndRefillBoard();
-    //}
 
     void SpawnHero()
     {

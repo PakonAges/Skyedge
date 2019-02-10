@@ -4,4 +4,5 @@ public interface IMatchController
 {
     Task StartMatchAsync();
     void ResetMatch();
+    void EndMatch();
 }
