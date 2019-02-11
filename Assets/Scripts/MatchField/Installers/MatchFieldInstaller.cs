@@ -52,6 +52,8 @@ public class MatchFieldInstaller : MonoInstaller
         Container.Bind<IFieldGenerationRulesProvider>().To<SOGenerationRulesProvider>().AsSingle(); //Debug only
         Container.Bind<SOFieldGenerationRules>().FromInstance(DebugFieldRules).AsSingle();
         Container.Bind<IChipInfoService>().To<ChipInfoService>().AsSingle();
+        Container.Bind<IFieldDataProvider>().To<FieldDataProvider>().AsSingle();
+
     }
 
 
@@ -59,6 +61,7 @@ public class MatchFieldInstaller : MonoInstaller
     void InstallFieldVisualization()
     {
         Container.BindInterfacesAndSelfTo<ChipPositionProvider>().AsSingle();
+        Container.BindInterfacesAndSelfTo<FieldVisualController>().AsSingle();
         Container.Bind<IChipSizeProvider>().To<ChipSizeProvider>().AsSingle();
         Container.Bind<IChipPrefabProvider>().To<ChipPrefabProvider>().AsSingle();
         Container.Bind<IChipVisualProvider>().To<ChipVisualProvider>().AsSingle();

@@ -4,18 +4,21 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
-/// Generates Match Field and Fills it with Color pieces, according to the Generatiob Rules. Without Combos
+/// Generates Match Field and Fills it with Color chips, according to the Generation Rules. Without Combos
 /// </summary>
 public class FieldGenerator : IFieldGenerator
 {
     readonly IChipManager _chipManager;
     readonly IChipInfoService _chipComparer;
-    
+    readonly IFieldDataProvider _fieldDataHolder;
+
     public FieldGenerator ( IChipManager chipManager,
-                            IChipInfoService chipComparer)
+                            IChipInfoService chipComparer,
+                            IFieldDataProvider fieldDataProvider)
     {
         _chipManager = chipManager;
         _chipComparer = chipComparer;
+        _fieldDataHolder = fieldDataProvider;
     }
 
     public async Task<Field> GenerateFieldAsync(FieldGenerationRules rules)
@@ -38,6 +41,8 @@ public class FieldGenerator : IFieldGenerator
 
             //Debug.LogFormat("Field [{0},{1}] with {2} elements Generated in Field Generator", rules.Xsize, rules.Ysize, rules.ChipTypes.Count);
             await new WaitForEndOfFrame();
+
+            _fieldDataHolder.GameField = NewField;
             return NewField;
 
         }

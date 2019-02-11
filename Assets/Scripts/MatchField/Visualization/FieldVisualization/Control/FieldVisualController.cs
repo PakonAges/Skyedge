@@ -2,16 +2,21 @@
 
 public class FieldVisualController : IFieldVisualController, IInitializable
 {
+    readonly IFieldBGSetup _fieldBG;
 
+    public FieldVisualController(IFieldBGSetup fieldBG)
+    {
+        _fieldBG = fieldBG;
+    }
 
     public void Initialize()
     {
-        //_chipPositioner.SetupChipParameters(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
+        
     }
 
     public void ShowBackGround()
     {
-        
+        _fieldBG.SetupBackGround();
     }
 
     public void ShowChips()

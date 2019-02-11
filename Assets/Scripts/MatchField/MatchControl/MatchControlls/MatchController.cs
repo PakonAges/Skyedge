@@ -9,11 +9,9 @@ using Zenject;
 /// </summary>
 public class MatchController : IMatchController
 {
-    readonly IFieldBGSetup _fieldBGSetup;
+    readonly IFieldVisualController _fieldVisual;
     readonly IFieldGenerator _fieldGenerator;
     readonly IFieldFiller _fieldFiller;
-    readonly IChipMovement _chipMovement;
-    readonly IMatchChecker _matchChecker;
     readonly IFieldCleaner _fieldCleaner;
     readonly IHeroSpawner _heroSpawner;
     readonly ILevelGenerator _levelGenerator;
@@ -25,12 +23,10 @@ public class MatchController : IMatchController
     public Field GameField;
     MatchLevel _matchLevel;
 
-    public MatchController( IFieldBGSetup fieldBGSetup,
+    public MatchController( IFieldVisualController fieldVisual,
                             IFieldGenerator fieldGenerator,
                             IFieldFiller fieldFiller,
                             IFieldGenerationRulesProvider fieldDataProvider,
-                            IChipMovement chipMovement,
-                            IMatchChecker matchChecker,
                             IFieldCleaner fieldCleaner,
                             IHeroSpawner heroSpawner,
                             IPlayerController playerController,
@@ -38,11 +34,9 @@ public class MatchController : IMatchController
                             ILevelController levelController,
                             IMyUIController myUIController)
     {
-        _fieldBGSetup = fieldBGSetup;
+        _fieldVisual = fieldVisual;
         _fieldGenerator = fieldGenerator;
         _fieldFiller = fieldFiller;
-        _chipMovement = chipMovement;
-        _matchChecker = matchChecker;
         _fieldCleaner = fieldCleaner;
         _heroSpawner = heroSpawner;
         _levelGenerator = levelGenerator;
@@ -54,13 +48,13 @@ public class MatchController : IMatchController
 
     public async Task StartMatchAsync()
     {
-        _fieldBGSetup.SetupBackGround();
+        _fieldVisual.ShowBackGround();
         await GenerateFieldAsync();
         SpawnHero();
         GenerateLevel();
     }
 
-    public void ResetMatch()
+    public void RestartMatch()
     {
         if (GameField != null)
         {
@@ -78,18 +72,16 @@ public class MatchController : IMatchController
     //GameField must be generated first. Because I send null object atm 
     async Task GenerateFieldAsync()
     {
-        if (GameField != null)
-        {
-            ResetMatch();
-        }
-        else
-        {
-            //ShowBackGround();
-        }
+        //if (GameField != null)
+        //{
+        //    RestartMatch();
+        //}
+        //else
+        //{
+        //    //ShowBackGround();
+        //}
 
         GameField = await _fieldGenerator.GenerateFieldAsync(_fieldGenerationRules);
-        _chipMovement.GameField = this.GameField;
-        _matchChecker.GameField = this.GameField;
         _fieldCleaner.GameField = this.GameField;
         _fieldFiller.GameField = this.GameField;
     }

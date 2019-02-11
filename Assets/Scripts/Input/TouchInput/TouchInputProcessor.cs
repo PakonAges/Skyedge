@@ -9,6 +9,7 @@ public class TouchInputProcessor : ITouchProcessor
     GameObject _selectionVisual;
     GameObject _selectedChipVisualizationPrefab;
 
+    IFieldDataProvider _fieldDataProvider;
     IChipMovement _chipMovement;
     IFieldCleaner _fieldCleaner;
     IMatchChecker _matchChecker;
@@ -18,13 +19,15 @@ public class TouchInputProcessor : ITouchProcessor
                                 IChipMovement chipMovement,
                                 IFieldCleaner fieldCleaner,
                                 IMatchChecker matchChecker,
-                                IPlayerController playerController)
+                                IPlayerController playerController,
+                                IFieldDataProvider fieldDataProvider)
     {
         _selectedChipVisualizationPrefab = fieldVisualizationParameters.SelectedChip;
         _chipMovement = chipMovement;
         _fieldCleaner = fieldCleaner;
         _matchChecker = matchChecker;
         _playerController = playerController;
+        _fieldDataProvider = fieldDataProvider;
         InitSelectionView();
     }
 
@@ -46,7 +49,7 @@ public class TouchInputProcessor : ITouchProcessor
         {
             Deselect();
         }
-        else if (_chipMovement.GameField.IsAdjacement(_selectedObject.GetComponent<IChip>(), tappedObject.gameObject.GetComponent<IChip>())) //Second Chip is Adjacement
+        else if (_fieldDataProvider.GameField.IsAdjacement(_selectedObject.GetComponent<IChip>(), tappedObject.gameObject.GetComponent<IChip>())) //Second Chip is Adjacement
         {
             SwapChips(_selectedObject, tappedObject.gameObject);
         }
@@ -185,19 +188,19 @@ public class TouchInputProcessor : ITouchProcessor
 
             if (direction == MoveDirection.TopToBot)
             {
-                chip2 = _chipMovement.GameField.FieldMatrix[chip1.X, chip1.Y + 1];
+                chip2 = _fieldDataProvider.GameField.FieldMatrix[chip1.X, chip1.Y + 1];
             }
             else if (direction == MoveDirection.BotToTop)
             {
-                chip2 = _chipMovement.GameField.FieldMatrix[chip1.X, chip1.Y - 1];
+                chip2 = _fieldDataProvider.GameField.FieldMatrix[chip1.X, chip1.Y - 1];
             }
             else if (direction == MoveDirection.RightToLeft)
             {
-                chip2 = _chipMovement.GameField.FieldMatrix[chip1.X - 1, chip1.Y];
+                chip2 = _fieldDataProvider.GameField.FieldMatrix[chip1.X - 1, chip1.Y];
             }
             else if (direction == MoveDirection.LeftToRight)
             {
-                chip2 = _chipMovement.GameField.FieldMatrix[chip1.X + 1, chip1.Y];
+                chip2 = _fieldDataProvider.GameField.FieldMatrix[chip1.X + 1, chip1.Y];
             }
 
             Deselect();
@@ -228,7 +231,7 @@ public class TouchInputProcessor : ITouchProcessor
         {
             return true;
         }
-        if (chip1.X == _matchChecker.GameField.Xsize - 1 && direction == MoveDirection.LeftToRight)
+        if (chip1.X == _fieldDataProvider.GameField.Xsize - 1 && direction == MoveDirection.LeftToRight)
         {
             return true;
         }
@@ -236,7 +239,7 @@ public class TouchInputProcessor : ITouchProcessor
         {
             return true;
         }
-        if (chip1.Y == _matchChecker.GameField.Ysize - 1 && direction == MoveDirection.TopToBot)
+        if (chip1.Y == _fieldDataProvider.GameField.Ysize - 1 && direction == MoveDirection.TopToBot)
         {
             return true;
         }

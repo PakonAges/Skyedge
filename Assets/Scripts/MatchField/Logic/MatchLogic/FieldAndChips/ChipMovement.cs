@@ -1,19 +1,20 @@
 ﻿using DG.Tweening;
-using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
 public class ChipMovement : IChipMovement
 {
     readonly IChipPositionProvider _chipPositionProvider;
+    readonly IFieldDataProvider _fieldDataProvider;
     readonly float _movementDuration;
     readonly float _swapDuration;
-    public Field GameField { get; set; }
 
     public ChipMovement(    IChipPositionProvider chipPositionProvider,
+                            IFieldDataProvider fieldDataProvider,
                             FieldVisualizationParameters fieldVisualizationParameters)
     {
         _chipPositionProvider = chipPositionProvider;
+        _fieldDataProvider = fieldDataProvider;
         _movementDuration = fieldVisualizationParameters.MovementDuration;
         _swapDuration = fieldVisualizationParameters.SwapDuration;
     }
@@ -34,8 +35,8 @@ public class ChipMovement : IChipMovement
 
         if (chip1.IsMovable && chip2.IsMovable)
         {
-            GameField.FieldMatrix[chip1.X, chip1.Y] = chip2;
-            GameField.FieldMatrix[chip2.X, chip2.Y] = chip1;
+            _fieldDataProvider.GameField.FieldMatrix[chip1.X, chip1.Y] = chip2;
+            _fieldDataProvider.GameField.FieldMatrix[chip2.X, chip2.Y] = chip1;
 
             chip1.X = chip2.X; 
             chip1.Y = chip2.Y;
@@ -47,8 +48,6 @@ public class ChipMovement : IChipMovement
             await new WaitForSeconds(_swapDuration);
         }
         return OnMovementDone();
-
-        //Change movement direction!
     }
 
     private bool OnMovementDone()

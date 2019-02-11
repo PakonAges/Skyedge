@@ -6,15 +6,18 @@
 public class MatchChecker : IMatchChecker
 {
     readonly IChipInfoService _chipServise;
+    readonly IFieldDataProvider _fieldDataProvider;
 
-    public Field GameField { get; set; }
+    private Field GameField;
     List<ColorChip> _horizontalChips = new List<ColorChip>();
     List<ColorChip> _verticalChips = new List<ColorChip>();
     List<ColorChip> _matchingChips = new List<ColorChip>();
 
-    public MatchChecker (IChipInfoService chipComparer)
+    public MatchChecker (   IChipInfoService chipComparer,
+                            IFieldDataProvider fieldDataProvider)
     {
         _chipServise = chipComparer;
+        _fieldDataProvider = fieldDataProvider;
     }
 
     /// <summary>
@@ -25,6 +28,7 @@ public class MatchChecker : IMatchChecker
     /// <returns>List of Matched Chips, if there is any</returns>
     public List<ColorChip> GetMatch(IChip chip)
     {
+        GameField = _fieldDataProvider.GameField;
         CleanUp();
 
         if (chip.ChipType == ChipType.ColorChip)
