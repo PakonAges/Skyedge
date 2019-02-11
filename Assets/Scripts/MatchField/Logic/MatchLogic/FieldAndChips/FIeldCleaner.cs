@@ -6,19 +6,24 @@ using UnityEngine;
 
 public class FIeldCleaner : IFieldCleaner
 {
-    public Field GameField { get; set; }
     readonly IChipManager _chipManager;
     readonly IMatchChecker _matchChecker;
     readonly IFieldFiller _fieldFiller;
+    readonly IFieldDataProvider _fieldDataProvider;
+
     List<ColorChip> _matches;
+    Field GameField { get { return _fieldDataProvider.GameField; }}
+
 
     public FIeldCleaner(IChipManager chipManager,
                         IMatchChecker matchChecker,
-                        IFieldFiller fieldFiller)
+                        IFieldFiller fieldFiller,
+                        IFieldDataProvider fieldDataProvider)
     {
         _chipManager = chipManager;
         _matchChecker = matchChecker;
         _fieldFiller = fieldFiller;
+        _fieldDataProvider = fieldDataProvider;
         _matches = new List<ColorChip>();
     }
 

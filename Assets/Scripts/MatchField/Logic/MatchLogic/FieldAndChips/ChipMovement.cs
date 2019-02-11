@@ -8,6 +8,7 @@ public class ChipMovement : IChipMovement
     readonly IFieldDataProvider _fieldDataProvider;
     readonly float _movementDuration;
     readonly float _swapDuration;
+    Field GameField { get { return _fieldDataProvider.GameField; } }
 
     public ChipMovement(    IChipPositionProvider chipPositionProvider,
                             IFieldDataProvider fieldDataProvider,
@@ -35,8 +36,8 @@ public class ChipMovement : IChipMovement
 
         if (chip1.IsMovable && chip2.IsMovable)
         {
-            _fieldDataProvider.GameField.FieldMatrix[chip1.X, chip1.Y] = chip2;
-            _fieldDataProvider.GameField.FieldMatrix[chip2.X, chip2.Y] = chip1;
+            GameField.FieldMatrix[chip1.X, chip1.Y] = chip2;
+            GameField.FieldMatrix[chip2.X, chip2.Y] = chip1;
 
             chip1.X = chip2.X; 
             chip1.Y = chip2.Y;

@@ -70,7 +70,6 @@ public class MatchFieldInstaller : MonoInstaller
         Container.Bind<FieldVisualizationParameters>().FromInstance(VisualizationParameters).AsSingle();
 
         Container.Bind<IChipPainter>().To<ChipPainter>().AsSingle();
-        Container.Bind<IChipMovement>().To<ChipMovement>().AsSingle();
 
     }
 
@@ -101,6 +100,7 @@ public class MatchFieldInstaller : MonoInstaller
 
     void InstallFIeldLogic()
     {
+        Container.Bind<IChipMovement>().To<ChipMovement>().AsSingle();
         Container.Bind<IFieldFiller>().To<FieldFiller>().AsSingle();
         Container.Bind<IMatchChecker>().To<MatchChecker>().AsSingle();
         Container.Bind<IFieldCleaner>().To<FIeldCleaner>().AsSingle();

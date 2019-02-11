@@ -11,7 +11,6 @@ public class MatchController : IMatchController
 {
     readonly IFieldVisualController _fieldVisual;
     readonly IFieldGenerator _fieldGenerator;
-    readonly IFieldFiller _fieldFiller;
     readonly IFieldCleaner _fieldCleaner;
     readonly IHeroSpawner _heroSpawner;
     readonly ILevelGenerator _levelGenerator;
@@ -25,7 +24,6 @@ public class MatchController : IMatchController
 
     public MatchController( IFieldVisualController fieldVisual,
                             IFieldGenerator fieldGenerator,
-                            IFieldFiller fieldFiller,
                             IFieldGenerationRulesProvider fieldDataProvider,
                             IFieldCleaner fieldCleaner,
                             IHeroSpawner heroSpawner,
@@ -36,7 +34,6 @@ public class MatchController : IMatchController
     {
         _fieldVisual = fieldVisual;
         _fieldGenerator = fieldGenerator;
-        _fieldFiller = fieldFiller;
         _fieldCleaner = fieldCleaner;
         _heroSpawner = heroSpawner;
         _levelGenerator = levelGenerator;
@@ -82,8 +79,6 @@ public class MatchController : IMatchController
         //}
 
         GameField = await _fieldGenerator.GenerateFieldAsync(_fieldGenerationRules);
-        _fieldCleaner.GameField = this.GameField;
-        _fieldFiller.GameField = this.GameField;
     }
 
     void SpawnHero()

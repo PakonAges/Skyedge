@@ -3,19 +3,21 @@ using UnityEngine;
 
 public class FieldFiller : IFieldFiller
 {
-    public Field GameField { get; set; }
     public MoveDirection FillDirection { get; set; }
-
     readonly IChipMovement _chipMovement;
     readonly IChipManager _chipManager;
+    readonly IFieldDataProvider _fieldDataProvider;
     readonly float _delayBetweenCheckingBoard;
+    Field GameField { get { return _fieldDataProvider.GameField; } }
 
     public FieldFiller( IChipMovement chipMovement,
                         IChipManager chipManager,
+                        IFieldDataProvider fieldDataProvider,
                         FieldVisualizationParameters fieldVisualizationParameters)
     {
         _chipMovement = chipMovement;
         _chipManager = chipManager;
+        _fieldDataProvider = fieldDataProvider;
         _delayBetweenCheckingBoard = fieldVisualizationParameters.MovementDuration;
     }
 

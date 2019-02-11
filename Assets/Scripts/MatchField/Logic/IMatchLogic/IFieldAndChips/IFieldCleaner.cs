@@ -2,7 +2,6 @@
 
 public interface IFieldCleaner
 {
-    Field GameField { get; set; }
     void ClearAllBoard();
     Task ClearAndRefillBoardAsync();
     Task<bool> ClearChipAsync(int x, int y);
