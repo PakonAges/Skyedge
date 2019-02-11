@@ -5,7 +5,8 @@
         "Unity.Addressables",
         "AsyncAwaitUtil",
         "MatchScene.Signals",
-        "ICoreSceneController"
+        "ICoreSceneController",
+        "MatchScene.IControllers"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

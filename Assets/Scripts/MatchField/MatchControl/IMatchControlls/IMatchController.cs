@@ -3,6 +3,6 @@
 public interface IMatchController
 {
     Task StartMatchAsync();
-    void RestartMatch();
+    Task RestartMatchAsync();
     void EndMatch();
 }

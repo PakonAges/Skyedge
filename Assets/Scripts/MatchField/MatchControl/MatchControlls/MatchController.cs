@@ -47,18 +47,13 @@ public class MatchController : IMatchController
     {
         _fieldVisual.ShowBackGround();
         await GenerateFieldAsync();
-        SpawnHero();
-        GenerateLevel();
     }
 
-    public void RestartMatch()
+    public async Task RestartMatchAsync()
     {
-        if (GameField != null)
-        {
-            _fieldCleaner.ClearAllBoard();
-        }
-
+        _fieldCleaner.ClearAllBoard();
         _levelGenerator.ResetLevel(_matchLevel, _fieldGenerationRules);
+        await GenerateFieldAsync();
     }
 
     public void EndMatch()
@@ -66,19 +61,10 @@ public class MatchController : IMatchController
 
     }
 
-    //GameField must be generated first. Because I send null object atm 
     async Task GenerateFieldAsync()
     {
-        //if (GameField != null)
-        //{
-        //    RestartMatch();
-        //}
-        //else
-        //{
-        //    //ShowBackGround();
-        //}
-
         GameField = await _fieldGenerator.GenerateFieldAsync(_fieldGenerationRules);
+        SpawnHero();
     }
 
     void SpawnHero()
@@ -98,6 +84,8 @@ public class MatchController : IMatchController
         }
 
         GameField.FieldMatrix[Position.x, Position.y] = _heroSpawner.SpawnHero(Position.x, Position.y);
+
+        GenerateLevel();
     }
 
     async void GenerateLevel()
