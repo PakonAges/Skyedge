@@ -8,8 +8,6 @@ using Zenject;
 
 public class CoreSceneController : ICoreSceneController, IDisposable, ITickable
 {
-    //private static CoreGameController _coreGameController;
-
     private CoreScene _currentCoreScene;
     private CoreScene _nextCoreScene;
     private AsyncOperation _resourceUnloadTask;
@@ -30,7 +28,7 @@ public class CoreSceneController : ICoreSceneController, IDisposable, ITickable
     private delegate void UpdateDelegate();
     private UpdateDelegate[] _updateDelegates;
 
-    public CoreSceneController()
+    public CoreSceneController(CoreScene sceneToLoad)
     {
         _updateDelegates = new UpdateDelegate[(int)SceneState.Count];
         _updateDelegates[(int)SceneState.Reset] = UpdateSceneReset;
@@ -42,8 +40,7 @@ public class CoreSceneController : ICoreSceneController, IDisposable, ITickable
         _updateDelegates[(int)SceneState.Run] = UpdateSceneRun;
 
         _currentCoreScene = CoreScene.Loader;
-        _nextCoreScene = CoreScene.MainMenu;
-
+        _nextCoreScene = sceneToLoad;
         _sceneState = SceneState.Reset;
     }
 
