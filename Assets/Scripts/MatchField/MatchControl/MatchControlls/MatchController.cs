@@ -27,18 +27,18 @@ public class MatchController : IMatchController, IInitializable
     MatchLevel _matchLevel;
 
     public MatchController( IFieldBGSetup fieldBGSetup,
-                                        IFieldGenerator fieldGenerator,
-                                        IFieldFiller fieldFiller,
-                                        IFieldGenerationRulesProvider fieldDataProvider,
-                                        IChipPositionProvider chipPositioner,
-                                        IChipMovement chipMovement,
-                                        IMatchChecker matchChecker,
-                                        IFieldCleaner fieldCleaner,
-                                        IHeroSpawner heroSpawner,
-                                        IPlayerController playerController,
-                                        ILevelGenerator levelGenerator,
-                                        ILevelController levelController,
-                                        IMyUIController myUIController)
+                            IFieldGenerator fieldGenerator,
+                            IFieldFiller fieldFiller,
+                            IFieldGenerationRulesProvider fieldDataProvider,
+                            IChipPositionProvider chipPositioner,
+                            IChipMovement chipMovement,
+                            IMatchChecker matchChecker,
+                            IFieldCleaner fieldCleaner,
+                            IHeroSpawner heroSpawner,
+                            IPlayerController playerController,
+                            ILevelGenerator levelGenerator,
+                            ILevelController levelController,
+                            IMyUIController myUIController)
     {
         _fieldBGSetup = fieldBGSetup;
         _fieldGenerator = fieldGenerator;
@@ -62,6 +62,7 @@ public class MatchController : IMatchController, IInitializable
 
     public async Task StartMatchAsync()
     {
+        ShowBackGround();
         await GenerateFieldAsync();
         SpawnHero();
         GenerateLevel();
@@ -103,8 +104,7 @@ public class MatchController : IMatchController, IInitializable
 
     void ShowBackGround()
     {
-        _fieldBGSetup.SetupBackGround(_fieldGenerationRules.BackgroundImage);
-        _fieldBGSetup.ShowEmptyGrid(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
+        _fieldBGSetup.SetupBackGround(_fieldGenerationRules.BackgroundImage, _fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
     }
 
     void SpawnHero()

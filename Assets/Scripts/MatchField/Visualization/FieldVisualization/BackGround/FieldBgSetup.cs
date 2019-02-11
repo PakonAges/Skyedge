@@ -15,7 +15,7 @@ public class FieldBgSetup : IFieldBGSetup
         _backGroundGO = bg;
     }
 
-    public void SetupBackGround(Sprite bgImage)
+    public void SetupBackGround(Sprite bgImage, int FieldSizeX, int FieldSizeY)
     {
         if (_backGroundGO == null)
         {
@@ -23,11 +23,21 @@ public class FieldBgSetup : IFieldBGSetup
         }
 
         var sr = _backGroundGO.GetComponentInChildren<SpriteRenderer>();
-        sr.sprite = bgImage;
-        sr.transform.localScale = Vector2.one * _scaleProvider.CalculateBGScale(bgImage);
+
+        if (sr != null)
+        {
+            sr.sprite = bgImage;
+            sr.transform.localScale = Vector2.one * _scaleProvider.CalculateBGScale(bgImage.bounds.size.x, bgImage.bounds.size.y);
+        }
+        else
+        {
+            Debug.LogErrorFormat("Can't Find SpriteRenderer Component in BG prefab ({0})", _backGroundGO);
+        }
+
+        ShowEmptyGrid(FieldSizeX, FieldSizeY);
     }
 
-    public void ShowEmptyGrid(int FieldSizeX, int FieldSizeY)
+    void ShowEmptyGrid(int FieldSizeX, int FieldSizeY)
     {
         _fieldGridGenerator.ShowEmptyGrid(FieldSizeX, FieldSizeY);
     }

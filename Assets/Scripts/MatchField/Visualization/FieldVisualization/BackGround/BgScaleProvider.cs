@@ -9,16 +9,13 @@ public class BgScaleProvider : IFieldBGScaleProvider
         _mainCam = camera;
     }
 
-    public float CalculateBGScale(Sprite image)
+    public float CalculateBGScale(float ImageWidth, float ImageHeight)
     {
-        var width = image.bounds.size.x;
-        var height = image.bounds.size.y;
-
         var worldScreenHeight = _mainCam.orthographicSize * 2.0;
         var worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
 
-        float scaleX = (float) worldScreenWidth / width;
-        float scaleY = (float) worldScreenHeight / height;
+        float scaleX = (float) worldScreenWidth / ImageWidth;
+        float scaleY = (float) worldScreenHeight / ImageHeight;
 
         return (scaleX > scaleY) ? scaleX : scaleY;
     }
