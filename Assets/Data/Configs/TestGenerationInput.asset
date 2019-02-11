@@ -18,5 +18,5 @@ MonoBehaviour:
   Chips: 0100000000000000
   HeroSpawnOption: 2
   ConcreteHeroSpawnPosition: {x: 0, y: 0}
-  TurnsLimit: 3
+  TurnsLimit: 10
   LevelType: 0
