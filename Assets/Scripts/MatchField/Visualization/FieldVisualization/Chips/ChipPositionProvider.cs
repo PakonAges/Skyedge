@@ -1,24 +1,31 @@
 ﻿using UnityEngine;
+using Zenject;
 
-public class ChipPositionProvider : IChipPositionProvider
+public class ChipPositionProvider : IChipPositionProvider, IInitializable
 {
     readonly IChipSizeProvider _chipSizeProvider;
 
     //TODO: Add some default ot try/catch to props. cos can be zeros
-    public float ChipSize { get; set; }
-    public Vector2 SpawnOffset { get; set; }
-    public int FieldSizeX { get; set; }
-    public int FieldSizeY { get; set; }
+    public float ChipSize { get; private set; }
+    public int FieldSizeX { get; private set; }
+    public int FieldSizeY { get; private set; }
+    Vector2 SpawnOffset = new Vector2();
 
-    public ChipPositionProvider( IChipSizeProvider chipSizeProvider)
+    public ChipPositionProvider( IChipSizeProvider chipSizeProvider,
+                                 IFieldGenerationRulesProvider fieldGenerationRulesProvider)
     {
         _chipSizeProvider = chipSizeProvider;
+        FieldSizeX = fieldGenerationRulesProvider.GetGenerationRules().Xsize;
+        FieldSizeY = fieldGenerationRulesProvider.GetGenerationRules().Ysize;
     }
 
-    public void SetupChipParameters(int FieldSizeX, int FieldSizeY)
+    public void Initialize()
     {
-        this.FieldSizeX = FieldSizeX;
-        this.FieldSizeY = FieldSizeY;
+        SetupChipParameters();
+    }
+
+    void SetupChipParameters()
+    {
         ChipSize = _chipSizeProvider.CalculateChipSize(FieldSizeX, FieldSizeY);
         SpawnOffset = CalculateSpawnOffset();
     }
@@ -40,4 +47,5 @@ public class ChipPositionProvider : IChipPositionProvider
     {
         return new Vector2(FieldSizeX * ChipSize * (-0.5f) + ChipSize * 0.5f, FieldSizeY * ChipSize * (0.5f) - ChipSize * 0.5f);
     }
+
 }

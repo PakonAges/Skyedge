@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class FieldGridGenerator : IFieldGridGenerator
@@ -9,12 +8,6 @@ public class FieldGridGenerator : IFieldGridGenerator
     readonly IChipPositionProvider _chipPositionProvider;
 
     Scene _gridScene;
-
-    [Serializable]
-    public class Settings
-    {
-        //public GameObject AsteroidPrefab;
-    }
 
     public FieldGridGenerator(  FieldVisualizationParameters fieldVisualizationParameters,
                                 GridCell.Factory cellFactory,

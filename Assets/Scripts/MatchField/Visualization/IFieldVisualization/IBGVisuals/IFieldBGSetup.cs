@@ -2,5 +2,5 @@
 
 public interface IFieldBGSetup
 {
-    void SetupBackGround(Sprite BgImage, int FieldSizeX, int FieldSizeY);
+    void SetupBackGround();
 }

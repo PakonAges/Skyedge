@@ -1,21 +1,31 @@
 ﻿using UnityEngine;
+using Zenject;
 
-public class FieldBgSetup : IFieldBGSetup
+public class FieldBgSetup : IFieldBGSetup,  IInitializable
 {
     readonly IFieldBGScaleProvider _scaleProvider;
     readonly IFieldGridGenerator _fieldGridGenerator;
+    readonly FieldGenerationRules _fieldGenerationRules;
     GameObject _backGroundGO;
 
     public FieldBgSetup(IFieldBGScaleProvider fieldBGScaleProvider,
                         IFieldGridGenerator fieldGridGenerator,
+                        IFieldGenerationRulesProvider fieldGenerationRulesProvider,
                         GameObject bg)
     {
         _scaleProvider = fieldBGScaleProvider;
         _fieldGridGenerator = fieldGridGenerator;
         _backGroundGO = bg;
+        _fieldGenerationRules = fieldGenerationRulesProvider.GetGenerationRules();
+
     }
 
-    public void SetupBackGround(Sprite bgImage, int FieldSizeX, int FieldSizeY)
+    public void Initialize()
+    {
+        SetupBackGround();
+    }
+
+    public void SetupBackGround()
     {
         if (_backGroundGO == null)
         {
@@ -26,19 +36,19 @@ public class FieldBgSetup : IFieldBGSetup
 
         if (sr != null)
         {
-            sr.sprite = bgImage;
-            sr.transform.localScale = Vector2.one * _scaleProvider.CalculateBGScale(bgImage.bounds.size.x, bgImage.bounds.size.y);
+            sr.sprite = _fieldGenerationRules.BackgroundImage;
+            sr.transform.localScale = Vector2.one * _scaleProvider.CalculateBGScale(_fieldGenerationRules.BackgroundImage.bounds.size.x, _fieldGenerationRules.BackgroundImage.bounds.size.y);
         }
         else
         {
             Debug.LogErrorFormat("Can't Find SpriteRenderer Component in BG prefab ({0})", _backGroundGO);
         }
 
-        ShowEmptyGrid(FieldSizeX, FieldSizeY);
+        ShowEmptyGrid();
     }
 
-    void ShowEmptyGrid(int FieldSizeX, int FieldSizeY)
+    void ShowEmptyGrid()
     {
-        _fieldGridGenerator.ShowEmptyGrid(FieldSizeX, FieldSizeY);
+        _fieldGridGenerator.ShowEmptyGrid(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
     }
 }

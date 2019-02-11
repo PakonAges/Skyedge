@@ -58,7 +58,7 @@ public class MatchFieldInstaller : MonoInstaller
 
     void InstallFieldVisualization()
     {
-        Container.Bind<IChipPositionProvider>().To<ChipPositionProvider>().AsSingle();
+        Container.BindInterfacesAndSelfTo<ChipPositionProvider>().AsSingle();
         Container.Bind<IChipSizeProvider>().To<ChipSizeProvider>().AsSingle();
         Container.Bind<IChipPrefabProvider>().To<ChipPrefabProvider>().AsSingle();
         Container.Bind<IChipVisualProvider>().To<ChipVisualProvider>().AsSingle();
@@ -84,7 +84,8 @@ public class MatchFieldInstaller : MonoInstaller
     void InstalBackGroundSetup()
     {
         //BackGround 
-        Container.Bind<IFieldBGSetup>().To<FieldBgSetup>().AsSingle();
+        //Container.Bind<IFieldBGSetup>().To<FieldBgSetup>().AsSingle();
+        Container.BindInterfacesAndSelfTo<FieldBgSetup>().AsSingle();
         Container.Bind<IFieldBGScaleProvider>().To<BgScaleProvider>().AsSingle();
         Container.Bind<GameObject>().FromInstance(BackGroundGO).AsSingle();
 

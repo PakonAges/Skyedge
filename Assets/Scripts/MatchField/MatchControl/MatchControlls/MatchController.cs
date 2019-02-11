@@ -7,12 +7,11 @@ using Zenject;
 /// Passing commands to change Game Field State. Doesn't care about implementation details of modules
 /// Generates Field, Reset Field, Spawns Hero
 /// </summary>
-public class MatchController : IMatchController, IInitializable
+public class MatchController : IMatchController
 {
     readonly IFieldBGSetup _fieldBGSetup;
     readonly IFieldGenerator _fieldGenerator;
     readonly IFieldFiller _fieldFiller;
-    readonly IChipPositionProvider _chipPositioner;
     readonly IChipMovement _chipMovement;
     readonly IMatchChecker _matchChecker;
     readonly IFieldCleaner _fieldCleaner;
@@ -30,7 +29,6 @@ public class MatchController : IMatchController, IInitializable
                             IFieldGenerator fieldGenerator,
                             IFieldFiller fieldFiller,
                             IFieldGenerationRulesProvider fieldDataProvider,
-                            IChipPositionProvider chipPositioner,
                             IChipMovement chipMovement,
                             IMatchChecker matchChecker,
                             IFieldCleaner fieldCleaner,
@@ -43,7 +41,6 @@ public class MatchController : IMatchController, IInitializable
         _fieldBGSetup = fieldBGSetup;
         _fieldGenerator = fieldGenerator;
         _fieldFiller = fieldFiller;
-        _chipPositioner = chipPositioner;
         _chipMovement = chipMovement;
         _matchChecker = matchChecker;
         _fieldCleaner = fieldCleaner;
@@ -55,14 +52,9 @@ public class MatchController : IMatchController, IInitializable
         _UIController = myUIController;
     }
 
-    public void Initialize()
-    {
-        _chipPositioner.SetupChipParameters(_fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
-    }
-
     public async Task StartMatchAsync()
     {
-        ShowBackGround();
+        _fieldBGSetup.SetupBackGround();
         await GenerateFieldAsync();
         SpawnHero();
         GenerateLevel();
@@ -92,7 +84,7 @@ public class MatchController : IMatchController, IInitializable
         }
         else
         {
-            ShowBackGround();
+            //ShowBackGround();
         }
 
         GameField = await _fieldGenerator.GenerateFieldAsync(_fieldGenerationRules);
@@ -100,11 +92,6 @@ public class MatchController : IMatchController, IInitializable
         _matchChecker.GameField = this.GameField;
         _fieldCleaner.GameField = this.GameField;
         _fieldFiller.GameField = this.GameField;
-    }
-
-    void ShowBackGround()
-    {
-        _fieldBGSetup.SetupBackGround(_fieldGenerationRules.BackgroundImage, _fieldGenerationRules.Xsize, _fieldGenerationRules.Ysize);
     }
 
     void SpawnHero()
