@@ -1,25 +1,24 @@
 ﻿using myUI;
+using Zenject;
 
 public class MatchPauseViewModel : MyUIViewModel<MatchPauseViewModel>
 {
-    readonly ICoreSceneController _coreSceneController;
-    readonly IMatchController _matchController;
+    readonly SignalBus _signalBus;
 
     public MatchPauseView View { get { return IView as MatchPauseView; } }
-    public MatchPauseViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack, ICoreSceneController coreSceneController, IMatchController matchController) : base(prefabProvider, uIViewModelsStack)
+    public MatchPauseViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack, SignalBus signalBus) : base(prefabProvider, uIViewModelsStack)
     {
-        _coreSceneController = coreSceneController;
-        _matchController = matchController;
+        _signalBus = signalBus;
     }
 
     public void RestartMatch()
     {
-        _matchController.RestartMatchAsync();
+        _signalBus.Fire<LevelRestartSignal>();
         Close();
     }
 
     public void ExitToTheMap()
     {
-        _coreSceneController.SwitchScene(CoreScene.Map);
+        _signalBus.Fire<ExitMatchSignal>();
     }
 }

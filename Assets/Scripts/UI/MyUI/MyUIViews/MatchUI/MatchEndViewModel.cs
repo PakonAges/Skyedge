@@ -1,5 +1,4 @@
 ﻿using myUI;
-using UnityEngine;
 using Zenject;
 
 public class MatchEndViewModel : MyUIViewModel<MatchEndViewModel>
@@ -12,5 +11,11 @@ public class MatchEndViewModel : MyUIViewModel<MatchEndViewModel>
     public void RestartLevel()
     {
         _signalBus.Fire<LevelRestartSignal>();
+        Close();
+    }
+
+    public void ExitToTheMap()
+    {
+        _signalBus.Fire<ExitMatchSignal>();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using myUI;
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
@@ -7,8 +8,11 @@ using Zenject;
 /// Passing commands to change Game Field State. Doesn't care about implementation details of modules
 /// Generates Field, Reset Field, Spawns Hero
 /// </summary>
-public class MatchController : IMatchController
+public class MatchController : IMatchController, IInitializable, IDisposable
 {
+
+    readonly SignalBus _signalBus;
+    readonly ICoreSceneController _coreSceneController;
     readonly IFieldVisualController _fieldVisual;
     readonly IFieldGenerator _fieldGenerator;
     readonly IFieldCleaner _fieldCleaner;
@@ -22,7 +26,9 @@ public class MatchController : IMatchController
     public Field GameField;
     MatchLevel _matchLevel;
 
-    public MatchController( IFieldVisualController fieldVisual,
+    public MatchController( SignalBus signalBus,
+                            ICoreSceneController coreSceneController,
+                            IFieldVisualController fieldVisual,
                             IFieldGenerator fieldGenerator,
                             IFieldGenerationRulesProvider fieldDataProvider,
                             IFieldCleaner fieldCleaner,
@@ -32,6 +38,8 @@ public class MatchController : IMatchController
                             ILevelController levelController,
                             IMyUIController myUIController)
     {
+        _signalBus = signalBus;
+        _coreSceneController = coreSceneController;
         _fieldVisual = fieldVisual;
         _fieldGenerator = fieldGenerator;
         _fieldCleaner = fieldCleaner;
@@ -41,6 +49,24 @@ public class MatchController : IMatchController
         _fieldGenerationRules = fieldDataProvider.GetGenerationRules();
         _levelController = levelController;
         _UIController = myUIController;
+    }
+
+    public void Initialize()
+    {
+        _signalBus.Subscribe<LevelRestartSignal>(RestartTmp);
+        _signalBus.Subscribe<ExitMatchSignal>(EndMatch);
+    }
+
+    public void Dispose()
+    {
+        _signalBus.Unsubscribe<LevelRestartSignal>(RestartTmp);
+        _signalBus.Unsubscribe<ExitMatchSignal>(EndMatch);
+    }
+    
+    //TODO: REWORK PLS! don't make 2 restart methods just to use asyncrony..
+    void RestartTmp()
+    {
+        RestartMatchAsync();
     }
 
     public async Task StartMatchAsync()
@@ -58,7 +84,7 @@ public class MatchController : IMatchController
 
     public void EndMatch()
     {
-
+        _coreSceneController.SwitchScene(CoreScene.Map);
     }
 
     async Task GenerateFieldAsync()

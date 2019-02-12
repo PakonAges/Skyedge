@@ -9,7 +9,7 @@ public class MatchEndView : MyUIView<MatchEndView>
     [Binding]
     public void OnClose()
     {
-        ViewModel.Close();
+        ViewModel.ExitToTheMap();
     }
 
     [Binding]
