@@ -1,7 +1,6 @@
 ﻿using myUI;
 using System;
 using System.Threading.Tasks;
-using UnityEngine;
 using Zenject;
 
 /// <summary>
@@ -17,11 +16,10 @@ public class MatchController : IMatchController, IInitializable, IDisposable
     readonly IFieldGenerator _fieldGenerator;
     readonly IMyUIController _UIController;
     readonly IHeroSpawner _heroSpawner;
-
     readonly ILevelGenerator _levelGenerator;
+
     readonly ILevelController _levelController;
     readonly FieldGenerationRules _fieldGenerationRules;
-    MatchLevel _matchLevel;
 
     public MatchController( SignalBus signalBus,
                             ICoreSceneController coreSceneController,
@@ -59,13 +57,17 @@ public class MatchController : IMatchController, IInitializable, IDisposable
     public async Task StartMatchAsync()
     {
         _fieldVisual.ShowBackGround();
-        await GenerateFieldAsync();
+        await GenerateAndShowFieldAsync();
+        _levelGenerator.GenerateLevel(_fieldGenerationRules);
+        await _UIController.ShowHUD();
+        _levelController.StartMatch();
     }
 
     public async Task RestartMatchAsync()
     {
-        _levelGenerator.ResetLevel(_matchLevel, _fieldGenerationRules);
-        await GenerateFieldAsync();
+        _levelGenerator.ResetLevel(_fieldGenerationRules);
+        await GenerateAndShowFieldAsync();
+        _levelController.ResetLevel();
     }
 
     public void EndMatch()
@@ -73,18 +75,9 @@ public class MatchController : IMatchController, IInitializable, IDisposable
         _coreSceneController.SwitchScene(CoreScene.Map);
     }
 
-    async Task GenerateFieldAsync()
+    async Task GenerateAndShowFieldAsync()
     {
         await _fieldGenerator.GenerateAndShowFieldAsync(_fieldGenerationRules);
         _heroSpawner.SpawnHero(_fieldGenerationRules.GetHeroSpawnPosition());
-        GenerateLevel();
-    }
-
-    async void GenerateLevel()
-    {
-        _matchLevel = _levelGenerator.GenerateLevel(_fieldGenerationRules);
-        _levelController.InitLevel(_matchLevel);
-        await _UIController.ShowHUD();
-        _levelController.StartMatch();
     }
 }

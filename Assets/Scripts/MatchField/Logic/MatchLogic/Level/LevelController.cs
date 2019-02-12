@@ -1,35 +1,36 @@
 ﻿using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
 public class LevelController : ILevelController, IInitializable, IDisposable
 {
-    public MatchLevel CurrentLevel { get; private set; }
     readonly ILevelFSM _levelFSM;
-    readonly SignalBus _signalBus;
+    //readonly SignalBus _signalBus;
     [Inject] readonly MatchEndViewModel _matchEndViewModel = null;
     [Inject] readonly MatchHUDViewModel _hud = null;
+    readonly ILevelDataProvider _levelDataProvider;
+    public MatchLevel CurrentLevel { get { return _levelDataProvider.MatchLevel; } }
 
-    public LevelController(ILevelFSM levelFSM, SignalBus signalBus)
+    public LevelController( ILevelFSM levelFSM,
+                            //SignalBus signalBus,
+                            ILevelDataProvider levelDataProvider)
     {
         _levelFSM = levelFSM;
-        _signalBus = signalBus;
+        //_signalBus = signalBus;
+        _levelDataProvider = levelDataProvider;
     }
 
     public void Initialize()
     {
-        _signalBus.Subscribe<LevelRestartSignal>(ResetLevel);
+        _levelFSM.SetupFSM(this);
+
+        //_signalBus.Subscribe<LevelRestartSignal>(ResetLevel);
     }
 
     public void Dispose()
     {
-        _signalBus.Unsubscribe<LevelRestartSignal>(ResetLevel);
-    }
-
-    public void InitLevel(MatchLevel level)
-    {
-        CurrentLevel = level;
-        _levelFSM.SetupFSM(this);
+        //_signalBus.Unsubscribe<LevelRestartSignal>(ResetLevel);
     }
 
     public void StartMatch()
@@ -42,10 +43,12 @@ public class LevelController : ILevelController, IInitializable, IDisposable
     public void ResetLevel()
     {
         CurrentLevel.CurrentTurn = 0;
+        int TurnsLeft = CurrentLevel.TurnsLimit - CurrentLevel.CurrentTurn;
+        _hud.UpdateTurnsCounter(TurnsLeft);
         Debug.LogFormat("Restart Level. Turns Left: {0}", CurrentLevel.TurnsLimit);
     }
 
-    public void EndOfPlayerMove()
+    public async Task EndOfPlayerMoveAsync()
     {
         CurrentLevel.CurrentTurn++;
         int TurnsLeft = CurrentLevel.TurnsLimit - CurrentLevel.CurrentTurn;
@@ -58,7 +61,7 @@ public class LevelController : ILevelController, IInitializable, IDisposable
         }
         else
         {
-            _matchEndViewModel.Open();
+            await _matchEndViewModel.Open();
             Debug.Log("Game Over. No more turns");
         }
     }

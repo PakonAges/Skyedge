@@ -53,6 +53,7 @@ public class MatchFieldInstaller : MonoInstaller
         Container.Bind<SOFieldGenerationRules>().FromInstance(DebugFieldRules).AsSingle();
         Container.Bind<IChipInfoService>().To<ChipInfoService>().AsSingle();
         Container.Bind<IFieldDataProvider>().To<FieldDataProvider>().AsSingle();
+        Container.Bind<ILevelDataProvider>().To<LevelDataProvider>().AsSingle();
 
     }
 

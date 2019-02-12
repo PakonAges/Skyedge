@@ -1,5 +1,5 @@
 ﻿public interface ILevelGenerator
 {
-    MatchLevel GenerateLevel(FieldGenerationRules Rules);
-    void ResetLevel(MatchLevel Level, FieldGenerationRules Rules);
+    void GenerateLevel(FieldGenerationRules Rules);
+    void ResetLevel(FieldGenerationRules Rules);
 }
