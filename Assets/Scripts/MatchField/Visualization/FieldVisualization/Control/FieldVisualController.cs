@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-public class FieldVisualController : IFieldVisualController, IInitializable
+public class FieldVisualController : IFieldVisualController
 {
     readonly IFieldBGSetup _fieldBG;
 
@@ -9,18 +9,8 @@ public class FieldVisualController : IFieldVisualController, IInitializable
         _fieldBG = fieldBG;
     }
 
-    public void Initialize()
-    {
-        
-    }
-
     public void ShowBackGround()
     {
         _fieldBG.SetupBackGround();
-    }
-
-    public void ShowChips()
-    {
-        
     }
 }

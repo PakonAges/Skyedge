@@ -21,7 +21,7 @@ public class FieldGenerator : IFieldGenerator
         _fieldDataHolder = fieldDataProvider;
     }
 
-    public async Task<Field> GenerateFieldAsync(FieldGenerationRules rules)
+    public async Task<Field> GenerateAndShowFieldAsync(FieldGenerationRules rules)
     {
         try
         {

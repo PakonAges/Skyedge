@@ -2,5 +2,5 @@
 
 public interface IFieldGenerator {
 
-    Task<Field> GenerateFieldAsync(FieldGenerationRules fieldGenerationRules);
+    Task<Field> GenerateAndShowFieldAsync(FieldGenerationRules fieldGenerationRules);
 }

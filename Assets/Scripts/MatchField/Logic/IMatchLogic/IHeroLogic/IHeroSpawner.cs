@@ -1,5 +1,7 @@
-﻿public interface IHeroSpawner 
+﻿using UnityEngine;
+
+public interface IHeroSpawner 
 {
-    IChip SpawnHero(int Xpos, int Ypos);
+    IChip SpawnHero(Vector2Int SpawnPosition);
     void RemoveHero(HeroChip hero);
 }
