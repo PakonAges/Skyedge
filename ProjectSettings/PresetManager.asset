@@ -5,13 +5,6 @@ PresetManager:
   m_ObjectHideFlags: 0
   m_DefaultList:
   - type:
-      m_NativeTypeID: 20
-      m_ManagedTypePPtr: {fileID: 0}
-      m_ManagedTypeFallback: 
-    defaultPresets:
-    - m_Preset: {fileID: 2655988077585873504, guid: bfcfc320427f8224bbb7a96f3d3aebad,
-        type: 2}
-  - type:
       m_NativeTypeID: 114
       m_ManagedTypePPtr: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c,
         type: 3}
