@@ -3,6 +3,7 @@
     "com.unity.addressables": "0.5.3-preview",
     "com.unity.ads": "2.3.2",
     "com.unity.analytics": "3.2.2",
+    "com.unity.cinemachine": "2.2.8",
     "com.unity.inputsystem": "0.2.0-preview",
     "com.unity.memoryprofiler": "0.1.0-preview.5",
     "com.unity.mobile.notifications": "1.0.0-preview.9",
