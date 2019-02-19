@@ -42,7 +42,8 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 2800000, guid: ff5f14616f22d2142a798730fc47d1c7, type: 3}
-    totalSpriteSurfaceArea: 36864
+    - {fileID: 2800000, guid: a396d98419019f24292a69f84471b674, type: 3}
+    totalSpriteSurfaceArea: 61440
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -54,7 +55,13 @@ SpriteAtlas:
   - {fileID: 21300008, guid: ff5f14616f22d2142a798730fc47d1c7, type: 3}
   - {fileID: 21300014, guid: ff5f14616f22d2142a798730fc47d1c7, type: 3}
   - {fileID: 21300012, guid: ff5f14616f22d2142a798730fc47d1c7, type: 3}
+  - {fileID: 21300018, guid: ff5f14616f22d2142a798730fc47d1c7, type: 3}
   - {fileID: 21300016, guid: ff5f14616f22d2142a798730fc47d1c7, type: 3}
+  - {fileID: 21300020, guid: ff5f14616f22d2142a798730fc47d1c7, type: 3}
+  - {fileID: 21300022, guid: ff5f14616f22d2142a798730fc47d1c7, type: 3}
+  - {fileID: 21300024, guid: ff5f14616f22d2142a798730fc47d1c7, type: 3}
+  - {fileID: 21300026, guid: ff5f14616f22d2142a798730fc47d1c7, type: 3}
+  - {fileID: 21300028, guid: ff5f14616f22d2142a798730fc47d1c7, type: 3}
   m_PackedSpriteNamesToIndex:
   - MapTiles2D_1
   - MapTiles2D_0
@@ -64,6 +71,12 @@ SpriteAtlas:
   - MapTiles2D_4
   - MapTiles2D_7
   - MapTiles2D_6
+  - MapTiles2D_9
   - MapTiles2D_8
+  - MapTiles2D_10
+  - MapTiles2D_11
+  - MapTiles2D_12
+  - MapTiles2D_13
+  - MapTiles2D_14
   m_Tag: MapTiles
   m_IsVariant: 0
