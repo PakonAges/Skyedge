@@ -31,15 +31,6 @@ namespace GlobalMap
             return hit.transform;
         }
 
-        Transform GestureHit(float FocusX, float FocusY)
-        {
-            Vector3 pos = new Vector3(FocusX, FocusY, 0.0f);
-            pos = _camera.ScreenToWorldPoint(pos);
-            RaycastHit2D hit = Physics2D.Raycast(pos, Vector3.zero);
-
-            return hit.transform;
-        }
-
         void TapGestureCallback(GestureRecognizer tapGesture)
         {
             if (tapGesture.State == GestureRecognizerState.Ended)
@@ -48,7 +39,6 @@ namespace GlobalMap
 
                 if (tappedTransform != null) // check for hit
                 {
-                    //Select Region
                     _touchProcessor.TapOnObject(tappedTransform);
                 }
             }
@@ -59,6 +49,10 @@ namespace GlobalMap
             if (panGesture.State == GestureRecognizerState.Executing)
             {
                 _touchProcessor.Drag( panGesture.DeltaX, panGesture.DeltaY);
+            }
+            else if(panGesture.State == GestureRecognizerState.Ended)
+            {
+                _touchProcessor.EndOfDrag(_camera.transform.position);
             }
         }
 

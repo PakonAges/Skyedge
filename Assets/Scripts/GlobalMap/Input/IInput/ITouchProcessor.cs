@@ -6,5 +6,6 @@ namespace GlobalMap
     {
         void TapOnObject(Transform tappedTransform);
         void Drag(float deltaX, float deltaY);
+        void EndOfDrag(Vector3 camPosition);
     }
 }

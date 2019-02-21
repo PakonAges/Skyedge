@@ -6,8 +6,8 @@ namespace GlobalMap
     public class TouchInputProcessor : ITouchProcessor
     {
         readonly CinemachineVirtualCamera _virtualCamera;
+
         Vector3 _newCameraPosition = new Vector3(0,0,-10);
-        Vector2 _focusPosition = new Vector2();
 
         public TouchInputProcessor(CinemachineVirtualCamera cinemachineVirtualCamera)
         {
@@ -18,13 +18,17 @@ namespace GlobalMap
         {
             _newCameraPosition.x = -deltaX;
             _newCameraPosition.y = -deltaY;
+            _virtualCamera.transform.Translate(_newCameraPosition.normalized * 0.5f, Space.World);
+        }
 
-            _virtualCamera.transform.Translate(_newCameraPosition, Space.World);
+        public void EndOfDrag(Vector3 camPosition)
+        {
+            _virtualCamera.transform.position = camPosition;
         }
 
         public void TapOnObject(Transform tappedTransform)
         {
-            throw new System.NotImplementedException();
+            //Show UI View with Location Info
         }
     }
 }
