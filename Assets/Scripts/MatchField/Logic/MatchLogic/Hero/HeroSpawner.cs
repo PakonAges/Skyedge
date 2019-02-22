@@ -33,7 +33,7 @@ public class HeroSpawner : IHeroSpawner
         //In case we want to spawn Hero first
         if (GameField.FieldMatrix[SpawnPosition.x, SpawnPosition.y] != null)
         {
-            _fieldCleaner.ClearChipAsync(SpawnPosition.x, SpawnPosition.y);
+            _fieldCleaner.ClearChip(SpawnPosition.x, SpawnPosition.y);
         }
 
         try

@@ -4,6 +4,8 @@ using Zenject;
 
 public class TouchInput : MonoBehaviour, ITouchInput
 {
+    public float DragTreshHold = 1.0f;
+
     GestureRecognizer _touchGesture;
     TapGestureRecognizer _tapGesture;
     PanGestureRecognizer _panGesture;
@@ -72,10 +74,13 @@ public class TouchInput : MonoBehaviour, ITouchInput
         {
             var pannedTransform = GestureHit(panGesture.StartFocusX, panGesture.StartFocusY);
 
-            //Hitted something
-            if (pannedTransform != null)
+            if (Mathf.Abs(panGesture.DeltaX) >= DragTreshHold || Mathf.Abs(panGesture.DeltaY) >= DragTreshHold)
             {
-                _touchProcessor.PanObject(pannedTransform, panGesture.DeltaX, panGesture.DeltaY);
+                //Hitted something
+                if (pannedTransform != null)
+                {
+                    _touchProcessor.PanObject(pannedTransform, panGesture.DeltaX, panGesture.DeltaY);
+                }
             }
         }
     }

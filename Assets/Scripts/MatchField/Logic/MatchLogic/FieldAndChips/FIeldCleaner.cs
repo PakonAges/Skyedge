@@ -29,17 +29,17 @@ public class FIeldCleaner : IFieldCleaner
 
     public async Task ClearAndRefillBoardAsync()
     {
-        bool NeedsToRefill = await ClearAllMathcesAndNeedsToRefillAsync();
+        bool NeedsToRefill = ClearAllMathcesAndNeedsToRefill();
 
         while (NeedsToRefill)
         //if (NeedsToRefill)
         {
             await _fieldFiller.FullFillAsync();
-            NeedsToRefill = await ClearAllMathcesAndNeedsToRefillAsync();
+            NeedsToRefill = ClearAllMathcesAndNeedsToRefill();
         }
     }
 
-    public async Task<bool> ClearAllMathcesAndNeedsToRefillAsync()
+    public bool ClearAllMathcesAndNeedsToRefill()
     {
         bool needsRefill = false;
         _matches.Clear();
@@ -58,7 +58,7 @@ public class FIeldCleaner : IFieldCleaner
                         {
                             try
                             {
-                                if (await ClearChipAsync(_matches[i].X, _matches[i].Y))
+                                if (ClearChip(_matches[i].X, _matches[i].Y))
                                 {
                                     needsRefill = true;
                                 }
@@ -77,7 +77,7 @@ public class FIeldCleaner : IFieldCleaner
         return needsRefill;
     }
 
-    public async Task<bool> ClearChipAsync(int x, int y)
+    public bool ClearChip(int x, int y)
     {
         if (GameField.FieldMatrix[x, y].IsClearable) //check for isBeingCleared?
         {
@@ -85,7 +85,7 @@ public class FIeldCleaner : IFieldCleaner
             {
                 RemoveChip(GameField.FieldMatrix[x, y]);
                 GameField.FieldMatrix[x, y] = _chipManager.SpawnEmptyChip(x, y);
-                await new WaitForEndOfFrame();
+                //await new WaitForEndOfFrame();
                 return true;
             }
             catch (Exception e)
@@ -141,7 +141,7 @@ public class FIeldCleaner : IFieldCleaner
     {
         try
         {
-            await ClearChipAsync(x, y);
+            ClearChip(x, y);
             await _fieldFiller.FullFillAsync();
             await ClearAndRefillBoardAsync();
         }
