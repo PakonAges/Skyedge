@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class TouchInputProcessor : ITouchProcessor
 {
-    readonly float _panDeadZone = 0f;
     GameObject _selectedObject = null;
     bool _alreadyHasSelection = false;
     GameObject _selectionVisual;
@@ -63,22 +62,49 @@ public class TouchInputProcessor : ITouchProcessor
     {
         if (_selectedObject.transform == pannedObject)
         {
-            //ok, let's try without showing selection
-            if (panX > _panDeadZone)
+            if (panX >= 0 && panY >= 0) //top right quadrant
             {
-                SwapChipInDirection(pannedObject.gameObject, MoveDirection.LeftToRight);
+                if (panX > panY) // more right
+                {
+                    SwapChipInDirection(pannedObject.gameObject, MoveDirection.LeftToRight);
+                }
+                else // more top
+                {
+                    SwapChipInDirection(pannedObject.gameObject, MoveDirection.BotToTop);
+                }
             }
-            else if (-1 * panX > _panDeadZone)
+            else if (panX >= 0 && panY < 0) //bot right quadrant
             {
-                SwapChipInDirection(pannedObject.gameObject, MoveDirection.RightToLeft);
+                if (panX > -1 * panY) // more right
+                {
+                    SwapChipInDirection(pannedObject.gameObject, MoveDirection.LeftToRight);
+                }
+                else // more bot
+                {
+                    SwapChipInDirection(pannedObject.gameObject, MoveDirection.TopToBot);
+                }
             }
-            else if (panY > _panDeadZone)
+            else if (panX < 0 && panY >= 0) //top left quadrant
             {
-                SwapChipInDirection(pannedObject.gameObject, MoveDirection.BotToTop);
+                if (-1 * panX > panY) // more left
+                {
+                    SwapChipInDirection(pannedObject.gameObject, MoveDirection.RightToLeft);
+                }
+                else // more top
+                {
+                    SwapChipInDirection(pannedObject.gameObject, MoveDirection.BotToTop);
+                }
             }
-            else if (-1 * panY > _panDeadZone)
+            else if (panX < 0 && panY < 0) //bot left quadrant
             {
-                SwapChipInDirection(pannedObject.gameObject, MoveDirection.TopToBot);
+                if (-1 * panX > -1 * panY) // more left
+                {
+                    SwapChipInDirection(pannedObject.gameObject, MoveDirection.RightToLeft);
+                }
+                else // more bot
+                {
+                    SwapChipInDirection(pannedObject.gameObject, MoveDirection.TopToBot);
+                }
             }
         }
         else
