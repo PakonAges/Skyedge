@@ -48,6 +48,7 @@ public class ChipMovement : IChipMovement
             chip2.MyGo.transform.DOMove(_chipPositionProvider.GetPosition(chip2.X, chip2.Y), _swapDuration);
             await new WaitForSeconds(_swapDuration);
         }
+
         return OnMovementDone();
     }
 
