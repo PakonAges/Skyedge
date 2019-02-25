@@ -1,4 +1,5 @@
 ﻿using myUI;
+using UnityEngine;
 
 public class ConfirmExitGameViewModel : MyUIViewModel<ConfirmExitGameViewModel>
 {

@@ -13,14 +13,20 @@
     <type fullname="UnityEngine.UI.GraphicRaycaster" preserve="all" />
     <type fullname="UnityEngine.UI.Image" preserve="all" />
   </assembly>
-  <assembly fullname="Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-    <type fullname="TMPro.TMP_FontAsset" preserve="all" />
-    <type fullname="TMPro.TextMeshProUGUI" preserve="all" />
-  </assembly>
-  <assembly fullname="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+  <assembly fullname="MyUI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="MatchEndView" preserve="all" />
     <type fullname="MatchPauseView" preserve="all" />
     <type fullname="MatchHUDView" preserve="all" />
+    <type fullname="ConfirmExitGameView" preserve="all" />
+  </assembly>
+  <assembly fullname="Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="TMPro.TMP_SubMeshUI" preserve="all" />
+    <type fullname="TMPro.TMP_FontAsset" preserve="all" />
+    <type fullname="TMPro.TextMeshProUGUI" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityWeld, Version=0.8.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityWeld.Binding.EventBinding" preserve="all" />
+    <type fullname="UnityWeld.Binding.OneWayPropertyBinding" preserve="all" />
   </assembly>
   <assembly fullname="UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="UnityEditor.MonoScript" preserve="all" />
