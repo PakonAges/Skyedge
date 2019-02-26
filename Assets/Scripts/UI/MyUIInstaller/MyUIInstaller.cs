@@ -10,6 +10,7 @@ public class MyUIInstaller : Installer<MyUIInstaller>
         Container.Bind<IMyUIPrefabProvider>().To<MyUIAdressablePrefabProvider>().AsSingle();
 
         BindUIViewModels();
+        BindGlobalMapViews();
     }
 
     void BindUIViewModels()
@@ -18,5 +19,10 @@ public class MyUIInstaller : Installer<MyUIInstaller>
         Container.BindInterfacesAndSelfTo<MatchPauseViewModel>().AsSingle();
         Container.BindInterfacesAndSelfTo<MatchEndViewModel>().AsSingle();
         Container.BindInterfacesAndSelfTo<ConfirmExitGameViewModel>().AsSingle();
+    }
+
+    void BindGlobalMapViews()
+    {
+        Container.BindInterfacesAndSelfTo<MapRegionModelView>().AsSingle();
     }
 }

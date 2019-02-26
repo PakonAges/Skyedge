@@ -11,6 +11,7 @@ public class GlobalMapInstaller : MonoInstaller
     public override void InstallBindings()
     {
         InstallInput();
+        MyUIInstaller.Install(Container);
         Container.Bind<GlobalMapViewModel>().AsSingle();
     }
 

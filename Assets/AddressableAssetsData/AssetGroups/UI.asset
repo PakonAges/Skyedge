@@ -27,6 +27,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - UiWindow
+  - m_GUID: 94b1ecef4af9ca443959fe6d8aa9525d
+    m_Address: MapRegionView
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UiWindow
   - m_GUID: 998e2bb7682d04d4ebe40c9c4a65606c
     m_Address: ConfirmExitGameView
     m_ReadOnly: 0
