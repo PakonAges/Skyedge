@@ -6,20 +6,21 @@ public class TouchInput : MonoBehaviour, ITouchInput
 {
     public float DragTreshHold = 1.0f;
 
-    GestureRecognizer _touchGesture;
     TapGestureRecognizer _tapGesture;
     PanGestureRecognizer _panGesture;
 
     Camera _camera;
     ITouchProcessor _touchProcessor;
-    
+    Transform _tappedTransform = null;
+    Transform _pannedTransform = null;
+
+
     [Inject]
     public void Construct(  Camera cam, ITouchProcessor touchProcessor)
     {
         _camera = cam;
         _touchProcessor = touchProcessor;
 
-        InitTouch();
         InitTapGesture();
         InitPanGesture();
     }
@@ -42,28 +43,17 @@ public class TouchInput : MonoBehaviour, ITouchInput
         return hit.transform;
     }
 
-    void TouchGestureCallback(GestureRecognizer TouchGesture)
-    {
-        if (TouchGesture.CurrentTrackedTouches.Count > 0)
-        {
-            var tappedTransform = GestureHit(TouchGesture.CurrentTrackedTouches[0].X, TouchGesture.CurrentTrackedTouches[0].Y);
-
-            if (tappedTransform != null) // check for hit
-            {
-                _touchProcessor.TapOnObject(tappedTransform);
-            }
-        }
-    }
 
     void TapGestureCallback(GestureRecognizer tapGesture)
     {
-        if (tapGesture.State == GestureRecognizerState.Ended)
+        if (tapGesture.State == GestureRecognizerState.Possible)
         {
-            var tappedTransform = GestureHit(tapGesture);
+            _tappedTransform = GestureHit(tapGesture);
 
-            if (tappedTransform != null) // check for hit
+            if (_tappedTransform != null) // check for hit
             {
-                _touchProcessor.TapOnObject(tappedTransform);
+                _touchProcessor.TapOnObject(_tappedTransform);
+                _tappedTransform = null;
             }
         }
     }
@@ -72,25 +62,20 @@ public class TouchInput : MonoBehaviour, ITouchInput
     {
         if (panGesture.State == GestureRecognizerState.Began)
         {
-            var pannedTransform = GestureHit(panGesture.StartFocusX, panGesture.StartFocusY);
-
             if (Mathf.Abs(panGesture.DeltaX) >= DragTreshHold || Mathf.Abs(panGesture.DeltaY) >= DragTreshHold)
             {
+                _pannedTransform = GestureHit(panGesture.StartFocusX, panGesture.StartFocusY);
                 //Hitted something
-                if (pannedTransform != null)
+                if (_pannedTransform != null)
                 {
-                    _touchProcessor.PanObject(pannedTransform, panGesture.DeltaX, panGesture.DeltaY);
+                    _touchProcessor.PanObject(_pannedTransform, panGesture.DeltaX, panGesture.DeltaY);
+                    _pannedTransform = null;
                 }
             }
         }
     }
 
-    void InitTouch()
-    {
-        _touchGesture = new TouchGestureRecognizer();
-        _touchGesture.StateUpdated += TouchGestureCallback;
-        FingersScript.Instance.AddGesture(_touchGesture);
-    }
+
 
     void InitTapGesture()
     {

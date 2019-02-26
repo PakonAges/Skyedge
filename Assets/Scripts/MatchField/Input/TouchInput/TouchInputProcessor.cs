@@ -60,7 +60,7 @@ public class TouchInputProcessor : ITouchProcessor
 
     public void PanObject(Transform pannedObject, float panX, float panY)
     {
-        if (_selectedObject.transform == pannedObject)
+        if (_selectedObject != null && _selectedObject.transform == pannedObject)
         {
             if (panX >= 0 && panY >= 0) //top right quadrant
             {
