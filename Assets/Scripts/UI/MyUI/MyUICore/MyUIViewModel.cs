@@ -43,13 +43,13 @@ namespace myUI
                 var ViewGo = GameObject.Instantiate(Prefab);
                 IView = ViewGo.GetComponent<IMyUIView>();
                 IView.SetViewModel(this);
-                SceneManager.MoveGameObjectToScene(ViewGo, _prefabProvider.UIScene);
+                //SceneManager.MoveGameObjectToScene(ViewGo, _prefabProvider.UIScene);
                 Canvas = ViewGo.GetComponent<Canvas>();
                 _stack.AddViewModel(this);
             }
             catch (Exception e)
             {
-                Debug.LogError(e);
+                Debug.LogError(e.Message);
             }
         }
 

@@ -2,7 +2,7 @@ using Zenject;
 
 public class CoreInstaller : MonoInstaller
 {
-    public CoreScene SceneToLoad = CoreScene.MainMenu;
+    public CoreScene SceneToLoad = CoreScene.Lobby;
 
     public override void InstallBindings()
     {

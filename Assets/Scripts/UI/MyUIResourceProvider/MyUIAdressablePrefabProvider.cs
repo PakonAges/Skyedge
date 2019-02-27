@@ -3,16 +3,28 @@ using UnityEngine.AddressableAssets;
 using System.Threading.Tasks;
 using System;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace myUI
 {
-    public class MyUIAdressablePrefabProvider : IMyUIPrefabProvider
+    public class MyUIAdressablePrefabProvider : IMyUIPrefabProvider, IInitializable
     {
-        public Scene UIScene { get; }
+        //Scene _uiScene;
+        //public Scene UIScene
+        //{
+        //    get
+        //    {
+        //        if (_uiScene == null)
+        //        {
+        //            _uiScene = SceneManager.CreateScene("UI");
+        //        }
+        //        return _uiScene;
+        //    }
+        //}
 
-        public MyUIAdressablePrefabProvider()
+        public void Initialize()
         {
-            UIScene = SceneManager.CreateScene("UI");
+            //_uiScene = SceneManager.CreateScene("UI");
         }
 
         public async Task<GameObject> GetWindowPrefab<T>() where T : MyUIViewModel
@@ -30,6 +42,7 @@ namespace myUI
             }
 
         }
+
 
         string ConvertGenericName(string ViewModelName)
         {

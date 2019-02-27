@@ -6,7 +6,7 @@ namespace myUI
 {
     public interface IMyUIPrefabProvider
     {
-        Scene UIScene { get; }
+        //Scene UIScene { get; }
         Task<GameObject> GetWindowPrefab<T>() where T : MyUIViewModel;
     }
 }
