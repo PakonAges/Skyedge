@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using myUI;
+using UnityEngine;
 using Zenject;
 
 public class MatchFieldInstaller : MonoInstaller
@@ -27,7 +28,6 @@ public class MatchFieldInstaller : MonoInstaller
         Container.Bind<Camera>().FromInstance(MainCamera);
 
         InputInstaller.Install(Container);
-        MyUIInstaller.Install(Container);
         MatchFieldSignalsInstaller.Install(Container);
 
         InstallControllers();
@@ -37,6 +37,7 @@ public class MatchFieldInstaller : MonoInstaller
         InstallChipFabrics();
         InstallFIeldLogic();
         InstallLevelLogic();
+        InstallUI();
     }
 
 
@@ -119,6 +120,14 @@ public class MatchFieldInstaller : MonoInstaller
         Container.Bind<IEnemiesController>().To<EnemiesController>().AsSingle();
     }
 
+    void InstallUI()
+    {
+        Container.Bind<IMyUIController>().To<MyUIController>().AsSingle();
+        Container.BindInterfacesAndSelfTo<MatchHUDViewModel>().AsSingle();
+        Container.BindInterfacesAndSelfTo<MatchPauseViewModel>().AsSingle();
+        Container.BindInterfacesAndSelfTo<MatchEndViewModel>().AsSingle();
+        Container.BindInterfacesAndSelfTo<ConfirmExitGameViewModel>().AsSingle();
+    }
 
     //void InstallNullObjects()
     //{

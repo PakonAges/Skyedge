@@ -3,9 +3,9 @@ using UnityWeld.Binding;
 using Zenject;
 
 [Binding]
-public class CoreMenuView : MonoBehaviour
+public class LobbyView : MonoBehaviour
 {
-    [Inject] CoreMenuViewModel _viewModel = null;
+    [Inject] LobbyViewModel _viewModel = null;
 
     [Binding]
     public void OnMatchBtn()

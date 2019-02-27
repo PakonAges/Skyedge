@@ -2,10 +2,10 @@
 using myUI;
 using Zenject;
 
-public class MapRegionModelView : MyUIViewModel<MapRegionModelView>
+public class MapRegionViewModel : MyUIViewModel<MapRegionViewModel>
 {
     public MapRegionView View { get { return IView as MapRegionView; } }
-    public MapRegionModelView(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack) : base(prefabProvider, uIViewModelsStack) { }
+    public MapRegionViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack) : base(prefabProvider, uIViewModelsStack) { }
 
     internal void RegionEnter()
     {

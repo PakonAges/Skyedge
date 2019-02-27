@@ -11,15 +11,20 @@ public class GlobalMapInstaller : MonoInstaller
     public override void InstallBindings()
     {
         InstallInput();
-        MyUIInstaller.Install(Container);
-        Container.Bind<GlobalMapViewModel>().AsSingle();
+        InstallUI();
+        //MyUIInstaller.Install(Container);
     }
 
     void InstallInput()
     {
         Container.Bind<Camera>().FromInstance(MainCamera);
         Container.Bind<CinemachineVirtualCamera>().FromInstance(VirtualCamera);
-
         Container.Bind<GlobalMap.ITouchProcessor>().To<GlobalMap.TouchInputProcessor>().AsSingle();
+    }
+
+    void InstallUI()
+    {
+        Container.BindInterfacesAndSelfTo<MapRegionViewModel>().AsSingle();
+        Container.Bind<GlobalMapViewModel>().AsSingle();
     }
 }

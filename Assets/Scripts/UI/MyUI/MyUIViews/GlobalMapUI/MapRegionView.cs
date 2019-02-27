@@ -4,7 +4,7 @@ using myUI;
 [Binding]
 public class MapRegionView : MyUIView<MapRegionView>
 {
-    public MapRegionModelView ViewModel { get { return IViewModel as MapRegionModelView; } }
+    public MapRegionViewModel ViewModel { get { return IViewModel as MapRegionViewModel; } }
 
     string _regionName;
     [Binding]

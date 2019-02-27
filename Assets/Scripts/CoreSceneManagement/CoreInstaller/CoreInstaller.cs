@@ -8,5 +8,6 @@ public class CoreInstaller : MonoInstaller
     {
         Container.Bind<CoreScene>().FromInstance(SceneToLoad).AsSingle().WhenInjectedInto<CoreSceneController>();
         Container.BindInterfacesAndSelfTo<CoreSceneController>().AsSingle();
+        MyUIInstaller.Install(Container);
     }
 }

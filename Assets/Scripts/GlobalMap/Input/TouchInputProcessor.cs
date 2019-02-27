@@ -7,7 +7,7 @@ namespace GlobalMap
 {
     public class TouchInputProcessor : ITouchProcessor
     {
-        [Inject] readonly MapRegionModelView _regionView = null;
+        [Inject] readonly MapRegionViewModel _regionView = null;
         readonly CinemachineVirtualCamera _virtualCamera;
         Vector3 _newCameraPosition = new Vector3(0,0,-10);
 

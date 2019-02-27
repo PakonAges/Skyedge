@@ -380,8 +380,9 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Map
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2315fc4a071d59d4ba7ab3f14dbcd042, type: 2}
+  m_sharedMaterial: {fileID: 21901603758718628, guid: 2315fc4a071d59d4ba7ab3f14dbcd042,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -540,8 +541,9 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Match
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2315fc4a071d59d4ba7ab3f14dbcd042, type: 2}
+  m_sharedMaterial: {fileID: 21901603758718628, guid: 2315fc4a071d59d4ba7ab3f14dbcd042,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -654,7 +656,7 @@ GameObject:
   - component: {fileID: 752961701}
   - component: {fileID: 752961700}
   m_Layer: 5
-  m_Name: CoreMenuCanvas
+  m_Name: LobbyCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -871,7 +873,7 @@ MonoBehaviour:
   m_Script: {fileID: -1360956885, guid: 37f8d8a5bbb63f0408b99d56763ce79e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewModelMethodName: CoreMenuView.OnMapBtn
+  viewModelMethodName: LobbyView.OnMapBtn
   viewEventName: UnityEngine.UI.Button.onClick
 --- !u!1 &1546683592
 GameObject:
@@ -1006,8 +1008,9 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Location
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2315fc4a071d59d4ba7ab3f14dbcd042, type: 2}
+  m_sharedMaterial: {fileID: 21901603758718628, guid: 2315fc4a071d59d4ba7ab3f14dbcd042,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1119,7 +1122,7 @@ GameObject:
   - component: {fileID: 1800420083}
   - component: {fileID: 1800420085}
   m_Layer: 0
-  m_Name: CoreMenuSceneContext
+  m_Name: LobbySceneContext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1322,7 +1325,7 @@ MonoBehaviour:
   m_Script: {fileID: -1360956885, guid: 37f8d8a5bbb63f0408b99d56763ce79e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewModelMethodName: CoreMenuView.OnMatchBtn
+  viewModelMethodName: LobbyView.OnMatchBtn
   viewEventName: UnityEngine.UI.Button.onClick
 --- !u!1 &2140681954
 GameObject:
@@ -1455,5 +1458,5 @@ MonoBehaviour:
   m_Script: {fileID: -1360956885, guid: 37f8d8a5bbb63f0408b99d56763ce79e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewModelMethodName: CoreMenuView.OnLocationBtn
+  viewModelMethodName: LobbyView.OnLocationBtn
   viewEventName: UnityEngine.UI.Button.onClick

@@ -1,8 +1,8 @@
-﻿public class CoreMenuViewModel
+﻿public class LobbyViewModel
 {
     private readonly ICoreSceneController _coreSceneController;
 
-    public CoreMenuViewModel(ICoreSceneController coreSceneController)
+    public LobbyViewModel(ICoreSceneController coreSceneController)
     {
         _coreSceneController = coreSceneController;
     }
