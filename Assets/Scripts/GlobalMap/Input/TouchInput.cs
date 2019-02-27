@@ -22,6 +22,11 @@ namespace GlobalMap
             InitPanGesture();
         }
 
+        void OnDisable()
+        {
+            FingersScript.Instance.ResetState(true);
+        }
+
         Transform GestureHit(GestureRecognizer gesture)
         {
             Vector3 pos = new Vector3(gesture.FocusX, gesture.FocusY, 0.0f);

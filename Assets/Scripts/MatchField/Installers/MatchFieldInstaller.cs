@@ -27,7 +27,7 @@ public class MatchFieldInstaller : MonoInstaller
     {
         Container.Bind<Camera>().FromInstance(MainCamera);
 
-        InputInstaller.Install(Container);
+        GameFieldInputInstaller.Install(Container);
         MatchFieldSignalsInstaller.Install(Container);
 
         InstallControllers();

@@ -1,4 +1,7 @@
-﻿public interface ITouchInput
+﻿namespace FieldGameplay
 {
+    public interface ITouchInput
+    {
 
+    }
 }

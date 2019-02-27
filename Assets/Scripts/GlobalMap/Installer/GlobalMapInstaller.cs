@@ -1,6 +1,5 @@
 using UnityEngine;
 using Zenject;
-using GlobalMap;
 using Cinemachine;
 
 public class GlobalMapInstaller : MonoInstaller
@@ -12,7 +11,6 @@ public class GlobalMapInstaller : MonoInstaller
     {
         InstallInput();
         InstallUI();
-        //MyUIInstaller.Install(Container);
     }
 
     void InstallInput()

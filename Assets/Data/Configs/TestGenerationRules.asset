@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2f744d0c2478b34d880e5fb80a2bdab, type: 3}
-  m_Name: TestGenerationInput
+  m_Name: TestGenerationRules
   m_EditorClassIdentifier: 
   Xsize: 8
   Ysize: 8

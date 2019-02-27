@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
-public interface ITouchProcessor
+namespace FieldGameplay
 {
-    void TapOnObject(Transform tappedObject);
-    void PanObject(Transform pannedObject, float panX, float panY);
+    public interface ITouchProcessor
+    {
+        void TapOnObject(Transform tappedObject);
+        void PanObject(Transform pannedObject, float panX, float panY);
+    }
 }
