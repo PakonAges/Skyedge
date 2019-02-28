@@ -24,7 +24,10 @@ namespace GlobalMap
 
         void OnDisable()
         {
-            FingersScript.Instance.ResetState(true);
+            _tapGesture.StateUpdated -= TapGestureCallback;
+            _panGesture.StateUpdated -= PanGestureCallback;
+            FingersScript.Instance.RemoveGesture(_tapGesture);
+            FingersScript.Instance.RemoveGesture(_panGesture);
         }
 
         Transform GestureHit(GestureRecognizer gesture)
