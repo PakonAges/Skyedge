@@ -8,5 +8,6 @@ namespace myUI
         void AddViewModel(MyUIViewModel ViewModel);
         void CloseTopView();
         void Close(MyUIViewModel ViewModel);
+        void ClearStack();
     }
 }

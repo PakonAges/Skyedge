@@ -1,5 +1,5 @@
 {
-    "name": "MyUI",
+    "name": "MyUICore",
     "references": [
         "Zenject",
         "Unity.Addressables",

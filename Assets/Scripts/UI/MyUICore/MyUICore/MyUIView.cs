@@ -18,14 +18,14 @@ namespace myUI
         public bool HideSubordinates = false;
         public bool NeedConfirmBeforeClosing = false;
 
-        internal virtual IMyUIViewModel IViewModel { get; set; }
+        protected virtual IMyUIViewModel IViewModel { get; set; }
         public bool HideOnClose { get; private set; }
         public bool NeedConfirmToClose { get; private set; }
         public bool HideAllOtherViews { get; private set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        internal void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

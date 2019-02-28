@@ -75,5 +75,13 @@ namespace myUI
 
             CloseTopView();
         }
+
+        public void ClearStack()
+        {
+            if (Stack.Count > 0)
+            {
+                Stack.Clear();
+            }
+        }
     }
 }

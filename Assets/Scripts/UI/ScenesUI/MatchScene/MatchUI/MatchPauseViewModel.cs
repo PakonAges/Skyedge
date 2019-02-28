@@ -20,5 +20,6 @@ public class MatchPauseViewModel : MyUIViewModel<MatchPauseViewModel>
     public void ExitToTheMap()
     {
         _signalBus.Fire<ExitMatchSignal>();
+        Close();
     }
 }

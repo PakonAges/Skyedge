@@ -14,7 +14,7 @@ public class MatchController : IMatchController, IInitializable, IDisposable
     readonly ICoreSceneController _coreSceneController;
     readonly IFieldVisualController _fieldVisual;
     readonly IFieldGenerator _fieldGenerator;
-    readonly IMyUIController _UIController;
+    readonly IMatchUIController _UIController;
     readonly IHeroSpawner _heroSpawner;
     readonly ILevelGenerator _levelGenerator;
 
@@ -29,7 +29,7 @@ public class MatchController : IMatchController, IInitializable, IDisposable
                             IHeroSpawner heroSpawner,
                             ILevelGenerator levelGenerator,
                             ILevelController levelController,
-                            IMyUIController myUIController)
+                            IMatchUIController myUIController)
     {
         _signalBus = signalBus;
         _coreSceneController = coreSceneController;
@@ -73,6 +73,7 @@ public class MatchController : IMatchController, IInitializable, IDisposable
     public void EndMatch()
     {
         _coreSceneController.SwitchScene(CoreScene.Map);
+        _UIController.ClearUIStack();
     }
 
     async Task GenerateAndShowFieldAsync()

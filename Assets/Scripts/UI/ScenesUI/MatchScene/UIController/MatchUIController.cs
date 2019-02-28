@@ -3,12 +3,12 @@ using Zenject;
 
 namespace myUI
 {
-    public class MyUIController : IMyUIController
+    public class MatchUIController : IMatchUIController
     {
         readonly IMyUIViewModelsStack _UIStack;
         [Inject] MatchHUDViewModel _HUD = null;
 
-        public MyUIController(IMyUIViewModelsStack stack)
+        public MatchUIController(IMyUIViewModelsStack stack)
         {
             _UIStack = stack;
         }
@@ -16,6 +16,11 @@ namespace myUI
         public void BackPressed()
         {
             _UIStack.CloseTopView();
+        }
+
+        public void ClearUIStack()
+        {
+            _UIStack.ClearStack();
         }
 
         public async Task ShowHUD()

@@ -122,7 +122,7 @@ public class MatchFieldInstaller : MonoInstaller
 
     void InstallUI()
     {
-        Container.Bind<IMyUIController>().To<MyUIController>().AsSingle();
+        Container.Bind<IMatchUIController>().To<MatchUIController>().AsSingle();
         Container.BindInterfacesAndSelfTo<MatchHUDViewModel>().AsSingle();
         Container.BindInterfacesAndSelfTo<MatchPauseViewModel>().AsSingle();
         Container.BindInterfacesAndSelfTo<MatchEndViewModel>().AsSingle();

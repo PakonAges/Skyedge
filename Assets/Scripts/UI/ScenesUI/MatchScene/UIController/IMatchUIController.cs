@@ -2,9 +2,10 @@
 
 namespace myUI
 {
-    public interface IMyUIController
+    public interface IMatchUIController
     {
         Task ShowHUD();
         void BackPressed();
+        void ClearUIStack();
     }
 }

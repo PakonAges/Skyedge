@@ -1,15 +1,9 @@
 {
-    "name": "MatchScene.Logic",
+    "name": "MyUI",
     "references": [
-        "MatchScene.ILogic",
-        "MatchScene.IVisualization",
-        "MatchScene.DataLayer",
+        "MyUICore",
         "Zenject",
-        "MatchScene.Entities",
-        "AsyncAwaitUtil",
-        "MyUI",
-        "MatchScene.Signals",
-        "MyUICore"
+        "MatchScene.Signals"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

@@ -86,10 +86,10 @@ namespace myUI
 
     public abstract class MyUIViewModel : IMyUIViewModel, IInitializable, IDisposable
     {
-        internal IMyUIPrefabProvider _prefabProvider;
-        internal IMyUIViewModelsStack _stack;
-        internal virtual IMyUIView IView { get; set; }
-        internal Canvas Canvas;
+        public IMyUIPrefabProvider _prefabProvider;
+        public IMyUIViewModelsStack _stack;
+        public virtual IMyUIView IView { get; set; }
+        public Canvas Canvas;
 
         public virtual void Initialize() { }
         public virtual void Dispose() { }
