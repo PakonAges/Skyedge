@@ -72,8 +72,8 @@ public class MatchController : IMatchController, IInitializable, IDisposable
 
     public void EndMatch()
     {
-        _coreSceneController.SwitchScene(CoreScene.Map);
         _UIController.ClearUIStack();
+        _coreSceneController.SwitchScene(CoreScene.Map);
     }
 
     async Task GenerateAndShowFieldAsync()

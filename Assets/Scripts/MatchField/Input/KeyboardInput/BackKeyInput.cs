@@ -17,7 +17,7 @@ public class BackKeyInput : MonoBehaviour
     {
         if (Input.GetKeyDown(BackKey) && _UIStack.Stack.Count > 0)
         {
-            _UIStack.CloseTopView();
+            _UIStack.Stack.Peek().Close();
         }
     }
 }

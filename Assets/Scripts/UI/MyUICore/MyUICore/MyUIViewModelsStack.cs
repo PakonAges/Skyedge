@@ -37,25 +37,17 @@ namespace myUI
         public void CloseTopView()
         {
             var TopView = Stack.Peek();
-
-            if (TopView.IView.NeedConfirmToClose)
+            //If all other views was closed -> show them on Close
+            if (TopView.IView.HideAllOtherViews)
             {
-                TopView.ShowConfirmToClose();
-            }
-            else
-            {
-                //If all other views was closed -> show them on Close
-                if (TopView.IView.HideAllOtherViews)
+                foreach (var view in Stack)
                 {
-                    foreach (var view in Stack)
-                    {
-                        view.Canvas.enabled = true;
-                    }
+                    view.Canvas.enabled = true;
                 }
-
-                TopView.CloseCommand();
-                Stack.Pop();
             }
+
+            TopView.CloseCommand();
+            Stack.Pop();
         }
 
         //Assumes that I want to close only top view? is it correct?
@@ -80,7 +72,10 @@ namespace myUI
         {
             if (Stack.Count > 0)
             {
-                Stack.Clear();
+                while (Stack.Count != 0)
+                {
+                    CloseTopView();
+                }
             }
         }
     }

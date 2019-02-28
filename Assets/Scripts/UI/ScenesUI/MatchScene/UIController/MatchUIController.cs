@@ -15,7 +15,7 @@ namespace myUI
 
         public void BackPressed()
         {
-            _UIStack.CloseTopView();
+            _UIStack.Stack.Peek().Close();
         }
 
         public void ClearUIStack()

@@ -13,13 +13,13 @@ public class MatchPauseViewModel : MyUIViewModel<MatchPauseViewModel>
 
     public void RestartMatch()
     {
-        _signalBus.Fire<LevelRestartSignal>();
         Close();
+        _signalBus.Fire<LevelRestartSignal>();
     }
 
     public void ExitToTheMap()
     {
-        _signalBus.Fire<ExitMatchSignal>();
         Close();
+        _signalBus.Fire<ExitMatchSignal>();
     }
 }
