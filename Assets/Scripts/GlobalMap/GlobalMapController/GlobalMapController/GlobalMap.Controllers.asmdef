@@ -1,0 +1,14 @@
+{
+    "name": "GlobalMap.Controllers",
+    "references": [
+        "GlobalMap.IControllers"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
