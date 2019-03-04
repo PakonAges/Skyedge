@@ -1,7 +1,7 @@
 {
-    "name": "GlobalMap.Controllers",
+    "name": "GlobalMap.Logic",
     "references": [
-        "GlobalMap.IControllers"
+        "GlobalMap.UI"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

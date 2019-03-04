@@ -29,7 +29,8 @@ public class GlobalMapInstaller : MonoInstaller
 
     void InstallUI()
     {
+        Container.Bind<IGlobalMapUIController>().To<GlobalMapUIContoller>().AsSingle();
         Container.BindInterfacesAndSelfTo<MapRegionViewModel>().AsSingle();
-        Container.Bind<GlobalMapViewModel>().AsSingle();
+        Container.Bind<GlobalMapHUDViewModel>().AsSingle();
     }
 }

@@ -3,6 +3,7 @@
     Loader = 0,
     Lobby = 1,
     Map = 2,
-    Location = 3,
-    Match = 4
+    Region = 3,
+    Location = 4,
+    Match = 5
 }

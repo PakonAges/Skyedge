@@ -17,6 +17,11 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: dbebe5e5f4dfe984b91e154e03b45791
   m_SerializeEntries:
+  - m_GUID: 2ab3a4df45627794091400ca61fc74ac
+    m_Address: GlobalMapHUDView
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UiWindow
   - m_GUID: 94b1ecef4af9ca443959fe6d8aa9525d
     m_Address: MapRegionView
     m_ReadOnly: 0

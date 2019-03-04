@@ -24,4 +24,10 @@ public class LobbyView : MonoBehaviour
     {
         _viewModel.LoadLocationScene();
     }
+
+    [Binding]
+    public void OnRegionBtn()
+    {
+        _viewModel.LoadRegionScene();
+    }
 }

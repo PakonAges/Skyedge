@@ -21,4 +21,9 @@
     {
         _coreSceneController.SwitchScene(CoreScene.Location);
     }
+
+    public void LoadRegionScene()
+    {
+        _coreSceneController.SwitchScene(CoreScene.Region);
+    }
 }
