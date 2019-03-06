@@ -7,12 +7,14 @@ public class GlobalMapInstaller : MonoInstaller
 {
     public Camera MainCamera;
     public CinemachineVirtualCamera VirtualCamera;
+    public GameObject HeroPrefab;
 
     public override void InstallBindings()
     {
         InstalControllers();
-        InstallInput();
-        InstallUI();
+        InstalLogic();
+        InstalInput();
+        InstalUI();
     }
 
     void InstalControllers()
@@ -20,14 +22,20 @@ public class GlobalMapInstaller : MonoInstaller
         Container.Bind<IGlobalMapController>().To<GlobalMapController>().AsSingle();
     }
 
-    void InstallInput()
+    void InstalLogic()
+    {
+        Container.BindFactory<IGlobalMapHero, GlobalMapHeroFactory>().FromComponentInNewPrefab(HeroPrefab);
+        Container.Bind<IGlobalMapHeroSpawner>().To<GlobalMapHeroSpawner>().AsSingle();
+    }
+
+    void InstalInput()
     {
         Container.Bind<Camera>().FromInstance(MainCamera);
         Container.Bind<CinemachineVirtualCamera>().FromInstance(VirtualCamera);
         Container.Bind<ITouchProcessor>().To<TouchInputProcessor>().AsSingle();
     }
 
-    void InstallUI()
+    void InstalUI()
     {
         Container.Bind<IGlobalMapUIController>().To<GlobalMapUIContoller>().AsSingle();
         Container.BindInterfacesAndSelfTo<MapRegionViewModel>().AsSingle();

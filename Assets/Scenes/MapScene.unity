@@ -141,7 +141,7 @@ Transform:
   m_Children:
   - {fileID: 1305390626}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &322673015
 GameObject:
@@ -2754,6 +2754,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 956586836}
   VirtualCamera: {fileID: 728560419}
+  HeroPrefab: {fileID: 2395481151638314544, guid: 385f0d2a8810b6b41b6f84def142430a,
+    type: 3}
 --- !u!114 &1340674314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2846,7 +2848,7 @@ PrefabInstance:
     - target: {fileID: 8647075926848389645, guid: 8b378d6f4f7dcc2448c583fb52b29dc1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8647075926848389645, guid: 8b378d6f4f7dcc2448c583fb52b29dc1,
         type: 3}
@@ -2920,7 +2922,7 @@ PrefabInstance:
     - target: {fileID: 8665126996030321311, guid: 3b8593cc1389ec641a8e58927c674be5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8665126996030321311, guid: 3b8593cc1389ec641a8e58927c674be5,
         type: 3}
@@ -24319,77 +24321,3 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1001 &2395481150332636063
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2395481151638314544, guid: 385f0d2a8810b6b41b6f84def142430a,
-        type: 3}
-      propertyPath: m_Name
-      value: MapHero
-      objectReference: {fileID: 0}
-    - target: {fileID: 2395481151638314543, guid: 385f0d2a8810b6b41b6f84def142430a,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.97
-      objectReference: {fileID: 0}
-    - target: {fileID: 2395481151638314543, guid: 385f0d2a8810b6b41b6f84def142430a,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -11.34
-      objectReference: {fileID: 0}
-    - target: {fileID: 2395481151638314543, guid: 385f0d2a8810b6b41b6f84def142430a,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2395481151638314543, guid: 385f0d2a8810b6b41b6f84def142430a,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2395481151638314543, guid: 385f0d2a8810b6b41b6f84def142430a,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2395481151638314543, guid: 385f0d2a8810b6b41b6f84def142430a,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2395481151638314543, guid: 385f0d2a8810b6b41b6f84def142430a,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2395481151638314543, guid: 385f0d2a8810b6b41b6f84def142430a,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2395481151638314543, guid: 385f0d2a8810b6b41b6f84def142430a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2395481151638314543, guid: 385f0d2a8810b6b41b6f84def142430a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2395481151638314543, guid: 385f0d2a8810b6b41b6f84def142430a,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2395481150471660892, guid: 385f0d2a8810b6b41b6f84def142430a,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 3
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 385f0d2a8810b6b41b6f84def142430a, type: 3}

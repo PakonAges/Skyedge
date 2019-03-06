@@ -3,15 +3,20 @@
     public class GlobalMapController : IGlobalMapController
     {
         readonly IGlobalMapUIController _uIController;
+        readonly IGlobalMapHeroSpawner _mapHeroSpawner;
 
-        public GlobalMapController(IGlobalMapUIController globalMapUIController)
+        public GlobalMapController( IGlobalMapUIController globalMapUIController,
+                                    IGlobalMapHeroSpawner mapHeroSpawner)
         {
             _uIController = globalMapUIController;
+            _mapHeroSpawner = mapHeroSpawner;
         }
 
         public void InitGlobalMap()
         {
             _uIController.ShowGlobalMapHUDAsync();
+            _mapHeroSpawner.SpawnHero();
+
             //Spawn Hero -> Position from save
             //In Region or Traveling
             //Calculate How far did he go, when I was online
