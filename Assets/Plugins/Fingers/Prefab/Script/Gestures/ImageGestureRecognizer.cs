@@ -296,7 +296,7 @@ namespace DigitalRubyShared
             {
                 b.AppendFormat(", 0x{0:X16}", Rows[i]);
             }
-            b.Append(" }, imageWidth)");
+            b.AppendFormat(" }}, imageWidth{0})", SimilarityPadding <= 0.0f ? string.Empty : ", " + SimilarityPadding.ToString("0.00") + "f");
             if (!string.IsNullOrEmpty(imageName))
             {
                 b.Append(", \"" + imageName + "\" }");

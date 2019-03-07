@@ -33,7 +33,7 @@ namespace DigitalRubyShared
         [Tooltip("The mode to execute in, can be require over game object or allow on any game object.")]
         public GestureRecognizerComponentScriptBase.GestureObjectMode Mode = GestureRecognizerComponentScriptBase.GestureObjectMode.RequireIntersectWithGameObject;
 
-        [Tooltip("The minimum and maximum scale. 0 for no limits.")]
+        [Tooltip("The minimum and maximum scale. 0 for no limits. 1 for no scaling.")]
         public Vector2 MinMaxScale;
 
         [Tooltip("Whether to add a double tap to reset the transform of the game object this script is on.")]
@@ -119,6 +119,11 @@ namespace DigitalRubyShared
 
         private static GameObject GestureIntersectsObject(DigitalRubyShared.GestureRecognizer r, Camera camera, GameObject obj, GestureRecognizerComponentScriptBase.GestureObjectMode mode)
         {
+            if (EventSystem.current == null)
+            {
+                return null;
+            }
+
             captureRaycastResults.Clear();
             PointerEventData p = new PointerEventData(EventSystem.current);
             p.Reset();
@@ -194,6 +199,11 @@ namespace DigitalRubyShared
 
         private void ScaleGestureUpdated(DigitalRubyShared.GestureRecognizer r)
         {
+            if (MinMaxScale.x == MinMaxScale.y && MinMaxScale.y == 1.0f)
+            {
+                return;
+            }
+
             GameObject obj = StartOrResetGesture(r, BringToFront, Camera, gameObject, spriteRenderer, Mode);
             if (r.State == GestureRecognizerState.Began)
             {

@@ -885,10 +885,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TreatMousePointerAsFinger: 1
   SimulateMouseWithTouches: 0
+  ProcessUnityTouches: 1
   RequireControlKeyForMouseZoom: 1
   MouseDistanceInUnitsForScaleAndRotate: 2
   MouseWheelDeltaMultiplier: 0.025
   PassThroughObjects: []
+  AutoAddRequiredComponents: 1
   ShowTouches: 0
   TouchCircles:
   - {fileID: 1000011844012702}

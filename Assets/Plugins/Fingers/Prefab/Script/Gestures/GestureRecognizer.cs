@@ -560,7 +560,7 @@ namespace DigitalRubyShared
 
 #endif
 
-        static void RunActionAfterDelayInternal(float seconds, Action action)
+        static void RunActionAfterDelayInternal(float seconds, System.Action action)
         {
             if (action == null)
             {
@@ -1226,7 +1226,7 @@ namespace DigitalRubyShared
         /// </summary>
         /// <param name="seconds">Delay in seconds</param>
         /// <param name="action">Action to run</param>
-        public static void RunActionAfterDelay(float seconds, Action action)
+        public static void RunActionAfterDelay(float seconds, System.Action action)
         {
             RunActionAfterDelayInternal(seconds, action);
         }
@@ -1358,6 +1358,13 @@ namespace DigitalRubyShared
         public float PlatformSpecificViewScale { get; set; }
 
         /// <summary>
+        /// Custom data for the gesture that you can attach, or just leave null if you don't need this
+        /// This is useful if you want to retrieve this in a callback function, but it is not require
+        /// for the gesture to work properly
+        /// </summary>
+        public object CustomData { get; set; }
+
+        /// <summary>
         /// Convenience method to add / remove one gesture to require failure on. Set to null to clear all require gestures to fail.
         /// </summary>
         public DigitalRubyShared.GestureRecognizer RequireGestureRecognizerToFail
@@ -1464,13 +1471,13 @@ namespace DigitalRubyShared
         public bool IsRestarting { get { return isRestarting; } }
 
         /// <summary>
-        /// Whether additional touches were added to the pan gesture since the last execute state.
+        /// Whether additional touches were added to the gesture since the last execute state.
         /// </summary>
         public bool ReceivedAdditionalTouches { get; set; }
 
 #if !PCL && !HAS_TASKS
 
-        public delegate void CallbackMainThreadDelegate(float delay, Action callback);
+        public delegate void CallbackMainThreadDelegate(float delay, System.Action callback);
 
         public static CallbackMainThreadDelegate MainThreadCallback;
 

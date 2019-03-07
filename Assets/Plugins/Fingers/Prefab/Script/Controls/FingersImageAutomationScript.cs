@@ -8,6 +8,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace DigitalRubyShared
@@ -19,6 +20,7 @@ namespace DigitalRubyShared
         public UnityEngine.UI.Text MatchLabel;
         public UnityEngine.UI.InputField ScriptText;
         public UnityEngine.UI.InputField ImageNameText;
+        public UnityEngine.UI.Button BulkImportButton;
 
         [Tooltip("Whether to auto-add non-matches to the list of possible images")]
         public bool AutoAddImages;
@@ -62,6 +64,33 @@ namespace DigitalRubyShared
             return texture;
         }
 
+        /// <summary>
+        /// Create an image gesture image from a texture
+        /// </summary>
+        /// <param name="texture">Texture</param>
+        /// <param name="scorePadding">Score padding</param>
+        /// <returns>ImageGestureImage or null if dimensions of texture do not match ImageGestureRecognizer.ImageColumns and ImageGestureRecognizer.ImageRows.</returns>
+        public static ImageGestureImage CreateImageGestureImageFromTexture(Texture2D texture, float scorePadding = 0.0f)
+        {
+            if (texture.width != ImageGestureRecognizer.ImageColumns || texture.height != ImageGestureRecognizer.ImageRows)
+            {
+                return null;
+            }
+
+            ulong[] rows = new ulong[ImageGestureRecognizer.ImageRows];
+            Color32[] pixels = texture.GetPixels32();
+            for (int row = 0; row < texture.height; row++)
+            {
+                for (int col = 0; col < texture.width; col++)
+                {
+                    Color32 pixel = pixels[(row * texture.width) + col];
+                    ulong hasValue = (pixel.a > 100 ? 1ul : 0ul);
+                    rows[row] |= (hasValue << col);
+                }
+            }
+            return new ImageGestureImage(rows, ImageGestureRecognizer.ImageColumns, scorePadding);
+        }
+
         public void DeleteLastScriptLine()
         {
             if (ScriptText != null)
@@ -77,6 +106,41 @@ namespace DigitalRubyShared
                     ImageGesture.GestureImages.RemoveAt(ImageGesture.GestureImages.Count - 1);
                 }
             }
+        }
+
+        public void BulkImport()
+        {
+
+#if UNITY_EDITOR
+
+            string path = UnityEditor.EditorUtility.OpenFolderPanel("Load png image textures", "", "");
+            StringBuilder scriptText = new StringBuilder();
+            foreach (string pngFile in System.IO.Directory.GetFiles(path, "*.png"))
+            {
+                string fileName = System.IO.Path.GetFileNameWithoutExtension(pngFile);
+                int pos = fileName.IndexOf('_');
+                if (pos >= 0)
+                {
+                    fileName = fileName.Substring(0, pos);
+                }
+                Texture2D tex = new Texture2D(1, 1, TextureFormat.ARGB32, false, false);
+                tex.LoadImage(System.IO.File.ReadAllBytes(pngFile));
+                Texture2D scaled = ScaleTexture(tex, ImageGestureRecognizer.ImageRows, ImageGestureRecognizer.ImageColumns);
+                ImageGestureImage image = CreateImageGestureImageFromTexture(scaled);
+                Destroy(tex);
+                Destroy(scaled);
+                scriptText.Append(image.GetCodeForRowsInitialize(fileName));
+                scriptText.AppendLine(",");
+                if (AutoAddImages)
+                {
+                    ImageGesture.GestureImages.Add(image);
+                    RecognizableImages[image] = fileName;
+                }
+            }
+            ScriptText.text = scriptText.ToString();
+
+#endif
+
         }
 
         protected virtual void OnEnable()
@@ -98,6 +162,13 @@ namespace DigitalRubyShared
             FingersScript.Instance.AddGesture(ImageGesture);
 
             // imageGesture.Simulate(752, 382, 760, 365, 768, 348, 780, 335, 789, 329, 802, 327, 814, 336, 828, 354, 837, 371, 841, 381, 841, 386);
+
+#if !UNITY_EDITOR
+
+            BulkImportButton.gameObject.SetActive(false);
+
+#endif
+
         }
 
         protected virtual void OnDisable()
@@ -111,9 +182,9 @@ namespace DigitalRubyShared
 
         protected virtual void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))
             {
-                if (Input.GetKeyDown(KeyCode.LeftShift))
+                if (UnityEngine.Input.GetKeyDown(KeyCode.LeftShift))
                 {
                     UnityEngine.SceneManagement.SceneManager.LoadScene(0);
                 }
@@ -122,7 +193,7 @@ namespace DigitalRubyShared
                     ResetLines();
                 }
             }
-            else if (Input.GetKey(KeyCode.Space))
+            else if (UnityEngine.Input.GetKey(KeyCode.Space))
             {
                 if (lineSet.Count != 0)
                 {
@@ -143,6 +214,24 @@ namespace DigitalRubyShared
                     ResetLines();
                 }
             }
+        }
+
+        public Texture2D ScaleTexture(Texture src, int width, int height)
+        {
+            RenderTexture rt = RenderTexture.GetTemporary(width, height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            Graphics.Blit(src, rt);
+
+            RenderTexture currentActiveRT = RenderTexture.active;
+            RenderTexture.active = rt;
+            Texture2D tex = new Texture2D(rt.width, rt.height, TextureFormat.ARGB32, false, false);
+
+            tex.ReadPixels(new Rect(0, 0, tex.width, tex.height), 0, 0);
+            tex.Apply();
+
+            RenderTexture.ReleaseTemporary(rt);
+            RenderTexture.active = currentActiveRT;
+
+            return tex;
         }
 
         private void UpdateImage()

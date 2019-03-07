@@ -1,5 +1,24 @@
 ﻿Changelog
 --------------------
+2.6.4	(2019-03-06)
+		- Add AR/VR pan object demo and component script. Use pan to move object left/right or forward/back. Great for placing plane or object in AR/VR.
+
+2.6.3	(2019-02-26)
+		- Fix joystick to accurately track with touch.
+		- Add second dpad to dpad demo scene.
+		- Add move and fire demo scene + script.
+		- Remove move to touch option for dpad, it was horribly broken anyway and doesn't make a lot of sense for dpad.
+
+2.6.2	(2019-02-21)
+		- Auto-add physics ray casters and event system if needed. This can be disabled via boolean property AutoAddRequiredComponents on fingers script.
+
+2.6.1	(2019-02-18)
+		- Add ability to turn off Unity touches and mouse. Great if you are implementing a virtual touch interface and don't want those interfering.
+
+2.6.0	(2019-02-05)
+		- Support bulk import of images for image automation. See tutorial in readme.txt file.
+		- Allow min and max scale of 1 to disable scaling in the pan/rotate/scale script.
+
 2.5.9	(2019-02-04)
 		- Drag drop script now supports 3D objects. Ensure physics raycaster is added to your camera.
 

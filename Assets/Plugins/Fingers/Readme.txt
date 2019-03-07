@@ -1,8 +1,8 @@
 Fingers, by Jeff Johnson
 Fingers (c) 2015 Digital Ruby, LLC
-http://www.digitalruby.com
+https://www.digitalruby.com
 
-Version 2.5.9
+Version 2.6.4
 
 See ChangeLog.txt for history.
 
@@ -16,11 +16,13 @@ Please note that the tutorials may reference the "Updated" property of the Digit
 
 Complete overview: https://youtu.be/97tJz0y52Fw
 Image recognition, OCR and shapes: https://youtu.be/ljQkuqo1dV0. Older videos: https://youtu.be/7dvP_zhlWvU and https://youtu.be/6JgPYK38G9o.
+Image recognition bulk import: https://youtu.be/ykBH84v22fc
 Scroll view: https://youtu.be/MEmpdz--S3g
 Joystick tutorial: https://youtu.be/_uGy6yAk83s
 DPad tutorial: https://youtu.be/kra9zFDhM-8
 First person controller tutorial: https://youtu.be/7T_IC3Cu1D8
 Third person controller tutorial: https://youtu.be/2QCFq1rAXxE
+Place object in AR/VR: https://youtu.be/pJ1Z1hdvne8
 
 Please be sure to check out each demo scene as well (Fingers/Demo/DemoScene*).
 

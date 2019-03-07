@@ -24,15 +24,15 @@ namespace DigitalRubyShared
         [Range(0.01f, 10.0f)]
         public float JoystickPower = 2.0f;
 
-        [Tooltip("The max exten the joystick can move as a percentage of Screen.width + Screen.height")]
-        [Range(0.001f, 0.2f)]
-        public float MaxExtentPercent = 0.02f;
-
         [Tooltip("In eight axis mode, the joystick can only move up, down, left, right or diagonally. No in between.")]
         public bool EightAxisMode;
 
         [Tooltip("Whether the x and y absolute values should add up to 1. If false, both can be 1 at a full diagonal.")]
         public bool AddUpToOne = true;
+
+        [Tooltip("Reduce the max range of the joystick based on radius of the joystick")]
+        [Range(0.5f, 1.0f)]
+        public float MaxRangeRadiusMultiplier = 0.975f;
 
         [Tooltip("Horizontal input axis name if cross platform input integration is desired.")]
         public string CrossPlatformInputHorizontalAxisName;
@@ -48,12 +48,14 @@ namespace DigitalRubyShared
         private bool crossPlatformInputNewlyRegistered;
 
         private Vector2 startCenter;
+        private RectTransform rectTransform;
 
         private void OnEnable()
         {
+            rectTransform = GetComponent<RectTransform>();
             PanGesture = new PanGestureRecognizer
             {
-                PlatformSpecificView = (MoveJoystickToGestureStartLocation ? null : JoystickImage.gameObject),
+                PlatformSpecificView = (MoveJoystickToGestureStartLocation ? null : GetComponent<Image>().gameObject),
                 ThresholdUnits = 0.0f
             };
             PanGesture.AllowSimultaneousExecutionWithAllGestures();
@@ -132,8 +134,16 @@ namespace DigitalRubyShared
             if (gesture.State == GestureRecognizerState.Executing)
             {
                 // clamp joystick movement to max values
-                float maxOffset = (Screen.width + Screen.height) * MaxExtentPercent;
-                Vector2 offset = new Vector2(gesture.FocusX - gesture.StartFocusX, gesture.FocusY - gesture.StartFocusY);
+                float diameter = (rectTransform.rect.width + rectTransform.rect.height) * 0.5f;
+                float radius = diameter * 0.5f;
+                float maxOffset = radius * MaxRangeRadiusMultiplier;
+                Vector2 gestureOffset = new Vector2(gesture.FocusX, gesture.FocusY);
+                Vector2 offset;
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, gestureOffset, null, out offset);
+                offset.x -= radius;
+                offset.y -= radius;
+
+                Debug.LogFormat("Gesture offset: {0}, transform offset: {1}, max: {2}", gestureOffset, offset, maxOffset);
 
                 // check distance from center, clamp to distance
                 offset = Vector2.ClampMagnitude(offset, maxOffset);

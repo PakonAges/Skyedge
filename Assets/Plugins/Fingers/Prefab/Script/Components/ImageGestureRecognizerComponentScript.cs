@@ -60,6 +60,14 @@ namespace DigitalRubyShared
             Gesture.MinimumDistanceBetweenPointsUnits = MinimumDistanceBetweenPointsUnits;
             Gesture.SimilarityMinimum = SimilarityMinimum;
             Gesture.MinimumPointsToRecognize = MinimumPointsToRecognize;
+            ReloadGestureImageEntries();
+        }
+
+        /// <summary>
+        /// Reload all gesture images from the GestureImages field
+        /// </summary>
+        public void ReloadGestureImageEntries()
+        {
             Gesture.GestureImages = new List<ImageGestureImage>();
             GestureImagesToKey = new Dictionary<ImageGestureImage, string>();
             foreach (ImageGestureRecognizerComponentScriptImageEntry img in GestureImages)
@@ -71,6 +79,8 @@ namespace DigitalRubyShared
                     try
                     {
                         // trim out scripting code
+                        Match nameMatch = Regex.Match(trimmed, "\"(?<name>.+?)\" ?},?$");
+                        string name = (nameMatch.Success ? nameMatch.Groups["name"].Value : img.Key).Replace("\\\\", "\\");
                         trimmed = Regex.Replace(trimmed, @" *?\{ new ImageGestureImage\(new ulong\[\] *?\{ *?", string.Empty);
                         trimmed = Regex.Replace(trimmed, @" *?\}.+$", string.Empty);
 
@@ -87,7 +97,7 @@ namespace DigitalRubyShared
                                 rows.Add(ulong.Parse(_rowString, System.Globalization.NumberStyles.HexNumber));
                             }
                             ImageGestureImage image = new ImageGestureImage(rows.ToArray(), ImageGestureRecognizer.ImageColumns, img.ScorePadding);
-                            image.Name = img.Key;
+                            image.Name = name;
                             Gesture.GestureImages.Add(image);
                             GestureImagesToKey[image] = img.Key;
                             rows.Clear();

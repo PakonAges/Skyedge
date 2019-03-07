@@ -153,20 +153,14 @@ namespace DigitalRubyShared
 
         public void GestureCallback(DigitalRubyShared.GestureRecognizer gesture)
         {
-            if (gesture.State == GestureRecognizerState.Began)
-            {
-            }
-            else if (gesture.State == GestureRecognizerState.Executing)
-            {
-            }
-            else if (gesture.State == GestureRecognizerState.Ended)
+            if (gesture.State == GestureRecognizerState.Ended)
             {
                 // save off the matched image, the gesture may reset if max path count has been reached
                 matchedImage = Gesture.MatchedGestureImage;
             }
-            else
+            else if (gesture.State != GestureRecognizerState.Began && gesture.State != GestureRecognizerState.Executing)
             {
-                // don't update lines
+                // don't update lines unless executing
                 return;
             }
             UpdateLines();

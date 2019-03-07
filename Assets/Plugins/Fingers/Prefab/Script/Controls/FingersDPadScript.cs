@@ -148,10 +148,12 @@ namespace DigitalRubyShared
         {
             if (gesture.State == GestureRecognizerState.Began || gesture.State == GestureRecognizerState.Executing)
             {
+                /*
                 if (gesture.State == GestureRecognizerState.Began && MoveDPadToGestureStartLocation)
                 {
                     transform.position = new Vector3(gesture.FocusX, gesture.FocusY, transform.position.z);
                 }
+                */
                 DisableButtons();
                 CheckForOverlap(new Vector2(gesture.FocusX, gesture.FocusY), PanGesture, DPadItemPanned);
             }
@@ -181,10 +183,9 @@ namespace DigitalRubyShared
 
             PanGesture = new PanGestureRecognizer
             {
-                PlatformSpecificView = (MoveDPadToGestureStartLocation ? null : DPadBackgroundImage.canvas.gameObject),
+                PlatformSpecificView = DPadBackgroundImage.gameObject,
                 ThresholdUnits = 0.0f
             };
-            PanGesture.AllowSimultaneousExecutionWithAllGestures();
             PanGesture.StateUpdated += PanGestureUpdated;
             FingersScript.Instance.AddGesture(PanGesture);
 
@@ -192,8 +193,8 @@ namespace DigitalRubyShared
             {
                 PlatformSpecificView = DPadBackgroundImage.gameObject
             };
-            TapGesture.AllowSimultaneousExecutionWithAllGestures();
             TapGesture.StateUpdated += TapGestureUpdated;
+            TapGesture.AllowSimultaneousExecution(PanGesture);
 
             if (!string.IsNullOrEmpty(CrossPlatformInputHorizontalAxisName) && !string.IsNullOrEmpty(CrossPlatformInputVerticalAxisName))
             {
@@ -223,9 +224,11 @@ namespace DigitalRubyShared
         public PanGestureRecognizer PanGesture { get; private set; }
         public TapGestureRecognizer TapGesture { get; private set; }
 
+        /*
         /// <summary>
         /// Whether to move the DPad when the pan gesture starts. Set this in Awake.
         /// </summary>
         public bool MoveDPadToGestureStartLocation { get; set; }
+        */
     }
 }
