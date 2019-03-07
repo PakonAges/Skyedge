@@ -2,7 +2,7 @@
     "name": "MatchScene.Visualization",
     "references": [
         "MatchScene.IVisualization",
-        "MatchScene.DataLayer",
+        "MyDataLayer",
         "MatchScene.ILogic",
         "Zenject",
         "MatchScene.Entities",

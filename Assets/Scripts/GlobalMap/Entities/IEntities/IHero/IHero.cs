@@ -2,13 +2,14 @@
 {
     using UnityEngine;
 
-    public interface IGlobalMapHero
+    public interface IHero
     {
         Vector2 HeroPosition { get; set; }
-        GlobalMapHeroState State { get; set; }
+        HeroState State { get; set; }
+        Transform GetTransform();
     }
 
-    public enum GlobalMapHeroState
+    public enum HeroState
     {
         Invalid,
         Moving,

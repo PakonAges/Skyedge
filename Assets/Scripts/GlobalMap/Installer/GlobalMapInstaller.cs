@@ -8,6 +8,7 @@ public class GlobalMapInstaller : MonoInstaller
     public Camera MainCamera;
     public CinemachineVirtualCamera VirtualCamera;
     public GameObject HeroPrefab;
+    public SOGlobalMapPersistantData PersistanceMock;
 
     public override void InstallBindings()
     {
@@ -24,8 +25,11 @@ public class GlobalMapInstaller : MonoInstaller
 
     void InstalLogic()
     {
-        Container.BindFactory<IGlobalMapHero, GlobalMapHeroFactory>().FromComponentInNewPrefab(HeroPrefab);
-        Container.Bind<IGlobalMapHeroSpawner>().To<GlobalMapHeroSpawner>().AsSingle();
+        Container.BindFactory<GlobalMap.IHero, HeroFactory>().FromComponentInNewPrefab(HeroPrefab);
+        Container.Bind<GlobalMap.IHeroSpawner>().To<GlobalMap.HeroSpawner>().AsSingle();
+        Container.Bind<IPersistentDataProvider>().To<PersistentDataProvider>().AsSingle();
+        Container.Bind<SOGlobalMapPersistantData>().FromInstance(PersistanceMock);
+        Container.Bind<ICameraController>().To<CameraController>().AsSingle();
     }
 
     void InstalInput()

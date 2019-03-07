@@ -1,7 +1,7 @@
 {
     "name": "MatchScene.IVisualization",
     "references": [
-        "MatchScene.DataLayer",
+        "MyDataLayer",
         "MatchScene.Entities"
     ],
     "optionalUnityReferences": [],

@@ -3,10 +3,10 @@
     public class GlobalMapController : IGlobalMapController
     {
         readonly IGlobalMapUIController _uIController;
-        readonly IGlobalMapHeroSpawner _mapHeroSpawner;
+        readonly IHeroSpawner _mapHeroSpawner;
 
         public GlobalMapController( IGlobalMapUIController globalMapUIController,
-                                    IGlobalMapHeroSpawner mapHeroSpawner)
+                                    IHeroSpawner mapHeroSpawner)
         {
             _uIController = globalMapUIController;
             _mapHeroSpawner = mapHeroSpawner;

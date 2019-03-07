@@ -2,7 +2,7 @@
     "name": "MatchScene.GenerationRules",
     "references": [
         "MatchScene.IGenerationRules",
-        "MatchScene.DataLayer"
+        "MyDataLayer"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

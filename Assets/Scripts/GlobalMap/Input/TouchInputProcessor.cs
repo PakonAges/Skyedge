@@ -19,6 +19,7 @@ namespace GlobalMap
 
         public void Drag(float deltaX, float deltaY)
         {
+            _virtualCamera.Follow = null;
             _newCameraPosition.x = -deltaX;
             _newCameraPosition.y = -deltaY;
             _virtualCamera.transform.Translate(_newCameraPosition.normalized * 0.5f, Space.World);

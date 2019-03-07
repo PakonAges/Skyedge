@@ -1,7 +1,7 @@
 {
     "name": "MatchScene.Controllers",
     "references": [
-        "MatchScene.DataLayer",
+        "MyDataLayer",
         "MatchScene.IControllers",
         "MatchScene.IVisualization",
         "MatchScene.IGenerationRules",

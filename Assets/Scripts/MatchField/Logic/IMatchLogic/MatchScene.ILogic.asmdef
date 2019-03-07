@@ -1,7 +1,7 @@
 {
     "name": "MatchScene.ILogic",
     "references": [
-        "MatchScene.DataLayer",
+        "MyDataLayer",
         "MatchScene.Entities"
     ],
     "optionalUnityReferences": [],

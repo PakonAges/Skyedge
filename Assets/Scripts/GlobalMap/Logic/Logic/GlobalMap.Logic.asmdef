@@ -4,7 +4,9 @@
         "GlobalMap.UI",
         "GlobalMap.IEntities",
         "Zenject",
-        "GlobalMap.ILogic"
+        "GlobalMap.ILogic",
+        "MyDataLayer",
+        "Cinemachine"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

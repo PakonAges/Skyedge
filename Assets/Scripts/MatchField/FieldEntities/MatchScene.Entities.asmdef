@@ -1,7 +1,7 @@
 {
     "name": "MatchScene.Entities",
     "references": [
-        "MatchScene.DataLayer",
+        "MyDataLayer",
         "Zenject"
     ],
     "optionalUnityReferences": [],
