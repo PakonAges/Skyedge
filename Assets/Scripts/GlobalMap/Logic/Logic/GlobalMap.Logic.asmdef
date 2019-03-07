@@ -2,8 +2,9 @@
     "name": "GlobalMap.Logic",
     "references": [
         "GlobalMap.UI",
-        "GlobalMap.Entities",
-        "Zenject"
+        "GlobalMap.IEntities",
+        "Zenject",
+        "GlobalMap.ILogic"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

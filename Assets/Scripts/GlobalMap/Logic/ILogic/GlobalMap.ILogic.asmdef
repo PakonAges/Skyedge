@@ -1,7 +1,7 @@
 {
-    "name": "GlobalMap.Entities",
+    "name": "GlobalMap.ILogic",
     "references": [
-        "Zenject"
+        "GlobalMap.IEntities"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
