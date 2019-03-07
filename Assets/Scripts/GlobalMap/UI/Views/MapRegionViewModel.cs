@@ -16,4 +16,9 @@ public class MapRegionViewModel : MyUIViewModel<MapRegionViewModel>
     {
         View.RegionName = "Region Name";
     }
+
+    public void MoveHere()
+    {
+        //Command Hero to Move here
+    }
 }

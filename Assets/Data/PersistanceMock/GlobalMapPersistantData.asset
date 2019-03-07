@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c57b240e81792644b723f743c6b0162, type: 3}
   m_Name: GlobalMapPersistantData
   m_EditorClassIdentifier: 
-  GlobalMapHeroPosition: {x: -10, y: -5}
+  GlobalMapHeroPosition: {x: -0.1, y: -11}

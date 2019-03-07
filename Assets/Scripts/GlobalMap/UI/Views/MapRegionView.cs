@@ -30,4 +30,10 @@ public class MapRegionView : MyUIView<MapRegionView>
     {
         ViewModel.RegionEnter();
     }
+
+    [Binding]
+    public void OnMoveHere()
+    {
+        ViewModel.MoveHere();
+    }
 }
