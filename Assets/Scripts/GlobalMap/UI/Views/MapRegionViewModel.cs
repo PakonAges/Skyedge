@@ -4,7 +4,7 @@ using Zenject;
 
 public class MapRegionViewModel : MyUIViewModel<MapRegionViewModel>
 {
-    public MapRegionView View { get { return IView as MapRegionView; } }
+    public MapRegionView View { get { return MyView as MapRegionView; } }
     public MapRegionViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack) : base(prefabProvider, uIViewModelsStack) { }
 
     internal void RegionEnter()

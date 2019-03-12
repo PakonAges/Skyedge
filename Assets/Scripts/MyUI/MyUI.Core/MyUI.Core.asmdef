@@ -1,8 +1,12 @@
 {
-    "name": "GlobalMap.UI",
+    "name": "MyUICore",
     "references": [
+        "Zenject",
+        "Unity.Addressables",
+        "AsyncAwaitUtil",
+        "MatchScene.Signals",
         "ICoreSceneController",
-        "MyUICore",
+        "MatchScene.IControllers",
         "MyUI.ICore"
     ],
     "optionalUnityReferences": [],

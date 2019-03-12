@@ -1,5 +1,4 @@
-﻿using myUI;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Zenject;
 
@@ -14,7 +13,6 @@ public class MatchController : IMatchController, IInitializable, IDisposable
     readonly ICoreSceneController _coreSceneController;
     readonly IFieldVisualController _fieldVisual;
     readonly IFieldGenerator _fieldGenerator;
-    readonly IMatchUIController _UIController;
     readonly IHeroSpawner _heroSpawner;
     readonly ILevelGenerator _levelGenerator;
 
@@ -28,8 +26,7 @@ public class MatchController : IMatchController, IInitializable, IDisposable
                             IFieldGenerationRulesProvider fieldDataProvider,
                             IHeroSpawner heroSpawner,
                             ILevelGenerator levelGenerator,
-                            ILevelController levelController,
-                            IMatchUIController myUIController)
+                            ILevelController levelController)
     {
         _signalBus = signalBus;
         _coreSceneController = coreSceneController;
@@ -39,7 +36,6 @@ public class MatchController : IMatchController, IInitializable, IDisposable
         _levelGenerator = levelGenerator;
         _fieldGenerationRules = fieldDataProvider.GetGenerationRules();
         _levelController = levelController;
-        _UIController = myUIController;
     }
 
     public void Initialize()
@@ -59,7 +55,6 @@ public class MatchController : IMatchController, IInitializable, IDisposable
         _fieldVisual.ShowBackGround();
         await GenerateAndShowFieldAsync();
         _levelGenerator.GenerateLevel(_fieldGenerationRules);
-        await _UIController.ShowHUD();
         _levelController.StartMatch();
     }
 
@@ -72,7 +67,6 @@ public class MatchController : IMatchController, IInitializable, IDisposable
 
     public void EndMatch()
     {
-        _UIController.ClearUIStack();
         _coreSceneController.SwitchScene(CoreScene.Map);
     }
 

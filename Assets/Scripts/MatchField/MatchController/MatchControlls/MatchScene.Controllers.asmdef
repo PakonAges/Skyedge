@@ -8,7 +8,6 @@
         "MatchScene.ILogic",
         "MatchScene.Entities",
         "MatchScene.Signals",
-        "MyUI",
         "Zenject",
         "ICoreSceneController"
     ],

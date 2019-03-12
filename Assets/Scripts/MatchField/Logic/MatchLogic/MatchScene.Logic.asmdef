@@ -7,9 +7,10 @@
         "Zenject",
         "MatchScene.Entities",
         "AsyncAwaitUtil",
-        "MyUI",
         "MatchScene.Signals",
-        "MyUICore"
+        "MyUICore",
+        "MyUI.MatchField",
+        "MyUI.ICore"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

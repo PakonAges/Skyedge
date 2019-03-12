@@ -1,9 +1,10 @@
 {
-    "name": "GlobalMap.UI",
+    "name": "MyUI.MatchField",
     "references": [
-        "ICoreSceneController",
+        "MyUI.ICore",
         "MyUICore",
-        "MyUI.ICore"
+        "Zenject",
+        "MatchScene.Signals"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

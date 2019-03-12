@@ -2,19 +2,15 @@
 {
     public class GlobalMapController : IGlobalMapController
     {
-        readonly IGlobalMapUIController _uIController;
         readonly IHeroSpawner _mapHeroSpawner;
 
-        public GlobalMapController( IGlobalMapUIController globalMapUIController,
-                                    IHeroSpawner mapHeroSpawner)
+        public GlobalMapController( IHeroSpawner mapHeroSpawner)
         {
-            _uIController = globalMapUIController;
             _mapHeroSpawner = mapHeroSpawner;
         }
 
         public void InitGlobalMap()
         {
-            _uIController.ShowGlobalMapHUDAsync();
             _mapHeroSpawner.SpawnHero();
 
             //Spawn Hero -> Position from save
