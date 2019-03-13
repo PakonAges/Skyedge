@@ -12,7 +12,7 @@ public class MatchHUDViewModel : MyUIViewModel<MatchHUDViewModel>
     [Inject] readonly ConfirmExitGameViewModel _exitConfirmWindow = null;
 
 
-    public async override void ShowConfirmToClose()
+    public async void ShowConfirmToClose()
     {
         try
         {

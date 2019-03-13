@@ -1,10 +1,11 @@
 ﻿using UnityWeld.Binding;
 using myUI;
+using Zenject;
 
 [Binding]
 public class MatchHUDView : MyUIView<MatchHUDView>
 {
-    public MatchHUDViewModel ViewModel { get { return IViewModel as MatchHUDViewModel; } }
+    [Inject] MatchHUDViewModel ViewModel = null;
 
     string _turnsCounter;
     [Binding]  public string TurnsCounter

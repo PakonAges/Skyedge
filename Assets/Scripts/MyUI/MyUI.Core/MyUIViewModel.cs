@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using UnityEngine;
-using Zenject;
 
 namespace myUI
 {
@@ -57,17 +56,17 @@ namespace myUI
                 return;
             }
 
-            if (MyView.HideOnClose)
-            {
-                MyView.MyCanvas.enabled = false;
-            }
-            else
-            {
+            //if (MyView.HideOnClose)
+            //{
+            //    MyView.MyCanvas.enabled = false;
+            //}
+            //else
+            //{
                 if (MyView.MyCanvas)
                 {
                     GameObject.Destroy(MyView.MyCanvas.gameObject);
                 }
-            }
+            //}
         }
 
         public override void CloseCommand()
@@ -81,33 +80,27 @@ namespace myUI
         }
     }
 
-    public abstract class MyUIViewModel : IMyUIViewModel, IInitializable, IDisposable
+    public abstract class MyUIViewModel : IMyUIViewModel, IDisposable
     {
         public IMyUIPrefabProvider _prefabProvider;
         public IMyUIViewModelsStack _stack;
         public IMyUIView MyView { get; set; }
 
-        public virtual void Initialize() { }
-        public virtual void Dispose() { }
+        public abstract void Dispose();
 
         /// <summary>
         /// Open call from UI and Input. Check if there is cached View is awailable before creating new
         /// </summary>
-        public virtual Task Open() { return null; }
+        public abstract Task Open();
 
         /// <summary>
         /// Call from UI and Input
         /// </summary>
-        public virtual void Close() { }
+        public abstract void Close();
 
         /// <summary>
-        /// Call from UI Stack
+        /// Call from Stack
         /// </summary>
-        public virtual void CloseCommand() { }
-
-        /// <summary>
-        /// ON close -> Show confirm Pop Up without closing View
-        /// </summary>
-        public virtual void ShowConfirmToClose() { }
+        public abstract void CloseCommand();
     }
 }

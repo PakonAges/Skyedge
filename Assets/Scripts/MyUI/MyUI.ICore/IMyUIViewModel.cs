@@ -4,7 +4,7 @@ namespace myUI
 {
     public interface IMyUIViewModel
     {
-        IMyUIView MyView { get; set; }
+        IMyUIView MyView { get; }
         Task Open();
         void CloseCommand();
         void Close();
