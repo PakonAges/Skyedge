@@ -6,6 +6,7 @@ namespace myUI
     {
         IMyUIView MyView { get; }
         Task Open();
+        Task Open(IMyUIViewData data);
         void CloseCommand();
         void Close();
     }

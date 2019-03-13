@@ -5,7 +5,7 @@ using Zenject;
 [Binding]
 public class GlobalMapHUDView : MyUIView<GlobalMapHUDView>
 {
-    public GlobalMapHUDViewModel ViewModel { get { return IViewModel as GlobalMapHUDViewModel; } }
+    [Inject] GlobalMapHUDViewModel ViewModel = null;
    
     [Binding]
     public void OnMatchBtn()

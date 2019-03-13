@@ -2,7 +2,8 @@
 using Zenject;
 using myUI;
 
-public class HotKeyInput : MonoBehaviour, IKeyboardInput {
+public class HotKeyInput : MonoBehaviour
+{
 
     public KeyCode GenerateField = KeyCode.G;
     public KeyCode FindCombos = KeyCode.F;

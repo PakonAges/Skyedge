@@ -33,6 +33,27 @@ namespace myUI
             }
         }
 
+        // TODO : how to fetch Data, like Region Data?
+        public async override Task Open(IMyUIViewData data)
+        {
+            //Already been created
+            if (MyView != null && MyView.HideOnClose)
+            {
+                if (!MyView.MyCanvas)
+                {
+                    Debug.LogErrorFormat("Trying to enable Canvas on Cached View ({0}), but there is no canvas", this);
+                    return;
+                }
+
+                MyView.MyCanvas.enabled = true;
+                _stack.AddViewModel(this);
+            }
+            else
+            {
+                await ShowViewAsync();
+            }
+        }
+
         public virtual async Task ShowViewAsync()
         {
             try
@@ -94,6 +115,13 @@ namespace myUI
         public abstract Task Open();
 
         /// <summary>
+        /// Open Window With some Parameters/Data
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public abstract Task Open(IMyUIViewData data);
+        
+        /// <summary>
         /// Call from UI and Input
         /// </summary>
         public abstract void Close();
@@ -102,5 +130,6 @@ namespace myUI
         /// Call from Stack
         /// </summary>
         public abstract void CloseCommand();
+
     }
 }
