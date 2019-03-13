@@ -2,7 +2,7 @@ Fingers, by Jeff Johnson
 Fingers (c) 2015 Digital Ruby, LLC
 https://www.digitalruby.com
 
-Version 2.6.4
+Version 2.6.5
 
 See ChangeLog.txt for history.
 
@@ -106,7 +106,7 @@ Scaling and Rotation one finger gestures are available. Please see DemoSceneOneF
 
 Joystick:
 --------------------
-FingersJoystickScript is a great way to create a joystick. Please see DemoSceneJoystick and DemoScriptJoystick for examples. The joystick features distance limiting and power (moves further as joystick moves away from center).
+FingersJoystickScript is a great way to create a joystick. Please see DemoSceneJoystick and DemoScriptJoystick for examples. The joystick features distance limiting and power (moves further as joystick moves away from center), along with a follow speed to have the joystick follow the touch if it moves beyond the joystick bounds.
 
 The joystick now has a prefab! It must be placed under a Canvas.
 

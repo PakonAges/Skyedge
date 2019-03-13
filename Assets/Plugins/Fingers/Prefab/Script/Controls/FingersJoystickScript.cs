@@ -19,6 +19,9 @@ namespace DigitalRubyShared
         [Tooltip("The image to move around like a joystick")]
         public Image JoystickImage;
 
+        [Tooltip("The background image of the joystick")]
+        public Image JoystickBackground;
+
         [Tooltip("Reduces the amount the joystick moves the closer it is to the center. As the joystick moves to it's max extents, the movement amount approaches 1. " +
             "For example, a power of 1 would be a linear equation, 2 would be squared, 3 cubed, etc.")]
         [Range(0.01f, 10.0f)]
@@ -34,6 +37,16 @@ namespace DigitalRubyShared
         [Range(0.5f, 1.0f)]
         public float MaxRangeRadiusMultiplier = 0.975f;
 
+        [Tooltip("The speed at which the joystick moves with the finger if it is dragged beyond the edge. 0 for no follow.")]
+        [Range(0.0f, 100.0f)]
+        public float FollowSpeed = 0.0f;
+
+        private bool lastMoveJoystickToGestureStartLocation;
+
+        [Tooltip("Whether to move the joystick when the pan gesture starts.")]
+        public bool MoveJoystickToGestureStartLocation;
+
+        [Header("Cross Platform Input")]
         [Tooltip("Horizontal input axis name if cross platform input integration is desired.")]
         public string CrossPlatformInputHorizontalAxisName;
 
@@ -55,7 +68,7 @@ namespace DigitalRubyShared
             rectTransform = GetComponent<RectTransform>();
             PanGesture = new PanGestureRecognizer
             {
-                PlatformSpecificView = (MoveJoystickToGestureStartLocation ? null : GetComponent<Image>().gameObject),
+                PlatformSpecificView = JoystickBackground.gameObject,
                 ThresholdUnits = 0.0f
             };
             PanGesture.AllowSimultaneousExecutionWithAllGestures();
@@ -143,7 +156,9 @@ namespace DigitalRubyShared
                 offset.x -= radius;
                 offset.y -= radius;
 
-                Debug.LogFormat("Gesture offset: {0}, transform offset: {1}, max: {2}", gestureOffset, offset, maxOffset);
+                float distanceFromCenter = offset.magnitude;
+                float overshoot = Mathf.Max(0.0f, distanceFromCenter - radius);
+                Vector2 followVelocity = (offset.normalized * overshoot * FollowSpeed * Time.deltaTime);
 
                 // check distance from center, clamp to distance
                 offset = Vector2.ClampMagnitude(offset, maxOffset);
@@ -195,12 +210,22 @@ namespace DigitalRubyShared
                 {
                     FingersCrossPlatformInputReflectionScript.UpdateVirtualAxis(crossPlatformInputVerticalAxisObject, offset.y);
                 }
+
+                transform.Translate(followVelocity);
             }
             else if (gesture.State == GestureRecognizerState.Began)
             {
                 if (MoveJoystickToGestureStartLocation)
                 {
-                    JoystickImage.transform.parent.position = new Vector3(gesture.FocusX, gesture.FocusY, JoystickImage.transform.parent.position.z);
+                    Vector2 localPoint;
+                    RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, new Vector2(gesture.FocusX, gesture.FocusY), null, out localPoint);
+                    float diameter = (rectTransform.rect.width + rectTransform.rect.height) * 0.5f;
+                    float radius = diameter * 0.5f;
+                    localPoint.x -= radius;
+                    localPoint.y -= radius;
+                    localPoint.x *= rectTransform.lossyScale.x;
+                    localPoint.y *= rectTransform.lossyScale.y;
+                    rectTransform.Translate(localPoint, Space.Self);
                 }
                 startCenter = JoystickImage.rectTransform.anchoredPosition;
             }
@@ -216,7 +241,11 @@ namespace DigitalRubyShared
 
         private void Update()
         {
-
+            if (lastMoveJoystickToGestureStartLocation != MoveJoystickToGestureStartLocation)
+            {
+                lastMoveJoystickToGestureStartLocation = MoveJoystickToGestureStartLocation;
+                PanGesture.PlatformSpecificView = (MoveJoystickToGestureStartLocation ? null : JoystickBackground.gameObject);
+            }
         }
 
         private void OnDestroy()
@@ -230,10 +259,5 @@ namespace DigitalRubyShared
 
         public PanGestureRecognizer PanGesture { get; private set; }
         public System.Action<FingersJoystickScript, Vector2> JoystickExecuted;
-
-        /// <summary>
-        /// Whether to move the joystick when the pan gesture starts. Set this in Awake.
-        /// </summary>
-        public bool MoveJoystickToGestureStartLocation { get; set; }
     }
 }

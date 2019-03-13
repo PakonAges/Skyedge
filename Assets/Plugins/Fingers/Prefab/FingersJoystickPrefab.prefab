@@ -10,9 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224311580566312476}
   - component: {fileID: 114317734903710598}
-  - component: {fileID: 58480818516335750}
   - component: {fileID: 222594913964042036}
-  - component: {fileID: 114780320824607600}
   m_Layer: 5
   m_Name: FingersJoystickPrefab
   m_TagString: Untagged
@@ -54,10 +52,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JoystickImage: {fileID: 114643641623415974}
+  JoystickBackground: {fileID: 114431922033988820}
   JoystickPower: 2
   EightAxisMode: 0
   AddUpToOne: 1
   MaxRangeRadiusMultiplier: 0.975
+  FollowSpeed: 0
+  MoveJoystickToGestureStartLocation: 0
   CrossPlatformInputHorizontalAxisName: Horizontal
   CrossPlatformInputVerticalAxisName: Vertical
   JoystickCallback:
@@ -65,22 +66,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: DigitalRubyShared.GestureRecognizerComponentEventVector2, Fingers,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!58 &58480818516335750
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1128901917730896}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 45
 --- !u!222 &222594913964042036
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -89,35 +74,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1128901917730896}
   m_CullTransparentMesh: 0
---- !u!114 &114780320824607600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1128901917730896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
 --- !u!1 &1571710926549446
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,14 +132,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.3137255}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 1148ca88c9402504ea0921307f9dea79, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -203,6 +159,7 @@ GameObject:
   - component: {fileID: 224358366909954314}
   - component: {fileID: 222604134852637946}
   - component: {fileID: 114431922033988820}
+  - component: {fileID: 58714598149532592}
   m_Layer: 5
   m_Name: JoystickBackground
   m_TagString: Untagged
@@ -250,14 +207,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.42068958, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 1148ca88c9402504ea0921307f9dea79, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -266,3 +223,19 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!58 &58714598149532592
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756073912480630}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 50
