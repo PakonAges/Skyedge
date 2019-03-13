@@ -125,7 +125,6 @@ public class MatchFieldInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<MatchHUDViewModel>().AsSingle();
         Container.BindInterfacesAndSelfTo<MatchPauseViewModel>().AsSingle();
         Container.BindInterfacesAndSelfTo<MatchEndViewModel>().AsSingle();
-        Container.BindInterfacesAndSelfTo<ConfirmExitGameViewModel>().AsSingle();
     }
 
     //void InstallNullObjects()

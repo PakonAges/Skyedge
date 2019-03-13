@@ -10,20 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: GlobalMapUI
+  m_Name: UI.Global
   m_EditorClassIdentifier: 
-  m_GroupName: GlobalMapUI
+  m_GroupName: UI.Global
   m_Data:
     m_SerializedData: []
-  m_GUID: dbebe5e5f4dfe984b91e154e03b45791
+  m_GUID: b17c55ba3132d6f4a929cf912f885331
   m_SerializeEntries:
-  - m_GUID: 2ab3a4df45627794091400ca61fc74ac
-    m_Address: GlobalMapHUDView
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UiWindow
-  - m_GUID: 94b1ecef4af9ca443959fe6d8aa9525d
-    m_Address: MapRegionView
+  - m_GUID: 998e2bb7682d04d4ebe40c9c4a65606c
+    m_Address: ConfirmExitGameView
     m_ReadOnly: 0
     m_SerializedLabels:
     - UiWindow
@@ -31,5 +26,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 949de0eccec8e124e882b1796de112e9, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: d68242db1011bb7478f9aaa0cc6dbb5a, type: 2}
-    - {fileID: 11400000, guid: d1123c8531efc9a4e99e9e94a722ae9e, type: 2}
+    - {fileID: 11400000, guid: ce80e4d2d333123438f15067412d59da, type: 2}
+    - {fileID: 11400000, guid: ba910d4a598022043a9fd05aee17a4cb, type: 2}
