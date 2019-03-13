@@ -1,7 +1,8 @@
 {
     "name": "CoreSceneController",
     "references": [
-        "ICoreSceneController"
+        "ICoreSceneController",
+        "MyUI.ICore"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

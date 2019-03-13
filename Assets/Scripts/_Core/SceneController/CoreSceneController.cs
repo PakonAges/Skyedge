@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
+using myUI;
 
 //Manages High Level application
 //Scene Loading State Machine
@@ -27,8 +28,9 @@ public class CoreSceneController : ICoreSceneController, IDisposable, ITickable
     private SceneState _sceneState;
     private delegate void UpdateDelegate();
     private UpdateDelegate[] _updateDelegates;
+    readonly IMyUIViewModelsStack _uiStack;
 
-    public CoreSceneController(CoreScene sceneToLoad)
+    public CoreSceneController(CoreScene sceneToLoad, IMyUIViewModelsStack myUIViewStack)
     {
         _updateDelegates = new UpdateDelegate[(int)SceneState.Count];
         _updateDelegates[(int)SceneState.Reset] = UpdateSceneReset;
@@ -42,6 +44,7 @@ public class CoreSceneController : ICoreSceneController, IDisposable, ITickable
         _currentCoreScene = CoreScene.Loader;
         _nextCoreScene = sceneToLoad;
         _sceneState = SceneState.Reset;
+        _uiStack = myUIViewStack;
     }
 
     public void Dispose()
@@ -66,6 +69,7 @@ public class CoreSceneController : ICoreSceneController, IDisposable, ITickable
     {
         if (_currentCoreScene != NextSceneType)
         {
+            _uiStack.ClearStack();
             _nextCoreScene = NextSceneType;
         }
     }
