@@ -12,6 +12,7 @@ public class CoreInstaller : MonoInstaller
 
         //Global UI Setup
         Container.Bind<IMyUIViewModelsStack>().To<MyUIViewModelsStack>().AsSingle();
+        Container.Bind<IMyUICoreController>().To<MyUICoreController>().AsSingle();
         Container.BindInterfacesAndSelfTo<MyUIAdressablePrefabProvider>().AsSingle();
     }
 }

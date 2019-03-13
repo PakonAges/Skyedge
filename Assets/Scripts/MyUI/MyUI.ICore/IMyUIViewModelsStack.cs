@@ -4,7 +4,7 @@ namespace myUI
 {
     public interface IMyUIViewModelsStack
     {
-        Stack<IMyUIViewModel> Stack { get; set; }
+        Stack<IMyUIViewModel> Stack { get; }
         void AddViewModel(IMyUIViewModel ViewModel);
         void CloseTopView();
         void Close(IMyUIViewModel ViewModel);
