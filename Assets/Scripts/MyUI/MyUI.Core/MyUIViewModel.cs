@@ -26,10 +26,7 @@ namespace myUI
             _stack.AddViewModel(this);
         }
 
-        private void FetchData(IMyUIViewData data)
-        {
-            //Fetch Data here!
-        }
+        protected virtual void FetchData(IMyUIViewData data) { }
 
         async Task ShowViewAsync()
         {
@@ -79,11 +76,6 @@ namespace myUI
             //}
         }
 
-        public override void CloseCommand()
-        {
-            Dispose();
-        }
-
         public override void Close()
         {
             _stack.Close(this);
@@ -114,11 +106,5 @@ namespace myUI
         /// Call from UI and Input
         /// </summary>
         public abstract void Close();
-
-        /// <summary>
-        /// Call from Stack
-        /// </summary>
-        public abstract void CloseCommand();
-
     }
 }

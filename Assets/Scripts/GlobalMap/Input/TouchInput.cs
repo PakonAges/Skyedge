@@ -69,6 +69,7 @@ namespace GlobalMap
             _tapGesture = new TapGestureRecognizer();
             _tapGesture.StateUpdated += TapGestureCallback;
             FingersScript.Instance.AddGesture(_tapGesture);
+            FingersScript.Instance.CaptureGestureHandler = CaptureGestureHandler;
         }
 
         void InitPanGesture()
@@ -77,6 +78,20 @@ namespace GlobalMap
             _panGesture.StateUpdated += PanGestureCallback;
             _panGesture.MaximumNumberOfTouchesToTrack = 1;
             FingersScript.Instance.AddGesture(_panGesture);
+        }
+
+        private static bool? CaptureGestureHandler(GameObject obj)
+        {
+            if (obj.layer == 5)
+            {
+                return true;
+            }
+            //else if (obj.layer != 5)
+            //{
+            //    return false;
+            //}
+            // fall-back to default behavior for anything else
+            return null;
         }
     }
 }

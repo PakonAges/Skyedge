@@ -46,7 +46,7 @@ namespace myUI
                 }
             }
 
-            TopView.CloseCommand();
+            TopView.Dispose();
             Stack.Pop();
         }
 
