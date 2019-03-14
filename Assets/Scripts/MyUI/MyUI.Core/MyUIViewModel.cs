@@ -15,28 +15,24 @@ namespace myUI
 
         public async override Task Open()
         {
-            //Already been created
-            if (MyView != null && MyView.HideOnClose)
-            {
-                if (!MyView.MyCanvas)
-                {
-                    Debug.LogErrorFormat("Trying to enable Canvas on Cached View ({0}), but there is no canvas", this);
-                    return;
-                }
-
-                MyView.MyCanvas.enabled = true;
-                _stack.AddViewModel(this);
-            }
-            else
-            {
-                await ShowViewAsync();
-            }
+            await ShowViewAsync();
+            _stack.AddViewModel(this);
         }
 
-        // TODO : how to fetch Data, like Region Data?
         public async override Task Open(IMyUIViewData data)
         {
-            //Already been created
+            await ShowViewAsync();
+            FetchData(data);
+            _stack.AddViewModel(this);
+        }
+
+        private void FetchData(IMyUIViewData data)
+        {
+            //Fetch Data here!
+        }
+
+        async Task ShowViewAsync()
+        {
             if (MyView != null && MyView.HideOnClose)
             {
                 if (!MyView.MyCanvas)
@@ -46,27 +42,20 @@ namespace myUI
                 }
 
                 MyView.MyCanvas.enabled = true;
-                _stack.AddViewModel(this);
             }
             else
             {
-                await ShowViewAsync();
-            }
-        }
-
-        public virtual async Task ShowViewAsync()
-        {
-            try
-            {
-                var Prefab = await _prefabProvider.GetWindowPrefab<T>();
-                var ViewGo = GameObject.Instantiate(Prefab);
-                MyView = ViewGo.GetComponent<IMyUIView>();
-                MyView.SetViewModel(this);
-                _stack.AddViewModel(this);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e.Message);
+                try
+                {
+                    var Prefab = await _prefabProvider.GetWindowPrefab<T>();
+                    var ViewGo = GameObject.Instantiate(Prefab);
+                    MyView = ViewGo.GetComponent<IMyUIView>();
+                    MyView.SetViewModel(this);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e.Message);
+                }
             }
         }
 

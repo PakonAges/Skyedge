@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: -1360956885, guid: 37f8d8a5bbb63f0408b99d56763ce79e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewModelMethodName: GlobalMapHUDView.OnMatchBtn
+  viewModelMethodName: GlobalMapHUDView.OnLocationBtn
   viewEventName: UnityEngine.UI.Button.onClick
 --- !u!1 &6366406349511452434
 GameObject:
@@ -587,7 +587,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CacheOnClosed: 0
   HideSubordinates: 0
-  NeedConfirmBeforeClosing: 0
 --- !u!1 &6366406350920430346
 GameObject:
   m_ObjectHideFlags: 0
