@@ -92,9 +92,9 @@ namespace myUI
         }
     }
 
-    public abstract class MyUIViewModel<TViewModel, TOptions> : MyUIViewModel<TViewModel> where TViewModel : class, IMyUIViewModel where TOptions : class, IMyUIViewData
+    public abstract class MyUIViewModel<TViewModel, TData> : MyUIViewModel<TViewModel> where TViewModel : class, IMyUIViewModel where TData : class, IMyUIViewData
     {
-        protected abstract TOptions DefaultOptions { get; }
+        protected abstract TData DefaultData { get; set; }
 
         public MyUIViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack) : base(prefabProvider, uIViewModelsStack)
         {
@@ -107,7 +107,7 @@ namespace myUI
             _stack.AddViewModel(this);
         }
 
-        void FetchData(IMyUIViewData data) { }
+        public abstract void FetchData(IMyUIViewData data);
     }
 
 }

@@ -1,12 +1,12 @@
 ﻿using System;
+using GlobalMap;
 using myUI;
-using Zenject;
 
-public class MapRegionViewModel : MyUIViewModel<MapRegionViewModel>
+public class MapRegionViewModel : MyUIViewModel<MapRegionViewModel, GlobalMapRegionData>
 {
     public MapRegionView View { get { return MyView as MapRegionView; } }
 
-    //protected override GlobalMapRegionData DefaultOptions { get; }
+    protected override GlobalMapRegionData DefaultData { get; set; }
 
     public MapRegionViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack) : base(prefabProvider, uIViewModelsStack) { }
 
@@ -15,10 +15,11 @@ public class MapRegionViewModel : MyUIViewModel<MapRegionViewModel>
         throw new NotImplementedException();
     }
 
-    //protected override void FetchData(IMyUIViewData data)
-    //{
-    //    View.RegionName = (GlobalMapRegionData)data;
-    //}
+    public override void FetchData(IMyUIViewData data)
+    {
+        DefaultData = (GlobalMapRegionData)data;
+        View.RegionName = DefaultData.RegionName;
+    }
 
     public void MoveHere()
     {

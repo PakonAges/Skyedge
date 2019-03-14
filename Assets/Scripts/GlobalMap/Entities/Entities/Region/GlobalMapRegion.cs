@@ -10,11 +10,18 @@
         //Info
         //Roads?
 
-        //[Inject] readonly MapRegionViewModel _regionView = null;
+        [Inject] readonly MapRegionViewModel _regionView = null;
 
         public async Task OnClickedAsync()
         {
-            //await _regionView.Open(Data);
+            try
+            {
+                await _regionView.Open(Data);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
         }
     }
 }

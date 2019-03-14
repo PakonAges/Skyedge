@@ -7,6 +7,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2897067598322128616, guid: 286e513d7264eda4a8af2661c84944d7,
+        type: 3}
+      propertyPath: m_Name
+      value: MapRegion 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6004531976129569518, guid: 286e513d7264eda4a8af2661c84944d7,
         type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.size
@@ -162,11 +167,12 @@ PrefabInstance:
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[14].y
       value: 0.8801792
       objectReference: {fileID: 0}
-    - target: {fileID: 2897067598322128616, guid: 286e513d7264eda4a8af2661c84944d7,
+    - target: {fileID: 4007628838882444110, guid: 286e513d7264eda4a8af2661c84944d7,
         type: 3}
-      propertyPath: m_Name
-      value: MapRegion 2
-      objectReference: {fileID: 0}
+      propertyPath: Data
+      value: 
+      objectReference: {fileID: 11400000, guid: bd12d17e277137e45880c50b2a9f0b3f,
+        type: 2}
     - target: {fileID: 2897067598322128617, guid: 286e513d7264eda4a8af2661c84944d7,
         type: 3}
       propertyPath: m_LocalPosition.x

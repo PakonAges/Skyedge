@@ -4,7 +4,8 @@
         "Zenject",
         "GlobalMap.IEntities",
         "GlobalMap.ILogic",
-        "MyUI.ICore"
+        "MyUI.ICore",
+        "MyUI"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
