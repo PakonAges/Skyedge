@@ -94,11 +94,9 @@ namespace myUI
 
     public abstract class MyUIViewModel<TViewModel, TData> : MyUIViewModel<TViewModel> where TViewModel : class, IMyUIViewModel where TData : class, IMyUIViewData
     {
-        protected abstract TData DefaultData { get; set; }
+        protected abstract TData ViewData { get; set; }
 
-        public MyUIViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack) : base(prefabProvider, uIViewModelsStack)
-        {
-        }
+        public MyUIViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack) : base(prefabProvider, uIViewModelsStack) { }
 
         public async Task Open(IMyUIViewData data)
         {
@@ -109,5 +107,4 @@ namespace myUI
 
         public abstract void FetchData(IMyUIViewData data);
     }
-
 }

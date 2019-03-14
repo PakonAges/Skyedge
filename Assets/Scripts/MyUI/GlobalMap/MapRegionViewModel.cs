@@ -6,7 +6,7 @@ public class MapRegionViewModel : MyUIViewModel<MapRegionViewModel, GlobalMapReg
 {
     public MapRegionView View { get { return MyView as MapRegionView; } }
 
-    protected override GlobalMapRegionData DefaultData { get; set; }
+    protected override GlobalMapRegionData ViewData { get; set; }
 
     public MapRegionViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack) : base(prefabProvider, uIViewModelsStack) { }
 
@@ -17,8 +17,8 @@ public class MapRegionViewModel : MyUIViewModel<MapRegionViewModel, GlobalMapReg
 
     public override void FetchData(IMyUIViewData data)
     {
-        DefaultData = (GlobalMapRegionData)data;
-        View.RegionName = DefaultData.RegionName;
+        ViewData = (GlobalMapRegionData)data;
+        View.RegionName = ViewData.RegionName;
     }
 
     public void MoveHere()

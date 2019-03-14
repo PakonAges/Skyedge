@@ -3,10 +3,6 @@ using UnityEngine;
 
 namespace myUI
 {
-    public abstract class MyUIView<T> : MyUIView where T : MyUIView<T>
-    {
-    }
-
     public abstract class MyUIView : MonoBehaviour, IMyUIView, INotifyPropertyChanged
     {
         public bool CacheOnClosed = false;
@@ -32,4 +28,10 @@ namespace myUI
             MyCanvas = gameObject.GetComponent<Canvas>();
         }
     }
+
+    public abstract class MyUIView<TView, TViewModel> : MyUIView where TView : class, IMyUIView where TViewModel : class, IMyUIViewModel
+    {
+        protected abstract TViewModel MyViewModel { get; set; }
+    }
+
 }
