@@ -20,15 +20,18 @@ MonoBehaviour:
   - m_GUID: 28d23f3624c910148be598dc3bd27dae
     m_Address: MatchPauseView
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UiWindow
   - m_GUID: 7dcbde00b41494243a8fd674273ffaeb
     m_Address: MatchEndView
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UiWindow
   - m_GUID: da21013f3f7d4334a9158be7406f5a60
     m_Address: MatchHUDView
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UiWindow
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 949de0eccec8e124e882b1796de112e9, type: 2}
   m_SchemaSet:

@@ -1,9 +1,14 @@
 {
-    "name": "GlobalMap.UI",
+    "name": "MyUI",
     "references": [
+        "MyUI.ICore",
+        "CoreSceneController",
+        "Zenject",
         "ICoreSceneController",
-        "MyUICore",
-        "MyUI.ICore"
+        "Unity.Addressables",
+        "MatchScene.Signals",
+        "AsyncAwaitUtil",
+        "Unity.ResourceManager"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

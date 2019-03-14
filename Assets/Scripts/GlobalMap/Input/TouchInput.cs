@@ -47,7 +47,7 @@ namespace GlobalMap
 
                 if (tappedTransform != null) // check for hit
                 {
-                    _touchProcessor.TapOnObjectAsync(tappedTransform);
+                    _touchProcessor.TapOnObject(tappedTransform);
                 }
             }
         }

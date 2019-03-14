@@ -1,13 +1,10 @@
 ﻿using Cinemachine;
-using System;
 using UnityEngine;
-using Zenject;
 
 namespace GlobalMap
 {
     public class TouchInputProcessor : ITouchProcessor
     {
-        [Inject] readonly MapRegionViewModel _regionView = null;
         readonly CinemachineVirtualCamera _virtualCamera;
         Vector3 _newCameraPosition = new Vector3(0,0,-10);
 
@@ -30,15 +27,13 @@ namespace GlobalMap
             _virtualCamera.transform.position = camPosition;
         }
 
-        public async void TapOnObjectAsync(Transform tappedTransform)
+        public void TapOnObject(Transform tappedTransform)
         {
-            try
+            var ClickedObject = tappedTransform.gameObject.GetComponent<IClickable>();
+
+            if (ClickedObject != null)
             {
-                await _regionView.Open();
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
+                ClickedObject.OnClickedAsync();
             }
         }
     }

@@ -4,7 +4,26 @@ using UnityEngine;
 
 namespace myUI
 {
-    public abstract class MyUIViewModel<T> : MyUIViewModel where T : MyUIViewModel<T>
+    public abstract class MyUIViewModel : IMyUIViewModel, IDisposable
+    {
+        public IMyUIPrefabProvider _prefabProvider;
+        public IMyUIViewModelsStack _stack;
+        public IMyUIView MyView { get; set; }
+
+        public abstract void Dispose();
+
+        /// <summary>
+        /// Open call from UI and Input. Check if there is cached View is awailable before creating new
+        /// </summary>
+        public abstract Task Open();
+        
+        /// <summary>
+        /// Call from UI and Input
+        /// </summary>
+        public abstract void Close();
+    }
+
+    public abstract class MyUIViewModel<TViewModel> : MyUIViewModel where TViewModel : class, IMyUIViewModel
     {
         public MyUIViewModel(   IMyUIPrefabProvider prefabProvider,
                                 IMyUIViewModelsStack uIViewModelsStack)
@@ -19,16 +38,7 @@ namespace myUI
             _stack.AddViewModel(this);
         }
 
-        public async override Task Open(IMyUIViewData data)
-        {
-            await ShowViewAsync();
-            FetchData(data);
-            _stack.AddViewModel(this);
-        }
-
-        protected virtual void FetchData(IMyUIViewData data) { }
-
-        async Task ShowViewAsync()
+        protected async Task ShowViewAsync()
         {
             if (MyView != null && MyView.HideOnClose)
             {
@@ -44,7 +54,7 @@ namespace myUI
             {
                 try
                 {
-                    var Prefab = await _prefabProvider.GetWindowPrefab<T>();
+                    var Prefab = await _prefabProvider.GetWindowPrefab<TViewModel>();
                     var ViewGo = GameObject.Instantiate(Prefab);
                     MyView = ViewGo.GetComponent<IMyUIView>();
                     MyView.SetViewModel(this);
@@ -82,29 +92,22 @@ namespace myUI
         }
     }
 
-    public abstract class MyUIViewModel : IMyUIViewModel, IDisposable
+    public abstract class MyUIViewModel<TViewModel, TOptions> : MyUIViewModel<TViewModel> where TViewModel : class, IMyUIViewModel where TOptions : class, IMyUIViewData
     {
-        public IMyUIPrefabProvider _prefabProvider;
-        public IMyUIViewModelsStack _stack;
-        public IMyUIView MyView { get; set; }
+        protected abstract TOptions DefaultOptions { get; }
 
-        public abstract void Dispose();
+        public MyUIViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack) : base(prefabProvider, uIViewModelsStack)
+        {
+        }
 
-        /// <summary>
-        /// Open call from UI and Input. Check if there is cached View is awailable before creating new
-        /// </summary>
-        public abstract Task Open();
+        public async Task Open(IMyUIViewData data)
+        {
+            await ShowViewAsync();
+            FetchData(data);
+            _stack.AddViewModel(this);
+        }
 
-        /// <summary>
-        /// Open Window With some Parameters/Data
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public abstract Task Open(IMyUIViewData data);
-        
-        /// <summary>
-        /// Call from UI and Input
-        /// </summary>
-        public abstract void Close();
+        void FetchData(IMyUIViewData data) { }
     }
+
 }

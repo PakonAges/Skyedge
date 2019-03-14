@@ -8,9 +8,8 @@
         "MatchScene.Entities",
         "AsyncAwaitUtil",
         "MatchScene.Signals",
-        "MyUICore",
-        "MyUI.MatchField",
-        "MyUI.ICore"
+        "MyUI.ICore",
+        "MyUI"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

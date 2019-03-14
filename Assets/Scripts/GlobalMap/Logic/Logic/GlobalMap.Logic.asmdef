@@ -1,7 +1,6 @@
 {
     "name": "GlobalMap.Logic",
     "references": [
-        "GlobalMap.UI",
         "GlobalMap.IEntities",
         "Zenject",
         "GlobalMap.ILogic",

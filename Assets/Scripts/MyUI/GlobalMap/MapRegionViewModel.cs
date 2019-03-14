@@ -5,6 +5,9 @@ using Zenject;
 public class MapRegionViewModel : MyUIViewModel<MapRegionViewModel>
 {
     public MapRegionView View { get { return MyView as MapRegionView; } }
+
+    //protected override GlobalMapRegionData DefaultOptions { get; }
+
     public MapRegionViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack) : base(prefabProvider, uIViewModelsStack) { }
 
     internal void RegionEnter()
@@ -12,10 +15,10 @@ public class MapRegionViewModel : MyUIViewModel<MapRegionViewModel>
         throw new NotImplementedException();
     }
 
-    public void ShowRegionInfo()
-    {
-        View.RegionName = "Region Name";
-    }
+    //protected override void FetchData(IMyUIViewData data)
+    //{
+    //    View.RegionName = (GlobalMapRegionData)data;
+    //}
 
     public void MoveHere()
     {

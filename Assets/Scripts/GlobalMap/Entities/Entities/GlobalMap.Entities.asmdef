@@ -2,7 +2,9 @@
     "name": "GlobalMap.Entities",
     "references": [
         "Zenject",
-        "GlobalMap.IEntities"
+        "GlobalMap.IEntities",
+        "GlobalMap.ILogic",
+        "MyUI.ICore"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
