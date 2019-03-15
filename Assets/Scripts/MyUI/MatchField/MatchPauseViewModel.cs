@@ -6,7 +6,7 @@ public class MatchPauseViewModel : MyUIViewModel<MatchPauseViewModel>
     readonly SignalBus _signalBus;
 
     public MatchPauseView View { get { return MyView as MatchPauseView; } }
-    public MatchPauseViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack, SignalBus signalBus) : base(prefabProvider, uIViewModelsStack)
+    public MatchPauseViewModel(SignalBus signalBus)
     {
         _signalBus = signalBus;
     }

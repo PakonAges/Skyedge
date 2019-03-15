@@ -5,10 +5,8 @@ using myUI;
 public class MapRegionViewModel : MyUIViewModel<MapRegionViewModel, GlobalMapRegionData>
 {
     public MapRegionView View { get { return MyView as MapRegionView; } }
-
     protected override GlobalMapRegionData ViewData { get; set; }
 
-    public MapRegionViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack) : base(prefabProvider, uIViewModelsStack) { }
 
     internal void RegionEnter()
     {

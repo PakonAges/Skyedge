@@ -6,7 +6,6 @@ using Zenject;
 public class MatchHUDViewModel : MyUIViewModel<MatchHUDViewModel>
 {
     public MatchHUDView View { get { return MyView as MatchHUDView; } }
-    public MatchHUDViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack) : base(prefabProvider, uIViewModelsStack) { }
 
     [Inject] readonly MatchPauseViewModel _pauseWindow = null;
     [Inject] readonly ConfirmExitGameViewModel _exitConfirmWindow = null;

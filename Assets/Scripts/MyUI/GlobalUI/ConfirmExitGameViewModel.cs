@@ -1,11 +1,8 @@
 ﻿using myUI;
-using UnityEngine;
 
 public class ConfirmExitGameViewModel : MyUIViewModel<ConfirmExitGameViewModel>
 {
     public ConfirmExitGameView View { get { return MyView as ConfirmExitGameView; } }
-
-    public ConfirmExitGameViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack) : base(prefabProvider, uIViewModelsStack) { }
 
     public void ExitGame()
     {

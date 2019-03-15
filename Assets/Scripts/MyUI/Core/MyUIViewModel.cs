@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 namespace myUI
 {
     public abstract class MyUIViewModel : IMyUIViewModel, IDisposable
     {
-        public IMyUIPrefabProvider _prefabProvider;
-        public IMyUIViewModelsStack _stack;
+        [Inject] readonly internal IMyUIPrefabProvider _prefabProvider = null;
+        [Inject] readonly internal IMyUIViewModelsStack _stack = null;
         public IMyUIView MyView { get; set; }
-
-        public abstract void Dispose();
 
         /// <summary>
         /// Open call from UI and Input. Check if there is cached View is awailable before creating new
@@ -21,17 +20,12 @@ namespace myUI
         /// Call from UI and Input
         /// </summary>
         public abstract void Close();
+
+        public abstract void Dispose();
     }
 
     public abstract class MyUIViewModel<TViewModel> : MyUIViewModel where TViewModel : class, IMyUIViewModel
     {
-        public MyUIViewModel(   IMyUIPrefabProvider prefabProvider,
-                                IMyUIViewModelsStack uIViewModelsStack)
-        {
-            _stack = uIViewModelsStack;
-            _prefabProvider = prefabProvider;
-        }
-
         public async override Task Open()
         {
             await ShowViewAsync();
@@ -87,8 +81,6 @@ namespace myUI
     public abstract class MyUIViewModel<TViewModel, TData> : MyUIViewModel<TViewModel> where TViewModel : class, IMyUIViewModel where TData : class, IMyUIViewData
     {
         protected abstract TData ViewData { get; set; }
-
-        public MyUIViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack) : base(prefabProvider, uIViewModelsStack) { }
 
         public async Task Open(IMyUIViewData data)
         {

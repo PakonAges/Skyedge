@@ -4,9 +4,12 @@ using Zenject;
 public class MatchEndViewModel : MyUIViewModel<MatchEndViewModel>
 {
     readonly SignalBus _signalBus;
-
     public MatchEndView View { get { return MyView as MatchEndView; } }
-    public MatchEndViewModel(IMyUIPrefabProvider prefabProvider, IMyUIViewModelsStack uIViewModelsStack, SignalBus signalBus) : base(prefabProvider, uIViewModelsStack) { _signalBus = signalBus; }
+
+    public MatchEndViewModel(SignalBus signalBus)
+    {
+        _signalBus = signalBus;
+    }
 
     public void RestartLevel()
     {
