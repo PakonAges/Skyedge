@@ -7,7 +7,6 @@
     public class GlobalMapRegion : MonoBehaviour, IGlobalMapRegion, IClickable
     {
         public GlobalMapRegionData Data;
-        //Info
         //Roads?
 
         [Inject] readonly MapRegionViewModel _regionView = null;

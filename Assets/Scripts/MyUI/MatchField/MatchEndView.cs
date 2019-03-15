@@ -2,19 +2,19 @@
 using myUI;
 
 [Binding]
-public class MatchEndView : MyUIView<MatchEndView>
+public class MatchEndView : MyUIView<MatchEndView, MatchEndViewModel>
 {
-    public MatchEndViewModel ViewModel { get { return IViewModel as MatchEndViewModel; } }
+    //public MatchEndViewModel ViewModel { get { return IViewModel as MatchEndViewModel; } }
 
     [Binding]
     public void OnClose()
     {
-        ViewModel.ExitToTheMap();
+        MyViewModel.ExitToTheMap();
     }
 
     [Binding]
     public void OnRestart()
     {
-        ViewModel.RestartLevel();
+        MyViewModel.RestartLevel();
     }
 }

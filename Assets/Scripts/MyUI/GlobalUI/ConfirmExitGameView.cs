@@ -2,19 +2,18 @@
 using myUI;
 
 [Binding]
-public class ConfirmExitGameView : MyUIView<ConfirmExitGameView>
+public class ConfirmExitGameView : MyUIView<ConfirmExitGameView, ConfirmExitGameViewModel>
 {
-    public ConfirmExitGameViewModel ViewModel { get { return IViewModel as ConfirmExitGameViewModel; } }
-
+    //public ConfirmExitGameViewModel MyViewModel { get { return IViewModel as ConfirmExitGameViewModel; } }
     [Binding]
     public void OnExitGameBtn()
     {
-        ViewModel.ExitGame();
+        MyViewModel.ExitGame();
     }
 
     [Binding]
     public void OnCancel()
     {
-        ViewModel.Close();
+        MyViewModel.Close();
     }
 }

@@ -2,25 +2,24 @@
 using myUI;
 
 [Binding]
-public class MatchPauseView : MyUIView<MatchPauseView>
+public class MatchPauseView : MyUIView<MatchPauseView, MatchPauseViewModel>
 {
-    public MatchPauseViewModel ViewModel { get { return IViewModel as MatchPauseViewModel; } }
-
+    //public MatchPauseViewModel MyViewModel { get { return IViewModel as MatchPauseViewModel; } }
     [Binding]
     public void OnClose()
     {
-        ViewModel.Close();
+        MyViewModel.Close();
     }
 
     [Binding]
     public void OnMatchRestart()
     {
-        ViewModel.RestartMatch();
+        MyViewModel.RestartMatch();
     }
 
     [Binding]
     public void OnExitToMap()
     {
-        ViewModel.ExitToTheMap();
+        MyViewModel.ExitToTheMap();
     }
 }

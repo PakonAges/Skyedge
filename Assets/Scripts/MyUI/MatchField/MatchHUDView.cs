@@ -3,10 +3,9 @@ using myUI;
 using Zenject;
 
 [Binding]
-public class MatchHUDView : MyUIView<MatchHUDView>
+public class MatchHUDView : MyUIView<MatchHUDView, MatchHUDViewModel>
 {
-    [Inject] MatchHUDViewModel ViewModel = null;
-
+    //[Inject] MatchHUDViewModel MyViewModel = null;
     string _turnsCounter;
     [Binding]  public string TurnsCounter
     {
@@ -22,6 +21,6 @@ public class MatchHUDView : MyUIView<MatchHUDView>
     [Binding]
     public void OnPauseBtnClick()
     {
-        ViewModel.ShowPauseView();
+        MyViewModel.ShowPauseView();
     }
 }

@@ -3,19 +3,20 @@ using UnityWeld.Binding;
 using Zenject;
 
 [Binding]
-public class GlobalMapHUDView : MyUIView<GlobalMapHUDView>
+public class GlobalMapHUDView : MyUIView<GlobalMapHUDView, GlobalMapHUDViewModel>
 {
-    [Inject] GlobalMapHUDViewModel ViewModel = null;
-   
+    //[Inject] GlobalMapHUDViewModel ViewModel = null;
+    //protected override GlobalMapHUDViewModel MyViewModel { get; set; }
+
     [Binding]
     public void OnMatchBtn()
     {
-        ViewModel.LoadMatchScene();
+        MyViewModel.LoadMatchScene();
     }
 
     [Binding]
     public void OnLocationBtn()
     {
-        ViewModel.LoadLocationScene();
+        MyViewModel.LoadLocationScene();
     }
 }

@@ -2,9 +2,9 @@
 using myUI;
 
 [Binding]
-public class MapRegionView : MyUIView<MapRegionView>
+public class MapRegionView : MyUIView<MapRegionView, MapRegionViewModel>
 {
-    public MapRegionViewModel ViewModel { get { return IViewModel as MapRegionViewModel; } }
+    //protected override MapRegionViewModel MyViewModel { get { return IViewModel as MapRegionViewModel; } }
 
     string _regionName;
     [Binding]
@@ -19,21 +19,23 @@ public class MapRegionView : MyUIView<MapRegionView>
         }
     }
 
+
     [Binding]
     public void OnClose()
     {
-        ViewModel.Close();
+        MyViewModel.Close();
     }
 
     [Binding]
     public void OnRegionEnter()
     {
-        ViewModel.RegionEnter();
+        MyViewModel.RegionEnter();
     }
 
     [Binding]
     public void OnMoveHere()
     {
-        ViewModel.MoveHere();
+        MyViewModel.MoveHere();
     }
+
 }
