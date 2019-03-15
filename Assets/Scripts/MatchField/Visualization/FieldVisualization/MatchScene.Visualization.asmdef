@@ -5,8 +5,7 @@
         "MyDataLayer",
         "MatchScene.ILogic",
         "Zenject",
-        "MatchScene.Entities",
-        "MatchScene.IGenerationRules"
+        "MatchScene.Entities"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

@@ -4,7 +4,6 @@
         "MyDataLayer",
         "MatchScene.IControllers",
         "MatchScene.IVisualization",
-        "MatchScene.IGenerationRules",
         "MatchScene.ILogic",
         "MatchScene.Entities",
         "MatchScene.Signals",

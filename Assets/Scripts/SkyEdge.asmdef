@@ -19,8 +19,6 @@
         "MatchScene.Controllers",
         "MatchScene.Signals",
         "MatchScene.Logic",
-        "MatchScene.IGenerationRules",
-        "MatchScene.GenerationRules",
         "MatchScene.IVisualization",
         "MatchScene.Visualization"
     ],
