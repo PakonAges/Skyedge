@@ -1,8 +1,6 @@
 {
     "name": "MatchScene.IControllers",
-    "references": [
-        "MyDataLayer"
-    ],
+    "references": [],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],

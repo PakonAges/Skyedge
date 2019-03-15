@@ -2,10 +2,10 @@
     "name": "MatchScene.Visualization",
     "references": [
         "MatchScene.IVisualization",
-        "MyDataLayer",
         "MatchScene.ILogic",
         "Zenject",
-        "MatchScene.Entities"
+        "MatchScene.Entities",
+        "MatchScene.IEntities"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

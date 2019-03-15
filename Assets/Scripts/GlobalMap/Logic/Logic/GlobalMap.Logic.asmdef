@@ -1,11 +1,11 @@
 {
     "name": "GlobalMap.Logic",
     "references": [
-        "GlobalMap.IEntities",
         "Zenject",
+        "Cinemachine",
+        "GlobalMap.IEntities",
         "GlobalMap.ILogic",
-        "MyDataLayer",
-        "Cinemachine"
+        "GlobalMap.Entities"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

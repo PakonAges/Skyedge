@@ -1,12 +1,12 @@
 {
     "name": "MatchScene.Logic",
     "references": [
+        "Zenject",
+        "AsyncAwaitUtil",
         "MatchScene.ILogic",
         "MatchScene.IVisualization",
-        "MyDataLayer",
-        "Zenject",
+        "MatchScene.IEntities",
         "MatchScene.Entities",
-        "AsyncAwaitUtil",
         "MyUI.ICore",
         "MyUI"
     ],
