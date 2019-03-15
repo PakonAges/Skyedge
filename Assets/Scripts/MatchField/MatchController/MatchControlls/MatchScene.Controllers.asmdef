@@ -1,13 +1,12 @@
 {
     "name": "MatchScene.Controllers",
     "references": [
+        "Zenject",
         "MyDataLayer",
         "MatchScene.IControllers",
         "MatchScene.IVisualization",
         "MatchScene.ILogic",
         "MatchScene.Entities",
-        "MatchScene.Signals",
-        "Zenject",
         "CoreScene.IController"
     ],
     "optionalUnityReferences": [],

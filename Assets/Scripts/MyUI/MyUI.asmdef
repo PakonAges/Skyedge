@@ -1,14 +1,14 @@
 {
     "name": "MyUI",
     "references": [
+        "Zenject",
+        "AsyncAwaitUtil",
+        "Unity.Addressables",
+        "Unity.ResourceManager",
         "MyUI.ICore",
         "CoreScene.Controller",
-        "Zenject",
         "CoreScene.IController",
-        "Unity.Addressables",
-        "MatchScene.Signals",
-        "AsyncAwaitUtil",
-        "Unity.ResourceManager"
+        "MatchScene.Entities"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

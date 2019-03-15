@@ -7,7 +7,6 @@
         "Zenject",
         "MatchScene.Entities",
         "AsyncAwaitUtil",
-        "MatchScene.Signals",
         "MyUI.ICore",
         "MyUI"
     ],
