@@ -8,7 +8,7 @@
         "MatchScene.Entities",
         "MatchScene.Signals",
         "Zenject",
-        "ICoreSceneController"
+        "CoreScene.IController"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
