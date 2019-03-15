@@ -4,7 +4,6 @@ using myUI;
 [Binding]
 public class MatchPauseView : MyUIView<MatchPauseView, MatchPauseViewModel>
 {
-    //public MatchPauseViewModel MyViewModel { get { return IViewModel as MatchPauseViewModel; } }
     [Binding]
     public void OnClose()
     {

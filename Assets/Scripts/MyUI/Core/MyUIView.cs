@@ -9,7 +9,6 @@ namespace myUI
         public bool HideSubordinates = false;
 
         protected virtual TViewModel MyViewModel { get; private set; }
-        //protected virtual IMyUIViewModel MyViewModel { get; private set; }
         public bool HideOnClose { get; private set; }
         public bool HideAllOtherViews { get; private set; }
         public Canvas MyCanvas { get; private set; }
@@ -32,19 +31,5 @@ namespace myUI
             HideAllOtherViews = HideSubordinates;
             MyCanvas = gameObject.GetComponent<Canvas>();
         }
-
-        //public virtual void SetViewModel(IMyUIViewModel viewModel)
-        //{
-        //    IViewModel = viewModel;
-        //    HideOnClose = CacheOnClosed;
-        //    HideAllOtherViews = HideSubordinates;
-        //    MyCanvas = gameObject.GetComponent<Canvas>();
-        //}
     }
-
-    //public abstract class MyUIView<TView, TViewModel> : MyUIView where TView : class, IMyUIView where TViewModel : class, IMyUIViewModel
-    //{
-    //    protected virtual TViewModel MyViewModel { get; private set; }
-    //}
-
 }

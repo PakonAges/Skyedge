@@ -4,9 +4,8 @@ using myUI;
 [Binding]
 public class MapRegionView : MyUIView<MapRegionView, MapRegionViewModel>
 {
-    //protected override MapRegionViewModel MyViewModel { get { return IViewModel as MapRegionViewModel; } }
-
     string _regionName;
+
     [Binding]
     public string RegionName
     {

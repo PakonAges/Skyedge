@@ -72,18 +72,10 @@ namespace myUI
             {
                 return;
             }
-
-            //if (MyView.HideOnClose)
-            //{
-            //    MyView.MyCanvas.enabled = false;
-            //}
-            //else
-            //{
-                if (MyView.MyCanvas)
-                {
-                    GameObject.Destroy(MyView.MyCanvas.gameObject);
-                }
-            //}
+            else
+            {
+                GameObject.Destroy(MyView.MyCanvas.gameObject);
+            }
         }
 
         public override void Close()

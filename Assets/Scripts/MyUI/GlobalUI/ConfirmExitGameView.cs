@@ -4,7 +4,6 @@ using myUI;
 [Binding]
 public class ConfirmExitGameView : MyUIView<ConfirmExitGameView, ConfirmExitGameViewModel>
 {
-    //public ConfirmExitGameViewModel MyViewModel { get { return IViewModel as ConfirmExitGameViewModel; } }
     [Binding]
     public void OnExitGameBtn()
     {
