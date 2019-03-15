@@ -5,7 +5,8 @@ using Zenject;
 [Binding]
 public class MatchHUDView : MyUIView<MatchHUDView, MatchHUDViewModel>
 {
-    //[Inject] MatchHUDViewModel MyViewModel = null;
+    [Inject] new MatchHUDViewModel MyViewModel = null;
+
     string _turnsCounter;
     [Binding]  public string TurnsCounter
     {

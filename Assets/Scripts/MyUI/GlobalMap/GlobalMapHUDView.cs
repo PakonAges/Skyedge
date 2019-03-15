@@ -5,7 +5,7 @@ using Zenject;
 [Binding]
 public class GlobalMapHUDView : MyUIView<GlobalMapHUDView, GlobalMapHUDViewModel>
 {
-    //[Inject] GlobalMapHUDViewModel ViewModel = null;
+    [Inject] new GlobalMapHUDViewModel MyViewModel = null;
     //protected override GlobalMapHUDViewModel MyViewModel { get; set; }
 
     [Binding]
