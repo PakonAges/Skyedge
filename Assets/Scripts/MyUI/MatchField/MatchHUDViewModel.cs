@@ -3,10 +3,8 @@ using System;
 using UnityEngine;
 using Zenject;
 
-public class MatchHUDViewModel : MyUIViewModel<MatchHUDViewModel>
+public class MatchHUDViewModel : MyUIViewModel<MatchHUDViewModel, MatchHUDView>
 {
-    public MatchHUDView View { get { return MyView as MatchHUDView; } }
-
     [Inject] readonly MatchPauseViewModel _pauseWindow = null;
     [Inject] readonly ConfirmExitGameViewModel _exitConfirmWindow = null;
 
@@ -44,6 +42,6 @@ public class MatchHUDViewModel : MyUIViewModel<MatchHUDViewModel>
     public void UpdateTurnsCounter(int turnsLeft)
     {
         var displayString = "Turns left: " + turnsLeft.ToString();
-        View.TurnsCounter = displayString;
+        MyView.TurnsCounter = displayString;
     }
 }

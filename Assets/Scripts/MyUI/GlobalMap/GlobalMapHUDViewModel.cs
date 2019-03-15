@@ -1,8 +1,7 @@
 ﻿using myUI;
 
-public class GlobalMapHUDViewModel : MyUIViewModel<GlobalMapHUDViewModel>
+public class GlobalMapHUDViewModel : MyUIViewModel<GlobalMapHUDViewModel,GlobalMapHUDView>
 {
-    public GlobalMapHUDView View { get { return MyView as GlobalMapHUDView; } }
     private readonly ICoreSceneController _coreSceneController;
 
     public GlobalMapHUDViewModel( ICoreSceneController coreSceneController)

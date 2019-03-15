@@ -1,10 +1,9 @@
 ﻿using myUI;
 using Zenject;
 
-public class MatchEndViewModel : MyUIViewModel<MatchEndViewModel>
+public class MatchEndViewModel : MyUIViewModel<MatchEndViewModel, MatchEndView>
 {
     readonly SignalBus _signalBus;
-    public MatchEndView View { get { return MyView as MatchEndView; } }
 
     public MatchEndViewModel(SignalBus signalBus)
     {

@@ -5,28 +5,14 @@ using Zenject;
 
 namespace myUI
 {
-    public abstract class MyUIViewModel : IMyUIViewModel, IDisposable
+    public abstract class MyUIViewModel<TViewModel, TView> : IMyUIViewModel, IDisposable where TViewModel : class, IMyUIViewModel where TView : class, IMyUIView
     {
         [Inject] readonly internal IMyUIPrefabProvider _prefabProvider = null;
         [Inject] readonly internal IMyUIViewModelsStack _stack = null;
-        public IMyUIView MyView { get; set; }
+        public virtual TView MyView { get; private set; }
+        IMyUIView IMyUIViewModel.MyView { get { return MyView; } }
 
-        /// <summary>
-        /// Open call from UI and Input. Check if there is cached View is awailable before creating new
-        /// </summary>
-        public abstract Task Open();
-        
-        /// <summary>
-        /// Call from UI and Input
-        /// </summary>
-        public abstract void Close();
-
-        public abstract void Dispose();
-    }
-
-    public abstract class MyUIViewModel<TViewModel> : MyUIViewModel where TViewModel : class, IMyUIViewModel
-    {
-        public async override Task Open()
+        public virtual async Task Open()
         {
             await ShowViewAsync();
             _stack.AddViewModel(this);
@@ -50,7 +36,7 @@ namespace myUI
                 {
                     var Prefab = await _prefabProvider.GetWindowPrefab<TViewModel>();
                     var ViewGo = GameObject.Instantiate(Prefab);
-                    MyView = ViewGo.GetComponent<IMyUIView>();
+                    MyView = ViewGo.GetComponent<TView>();
                     MyView.SetViewModel(this);
                 }
                 catch (Exception e)
@@ -60,7 +46,7 @@ namespace myUI
             }
         }
 
-        public override void Dispose()
+        public virtual void Dispose()
         {
             if (MyView == null || MyView.MyCanvas == null)
             {
@@ -72,15 +58,15 @@ namespace myUI
             }
         }
 
-        public override void Close()
+        public virtual void Close()
         {
             _stack.Close(this);
         }
     }
 
-    public abstract class MyUIViewModel<TViewModel, TData> : MyUIViewModel<TViewModel> where TViewModel : class, IMyUIViewModel where TData : class, IMyUIViewData
+    public abstract class MyUIViewModel<TViewModel, TView, TData> : MyUIViewModel<TViewModel, TView> where TViewModel : class, IMyUIViewModel where TView : class, IMyUIView where TData : class, IMyUIViewData
     {
-        protected abstract TData ViewData { get; set; }
+        protected virtual TData MyViewData { get; private set; }
 
         public async Task Open(IMyUIViewData data)
         {
@@ -89,6 +75,12 @@ namespace myUI
             _stack.AddViewModel(this);
         }
 
-        public abstract void FetchData(IMyUIViewData data);
+        protected virtual void FetchData(IMyUIViewData data)
+        {
+            MyViewData = (TData)data;
+            ApplyData();
+        }
+
+        protected abstract void ApplyData();
     }
 }

@@ -1,9 +1,8 @@
 ﻿using myUI;
+using UnityEngine;
 
-public class ConfirmExitGameViewModel : MyUIViewModel<ConfirmExitGameViewModel>
+public class ConfirmExitGameViewModel : MyUIViewModel<ConfirmExitGameViewModel, ConfirmExitGameView>
 {
-    public ConfirmExitGameView View { get { return MyView as ConfirmExitGameView; } }
-
     public void ExitGame()
     {
         // save any game data here
