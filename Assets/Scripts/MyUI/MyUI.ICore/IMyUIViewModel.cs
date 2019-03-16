@@ -8,5 +8,6 @@ namespace myUI
         Task Open();
         void Close();
         void Dispose();
+        void SetView(IMyUIView view);
     }
 }

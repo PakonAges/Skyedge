@@ -25,6 +25,8 @@ namespace myUI
             MyViewModel = (TViewModel)vm;
         }
 
+
+
         void Start()
         {
             HideOnClose = CacheOnClosed;

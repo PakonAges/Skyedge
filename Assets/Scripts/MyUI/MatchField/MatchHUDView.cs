@@ -19,6 +19,14 @@ public class MatchHUDView : MyUIView<MatchHUDView, MatchHUDViewModel>
         }
     }
 
+    void Awake()
+    {
+        if (MyViewModel.MyView == null)
+        {
+            MyViewModel.SetView(this);
+        }
+    }
+
     [Binding]
     public void OnPauseBtnClick()
     {

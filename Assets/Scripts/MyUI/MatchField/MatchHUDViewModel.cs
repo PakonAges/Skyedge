@@ -24,7 +24,6 @@ public class MatchHUDViewModel : MyUIViewModel<MatchHUDViewModel, MatchHUDView>
     public override void Close()
     {
         ShowConfirmToClose();
-        //base.Close();
     }
 
     public async void ShowPauseView()

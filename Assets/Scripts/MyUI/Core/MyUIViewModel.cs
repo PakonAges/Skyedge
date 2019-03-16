@@ -12,6 +12,11 @@ namespace myUI
         public virtual TView MyView { get; private set; }
         IMyUIView IMyUIViewModel.MyView { get { return MyView; } }
 
+        public void SetView(IMyUIView view)
+        {
+            MyView = (TView)view;
+        }
+
         public virtual async Task Open()
         {
             await ShowViewAsync();
