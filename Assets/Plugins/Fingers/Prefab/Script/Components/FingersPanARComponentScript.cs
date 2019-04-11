@@ -205,6 +205,9 @@ namespace DigitalRubyShared
             {
                 FingersScript.Instance.RemoveGesture(PanGesture);
                 FingersScript.Instance.RemoveGesture(RotateGesture);
+                FingersScript.Instance.RemoveGesture(ScaleGesture);
+                FingersScript.Instance.RemoveGesture(TapGestureReset);
+                FingersScript.Instance.RemoveGesture(TapGestureDestroy);
             }
         }
 

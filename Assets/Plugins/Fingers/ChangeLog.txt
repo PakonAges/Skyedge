@@ -1,5 +1,8 @@
 ﻿Changelog
 --------------------
+2.6.6	(2019-03-14)
+		- Add camera 3d movement component script, similar to mapps applications on mobile movement. See DemoSceneCameraMove3D.
+
 2.6.5   (2019-03-08)
 		- Spiffy up joystick appearance to be more modern.
 		- Add follow speed for joystick to follow the touch.

@@ -410,14 +410,7 @@ namespace DigitalRubyShared
                 return;
             }
 
-            if (ScaleGesture.ScaleMultiplier > 1.0f)
-            {
-                zoomSpeed += (ScaleGesture.ScaleMultiplier * ZoomSpeed);
-            }
-            else if (ScaleGesture.ScaleMultiplier < 1.0f)
-            {
-                zoomSpeed -= ((1.0f / ScaleGesture.ScaleMultiplier) * ZoomSpeed);
-            }
+            zoomSpeed += ScaleGesture.ScaleMultiplierRange;
         }
 
         private bool PanGestureHasEnoughMovementOnOneAxis(ref float xVelocity, ref float yVelocity)
