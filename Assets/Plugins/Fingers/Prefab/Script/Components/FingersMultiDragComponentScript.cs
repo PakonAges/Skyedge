@@ -18,8 +18,14 @@ namespace DigitalRubyShared
         private class DragState
         {
             public GameObject GameObject;
-            public Vector2 Offset;
+            public Vector3 Offset;
         }
+
+        [Tooltip("Whether to drag on x axis")]
+        public bool DragX = true;
+
+        [Tooltip("Whether to drag on y axis")]
+        public bool DragY = true;
 
         [Tooltip("The tag of the object(s) to drag - if the tag contains this, the object can drag")]
         public string TagToDrag;
@@ -69,7 +75,7 @@ namespace DigitalRubyShared
         private void StartDrag(GestureTouch touch)
         {
             // check if we hit something, if so start dragging it otherwise reset the gesture
-            Vector2 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(touch.X, touch.Y, 0.0f));
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(touch.X, touch.Y, 0.0f));
             Collider2D[] hits = Physics2D.OverlapCircleAll(worldPos, 0.5f);
             foreach (Collider2D hit in hits)
             {
@@ -79,7 +85,7 @@ namespace DigitalRubyShared
                     DragState state = new DragState
                     {
                         GameObject = hit.gameObject,
-                        Offset = (Vector2)hit.transform.position - worldPos
+                        Offset = (hit.transform.position - worldPos)
                     };
                     draggingObjectsByGameObject[hit.gameObject] = state;
                     draggingObjectsByTouchId[touch.Id] = state;
@@ -97,8 +103,11 @@ namespace DigitalRubyShared
                 if (draggingObjectsByTouchId.TryGetValue(touch.Id, out state))
                 {
                     // position the object relative to the touch location and offset
-                    Vector2 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(touch.X, touch.Y, 0.0f));
-                    state.GameObject.transform.position = (Vector3)(worldPos + state.Offset);
+                    Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(touch.X, touch.Y, 0.0f));
+                    Vector3 newPos = (worldPos + state.Offset);
+                    newPos.x = (DragX ? newPos.x : state.GameObject.transform.position.x);
+                    newPos.y = (DragY ? newPos.y : state.GameObject.transform.position.y);
+                    state.GameObject.transform.position = newPos;
                 }
                 else if (!allTouchIds.Contains(touch.Id))
                 {

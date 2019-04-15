@@ -809,6 +809,12 @@ namespace DigitalRubyShared
 
         private void OnEnable()
         {
+            if (!Input.mousePresent)
+            {
+                UnityEngine.Input.simulateMouseWithTouches = SimulateMouseWithTouches = false;
+                TreatMousePointerAsFinger = false;
+            }
+
             // add event system if needed
             if (EventSystem.current == null && AutoAddRequiredComponents && FindObjectOfType<EventSystem>() == null)
             {

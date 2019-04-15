@@ -220,6 +220,25 @@ namespace DigitalRubyShared
         public float ZoomSpeed { get; set; }
 
         /// <summary>
+        /// Get the current scale speed in a range of -1 to 1 with ZoomSpeed applied
+        /// </summary>
+        public float ScaleMultiplierRange
+        {
+            get
+            {
+                if (ScaleMultiplier > 1.0f)
+                {
+                    return (ScaleMultiplier * ZoomSpeed);
+                }
+                else if (ScaleMultiplier < 1.0f)
+                {
+                    return ((-1.0f / ScaleMultiplier) * ZoomSpeed);
+                }
+                return 0.0f;
+            }
+        }
+
+        /// <summary>
         /// How many units the distance between the fingers must increase or decrease from the start distance to begin executing. Default is 0.15.
         /// </summary>
         /// <value>The threshold in units</value>

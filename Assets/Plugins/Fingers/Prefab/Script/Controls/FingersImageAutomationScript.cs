@@ -15,15 +15,21 @@ namespace DigitalRubyShared
 {
     public class FingersImageAutomationScript : MonoBehaviour
     {
+        [Header("Config")]
+        [Range(1, 10)]
+        [Tooltip("Max strokes that can make up an image. For example an X would require 2 strokes, 3 parallel lines would require 3 strokes, etc.")]
+        public int MaxStrokeCount = 2;
+
+        [Tooltip("Whether to auto-add non-matches to the list of possible images")]
+        public bool AutoAddImages;
+
+        [Header("UI elements")]
         public UnityEngine.UI.RawImage Image;
         public Material LineMaterial;
         public UnityEngine.UI.Text MatchLabel;
         public UnityEngine.UI.InputField ScriptText;
         public UnityEngine.UI.InputField ImageNameText;
         public UnityEngine.UI.Button BulkImportButton;
-
-        [Tooltip("Whether to auto-add non-matches to the list of possible images")]
-        public bool AutoAddImages;
 
         public ImageGestureRecognizer ImageGesture { get; private set; }
         protected ImageGestureImage LastImage { get; private set; }
@@ -150,7 +156,7 @@ namespace DigitalRubyShared
 
             ImageGesture = new ImageGestureRecognizer();
             ImageGesture.StateUpdated += ImageGestureUpdated;
-            ImageGesture.MaximumPathCount = 2;
+            ImageGesture.MaximumPathCount = MaxStrokeCount;
             ImageGesture.MaximumPathCountExceeded += MaximumPathCountExceeded;
             ImageGesture.ThresholdUnits = 0.0f;
             if (RecognizableImages != null)
