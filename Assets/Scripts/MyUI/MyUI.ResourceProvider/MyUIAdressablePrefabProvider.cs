@@ -32,7 +32,7 @@ namespace myUI
             try
             {
                 var AssetName = ConvertGenericName(typeof(T).Name.ToString());
-                var window = await Addressables.LoadAsset<GameObject>(AssetName) as GameObject;
+                var window = await Addressables.LoadAssetAsync<GameObject>(AssetName) as GameObject;
                 return window;
             }
             catch (Exception e)
