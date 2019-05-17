@@ -14,6 +14,7 @@ public class CoreInstaller : MonoInstaller
         Container.Bind<IMyUIViewModelsStack>().To<MyUIViewModelsStack>().AsSingle();
         Container.Bind<IMyUICoreController>().To<MyUICoreController>().AsSingle();
         Container.BindInterfacesAndSelfTo<MyUIAdressablePrefabProvider>().AsSingle();
+        //Container.Bind<IMyUIPrefabProvider>().To<TestPrefabProvider>().AsSingle();
         Container.BindInterfacesAndSelfTo<ConfirmExitGameViewModel>().AsSingle();
     }
 }

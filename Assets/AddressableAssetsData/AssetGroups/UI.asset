@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UI
+  m_EditorClassIdentifier: 
+  m_GroupName: UI
+  m_Data:
+    m_SerializedData: []
+  m_GUID: c0ea492ea18c67a4b828d4d98f0c58e8
+  m_SerializeEntries:
+  - m_GUID: 28d23f3624c910148be598dc3bd27dae
+    m_Address: MatchPauseView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2ab3a4df45627794091400ca61fc74ac
+    m_Address: GlobalMapHUDView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7dcbde00b41494243a8fd674273ffaeb
+    m_Address: MatchEndView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 94b1ecef4af9ca443959fe6d8aa9525d
+    m_Address: MapRegionView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 998e2bb7682d04d4ebe40c9c4a65606c
+    m_Address: ConfirmExitGameView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: da21013f3f7d4334a9158be7406f5a60
+    m_Address: MatchHUDView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 949de0eccec8e124e882b1796de112e9, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 3c588fa9e4ce2694282c62094725ec0b, type: 2}
+    - {fileID: 11400000, guid: ed38b08765b2b114dad0c7aec610cfba, type: 2}

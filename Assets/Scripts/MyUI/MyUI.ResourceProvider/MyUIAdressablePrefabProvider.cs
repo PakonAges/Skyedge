@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System;
 using UnityEngine.SceneManagement;
 using Zenject;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace myUI
 {
@@ -32,8 +33,9 @@ namespace myUI
             try
             {
                 var AssetName = ConvertGenericName(typeof(T).Name.ToString());
-                var window = await Addressables.LoadAssetAsync<GameObject>(AssetName) as GameObject;
-                return window;
+                AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(AssetName);
+                await handle.Task;
+                return handle.Result;
             }
             catch (Exception e)
             {

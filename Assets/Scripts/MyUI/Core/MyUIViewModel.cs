@@ -39,6 +39,7 @@ namespace myUI
             {
                 try
                 {
+                    //Show darkening here?
                     var Prefab = await _prefabProvider.GetWindowPrefab<TViewModel>();
                     var ViewGo = GameObject.Instantiate(Prefab);
                     MyView = ViewGo.GetComponent<TView>();
