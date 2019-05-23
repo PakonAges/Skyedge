@@ -32,7 +32,6 @@ public class FIeldCleaner : IFieldCleaner
         bool NeedsToRefill = ClearAllMathcesAndNeedsToRefill();
 
         while (NeedsToRefill)
-        //if (NeedsToRefill)
         {
             await _fieldFiller.FullFillAsync();
             NeedsToRefill = ClearAllMathcesAndNeedsToRefill();
@@ -51,6 +50,16 @@ public class FIeldCleaner : IFieldCleaner
                 if (GameField.FieldMatrix[x, y].IsClearable)
                 {
                     _matches = _matchChecker.GetMatch(GameField.FieldMatrix[x, y]);
+
+                    //TODO: 
+                    //Should return dictionaty [ChipType, List<Chipcoord?>]
+
+                    //If true = found combos
+                    //for each combo check loot + skills
+
+                    //But! if combo 4+ => spawn loot box!
+                    //So this is just a cleaner
+                    //I need some checker class? method?
 
                     if (_matches != null && _matches.Any())
                     {
