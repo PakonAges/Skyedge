@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -27,12 +27,19 @@ namespace DigitalRubyShared
     {
         private readonly System.Diagnostics.Stopwatch stopWatch = new Stopwatch();
 
+        /// <summary>
+        /// TouchesBegan
+        /// </summary>
+        /// <param name="touches">touches</param>
         protected override void TouchesBegan(System.Collections.Generic.IEnumerable<GestureTouch> touches)
         {
             stopWatch.Reset();
             stopWatch.Start();
         }
 
+        /// <summary>
+        /// TouchesMoved
+        /// </summary>
         protected override void TouchesMoved()
         {
             CalculateFocus(CurrentTrackedTouches);
@@ -62,6 +69,9 @@ namespace DigitalRubyShared
             }
         }
 
+        /// <summary>
+        /// TouchesEnded
+        /// </summary>
         protected override void TouchesEnded()
         {
             if (State == GestureRecognizerState.Began || State == GestureRecognizerState.Executing)

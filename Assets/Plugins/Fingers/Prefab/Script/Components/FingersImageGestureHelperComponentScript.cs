@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -17,19 +17,23 @@ namespace DigitalRubyShared
     /// You can leave the line renderers and match text as null if you will be drawing your own lines
     /// and text for when there is a match.
     /// </summary>
-    [AddComponentMenu("Fingers Gestures/Component/Image Recognizer Helper", 8)]
+    [AddComponentMenu("Fingers Gestures/Component/Fingers Image Recognizer Helper", 8)]
     public class FingersImageGestureHelperComponentScript : ImageGestureRecognizerComponentScript
     {
+        /// <summary>The line renderers to show drawn lines or NULL if you are drawing your own lines. Make sure to add enough line renderers to match the max path count for your image gesture recognizer.</summary>
         [Tooltip("The line renderers to show drawn lines or NULL if you are drawing your own lines. Make sure to add " +
             "enough line renderers to match the max path count for your image gesture recognizer.")]
         public LineRenderer[] LineRenderers;
 
+        /// <summary>Label to show match in, null for none</summary>
         [Tooltip("Label to show match in, null for none")]
         public UnityEngine.UI.Text MatchText;
 
+        /// <summary>Executed whenever lines need updating. Use the gesture property FocusX and FocusY to determine the current point.</summary>
         [Tooltip("Executed whenever lines need updating. Use the gesture property FocusX and FocusY to determine the current point.")]
         public System.EventHandler LinesUpdated;
 
+        /// <summary>Executed whenever lines are cleared.</summary>
         [Tooltip("Executed whenever lines are cleared.")]
         public System.EventHandler LinesCleared;
 
@@ -110,6 +114,10 @@ namespace DigitalRubyShared
             }
         }
 
+        /// <summary>
+        /// Check for an image match
+        /// </summary>
+        /// <returns>Matched image or null if none</returns>
         public ImageGestureImage CheckForImageMatch()
         {
             if (matchedImage == null)
@@ -136,6 +144,9 @@ namespace DigitalRubyShared
             return matchedImage;
         }
 
+        /// <summary>
+        /// OnEnable
+        /// </summary>
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -144,6 +155,9 @@ namespace DigitalRubyShared
             Gesture.MaximumPathCountExceeded += Gesture_MaximumPathCountExceeded;
         }
 
+        /// <summary>
+        /// LateUpdate
+        /// </summary>
         protected override void LateUpdate()
         {
             base.LateUpdate();
@@ -151,6 +165,10 @@ namespace DigitalRubyShared
             UpdateLineAnimation();
         }
 
+        /// <summary>
+        /// Callback for gesture events
+        /// </summary>
+        /// <param name="gesture">Gesture</param>
         public void GestureCallback(DigitalRubyShared.GestureRecognizer gesture)
         {
             if (gesture.State == GestureRecognizerState.Ended)

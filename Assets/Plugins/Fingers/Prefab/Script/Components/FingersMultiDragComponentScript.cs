@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -12,7 +12,10 @@ using UnityEngine;
 
 namespace DigitalRubyShared
 {
-    [AddComponentMenu("Fingers Gestures/Component/Multi Drag", 1)]
+    /// <summary>
+    /// Allows dragging multiple objects with just one gesture
+    /// </summary>
+    [AddComponentMenu("Fingers Gestures/Component/Fingers Multi Drag", 1)]
     public class FingersMultiDragComponentScript : MonoBehaviour
     {
         private class DragState
@@ -21,15 +24,19 @@ namespace DigitalRubyShared
             public Vector3 Offset;
         }
 
+        /// <summary>Whether to drag on x axis</summary>
         [Tooltip("Whether to drag on x axis")]
         public bool DragX = true;
 
+        /// <summary>Whether to drag on y axis</summary>
         [Tooltip("Whether to drag on y axis")]
         public bool DragY = true;
 
+        /// <summary>The tag of the object(s) to drag - if the tag contains this, the object can drag</summary>
         [Tooltip("The tag of the object(s) to drag - if the tag contains this, the object can drag")]
         public string TagToDrag;
 
+        /// <summary>The name of the object(s) to drag - if the name contains this, the object can drag</summary>
         [Tooltip("The name of the object(s) to drag - if the name contains this, the object can drag")]
         public string NameToDrag;
 

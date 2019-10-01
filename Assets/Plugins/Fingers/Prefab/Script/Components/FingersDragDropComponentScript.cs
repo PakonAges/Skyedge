@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -15,15 +15,18 @@ namespace DigitalRubyShared
     /// <summary>
     /// Allows a long tap and hold to move an object around and release it at a new point. Add this script to the object to drag.
     /// </summary>
-    [AddComponentMenu("Fingers Gestures/Component/Drag and Drop", 0)]
+    [AddComponentMenu("Fingers Gestures/Component/Fingers Drag and Drop", 0)]
     public class FingersDragDropComponentScript : MonoBehaviour
     {
+        /// <summary>The camera to use to convert screen coordinates to world coordinates. Defaults to Camera.main.</summary>
         [Tooltip("The camera to use to convert screen coordinates to world coordinates. Defaults to Camera.main.")]
-        public Camera Camera;
+        public Camera[] Cameras;
 
+        /// <summary>Whether to bring the object to the front when a gesture executes on it. Only used for 2D objects, ignored for 3D objects.</summary>
         [Tooltip("Whether to bring the object to the front when a gesture executes on it. Only used for 2D objects, ignored for 3D objects.")]
         public bool BringToFront = true;
 
+        /// <summary>Scale to increase object by when a drag starts. When drags stops, scale is returned to normal.</summary>
         [Tooltip("Scale to increase object by when a drag starts. When drags stops, scale is returned to normal.")]
         [Range(1.0f, 1.5f)]
         public float DragScale = 1.1f;
@@ -42,12 +45,13 @@ namespace DigitalRubyShared
 
         private void LongPressGestureUpdated(DigitalRubyShared.GestureRecognizer r)
         {
-            FingersPanRotateScaleComponentScript.StartOrResetGesture(r, BringToFront, Camera, gameObject, spriteRenderer, GestureRecognizerComponentScriptBase.GestureObjectMode.RequireIntersectWithGameObject);
+            Camera camera;
+            FingersScript.StartOrResetGesture(r, BringToFront, Cameras, gameObject, spriteRenderer, GestureRecognizerComponentScriptBase.GestureObjectMode.RequireIntersectWithGameObject, out camera);
             if (r.State == GestureRecognizerState.Began)
             {
                 transform.localScale *= DragScale;
-                panZ = Camera.WorldToScreenPoint(transform.position).z;
-                panOffset = transform.position - Camera.ScreenToWorldPoint(new Vector3(r.FocusX, r.FocusY, panZ));
+                panZ = camera.WorldToScreenPoint(transform.position).z;
+                panOffset = transform.position - camera.ScreenToWorldPoint(new Vector3(r.FocusX, r.FocusY, panZ));
                 if (DragStarted != null)
                 {
                     DragStarted.Invoke(this, System.EventArgs.Empty);
@@ -56,7 +60,7 @@ namespace DigitalRubyShared
             else if (r.State == GestureRecognizerState.Executing)
             {
                 Vector3 gestureScreenPoint = new Vector3(r.FocusX, r.FocusY, panZ);
-                Vector3 gestureWorldPoint = Camera.ScreenToWorldPoint(gestureScreenPoint) + panOffset;
+                Vector3 gestureWorldPoint = camera.ScreenToWorldPoint(gestureScreenPoint) + panOffset;
                 if (rigidBody != null)
                 {
                     rigidBody.MovePosition(gestureWorldPoint);
@@ -90,7 +94,10 @@ namespace DigitalRubyShared
 
         private void OnEnable()
         {
-            this.Camera = (this.Camera == null ? Camera.main : this.Camera);
+            if ((Cameras == null || Cameras.Length == 0) && Camera.main != null)
+            {
+                Cameras = new Camera[] { Camera.main };
+            }
             LongPressGesture = new LongPressGestureRecognizer();
             LongPressGesture.StateUpdated += LongPressGestureUpdated;
             rigidBody = GetComponent<Rigidbody>();
@@ -111,8 +118,19 @@ namespace DigitalRubyShared
             }
         }
 
+        /// <summary>
+        /// Fires when a drag starts
+        /// </summary>
         public event System.EventHandler DragStarted;
+
+        /// <summary>
+        /// Fires when a drag updates
+        /// </summary>
         public event System.EventHandler DragUpdated;
+
+        /// <summary>
+        /// Fires when a drag ends
+        /// </summary>
         public event System.EventHandler DragEnded;
     }
 }

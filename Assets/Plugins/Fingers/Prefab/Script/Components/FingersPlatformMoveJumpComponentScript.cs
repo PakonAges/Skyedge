@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -18,38 +18,46 @@ namespace DigitalRubyShared
     /// Allow controlling a rigid body in 2D with jump, move and drop through platform ability
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
-    [AddComponentMenu("Fingers Gestures/Component/Platform jump, move and drop down", 7)]
+    [AddComponentMenu("Fingers Gestures/Component/Fingers Platform Controller", 7)]
     public class FingersPlatformMoveJumpComponentScript : MonoBehaviour
     {
         private Rigidbody2D playerBody;
 
+        /// <summary>Max velocity in x and y direction. The x and y component will be clamped to this speed.</summary>
         [Tooltip("Max velocity in x and y direction. The x and y component will be clamped to this speed.")]
         [Range(1.0f, 128.0f)]
         public float MaxSpeed = 32.0f;
 
+        /// <summary>Force of a jump</summary>
         [Tooltip("Force of a jump")]
         [Range(1.0f, 128.0f)]
         public float JumpForce = 16.0f;
 
+        /// <summary>How far the tap can move to still count as a jump</summary>
         [Tooltip("How far the tap can move to still count as a jump")]
         [Range(0.3f, 5.0f)]
         public float JumpThresholdUnits = 3.0f;
 
+        /// <summary>The jump must happen with this seconds or it fails</summary>
         [Tooltip("The jump must happen with this seconds or it fails")]
         [Range(0.1f, 0.5f)]
         public float JumpThresholdSeconds = 0.3f;
 
+        /// <summary>Move speed multiplier</summary>
         [Tooltip("Move speed multiplier")]
         [Range(0.01f, 10.0f)]
         public float MoveSpeed = 0.1f;
 
+        /// <summary>How far the pan must move before movements starts</summary>
         [Tooltip("How far the pan must move before movements starts")]
         [Range(0.1f, 1.0f)]
         public float MoveThresholdUnits = 0.35f;
 
+        /// <summary>Set the tag of platforms that can be jumped off of</summary>
         [Tooltip("Set the tag of platforms that can be jumped off of")]
         public string PlatformTag = "Platform";
 
+        /// <summary>Set the name of platforms that can be jumped off of</summary>
         [Tooltip("Set the name of platforms that can be jumped off of")]
         public string PlatformName = "Platform";
 

@@ -1,14 +1,18 @@
 Fingers, by Jeff Johnson
-Fingers (c) 2015 Digital Ruby, LLC
-https://www.digitalruby.com
+Fingers (c) 2015-Present Digital Ruby, LLC
+https://www.digitalruby.com/unity-plugins/
 
-Version 2.6.6
+Version 2.9.0
 
 See ChangeLog.txt for history.
 
 Fingers is an advanced gesture recognizer system for Unity and any other platform where C# is supported (such as Xamarin). I am using this same code in a native drawing app for Android (You Doodle) and they work great.
 
 If you've used UIGestureRecognizer on iOS, you should feel right at home using Fingers. In fact, Apple's documentation is very relevant to fingers: https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIGestureRecognizer_Class/
+
+Code Documentation
+--------------------
+Fingers - Gestures for Unity code documentation is available at https://unitydocs.digitalruby.com
 
 Tutorial
 --------------------
@@ -35,10 +39,10 @@ To get started, perform the following:
 - You are welcome to drag the FingersScriptPrefab object into your scene as well if you want, but this is not necessary.
 - Add "using DigitalRubyShared;" to the top of your scripts to include the gestures and framework.
 - Create some gestures. There are many example scripts and scenes for you to refer to. The component menu allows adding gestures directly in the editor.
-- Add colliders to elements that you want to receive touches. Make sure your camera has physics raycasters as wel.
+- Add colliders to elements that you want to receive touches. Make sure your camera has physics raycasters as well.
 
 Fingers script has these properties:
-- Treat mouse as pointer (default is true, useful for testing in the player for some gestures). Disable this if you are using Unity Remote or are running on a touch screen like Surface Pro.
+- Treat mouse pointer/wheel as finger (default is true, useful for testing in the player for some gestures). Disable this if you are using Unity Remote or are running on a touch screen like Surface Pro.
 - Simulate mouse with touch - whether to send mouse events for touches. Default is false. You don't need this unless you have legacy code relying on mouse events.
 - RequireControlKeyForMouseZoom - whether the control key is required to scale with mouse wheel.
 - Pass through objects. Any object in this list will always allow the gesture to execute and will not block it.
@@ -47,11 +51,34 @@ Fingers script has these properties:
 - Default DPI. In the event that Unity can't figure out the DPI of the device, use this default value.
 - Clear gestures on level load. Default is true. This clears out all gestures when a new scene is loaded.
 
+Requirements for happy gestures in Unity scripts
+--------------------
+- Script fields: Create your gesture objects in fields of your script, i.e. private readonly PanGestureRecognizer panGesture = new PanGestureRecognizer();
+- Wrap any private gesture recognizers that need to be accessed by other scripts with a public get only property, i.e. public PanGestureRecognizer PanGesture { get { return panGesture; } }
+- OnEnable: Setup your gestures and add gestures using FingersScript.Instance.AddGesture in OnEnable. Add masks using FingersScript.Instance.AddMask.
+- OnDisable: Remove gestures using FingersScript.Instance.RemoveGesture, remove masks using FingersScript.Instance.RemoveMask. Wrap both inside an if (FingersScript.HasInstance) { /* remove gestures, remove masks */ }.
+
+Input Lag
+--------------------
+Unity input will likely lag on all devices with default settings. To get maximum input performance, do the following:
+- Turn on UseFixedUpdate on the fingers script.
+- Set project settings -> time -> fixed update rate to a low value (like 0.001) or whatever rate your mouse or touch device polls at.
+
+If you do modify these settings, please profile and make sure your performance is acceptable.
+
 Creating and Removing Gestures
 --------------------
 Always create new gestures in OnEnable. Remove them in OnDisable. The demo scripts all show this pattern in action. OnDisable should check if FingersScript.HasInstance is true before removing gestures.
 
 This ensures that there are no memory leaks or bad behavior with Unity game objects / null reference exceptions, etc.
+
+Masking Gestures
+--------------------
+Gestures can be restricted to masks using collider2d trigger object that must be in a canvas. You can have as many masks as you like.
+
+Use FingersScript.Instance.AddMask and FingersScript.Instance.RemoveMask to add and remove masks. Component gestures also have a Collider2D mask field.
+
+DemoSceneJoystickMaskArea shows an example.
 
 Event System
 --------------------
@@ -108,7 +135,7 @@ Joystick:
 --------------------
 FingersJoystickScript is a great way to create a joystick. Please see DemoSceneJoystick and DemoScriptJoystick for examples. The joystick features distance limiting and power (moves further as joystick moves away from center), along with a follow speed to have the joystick follow the touch if it moves beyond the joystick bounds.
 
-The joystick now has a prefab! It must be placed under a Canvas.
+The joystick now has a prefab! It must be placed under a Canvas. The joystick rect transform must have a pivot of 0.5,0.5 and this is enforced in OnEnable in the joystick script.
 
 DPad:
 --------------------
@@ -123,6 +150,10 @@ First person and third person controller prefabs are now part of the asset. Plea
 First person controller tutorial: https://youtu.be/7T_IC3Cu1D8
 Third person controller tutorial: https://youtu.be/2QCFq1rAXxE
 
+VR / AR / Virtual touches
+--------------------
+Please see DemosceneVirtualTouches and DemoScriptVirtualTouches for examples on how to do AR / VR or other virtual touches.
+
 Demos:
 --------------------
 I've made many demo scenes. Please check them out as they are great for seeing everything Fingers - Gestures for Unity can do.
@@ -130,6 +161,10 @@ I've made many demo scenes. Please check them out as they are great for seeing e
 Multiple Gestures with One Touch
 --------------------
 See DemoSceneSwipe / DemoScriptSwipe.cs for an example of how to make a gesture that can restart without lifting the finger or mouse.
+
+OnMouse* events and scripts
+--------------------
+Fingers Gestures does not support OnMouse* script events on platforms without a mouse. This is due to the massive amounts of bugs and complexity of having a mouse pointer simulated on these platforms. If you have OnMouse* methods, you will need to replace with actual gestures.
 
 Misc:
 --------------------

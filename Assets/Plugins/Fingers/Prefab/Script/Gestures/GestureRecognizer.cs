@@ -1,4 +1,4 @@
-﻿﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -105,10 +105,10 @@ namespace DigitalRubyShared
         /// <param name="screenY">Screen y in pixels</param>
         /// <param name="previousX">Previous screen x in pixels</param>
         /// <param name="previousY">Previous screen y in pixels</param>
-        /// <param name="pressure">Pressure if known (0 to 1)</param>
+        /// <param name="pressure">Pressure if known (0 to 1), set to 1 if unknown</param>
         /// <param name="platformSpecificTouch"></param>
         /// <param name="touchPhase"></param>
-        public GestureTouch(int platformSpecificId, float screenX, float screenY, float previousX, float previousY, float pressure, object platformSpecificTouch = null, TouchPhase touchPhase = TouchPhase.Unknown)
+        public GestureTouch(int platformSpecificId, float screenX, float screenY, float previousX, float previousY, float pressure = 1.0f, object platformSpecificTouch = null, TouchPhase touchPhase = TouchPhase.Unknown)
         {
             this.id = platformSpecificId;
             this.screenX = screenX;
@@ -282,6 +282,9 @@ namespace DigitalRubyShared
             timer.Start();
         }
 
+        /// <summary>
+        /// Reset velocity state
+        /// </summary>
         public void Reset()
         {
             timer.Reset();
@@ -289,11 +292,19 @@ namespace DigitalRubyShared
             history.Clear();
         }
 
+        /// <summary>
+        /// Reset and set previouos pos to nil
+        /// </summary>
         public void Restart()
         {
             Restart(float.MinValue, float.MinValue);
         }
 
+        /// <summary>
+        /// Reset and set previous position
+        /// </summary>
+        /// <param name="previousX">Previous x pos</param>
+        /// <param name="previousY">Previous y pos</param>
         public void Restart(float previousX, float previousY)
         {
             this.previousX = previousX;
@@ -302,6 +313,11 @@ namespace DigitalRubyShared
             timer.Start();
         }
 
+        /// <summary>
+        /// Update velocity state
+        /// </summary>
+        /// <param name="x">Next x pos</param>
+        /// <param name="y">Next y pos</param>
         public void Update(float x, float y)
         {
             float elapsed = ElapsedSeconds;
@@ -317,9 +333,24 @@ namespace DigitalRubyShared
             previousY = y;
         }
 
+        /// <summary>
+        /// Elapsed seconds
+        /// </summary>
         public float ElapsedSeconds { get { return (float)timer.Elapsed.TotalSeconds; } }
+
+        /// <summary>
+        /// Current x velocity
+        /// </summary>
         public float VelocityX { get; private set; }
+
+        /// <summary>
+        /// Current y velocity
+        /// </summary>
         public float VelocityY { get; private set; }
+
+        /// <summary>
+        /// Current speed
+        /// </summary>
         public float Speed { get { return (float)Math.Sqrt(VelocityX * VelocityX + VelocityY * VelocityY); } }
     }
 
@@ -351,10 +382,21 @@ namespace DigitalRubyShared
         private bool isRestarting;
         private int lastTrackTouchCount;
         private bool enabled = true;
+        private bool inReset;
 
+        /// <summary>
+        /// Previous focus x
+        /// </summary>
         protected float PrevFocusX { get; private set; }
+
+        /// <summary>
+        /// Previous focus y
+        /// </summary>
         protected float PrevFocusY { get; private set; }
 
+        /// <summary>
+        /// Current active gestures
+        /// </summary>
         internal static readonly HashSet<DigitalRubyShared.GestureRecognizer> ActiveGestures = new HashSet<DigitalRubyShared.GestureRecognizer>();
 
         private void UpdateTouchState(bool executing)
@@ -536,20 +578,66 @@ namespace DigitalRubyShared
             return count;
         }
 
+        private bool RequiredGesturesToFailAllowsEndPending()
+        {
+            if (requireGestureRecognizersToFail.Count > 0)
+            {
+                using (HashSet<DigitalRubyShared.GestureRecognizer>.Enumerator gestureToFailEnumerator = requireGestureRecognizersToFail.GetEnumerator())
+                {
+                    while (gestureToFailEnumerator.MoveNext())
+                    {
+                        // if the require fail gesture is possible and
+                        // the require fail gesture has touches or just ended and
+                        // the require fail gesture has not jus failed
+                        // then requre end pending state for failed gesture check
+                        bool isPossible = gestureToFailEnumerator.Current.State == GestureRecognizerState.Possible ||
+                            gestureToFailEnumerator.Current.State == GestureRecognizerState.Began ||
+                            gestureToFailEnumerator.Current.State == GestureRecognizerState.Executing;
+                        bool isTrackingTouches = gestureToFailEnumerator.Current.CurrentTrackedTouches.Count != 0;
+                        bool justEnded = gestureToFailEnumerator.Current.justEnded;
+                        bool justFailed = gestureToFailEnumerator.Current.justFailed;
+                        bool requireEndPending = isPossible && (isTrackingTouches || justEnded) && !justFailed;
+                        if (requireEndPending)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool HasAllRequiredFailGesturesToEndFromEndPending()
+        {
+            return requireGestureRecognizersToFail.SetEquals(requireGestureRecognizersToFailThatHaveFailed);
+        }
+
         private void ResetInternal(bool clearCurrentTrackedTouches)
         {
-            if (clearCurrentTrackedTouches)
+            if (inReset)
             {
-                currentTrackedTouches.Clear();
+                return;
             }
-            requireGestureRecognizersToFailThatHaveFailed.Clear();
-            touchStartLocations.Clear();
-            StartFocusX = PrevFocusX = StartFocusY = PrevFocusY = float.MinValue;
-            FocusX = FocusY = DeltaX = DeltaY = DistanceX = DistanceY = 0.0f;
-            Pressure = 0.0f;
-            velocityTracker.Reset();
-            RemoveFromActiveGestures();
-            SetState(GestureRecognizerState.Possible);
+            inReset = true;
+            try
+            {
+                if (clearCurrentTrackedTouches)
+                {
+                    currentTrackedTouches.Clear();
+                }
+                requireGestureRecognizersToFailThatHaveFailed.Clear();
+                touchStartLocations.Clear();
+                StartFocusX = PrevFocusX = StartFocusY = PrevFocusY = float.MinValue;
+                FocusX = FocusY = DeltaX = DeltaY = DistanceX = DistanceY = 0.0f;
+                Pressure = 0.0f;
+                velocityTracker.Reset();
+                RemoveFromActiveGestures();
+                SetState(GestureRecognizerState.Possible);
+            }
+            finally
+            {
+                inReset = false;
+            }
         }
 
         private
@@ -601,38 +689,6 @@ namespace DigitalRubyShared
             {
                 touchStartLocations.Add(new KeyValuePair<float, float>(touch.X, touch.Y));
             }
-        }
-
-        /// <summary>
-        /// Determines whether any tracked touches are within the distance of the starting point of each tracked touch.
-        /// </summary>
-        /// <param name="thresholdUnits">Threshold in units</param>
-        /// <returns>True if all touches are within thresholdUnits from their start position, false otherwise</returns>
-        protected bool AreTrackedTouchesWithinDistance(float thresholdUnits)
-        {
-            if (CurrentTrackedTouches.Count == 0 || touchStartLocations.Count == 0)
-            {
-                // this.Log("Distance fail, no current or start locations");
-                return false;
-            }
-            foreach (GestureTouch touch in CurrentTrackedTouches)
-            {
-                bool withinDistance = false;
-                for (int i = touchStartLocations.Count - 1; i >= 0; i--)
-                {
-                    if (PointsAreWithinDistance(touch.X, touch.Y, touchStartLocations[i].Key, touchStartLocations[i].Value, thresholdUnits))
-                    {
-                        withinDistance = true;
-                        break;
-                    }
-                    // this.Log("Distance fail: " + touch.X + ", " + touch.Y + ", " + touchStartLocations[i].Key + ", " + touchStartLocations[i].Value + ", " + thresholdUnits);
-                }
-                if (!withinDistance)
-                {
-                    return false;
-                }
-            }
-            return true;
         }
 
         /// <summary>
@@ -776,40 +832,6 @@ namespace DigitalRubyShared
             return true;
         }
 
-        private bool RequiredGesturesToFailAllowsEndPending()
-        {
-            if (requireGestureRecognizersToFail.Count > 0)
-            {
-                using (HashSet<DigitalRubyShared.GestureRecognizer>.Enumerator gestureToFailEnumerator = requireGestureRecognizersToFail.GetEnumerator())
-                {
-                    while (gestureToFailEnumerator.MoveNext())
-                    {
-                        // if the require fail gesture is possible and
-                        // the require fail gesture has touches or just ended and
-                        // the require fail gesture has not jus failed
-                        // then requre end pending state for failed gesture check
-                        bool isPossible = gestureToFailEnumerator.Current.State == GestureRecognizerState.Possible ||
-                            gestureToFailEnumerator.Current.State == GestureRecognizerState.Began ||
-                            gestureToFailEnumerator.Current.State == GestureRecognizerState.Executing;
-                        bool isTrackingTouches = gestureToFailEnumerator.Current.CurrentTrackedTouches.Count != 0;
-                        bool justEnded = gestureToFailEnumerator.Current.justEnded;
-                        bool justFailed = gestureToFailEnumerator.Current.justFailed;
-                        bool requireEndPending = isPossible && (isTrackingTouches || justEnded) && !justFailed;
-                        if (requireEndPending)
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
-        }
-
-        private bool HasAllRequiredFailGesturesToEndFromEndPending()
-        {
-            return requireGestureRecognizersToFail.SetEquals(requireGestureRecognizersToFailThatHaveFailed);
-        }
-
         /// <summary>
         /// Call with the touches that began, child class should override
         /// </summary>
@@ -822,7 +844,6 @@ namespace DigitalRubyShared
         /// <summary>
         /// Call with the touches that moved, child class should override
         /// </summary>
-        /// <param name="touches">Touches that moved</param>
         protected virtual void TouchesMoved()
         {
 
@@ -831,7 +852,6 @@ namespace DigitalRubyShared
         /// <summary>
         /// Call with the touches that ended, child class should override
         /// </summary>
-        /// <param name="touches">Touches that ended</param>
         protected virtual void TouchesEnded()
         {
 
@@ -1073,6 +1093,38 @@ namespace DigitalRubyShared
                 StopTrackingTouches(touches);
                 justEnded = true;
             }
+        }
+
+        /// <summary>
+        /// Determines whether any tracked touches are within the distance of the starting point of each tracked touch.
+        /// </summary>
+        /// <param name="thresholdUnits">Threshold in units</param>
+        /// <returns>True if all touches are within thresholdUnits from their start position, false otherwise</returns>
+        public bool AreTrackedTouchesWithinDistance(float thresholdUnits)
+        {
+            if (CurrentTrackedTouches.Count == 0 || touchStartLocations.Count == 0)
+            {
+                // this.Log("Distance fail, no current or start locations");
+                return false;
+            }
+            foreach (GestureTouch touch in CurrentTrackedTouches)
+            {
+                bool withinDistance = false;
+                for (int i = touchStartLocations.Count - 1; i >= 0; i--)
+                {
+                    if (PointsAreWithinDistance(touch.X, touch.Y, touchStartLocations[i].Key, touchStartLocations[i].Value, thresholdUnits))
+                    {
+                        withinDistance = true;
+                        break;
+                    }
+                    // this.Log("Distance fail: " + touch.X + ", " + touch.Y + ", " + touchStartLocations[i].Key + ", " + touchStartLocations[i].Value + ", " + thresholdUnits);
+                }
+                if (!withinDistance)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         /// <summary>
@@ -1477,8 +1529,16 @@ namespace DigitalRubyShared
 
 #if !PCL && !HAS_TASKS
 
+        /// <summary>
+        /// Main thread callback
+        /// </summary>
+        /// <param name="delay">Delay in seconds</param>
+        /// <param name="callback">Callback</param>
         public delegate void CallbackMainThreadDelegate(float delay, System.Action callback);
 
+        /// <summary>
+        /// Main thread callback implementation
+        /// </summary>
         public static CallbackMainThreadDelegate MainThreadCallback;
 
 #endif

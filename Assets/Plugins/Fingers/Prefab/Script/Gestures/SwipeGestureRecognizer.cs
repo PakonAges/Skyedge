@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -158,6 +158,10 @@ namespace DigitalRubyShared
             }
         }
 
+        /// <summary>
+        /// TouchesBegan
+        /// </summary>
+        /// <param name="touches">Touches</param>
         protected override void TouchesBegan(System.Collections.Generic.IEnumerable<GestureTouch> touches)
         {
             CalculateFocus(CurrentTrackedTouches);
@@ -165,12 +169,18 @@ namespace DigitalRubyShared
             SetState(GestureRecognizerState.Possible);
         }
 
+        /// <summary>
+        /// TouchesMoved
+        /// </summary>
         protected override void TouchesMoved()
         {
             CalculateFocus(CurrentTrackedTouches);
             CheckForSwipeCompletion(EndMode != SwipeGestureRecognizerEndMode.EndWhenTouchEnds);
         }
 
+        /// <summary>
+        /// TouchesEnded
+        /// </summary>
         protected override void TouchesEnded()
         {
             CalculateFocus(CurrentTrackedTouches);
@@ -199,6 +209,9 @@ namespace DigitalRubyShared
             SendBeginExecutingStates = true;
         }
 
+        /// <summary>
+        /// Reset the gesture
+        /// </summary>
         public override void Reset()
         {
             base.Reset();

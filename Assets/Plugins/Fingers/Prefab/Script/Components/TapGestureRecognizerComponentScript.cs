@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -12,25 +12,35 @@ using UnityEngine;
 
 namespace DigitalRubyShared
 {
-    [AddComponentMenu("Fingers Gestures/Gesture/Tap Gesture", 0)]
+    /// <summary>
+    /// Wraps a tap gesture in a component
+    /// </summary>
+    [AddComponentMenu("Fingers Gestures/Gesture/Fingers Tap Gesture", 0)]
     public class TapGestureRecognizerComponentScript : GestureRecognizerComponentScript<TapGestureRecognizer>
     {
+        /// <summary>How many taps must execute in order to end the gesture</summary>
         [Header("Tap gesture properties")]
         [Tooltip("How many taps must execute in order to end the gesture")]
         [Range(1, 5)]
         public int NumberOfTapsRequired = 1;
 
+        /// <summary>How many seconds can expire before the tap is released to still count as a tap</summary>
         [Tooltip("How many seconds can expire before the tap is released to still count as a tap")]
         [Range(0.01f, 1.0f)]
         public float ThresholdSeconds = 0.5f;
 
+        /// <summary>How many units away the tap down and up and subsequent taps can be to still be considered - must be greater than 0.</summary>
         [Tooltip("How many units away the tap down and up and subsequent taps can be to still be considered - must be greater than 0.")]
         [Range(0.01f, 1.0f)]
         public float ThresholdUnits = 0.3f;
 
+        /// <summary>Whether the tap gesture will immediately send a begin state when a touch is first down. Default is false.</summary>
         [Tooltip("Whether the tap gesture will immediately send a begin state when a touch is first down. Default is false.")]
         public bool SendBeginState;
 
+        /// <summary>
+        /// OnEnable
+        /// </summary>
         protected override void OnEnable()
         {
             base.OnEnable();

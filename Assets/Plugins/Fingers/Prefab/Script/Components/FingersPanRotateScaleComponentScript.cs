@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -18,26 +18,72 @@ namespace DigitalRubyShared
     /// <summary>
     /// Allows two finger pan, scale and rotate on a game object
     /// </summary>
-    [AddComponentMenu("Fingers Gestures/Component/Pan-Rotate-Scale", 4)]
+    [AddComponentMenu("Fingers Gestures/Component/Fingers Pan Rotate Scale", 4)]
     public class FingersPanRotateScaleComponentScript : MonoBehaviour
     {
-        [Tooltip("The camera to use to convert screen coordinates to world coordinates. Defaults to Camera.main.")]
-        public Camera Camera;
+        /// <summary>
+        /// Double tap reset mode
+        /// </summary>
+        public enum _DoubleTapResetMode
+        {
+            /// <summary>
+            /// No reset on double tap
+            /// </summary>
+            Off = 0,
 
+            /// <summary>
+            /// Reset scale and rotation on double tap
+            /// </summary>
+            ResetScaleRotation = 1,
+
+            /// <summary>
+            /// Reset scale, rotation and position on double tap
+            /// </summary>
+            ResetScaleRotationPosition = 2
+        }
+
+        /// <summary>The cameras to use to convert screen coordinates to world coordinates. Defaults to Camera.main.</summary>
+        [Header("Setup")]
+        [Tooltip("The cameras to use to convert screen coordinates to world coordinates. Defaults to Camera.main.")]
+        public Camera[] Cameras;
+
+        /// <summary>Whether to bring the object to the front when a gesture executes on it</summary>
         [Tooltip("Whether to bring the object to the front when a gesture executes on it")]
         public bool BringToFront = true;
 
+        /// <summary>Whether the gestures in this script can execute simultaneously with all other gestures.</summary>
         [Tooltip("Whether the gestures in this script can execute simultaneously with all other gestures.")]
         public bool AllowExecutionWithAllGestures;
 
+        /// <summary>The mode to execute in, can be require over game object or allow on any game object.</summary>
         [Tooltip("The mode to execute in, can be require over game object or allow on any game object.")]
         public GestureRecognizerComponentScriptBase.GestureObjectMode Mode = GestureRecognizerComponentScriptBase.GestureObjectMode.RequireIntersectWithGameObject;
 
-        [Tooltip("The minimum and maximum scale. 0 for no limits. 1 for no scaling.")]
+        /// <summary>The minimum and maximum scale as a percentage of the original scale of the object. 0,0 for no limits. -1,-1 for no scaling.</summary>
+        [Tooltip("The minimum and maximum scale as a percentage of the original scale of the object. 0,0 for no limits. -1,-1 for no scaling.")]
         public Vector2 MinMaxScale;
 
-        [Tooltip("Whether to add a double tap to reset the transform of the game object this script is on.")]
-        public bool DoubleTapToReset;
+        /// <summary>The threshold in units touches must move apart or together to begin scaling.</summary>
+        [Tooltip("The threshold in units touches must move apart or together to begin scaling.")]
+        [Range(0.0f, 1.0f)]
+        public float ScaleThresholdUnits = 0.15f;
+
+        /// <summary>Whether to add a double tap to reset the transform of the game object this script is on. This must be set in the inspector and not changed.</summary>
+        [Header("Enable / Disable Gestures")]
+        [Tooltip("Whether to add a double tap to reset the transform of the game object this script is on. This must be set in the inspector and not changed.")]
+        public _DoubleTapResetMode DoubleTapResetMode;
+
+        /// <summary>Whether to allow panning. Can be set during editor or runtime.</summary>
+        [Tooltip("Whether to allow panning. Can be set during editor or runtime.")]
+        public bool AllowPan = true;
+
+        /// <summary>Whether to allow scaling. Can be set during editor or runtime.</summary>
+        [Tooltip("Whether to allow scaling. Can be set during editor or runtime.")]
+        public bool AllowScale = true;
+
+        /// <summary>Whether to allow rotating. Can be set during editor or runtime.</summary>
+        [Tooltip("Whether to allow rotating. Can be set during editor or runtime.")]
+        public bool AllowRotate = true;
 
         /// <summary>
         /// Allow moving the target
@@ -67,97 +113,32 @@ namespace DigitalRubyShared
         private int startSortOrder;
         private float panZ;
         private Vector3 panOffset;
+        private Vector3? startScale;
 
         private struct SavedState
         {
             public Vector3 Scale;
             public Quaternion Rotation;
+            public Vector3 Position;
         }
         private readonly Dictionary<Transform, SavedState> savedStates = new Dictionary<Transform, SavedState>();
 
-        private static readonly List<RaycastResult> captureRaycastResults = new List<RaycastResult>();
-
-        public static GameObject StartOrResetGesture(DigitalRubyShared.GestureRecognizer r, bool bringToFront, Camera camera, GameObject obj, SpriteRenderer spriteRenderer, GestureRecognizerComponentScriptBase.GestureObjectMode mode)
-        {
-            GameObject result = null;
-            if (r.State == GestureRecognizerState.Began)
-            {
-                if ((result = GestureIntersectsObject(r, camera, obj, mode)) != null)
-                {
-                    SpriteRenderer _spriteRenderer;
-                    if (bringToFront && (_spriteRenderer = result.GetComponent<SpriteRenderer>()) != null)
-                    {
-                        _spriteRenderer.sortingOrder = 1000;
-                    }
-                }
-                else
-                {
-                    r.Reset();
-                }
-            }
-            return result;
-        }
-
-        private static int RaycastResultCompare(RaycastResult r1, RaycastResult r2)
-        {
-            SpriteRenderer rend1 = r1.gameObject.GetComponent<SpriteRenderer>();
-            if (rend1 != null)
-            {
-                SpriteRenderer rend2 = r2.gameObject.GetComponent<SpriteRenderer>();
-                if (rend2 != null)
-                {
-                    int comp = rend2.sortingLayerID.CompareTo(rend1.sortingLayerID);
-                    if (comp == 0)
-                    {
-                        comp = rend2.sortingOrder.CompareTo(rend1.sortingOrder);
-                    }
-                    return comp;
-                }
-            }
-            return r2.gameObject.transform.GetSiblingIndex().CompareTo(r1.gameObject.transform.GetSiblingIndex());
-        }
-
-        private static GameObject GestureIntersectsObject(DigitalRubyShared.GestureRecognizer r, Camera camera, GameObject obj, GestureRecognizerComponentScriptBase.GestureObjectMode mode)
-        {
-            if (EventSystem.current == null)
-            {
-                return null;
-            }
-
-            captureRaycastResults.Clear();
-            PointerEventData p = new PointerEventData(EventSystem.current);
-            p.Reset();
-            p.position = new Vector2(r.FocusX, r.FocusY);
-            p.clickCount = 1;
-            EventSystem.current.RaycastAll(p, captureRaycastResults);
-            captureRaycastResults.Sort(RaycastResultCompare);
-
-            foreach (RaycastResult result in captureRaycastResults)
-            {
-                if (result.gameObject == obj)
-                {
-                    return result.gameObject;
-                }
-                else if (result.gameObject.GetComponent<Collider>() != null ||
-                    result.gameObject.GetComponent<Collider2D>() != null ||
-                    result.gameObject.GetComponent<FingersPanRotateScaleComponentScript>() != null)
-                {
-                    if (mode == GestureRecognizerComponentScriptBase.GestureObjectMode.AllowOnAnyGameObjectViaRaycast)
-                    {
-                        return result.gameObject;
-                    }
-
-                    // blocked by a collider or another gesture, bail
-                    break;
-                }
-            }
-            return null;
-        }
-
         private void PanGestureUpdated(DigitalRubyShared.GestureRecognizer r)
         {
-            GameObject obj = StartOrResetGesture(r, BringToFront, Camera, gameObject, spriteRenderer, Mode);
-            if (r.State == GestureRecognizerState.Began)
+            if (!AllowPan)
+            {
+                r.Reset();
+                return;
+            }
+
+            Camera camera;
+            GameObject obj = FingersScript.StartOrResetGesture(r, BringToFront, Cameras, gameObject, spriteRenderer, Mode, out camera);
+            if (camera == null)
+            {
+                r.Reset();
+                return;
+            }
+            else if (r.State == GestureRecognizerState.Began)
             {
                 SetStartState(r, obj, false);
             }
@@ -165,11 +146,19 @@ namespace DigitalRubyShared
             {
                 if (PanGesture.ReceivedAdditionalTouches)
                 {
-                    panZ = Camera.WorldToScreenPoint(_transform.position).z;
-                    panOffset = _transform.position - Camera.ScreenToWorldPoint(new Vector3(r.FocusX, r.FocusY, panZ));
+                    panZ = camera.WorldToScreenPoint(_transform.position).z;
+                    if (canvasRenderer == null)
+                    {
+                        panOffset = _transform.position - camera.ScreenToWorldPoint(new Vector3(r.FocusX, r.FocusY, panZ));
+                    }
+                    else
+                    {
+                        Vector2 screenToCanvasPoint = canvasRenderer.GetComponentInParent<Canvas>().ScreenToCanvasPoint(new Vector2(r.FocusX, r.FocusY));
+                        panOffset = new Vector3(screenToCanvasPoint.x - _transform.position.x, screenToCanvasPoint.y - _transform.position.y, 0.0f);
+                    }
                 }
                 Vector3 gestureScreenPoint = new Vector3(r.FocusX, r.FocusY, panZ);
-                Vector3 gestureWorldPoint = Camera.ScreenToWorldPoint(gestureScreenPoint) + panOffset;
+                Vector3 gestureWorldPoint = camera.ScreenToWorldPoint(gestureScreenPoint) + panOffset;
                 if (rigidBody != null)
                 {
                     rigidBody.MovePosition(gestureWorldPoint);
@@ -180,7 +169,7 @@ namespace DigitalRubyShared
                 }
                 else if (canvasRenderer != null)
                 {
-                    _transform.position = gestureScreenPoint;
+                    _transform.position = gestureScreenPoint - panOffset;
                 }
                 else
                 {
@@ -199,29 +188,49 @@ namespace DigitalRubyShared
 
         private void ScaleGestureUpdated(DigitalRubyShared.GestureRecognizer r)
         {
-            if (MinMaxScale.x == MinMaxScale.y && MinMaxScale.y == 1.0f)
+            if (!AllowScale)
             {
+                r.Reset();
+                return;
+            }
+            else if (MinMaxScale.x < 0.0f || MinMaxScale.y < 0.0f || startScale == null)
+            {
+                // no scaling
                 return;
             }
 
-            GameObject obj = StartOrResetGesture(r, BringToFront, Camera, gameObject, spriteRenderer, Mode);
-            if (r.State == GestureRecognizerState.Began)
+            Camera camera;
+            GameObject obj = FingersScript.StartOrResetGesture(r, BringToFront, Cameras, gameObject, spriteRenderer, Mode, out camera);
+            if (camera == null)
+            {
+                r.Reset();
+                return;
+            }
+            else if (r.State == GestureRecognizerState.Began)
             {
                 SetStartState(r, obj, false);
             }
             else if (r.State == GestureRecognizerState.Executing && _transform != null)
             {
                 // assume uniform scale
-                float scale = _transform.localScale.x * ScaleGesture.ScaleMultiplier;
-
-                if (MinMaxScale.x > 0.0f && MinMaxScale.y >= MinMaxScale.x)
+                Vector3 scale = new Vector3
+                (
+                    (_transform.localScale.x * ScaleGesture.ScaleMultiplier),
+                    (_transform.localScale.y * ScaleGesture.ScaleMultiplier),
+                    (_transform.localScale.z * ScaleGesture.ScaleMultiplier)
+                );
+                if (MinMaxScale.x > 0.0f || MinMaxScale.y > 0.0f)
                 {
-                    scale = Mathf.Clamp(scale, MinMaxScale.x, MinMaxScale.y);
+                    float minValue = Mathf.Min(MinMaxScale.x, MinMaxScale.y);
+                    float maxValue = Mathf.Max(MinMaxScale.x, MinMaxScale.y);
+                    scale.x = Mathf.Clamp(scale.x, startScale.Value.x * minValue, startScale.Value.x * maxValue);
+                    scale.y = Mathf.Clamp(scale.y, startScale.Value.y * minValue, startScale.Value.y * maxValue);
+                    scale.z = Mathf.Clamp(scale.z, startScale.Value.z * minValue, startScale.Value.z * maxValue);
                 }
 
                 // don't mess with z scale for 2D
-                float zScale = (rigidBody2D == null && spriteRenderer == null && canvasRenderer == null ? scale : _transform.localScale.z);
-                _transform.localScale = new Vector3(scale, scale, zScale);
+                scale.z = (rigidBody2D == null && spriteRenderer == null && canvasRenderer == null ? scale.z : _transform.localScale.z);
+                _transform.localScale = scale;
             }
             else if (r.State == GestureRecognizerState.Ended)
             {
@@ -231,8 +240,20 @@ namespace DigitalRubyShared
 
         private void RotateGestureUpdated(DigitalRubyShared.GestureRecognizer r)
         {
-            GameObject obj = StartOrResetGesture(r, BringToFront, Camera, gameObject, spriteRenderer, Mode);
-            if (r.State == GestureRecognizerState.Began)
+            if (!AllowRotate)
+            {
+                r.Reset();
+                return;
+            }
+
+            Camera camera;
+            GameObject obj = FingersScript.StartOrResetGesture(r, BringToFront, Cameras, gameObject, spriteRenderer, Mode, out camera);
+            if (camera == null)
+            {
+                r.Reset();
+                return;
+            }
+            else if (r.State == GestureRecognizerState.Began)
             {
                 SetStartState(r, obj, false);
             }
@@ -241,7 +262,7 @@ namespace DigitalRubyShared
                 if (rigidBody != null)
                 {
                     float angle = RotateGesture.RotationDegreesDelta;
-                    Quaternion rotation = Quaternion.AngleAxis(angle, Camera.transform.forward);
+                    Quaternion rotation = Quaternion.AngleAxis(angle, camera.transform.forward);
                     rigidBody.MoveRotation(rigidBody.rotation * rotation);
                 }
                 else if (rigidBody2D != null)
@@ -254,7 +275,7 @@ namespace DigitalRubyShared
                 }
                 else
                 {
-                    _transform.Rotate(Camera.transform.forward, RotateGesture.RotationDegreesDelta, Space.Self);
+                    _transform.Rotate(camera.transform.forward, RotateGesture.RotationDegreesDelta, Space.Self);
                 }
             }
             else if (r.State == GestureRecognizerState.Ended)
@@ -265,14 +286,24 @@ namespace DigitalRubyShared
 
         private void DoubleTapGestureUpdated(DigitalRubyShared.GestureRecognizer r)
         {
-            if (r.State == GestureRecognizerState.Ended)
+            if (DoubleTapResetMode == _DoubleTapResetMode.Off)
             {
-                GameObject obj = GestureIntersectsObject(r, Camera, gameObject, Mode);
+                r.Reset();
+                return;
+            }
+            else if (r.State == GestureRecognizerState.Ended)
+            {
+                Camera camera = FingersScript.GetCameraForGesture(r, Cameras);
+                GameObject obj = FingersScript.GestureIntersectsObject(r, camera, gameObject, Mode);
                 SavedState state;
                 if (obj != null && savedStates.TryGetValue(obj.transform, out state))
                 {
                     obj.transform.rotation = state.Rotation;
                     obj.transform.localScale = state.Scale;
+                    if (DoubleTapResetMode == _DoubleTapResetMode.ResetScaleRotationPosition)
+                    {
+                        obj.transform.position = state.Position;
+                    }
                     savedStates.Remove(obj.transform);
                 }
             }
@@ -318,9 +349,13 @@ namespace DigitalRubyShared
                     startSortOrder = spriteRenderer.sortingOrder;
                 }
                 _transform = (rigidBody == null ? (rigidBody2D == null ? obj.transform : rigidBody2D.transform) : rigidBody.transform);
-                if (DoubleTapToReset && !savedStates.ContainsKey(_transform))
+                if (DoubleTapResetMode != _DoubleTapResetMode.Off && !savedStates.ContainsKey(_transform))
                 {
-                    savedStates[_transform] = new SavedState { Rotation = _transform.rotation, Scale = _transform.localScale };
+                    savedStates[_transform] = new SavedState { Rotation = _transform.rotation, Scale = _transform.localScale, Position = _transform.position };
+                }
+                if (startScale == null)
+                {
+                    startScale = _transform.localScale;
                 }
             }
             else if (_transform != obj.transform)
@@ -336,10 +371,14 @@ namespace DigitalRubyShared
 
         private void OnEnable()
         {
-            this.Camera = (this.Camera == null ? Camera.main : this.Camera);
+            if ((Cameras == null || Cameras.Length == 0) && Camera.main != null)
+            {
+                Cameras = new Camera[] { Camera.main };
+            }
             PanGesture = new PanGestureRecognizer { MaximumNumberOfTouchesToTrack = 2, ThresholdUnits = 0.01f };
             PanGesture.StateUpdated += PanGestureUpdated;
             ScaleGesture = new ScaleGestureRecognizer();
+            ScaleGesture.ThresholdUnits = ScaleThresholdUnits;
             ScaleGesture.StateUpdated += ScaleGestureUpdated;
             RotateGesture = new RotateGestureRecognizer();
             RotateGesture.StateUpdated += RotateGestureUpdated;
@@ -347,7 +386,7 @@ namespace DigitalRubyShared
             {
                 SetStartState(null, gameObject, true);
             }
-            if (DoubleTapToReset)
+            if (DoubleTapResetMode != _DoubleTapResetMode.Off)
             {
                 DoubleTapGesture = new TapGestureRecognizer { NumberOfTapsRequired = 2 };
                 DoubleTapGesture.StateUpdated += DoubleTapGestureUpdated;

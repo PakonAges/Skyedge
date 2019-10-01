@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -10,6 +10,9 @@ using System;
 
 namespace DigitalRubyShared
 {
+    /// <summary>
+    /// Contains device information
+    /// </summary>
     public static class DeviceInfo
     {
         private static float pixelsPerInch;

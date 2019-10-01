@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -12,21 +12,33 @@ using UnityEngine;
 
 namespace DigitalRubyShared
 {
+    /// <summary>
+    /// Allows zooming and panning a camera using pan and scale gestures. A tap gesture is also included to force the camera to look at the tapped object.
+    /// </summary>
     [RequireComponent(typeof(Camera))]
-    [AddComponentMenu("Fingers Gestures/Component/Zoom Pan Camera", 5)]
+    [AddComponentMenu("Fingers Gestures/Component/Fingers Zoom Pan Camera", 5)]
     public class FingersZoomPanCameraComponentScript : MonoBehaviour
     {
+        /// <summary>Require this area to be visible at all times</summary>
         [Tooltip("Require this area to be visible at all times")]
         public Collider VisibleArea;
 
+        /// <summary>Dampening for velocity when pan is released, lower values reduce velocity faster.</summary>
         [Tooltip("Dampening for velocity when pan is released, lower values reduce velocity faster.")]
         [Range(0.0f, 1.0f)]
         public float Dampening = 0.8f;
 
+        /// <summary>Adjust speed of rotation gesture (two finger rotate). Set to 0 for no rotation allowed.</summary>
         [Tooltip("Adjust speed of rotation gesture (two finger rotate). Set to 0 for no rotation allowed.")]
         [Range(-10.0f, 10.0f)]
         public float RotationSpeed = 0.0f;
 
+        /// <summary>The threshold scale gesture must change in units before executing</summary>
+        [Tooltip("The threshold scale gesture must change in units before executing")]
+        [Range(0.0f, 1.0f)]
+        public float ScaleThreshold = 0.15f;
+
+        /// <summary>The layers that can be tapped on for objects to center the camera on them</summary>
         [Tooltip("The layers that can be tapped on for objects to center the camera on them")]
         public LayerMask TapToCenterLayerMask = -1;
 
@@ -80,6 +92,7 @@ namespace DigitalRubyShared
 
             ScaleGesture = new ScaleGestureRecognizer
             {
+                ThresholdUnits = ScaleThreshold,
                 ZoomSpeed = 6.0f // for a touch screen you'd probably not do this, but if you are using ctrl + mouse wheel then this helps zoom faster
             };
             ScaleGesture.StateUpdated += Gesture_Updated;

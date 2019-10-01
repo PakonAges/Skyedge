@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -12,62 +12,80 @@ using UnityEngine;
 
 namespace DigitalRubyShared
 {
-    [AddComponentMenu("Fingers Gestures/Component/ScrollView", 6)]
+    /// <summary>
+    /// Represents a scroll view, very similar to UIScrollView from UIKit.
+    /// </summary>
+    [AddComponentMenu("Fingers Gestures/Component/Fingers ScrollView", 6)]
     public class FingersScrollViewComponentScript : MonoBehaviour
     {
+        /// <summary>The content to act as a scroll view.</summary>
         [Tooltip("The content to act as a scroll view.")]
         public GameObject ScrollContent;
 
+        /// <summary>The game object of the element containing the scroll view. This is usually a panel with a transparent image.</summary>
         [Tooltip("The game object of the element containing the scroll view. This is usually a panel with a transparent image.")]
         public GameObject ScrollContentContainer;
 
+        /// <summary>Canvas camera, null if canvas is screen space.</summary>
         [Tooltip("Canvas camera, null if canvas is screen space.")]
         public Camera CanvasCamera;
 
+        /// <summary>The max speed for the scroll view. When a pan finishes, velocity will be applied and the content will move a bit more.</summary>
         [Tooltip("The max speed for the scroll view. When a pan finishes, velocity will be applied and the content will move a bit more.")]
         [Range(0.01f, 4096.0f)]
         public float MaxSpeed = 1024.0f;
 
+        /// <summary>The threshold of zoom scale at which a double tap will zoom out instead of zoom in.</summary>
         [Tooltip("The threshold of zoom scale at which a double tap will zoom out instead of zoom in.")]
         [Range(1.0f, 10.0f)]
         public float DoubleTapZoomOutThreshold = 2.5f;
 
+        /// <summary>The scale at which a double tap will zoom out to.</summary>
         [Tooltip("The scale at which a double tap will zoom out to.")]
         [Range(0.1f, 10.0f)]
         public float DoubleTapZoomOutValue = 0.5f;
 
+        /// <summary>The scale at which a double tap will zoom in to.</summary>
         [Tooltip("The scale at which a double tap will zoom in to.")]
         [Range(0.1f, 10.0f)]
         public float DoubleTapZoomInValue = 4.0f;
 
+        /// <summary>How long a double tap will animate the zoom in and out.</summary>
         [Tooltip("How long a double tap will animate the zoom in and out.")]
         [Range(0.01f, 3.0f)]
         public float DoubleTapAnimationTimeSeconds = 0.5f;
 
+        /// <summary>How quickly pan velocity reduces when a pan finishes. Lower values reduce faster.</summary>
         [Tooltip("How quickly pan velocity reduces when a pan finishes. Lower values reduce faster.")]
         [Range(0.01f, 0.999f)]
         public float PanDampening = 0.95f;
 
+        /// <summary>How quickly the scale velocity reduces when a scale finishes. Lower values reduce faster.</summary>
         [Tooltip("How quickly the scale velocity reduces when a scale finishes. Lower values reduce faster.")]
         [Range(0.01f, 0.999f)]
         public float ScaleDampening = 0.1f;
 
+        /// <summary>How fast the scale gesture scales in and out. Lower values scale more slowly.</summary>
         [Tooltip("How fast the scale gesture scales in and out. Lower values scale more slowly.")]
         [Range(0.0001f, 0.1f)]
         public float ScaleSpeed = 0.01f;
 
+        /// <summary>The minimum scale multiplier.</summary>
         [Tooltip("The minimum scale multiplier.")]
         [Range(0.01f, 1.0f)]
         public float MinimumScale = 0.1f;
 
+        /// <summary>The maximum scale multiplier.</summary>
         [Tooltip("The maximum scale multiplier.")]
         [Range(0.01f, 100.0f)]
         public float MaximumScale = 8.0f;
 
+        /// <summary>How quickly the content bounces back to the center if it is moved or scaled out of bounds. Higher values move to the center faster.</summary>
         [Tooltip("How quickly the content bounces back to the center if it is moved or scaled out of bounds. Higher values move to the center faster.")]
         [Range(0.01f, 1.0f)]
         public float BounceModifier = 0.2f;
 
+        /// <summary>Optional, a text element to show debug text, useful for debugging the scroll view.</summary>
         [Tooltip("Optional, a text element to show debug text, useful for debugging the scroll view.")]
         public UnityEngine.UI.Text DebugText;
 

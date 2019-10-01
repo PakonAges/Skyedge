@@ -1,4 +1,12 @@
-﻿using System;
+//
+// Fingers Gestures
+// (c) 2015 Digital Ruby, LLC
+// http://www.digitalruby.com
+// Source code may be used for personal or commercial projects.
+// Source code may NOT be redistributed or sold.
+// 
+
+using System;
 using System.Reflection;
 
 using UnityEngine;

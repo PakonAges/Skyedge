@@ -1,4 +1,12 @@
-﻿using System.Collections;
+//
+// Fingers Gestures
+// (c) 2015 Digital Ruby, LLC
+// http://www.digitalruby.com
+// Source code may be used for personal or commercial projects.
+// Source code may NOT be redistributed or sold.
+// 
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,57 +16,70 @@ namespace DigitalRubyShared
     /// The joystick anywhere script creates a virtual joystick wherever the pan starts. This acts as the joystick center until finger lifts.
     /// When a new pan starts, the new joystick center is wherever that pan started.
     /// </summary>
-    [AddComponentMenu("Fingers Gestures/Control/Joystick Anywhere", 0)]
+    [AddComponentMenu("Fingers Gestures/Control/Fingers Joystick Anywhere", 0)]
     public class FingersJoystickAnywhereComponentScript : MonoBehaviour
     {
+        /// <summary>The number of units where the pan will be at maximum. For example, if you move this many units (default is inches) or more from the pan start, your move for that axis would be the maximum.</summary>
         [Header("Control")]
         [Tooltip("The number of units where the pan will be at maximum. For example, if you move this many units (default is inches) or more from " +
             "the pan start, your move for that axis would be the maximum.")]
         [Range(0.1f, 5.0f)]
         public float PanUnitsForMaxMove = 1.5f;
 
+        /// <summary>Whether a tap will register as a jump. False to not allow tap to jump.</summary>
         [Tooltip("Whether a tap will register as a jump. False to not allow tap to jump.")]
         public bool TapToJump;
 
+        /// <summary>The game object the pan must happen in, null for anywhere</summary>
         [Tooltip("The game object the pan must happen in, null for anywhere")]
         public GameObject PanPlatformSpecificView;
 
+        /// <summary>The game object the tap must happen in, null for anywhere</summary>
         [Tooltip("The game object the tap must happen in, null for anywhere")]
         public GameObject TapPlatformSpecificView;
 
+        /// <summary>How far the pan gesture must move before executing in units (inches)</summary>
         [Header("Thresholds")]
         [Tooltip("How far the pan gesture must move before executing in units (inches)")]
         [Range(0.0f, 1.0f)]
         public float PanGestureThresholdUnits = 0.1f;
 
+        /// <summary>How far the tap gesture can move and still count as a tap in units (inches)</summary>
         [Tooltip("How far the tap gesture can move and still count as a tap in units (inches)")]
         [Range(0.0f, 5.0f)]
         public float TapGestureThresholdUnits = 4.0f;
 
+        /// <summary>Show where the pan center is currently, null to not do this. This is the center for the current joystick, depending on where the pan started. As the pan moves away from this center, the pan amount increases up to 1.</summary>
         [Header("UI")]
         [Tooltip("Show where the pan center is currently, null to not do this. This is the center for " +
             "the current joystick, depending on where the pan started. As the pan moves away from " +
             "this center, the pan amount increases up to 1.")]
         public UnityEngine.UI.Image PanAnchor;
 
+        /// <summary>Allows drawing a line from pan anchor to current pan to help with seeing the current pan position from anchor.</summary>
         [Tooltip("Allows drawing a line from pan anchor to current pan to help with seeing the current " +
             "pan position from anchor.")]
         public UnityEngine.UI.Image PanAnchorLine;
 
+        /// <summary>Horizontal input axis name if cross platform input integration is desired.</summary>
         [Header("Cross Platform Input")]
         [Tooltip("Horizontal input axis name if cross platform input integration is desired.")]
         public string CrossPlatformInputHorizontalAxisName;
 
+        /// <summary>Vertical input axis name if cross platform input integration is desired.</summary>
         [Tooltip("Vertical input axis name if cross platform input integration is desired.")]
         public string CrossPlatformInputVerticalAxisName;
 
+        /// <summary>Jump input axis name if cross platform input integration is desired. Sends a value of 1.0 if jumped.</summary>
         [Tooltip("Jump input axis name if cross platform input integration is desired. Sends a value of 1.0 if jumped.")]
         public string CrossPlatformInputJumpAxisName;
 
+        /// <summary>The pan/move callback (values are between -1 and 1)</summary>
         [Header("Callbacks")]
         [Tooltip("The pan/move callback (values are between -1 and 1)")]
         public GestureRecognizerComponentEventVector2 PanCallback;
 
+        /// <summary>The tap/jump callback</summary>
         [Tooltip("The tap/jump callback")]
         public GestureRecognizerComponentEvent TapCallback;
 
@@ -73,6 +94,24 @@ namespace DigitalRubyShared
         private System.Action clearJumpAction;
 
         private Vector2 panLocation;
+
+        /// <summary>
+        /// Reset all the gestures in this component script
+        /// </summary>
+        public void Reset()
+        {
+            panGesture.Reset();
+            tapGesture.Reset();
+            if (PanAnchor != null)
+            {
+                PanAnchor.enabled = false;
+                panLocation = Vector2.zero;
+            }
+            if (PanAnchorLine != null)
+            {
+                PanAnchorLine.enabled = false;
+            }
+        }
 
         private void Update()
         {

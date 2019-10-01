@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -79,6 +79,9 @@ namespace DigitalRubyShared
             }
         }
 
+        /// <summary>
+        /// StateChanged
+        /// </summary>
         protected override void StateChanged()
         {
             base.StateChanged();
@@ -90,11 +93,18 @@ namespace DigitalRubyShared
             }
         }
 
+        /// <summary>
+        /// TouchesBegan
+        /// </summary>
+        /// <param name="touches">Touches</param>
         protected override void TouchesBegan(System.Collections.Generic.IEnumerable<GestureTouch> touches)
         {
             CalculateFocus(CurrentTrackedTouches);
         }
 
+        /// <summary>
+        /// TouchesMoved
+        /// </summary>
         protected override void TouchesMoved()
         {
             if (CurrentTrackedTouches.Count == MaximumNumberOfTouchesToTrack)
@@ -111,6 +121,9 @@ namespace DigitalRubyShared
             }
         }
 
+        /// <summary>
+        /// TouchesEnded
+        /// </summary>
         protected override void TouchesEnded()
         {
             if (State == GestureRecognizerState.Possible)

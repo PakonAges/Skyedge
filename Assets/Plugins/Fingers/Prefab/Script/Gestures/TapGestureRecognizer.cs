@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -41,6 +41,9 @@ namespace DigitalRubyShared
             RunActionAfterDelay(ThresholdSeconds, VerifyFailGestureAfterDelay);
         }
 
+        /// <summary>
+        /// StateChanged
+        /// </summary>
         protected override void StateChanged()
         {
             base.StateChanged();
@@ -53,6 +56,10 @@ namespace DigitalRubyShared
             }
         }
 
+        /// <summary>
+        /// TouchesBegan
+        /// </summary>
+        /// <param name="touches">Touches</param>
         protected override void TouchesBegan(System.Collections.Generic.IEnumerable<GestureTouch> touches)
         {
             // if we have any ignore touch ids from previous touches, fail the gesture
@@ -91,6 +98,9 @@ namespace DigitalRubyShared
             }
         }
 
+        /// <summary>
+        /// TouchesMoved
+        /// </summary>
         protected override void TouchesMoved()
         {
             CalculateFocus(CurrentTrackedTouches);
@@ -101,7 +111,10 @@ namespace DigitalRubyShared
                 SetState(GestureRecognizerState.Failed);
             }
         }
-
+        
+        /// <summary>
+        /// TouchesEnded
+        /// </summary>
         protected override void TouchesEnded()
         {
             if ((float)timer.Elapsed.TotalSeconds <= ThresholdSeconds)

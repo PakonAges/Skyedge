@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -13,27 +13,70 @@ using UnityEngine;
 
 namespace DigitalRubyShared
 {
+    /// <summary>
+    /// Wraps the fingers image gesture in a way that allows easy and quick creation of multiple image gestures
+    /// </summary>
     public class FingersImageAutomationScript : MonoBehaviour
     {
+        /// <summary>Max strokes that can make up an image. For example an X would require 2 strokes, 3 parallel lines would require 3 strokes, etc.</summary>
         [Header("Config")]
         [Range(1, 10)]
         [Tooltip("Max strokes that can make up an image. For example an X would require 2 strokes, 3 parallel lines would require 3 strokes, etc.")]
         public int MaxStrokeCount = 2;
 
+        /// <summary>Whether to auto-add non-matches to the list of possible images</summary>
         [Tooltip("Whether to auto-add non-matches to the list of possible images")]
         public bool AutoAddImages;
 
+        /// <summary>
+        /// Image
+        /// </summary>
         [Header("UI elements")]
         public UnityEngine.UI.RawImage Image;
+
+        /// <summary>
+        /// Line material
+        /// </summary>
         public Material LineMaterial;
+
+        /// <summary>
+        /// Match label
+        /// </summary>
         public UnityEngine.UI.Text MatchLabel;
+
+        /// <summary>
+        /// Script text field
+        /// </summary>
         public UnityEngine.UI.InputField ScriptText;
+
+        /// <summary>
+        /// Image name text field
+        /// </summary>
         public UnityEngine.UI.InputField ImageNameText;
+
+        /// <summary>
+        /// Bulk import button
+        /// </summary>
         public UnityEngine.UI.Button BulkImportButton;
 
+        /// <summary>
+        /// Image gesture
+        /// </summary>
         public ImageGestureRecognizer ImageGesture { get; private set; }
+
+        /// <summary>
+        /// The last matched image
+        /// </summary>
         protected ImageGestureImage LastImage { get; private set; }
+
+        /// <summary>
+        /// The current matched image
+        /// </summary>
         protected ImageGestureImage MatchedImage { get; private set; }
+
+        /// <summary>
+        /// Possible images that can be recognized
+        /// </summary>
         protected Dictionary<ImageGestureImage, string> RecognizableImages = new Dictionary<ImageGestureImage, string>();
 
         private List<List<Vector2>> lineSet = new List<List<Vector2>>();
@@ -97,6 +140,9 @@ namespace DigitalRubyShared
             return new ImageGestureImage(rows, ImageGestureRecognizer.ImageColumns, scorePadding);
         }
 
+        /// <summary>
+        /// Delete the last line in the script, great for undoing the last action
+        /// </summary>
         public void DeleteLastScriptLine()
         {
             if (ScriptText != null)
@@ -114,6 +160,9 @@ namespace DigitalRubyShared
             }
         }
 
+        /// <summary>
+        /// Bulk import images, opens a folder dialog and imports all the png files
+        /// </summary>
         public void BulkImport()
         {
 
@@ -149,6 +198,9 @@ namespace DigitalRubyShared
 
         }
 
+        /// <summary>
+        /// OnEnable
+        /// </summary>
         protected virtual void OnEnable()
         {
             tap = new TapGestureRecognizer();
@@ -177,6 +229,9 @@ namespace DigitalRubyShared
 
         }
 
+        /// <summary>
+        /// OnDisable
+        /// </summary>
         protected virtual void OnDisable()
         {
             if (FingersScript.HasInstance)
@@ -186,6 +241,9 @@ namespace DigitalRubyShared
             }
         }
 
+        /// <summary>
+        /// Update
+        /// </summary>
         protected virtual void Update()
         {
             if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))
@@ -222,7 +280,14 @@ namespace DigitalRubyShared
             }
         }
 
-        public Texture2D ScaleTexture(Texture src, int width, int height)
+        /// <summary>
+        /// Scale a texture to a new size
+        /// </summary>
+        /// <param name="src">Source texture</param>
+        /// <param name="width">New width</param>
+        /// <param name="height">New height</param>
+        /// <returns>New texture</returns>
+        public static Texture2D ScaleTexture(Texture src, int width, int height)
         {
             RenderTexture rt = RenderTexture.GetTemporary(width, height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
             Graphics.Blit(src, rt);

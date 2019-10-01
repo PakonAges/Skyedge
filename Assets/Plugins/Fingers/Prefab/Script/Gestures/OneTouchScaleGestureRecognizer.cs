@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -10,8 +10,14 @@ using System;
 
 namespace DigitalRubyShared
 {
+    /// <summary>
+    /// Allows scaling with a single touch
+    /// </summary>
     public class OneTouchScaleGestureRecognizer : DigitalRubyShared.GestureRecognizer
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public OneTouchScaleGestureRecognizer()
         {
             ScaleMultiplier = ScaleMultiplierX = ScaleMultiplierY = 1.0f;
@@ -29,12 +35,19 @@ namespace DigitalRubyShared
 
         }
 
+        /// <summary>
+        /// TouchesBegan
+        /// </summary>
+        /// <param name="touches">Touches</param>
         protected override void TouchesBegan(System.Collections.Generic.IEnumerable<GestureTouch> touches)
         {
             CalculateFocus(CurrentTrackedTouches);
             SetState(GestureRecognizerState.Possible);
         }
 
+        /// <summary>
+        /// Touches moved
+        /// </summary>
         protected override void TouchesMoved()
         {
             CalculateFocus(CurrentTrackedTouches);
@@ -65,6 +78,9 @@ namespace DigitalRubyShared
             }
         }
 
+        /// <summary>
+        /// TouchesEnded
+        /// </summary>
         protected override void TouchesEnded()
         {
             if (State == GestureRecognizerState.Possible)
@@ -80,19 +96,28 @@ namespace DigitalRubyShared
         }
 
         /// <summary>
+        /// Reset the gesture
+        /// </summary>
+        public override void Reset()
+        {
+            base.Reset();
+            ScaleMultiplier = ScaleMultiplierX = ScaleMultiplierY = 1.0f;
+        }
+
+        /// <summary>
         /// The current scale multiplier. Multiply your current scale value by this to scale.
         /// </summary>
         /// <value>The scale multiplier.</value>
         public float ScaleMultiplier { get; private set; }
 
         /// <summary>
-        /// The current scale multiplier. Multiply your current x scale value by this to scale.
+        /// The current scale multiplier on x axis. Multiply your current x scale value by this to scale.
         /// </summary>
         /// <value>The scale multiplier.</value>
         public float ScaleMultiplierX { get; private set; }
 
         /// <summary>
-        /// The current scale multiplier. Multiply your current y scale value by this to scale.
+        /// The current scale multiplier on y axis. Multiply your current y scale value by this to scale.
         /// </summary>
         /// <value>The scale multiplier.</value>
         public float ScaleMultiplierY { get; private set; }

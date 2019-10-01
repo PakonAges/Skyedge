@@ -1,5 +1,73 @@
 ﻿Changelog
 --------------------
+2.9.0	(2019-09-26)
+		- Add TestTouches field to fingers script. This makes it easier to create tests and inject fake touches to create automated UI and touch handling tests, test really fast flicks, etc.
+		- Add RecordTouches property to fingers script. This will populate the test touches array with all touches in play mode. You can then click copy component, stop play and paste component values to paste in the touches and you can replay the touches you did on next play.
+		- Change pan gesture to process one last iteration in the end touch event.
+
+2.8.4	(2019-09-15)
+		- Add optional restricted area to joystick script. Can use to prevent joystick going outside of certain areas.
+		- Change joystick starting mode to an enum property 'StartMode' with three values: MustStartInside, MoveToPanStart and PanInsideOrPanMovesInside.
+		- Improve scale gesture smoothness.
+
+2.8.3	(2019-09-13)
+		- Tweak how Mask property works. It is now only accessible from script. Add all masks in OnEnable. Remove masks in OnDisable. See DemoScriptJoystick.cs for an example.
+		- Add dead zones and input curve to joystick. This will better control joystick power, and these replace the joystick power field.
+		- Add active and idle image and background image to the joystick script.
+		- Add ReturnToHomePosition option to joystick script.
+		- New demo scene with two joysticks, two mover objects and two mask areas.
+
+2.8.2	(2019-09-12)
+		- Add Masks property to FingersScript. This is an array of Collider2D. Each must be in a Canvas object. Gestures will be restricted to these objects if they are set and active.
+
+2.8.1	(2019-09-09)
+		- Add UseFixedUpdate property to fingers script. This will allow the gestures to read from Unity input faster, using the fixed update rate in project settings -> time.
+		- Change FingersPanRotateScaleComponentScript MinMaxScale to be a percentage of the transform start scale. Either value can be negative to disable scaling.
+
+2.8.0	(2019-09-06)
+		- Add example projects folder. Will put in more complete examples of how to make a game or app with fingers gestures. Starting work on a word game example.
+		- Add TimeToRestartThresholdUnits to pan gesture recognizer.
+
+2.7.9	(2019-09-05)
+		- Add SpeedUnitsToRestartThresholdUnits property to pan gesture recognizer to aid in placing objects with exactness.
+
+2.7.8	(2019-08-21)
+		- Add new DemoSceneVirtualTouches and DemoScriptVirtualTouches. Virtual touch handling is now well documented in this demo script. FingersScript has a new callback method that is required to implement virtual touches: VirtualTouchUpdateHandler.
+
+2.7.7	(2019-08-09)
+		- Add two finger pan gesture to first person script to allow looking up and down.
+
+2.7.6	(2019-08-03)
+		- Change FingersPanARComponentScript to allow multiple targets. First target hit by racast will be chosen when the pan starts. You will need to re-setup this script if you are using it.
+		
+2.7.5	(2019-07-25)
+		- Add TreatMouseWheelAsFingers property to FingersScript. Now you can have a mouse wheel handler without the mouse pointer.
+
+2.7.4	(2019-07-09)
+		- Add Reset method to joystick script. Use this if app resumes from background on mobile device.
+
+2.7.3	(2019-07-05)
+		- Add LookAtTarget flag to FingersPanOrbitComponentScript. Set to false to prevent the script from auto-pointing the camera at the target.
+
+2.7.2	(2019-06-26)
+		- Add ClampBounds property to pan orbit script to restrict the orbiter to a box.
+
+2.7.1	(2019-06-12)
+		- Add multiple camera support for drag drop component script and pan, rotate, scale component script.
+
+2.7.0	(2019-05-14)
+		- Add pan to rotate camera or object component. Use this for a 1st person camera to look around, or to rotate a 3D object around x and y axis.
+
+2.6.9	(2019-05-11)
+		- Add one touch x and y axis scale gesture component. Great for scaling separately on x and y axis.
+
+2.6.8	(2019-05-05)
+		- Add option to pan / rotate / scale script to disable pan, rotate and/or scale.
+		- Add additional double tap reset option to pan / rotate / scale script that allows reset of position.
+
+2.6.7   (2019-05-03)
+		- Fix compile error when ScrollView was not in Unity version.
+
 2.6.6	(2019-03-14)
 		- Add camera 3d movement component script, similar to mapps applications on mobile movement. See DemoSceneCameraMove3D.
 

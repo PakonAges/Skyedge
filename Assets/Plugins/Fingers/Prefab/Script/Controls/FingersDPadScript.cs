@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -15,45 +15,83 @@ using UnityEngine.UI;
 
 namespace DigitalRubyShared
 {
+    /// <summary>
+    /// DPad item
+    /// </summary>
     [System.Flags]
     public enum FingersDPadItem
     {
+        /// <summary>
+        /// None
+        /// </summary>
         None = 0,
+
+        /// <summary>
+        /// Up
+        /// </summary>
         Up = 1,
+
+        /// <summary>
+        /// Right
+        /// </summary>
         Right = 2,
+
+        /// <summary>
+        /// Down
+        /// </summary>
         Down = 4,
+
+        /// <summary>
+        /// Left
+        /// </summary>
         Left = 8,
+
+        /// <summary>
+        /// Center
+        /// </summary>
         Center = 16
     }
 
+    /// <summary>
+    /// Represents a dpad that can be used just like a real-controller with 4 directions
+    /// </summary>
     public class FingersDPadScript : MonoBehaviour
     {
+        /// <summary>The background image to use for the DPad. This should contain up, right, down, left and center in unselected state.</summary>
         [Tooltip("The background image to use for the DPad. This should contain up, right, down, left and center in unselected state.")]
         public UnityEngine.UI.Image DPadBackgroundImage;
 
+        /// <summary>The up image to use for the DPad for selected state. Alpha pixel of less than MinAlphaForTouch will not be selectable.</summary>
         [Tooltip("The up image to use for the DPad for selected state. Alpha pixel of less than MinAlphaForTouch will not be selectable.")]
         public UnityEngine.UI.Image DPadUpImageSelected;
 
+        /// <summary>The right image to use for the DPad for selected state. Alpha pixel of less than MinAlphaForTouch will not be selectable.</summary>
         [Tooltip("The right image to use for the DPad for selected state. Alpha pixel of less than MinAlphaForTouch will not be selectable.")]
         public UnityEngine.UI.Image DPadRightImageSelected;
 
+        /// <summary>The down image to use for the DPad for selected state. Alpha pixel of less than MinAlphaForTouch will not be selectable.</summary>
         [Tooltip("The down image to use for the DPad for selected state. Alpha pixel of less than MinAlphaForTouch will not be selectable.")]
         public UnityEngine.UI.Image DPadDownImageSelected;
 
+        /// <summary>The left image to use for the DPad for selected state. Alpha pixel of less than MinAlphaForTouch will not be selectable.</summary>
         [Tooltip("The left image to use for the DPad for selected state. Alpha pixel of less than MinAlphaForTouch will not be selectable.")]
         public UnityEngine.UI.Image DPadLeftImageSelected;
 
+        /// <summary>The center image to use for the DPad for selected state. Alpha pixel of less than MinAlphaForTouch will not be selectable.</summary>
         [Tooltip("The center image to use for the DPad for selected state. Alpha pixel of less than MinAlphaForTouch will not be selectable.")]
         public UnityEngine.UI.Image DPadCenterImageSelected;
 
+        /// <summary>Touch radius in units (usually inches). Set to lowest for single pixel accuracy, or larger if you want more than one dpad button interactable at once. You'll need to test this to make sure the DPad works how you expect for an average finger size and your screen size.</summary>
         [Tooltip("Touch radius in units (usually inches). Set to lowest for single pixel accuracy, or larger if you want more than one dpad button interactable at once. " +
             "You'll need to test this to make sure the DPad works how you expect for an average finger size and your screen size.")]
         [Range(0.01f, 1.0f)]
         public float TouchRadiusInUnits = 0.125f;
 
+        /// <summary>Horizontal input axis name if cross platform input integration is desired.</summary>
         [Tooltip("Horizontal input axis name if cross platform input integration is desired.")]
         public string CrossPlatformInputHorizontalAxisName;
 
+        /// <summary>Vertical input axis name if cross platform input integration is desired.</summary>
         [Tooltip("Vertical input axis name if cross platform input integration is desired.")]
         public string CrossPlatformInputVerticalAxisName;
 
@@ -219,9 +257,24 @@ namespace DigitalRubyShared
             }
         }
 
+        /// <summary>
+        /// Fires when a dpad item is tapped
+        /// </summary>
         public System.Action<FingersDPadScript, FingersDPadItem, TapGestureRecognizer> DPadItemTapped;
+
+        /// <summary>
+        /// Fires when a dpad item is panned on
+        /// </summary>
         public System.Action<FingersDPadScript, FingersDPadItem, PanGestureRecognizer> DPadItemPanned;
+
+        /// <summary>
+        /// Pan gesture
+        /// </summary>
         public PanGestureRecognizer PanGesture { get; private set; }
+
+        /// <summary>
+        /// Tap gesture
+        /// </summary>
         public TapGestureRecognizer TapGesture { get; private set; }
 
         /*

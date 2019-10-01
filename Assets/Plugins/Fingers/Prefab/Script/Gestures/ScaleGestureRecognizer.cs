@@ -1,4 +1,4 @@
-﻿//
+//
 // Fingers Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
@@ -36,10 +36,23 @@ namespace DigitalRubyShared
 
         private readonly System.Diagnostics.Stopwatch timer = new System.Diagnostics.Stopwatch();
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ScaleGestureRecognizer()
         {
             ScaleMultiplier = ScaleMultiplierX = ScaleMultiplierY = 1.0f;
-            ZoomSpeed = 3.0f;
+
+#if UNITY_2017_4_OR_NEWER
+
+            ZoomSpeed = (UnityEngine.Input.mousePresent ? 3.0f : 1.0f);
+
+#else
+
+            ZoomSpeed = 1.0f;
+
+#endif
+
             ThresholdUnits = 0.15f;
             MinimumNumberOfTouchesToTrack = MaximumNumberOfTouchesToTrack = 2;
             timer.Start();
@@ -94,16 +107,14 @@ namespace DigitalRubyShared
             {
                 if (previousDistance == 0.0f)
                 {
-                    // until the gesture starts, previousDistance is actually firstDistance
-                    previousDistance = distance;
-                    previousDistanceX = distanceX;
-                    previousDistanceY = distanceY;
+                    SetPreviousDistance(distance, distanceX, distanceY);
                 }
                 else
                 {
                     float diff = Math.Abs(previousDistance - distance);
                     if (diff >= ThresholdUnits)
                     {
+                        SetPreviousDistance(distance, distanceX, distanceY);
                         SetState(GestureRecognizerState.Began);
                     }
                 }
@@ -135,10 +146,14 @@ namespace DigitalRubyShared
                     // must be above jitter threshold to execute
                     if (aboveJitterThreshold)
                     {
+                        if (previousDistanceDirection == 0.0f)
+                        {
+                            SetPreviousDistance(distance, distanceX, distanceY);
+                        }
                         timer.Reset();
                         timer.Start();
                         float newDistanceDirection = (currentDistanceSquared - previousDistanceSquared >= 0.0f ? 1.0f : -1.0f);
-                        if (newDistanceDirection == previousDistanceDirection)
+                        if (previousDistanceDirection == 0 || newDistanceDirection == previousDistanceDirection)
                         {
                             ScaleMultiplier = GetScale(distance / previousDistance);
                             ScaleMultiplierX = GetScale(distanceX / previousDistanceX);
@@ -148,8 +163,8 @@ namespace DigitalRubyShared
                         else
                         {
                             ScaleMultiplier = ScaleMultiplierX = ScaleMultiplierY = 1.0f;
-                            previousDistanceDirection = newDistanceDirection;
                         }
+                        previousDistanceDirection = newDistanceDirection;
                         SetPreviousDistance(distance, distanceX, distanceY);
                     }
                     else if (timer.ElapsedMilliseconds > resetDirectionMilliseconds)
@@ -171,16 +186,26 @@ namespace DigitalRubyShared
             }
         }
 
+        /// <summary>
+        /// TouchesBegan
+        /// </summary>
+        /// <param name="touches">Touches</param>
         protected override void TouchesBegan(System.Collections.Generic.IEnumerable<GestureTouch> touches)
         {
             previousDistance = 0.0f;
         }
 
+        /// <summary>
+        /// TouchesMoved
+        /// </summary>
         protected override void TouchesMoved()
         {
             ProcessTouches();
         }
 
+        /// <summary>
+        /// TouchesEnded
+        /// </summary>
         protected override void TouchesEnded()
         {
             if (State == GestureRecognizerState.Executing)
